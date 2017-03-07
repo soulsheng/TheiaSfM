@@ -43,6 +43,10 @@ using namespace std;
 #include "NamedMutex.h"
 #endif
 
+#if defined(_MSC_VER)
+#define strcasecmp _stricmp
+#endif
+
 namespace visual_sfm {
 
 //////////////////////////////////////

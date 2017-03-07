@@ -112,7 +112,7 @@ void AKAZE::Allocate_Memory_Evolution() {
 }
 
 /* ************************************************************************* */
-int AKAZE::Create_Nonlinear_Scale_Space(const RowMatrixXf& img) {
+int AKAZE::Create_Nonlinear_Scale_Space(const libAKAZE::RowMatrixXf& img) {
   if (evolution_.size() == 0) {
     std::cerr << "Error generating the nonlinear scale space!!" << std::endl;
     std::cerr << "Firstly you need to call AKAZE::Allocate_Memory_Evolution()"

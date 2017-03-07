@@ -133,3 +133,4 @@
 /build/libraries/flann/src/cpp/*.dir
 /build/bin
 /build/lib
+/build/libraries/akaze/lib
