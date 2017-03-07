@@ -1,0 +1,589 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{5BD0D74E-1065-4CCF-96B5-34470DA9159C}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build --check-stamp-file D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/file/code/git/3d/TheiaSfM/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeSystem.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeCCompiler.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCommonLanguageInclude.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindEigen.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindGflags.cmake;D:\file\code\sdk\gflags\bin\gflags-config-version.cmake;D:\file\code\sdk\gflags\bin\gflags-config.cmake;D:\file\code\sdk\gflags\bin\gflags-targets.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindGlog.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindCeres.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindOpenImageIO.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindSuiteSparse.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\OptimizeTheiaCompilerFlags.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CheckCXXSourceCompiles.cmake;D:\file\code\git\3d\TheiaSfM\cmake\uninstall.cmake.in;D:\file\code\git\3d\TheiaSfM\cmake\TheiaConfig.cmake.in;D:\file\code\git\3d\TheiaSfM\cmake\TheiaConfigVersion.cmake.in;D:\file\code\git\3d\TheiaSfM\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build --check-stamp-file D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/file/code/git/3d/TheiaSfM/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeSystem.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeCCompiler.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCommonLanguageInclude.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindEigen.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindGflags.cmake;D:\file\code\sdk\gflags\bin\gflags-config-version.cmake;D:\file\code\sdk\gflags\bin\gflags-config.cmake;D:\file\code\sdk\gflags\bin\gflags-targets.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindGlog.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindCeres.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindOpenImageIO.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindSuiteSparse.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\OptimizeTheiaCompilerFlags.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CheckCXXSourceCompiles.cmake;D:\file\code\git\3d\TheiaSfM\cmake\uninstall.cmake.in;D:\file\code\git\3d\TheiaSfM\cmake\TheiaConfig.cmake.in;D:\file\code\git\3d\TheiaSfM\cmake\TheiaConfigVersion.cmake.in;D:\file\code\git\3d\TheiaSfM\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build --check-stamp-file D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:/file/code/git/3d/TheiaSfM/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeSystem.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeCCompiler.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCommonLanguageInclude.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindEigen.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindGflags.cmake;D:\file\code\sdk\gflags\bin\gflags-config-version.cmake;D:\file\code\sdk\gflags\bin\gflags-config.cmake;D:\file\code\sdk\gflags\bin\gflags-targets.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindGlog.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindCeres.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindOpenImageIO.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindSuiteSparse.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\OptimizeTheiaCompilerFlags.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CheckCXXSourceCompiles.cmake;D:\file\code\git\3d\TheiaSfM\cmake\uninstall.cmake.in;D:\file\code\git\3d\TheiaSfM\cmake\TheiaConfig.cmake.in;D:\file\code\git\3d\TheiaSfM\cmake\TheiaConfigVersion.cmake.in;D:\file\code\git\3d\TheiaSfM\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build --check-stamp-file D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:/file/code/git/3d/TheiaSfM/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeSystem.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeCCompiler.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC.cmake;D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\2.8.12.2\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeCommonLanguageInclude.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindEigen.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindGflags.cmake;D:\file\code\sdk\gflags\bin\gflags-config-version.cmake;D:\file\code\sdk\gflags\bin\gflags-config.cmake;D:\file\code\sdk\gflags\bin\gflags-targets.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindGlog.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindCeres.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindOpenImageIO.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\FindSuiteSparse.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CMakeParseArguments.cmake;D:\file\code\git\3d\TheiaSfM\cmake\OptimizeTheiaCompilerFlags.cmake;C:\Program Files (x86)\CMake 2.8\share\cmake-2.8\Modules\CheckCXXSourceCompiles.cmake;D:\file\code\git\3d\TheiaSfM\cmake\uninstall.cmake.in;D:\file\code\git\3d\TheiaSfM\cmake\TheiaConfig.cmake.in;D:\file\code\git\3d\TheiaSfM\cmake\TheiaConfigVersion.cmake.in;D:\file\code\git\3d\TheiaSfM\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\generate.stamp</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="CMakeFiles\a275d67cd32b07ba3d6c03be3b41dcf2\ALL_BUILD.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Build all projects</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/file/code/git/3d/TheiaSfM/build/CMakeFiles/a275d67cd32b07ba3d6c03be3b41dcf2/ALL_BUILD.rule;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\ALL_BUILD</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Build all projects</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/file/code/git/3d/TheiaSfM/build/CMakeFiles/a275d67cd32b07ba3d6c03be3b41dcf2/ALL_BUILD.rule;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\ALL_BUILD</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Build all projects</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:/file/code/git/3d/TheiaSfM/build/CMakeFiles/a275d67cd32b07ba3d6c03be3b41dcf2/ALL_BUILD.rule;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\ALL_BUILD</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Build all projects</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:/file/code/git/3d/TheiaSfM/build/CMakeFiles/a275d67cd32b07ba3d6c03be3b41dcf2/ALL_BUILD.rule;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\file\code\git\3d\TheiaSfM\build\CMakeFiles\ALL_BUILD</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeFiles\ALL_BUILD" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/ZERO_CHECK.vcxproj">
+      <Project>E74F2D03-9DAA-46BF-854D-E63BB330E037</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/akaze/akaze.vcxproj">
+      <Project>9F1C2697-48DC-4346-8A40-4B0D6D742AFE</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/akaze_descriptor_test.vcxproj">
+      <Project>670C0F27-8E1F-42DD-9D31-06C95317B914</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/akaze/akaze_features.vcxproj">
+      <Project>37CCB4C7-8285-43E3-9E9E-EE078516EE41</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/akaze/akaze_match.vcxproj">
+      <Project>69B72D9C-65C0-4EEF-8F37-D46A95AE3452</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/align_point_clouds_test.vcxproj">
+      <Project>CADDF174-3F42-40AF-8B51-E0FE8097BB18</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/align_reconstructions_test.vcxproj">
+      <Project>CAB9DE55-FC99-43D0-828E-34092CFEDC5A</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/align_rotations_test.vcxproj">
+      <Project>467F36FB-E6C7-4DA5-B1F6-45A5EA679D30</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/arrsac_test.vcxproj">
+      <Project>A89465D7-5F70-4A5F-A31F-ABB0954581C9</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/brute_force_feature_matcher_test.vcxproj">
+      <Project>8AF7CABD-9588-4149-A418-DB78FE3CD422</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/build_1dsfm_reconstruction.vcxproj">
+      <Project>EAB575B1-93B4-4BB2-BE19-E058F2C03A89</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/build_reconstruction.vcxproj">
+      <Project>2D39221C-B8A9-4DF5-9E91-D49B30F8CB88</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/calibrate_camera_intrinsics.vcxproj">
+      <Project>E7AB32C4-2784-45C3-99B4-12BB3E34FB34</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/camera_test.vcxproj">
+      <Project>86A9279F-0A13-450E-A347-F7E21E5A3E85</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/cascade_hashing_feature_matcher_test.vcxproj">
+      <Project>444C48EB-7E87-4169-BAD1-38683D6C8F81</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/closed_form_polynomial_solver_test.vcxproj">
+      <Project>02544D3F-624D-43AE-80A6-9B9C480AFC31</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/colorize_reconstruction.vcxproj">
+      <Project>BBC66D63-ED46-478F-A654-4D487CEC146C</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/compare_reconstructions.vcxproj">
+      <Project>3502E640-02A9-46C8-8227-9C60A29EA444</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/compute_matching_relative_pose_errors.vcxproj">
+      <Project>6286FEBA-D2A9-492D-816B-DC997540DE90</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/compute_reconstruction_statistics.vcxproj">
+      <Project>9C88B075-141D-47F3-AC69-6C12F391344E</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/compute_triplet_baseline_ratios_test.vcxproj">
+      <Project>1F820ADF-38C1-4F98-8140-62C0430C6998</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/compute_two_view_geometry.vcxproj">
+      <Project>A37DD233-EACE-4259-A0D1-6C0E3AC6C57F</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/connected_components_test.vcxproj">
+      <Project>4F67FE00-EE51-4558-9A60-7016DF73E822</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/convert_bundle_file.vcxproj">
+      <Project>3C318687-A5AA-481C-941A-D4CB7921ED74</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/convert_nvm_file.vcxproj">
+      <Project>0C115BA3-8E96-4EAE-8390-77B52EEF6F31</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/convert_sift_key_file.vcxproj">
+      <Project>924EFD75-1661-4781-9B0A-72B31E773442</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/convert_theia_reconstruction_to_bundler_file.vcxproj">
+      <Project>CE519C29-AF38-401F-8730-CF8C4F7A27A5</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/create_calibration_file_from_exif.vcxproj">
+      <Project>EA91BE29-A363-45DE-A77F-A9D873D24701</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/create_reconstruction_from_strecha_dataset.vcxproj">
+      <Project>B81D5FDA-F5E0-4789-941C-283762CBC85C</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/distance_test.vcxproj">
+      <Project>4E524F21-9469-4B46-88E4-65593017083E</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/dls_pnp_test.vcxproj">
+      <Project>D7EE02F8-A50A-41DA-85B1-CF5595AFC085</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/eight_point_fundamental_matrix_test.vcxproj">
+      <Project>E4CBDE09-E4ED-4FA2-BFBA-B183E5B21C33</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/essential_matrix_utils_test.vcxproj">
+      <Project>AED0BD18-58EF-4B56-A43C-ACCF6AA855AB</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_calibrated_absolute_pose_test.vcxproj">
+      <Project>A462CDE2-F96D-4EF7-924A-F3CC02DB2BF1</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_dominant_plane_from_points_test.vcxproj">
+      <Project>C8B08F02-4321-4B3F-81F4-B3AA2CEF4354</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_essential_matrix_test.vcxproj">
+      <Project>8924185F-F3BD-4868-88D7-5DC481937475</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_fundamental_matrix_test.vcxproj">
+      <Project>7AA442BD-2A6A-40BC-A12C-04632940A810</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_homography_test.vcxproj">
+      <Project>7B821F52-943C-405A-9823-D3F925A9E00B</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_relative_pose_test.vcxproj">
+      <Project>CAEF41D2-A99B-4708-BA8F-D82C2AA69E96</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_similarity_transformation_2d_3d_test.vcxproj">
+      <Project>16478147-E279-4F33-A9D4-7029B0572EF0</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_triangulation_test.vcxproj">
+      <Project>AB19CA4E-3D7B-4F29-9A12-30C2DA2EC089</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_uncalibrated_absolute_pose_test.vcxproj">
+      <Project>9AA9CFB4-EDDA-422E-B877-389243BFCEB6</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/estimate_uncalibrated_relative_pose_test.vcxproj">
+      <Project>F02CFA60-19CA-4D72-ABBF-656A7509C73B</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/evaluate_relative_translation_optimization.vcxproj">
+      <Project>D924D102-BF5C-4902-A4DC-51F2E3D03369</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/evsac_test.vcxproj">
+      <Project>9793D81A-D9C3-4151-BFA4-6FA6B27D8D00</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/exif_reader_test.vcxproj">
+      <Project>C49E8CF0-276A-4A2D-9C69-718F4D48DDC9</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/export_reconstruction_to_pmvs.vcxproj">
+      <Project>55EED200-A3FE-4E96-88BF-D6AE558EC53D</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/export_to_nvm_file.vcxproj">
+      <Project>2159E59C-34DE-4E04-8380-8C5EDAC5E879</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/extract_features.vcxproj">
+      <Project>0927AC14-B3D2-40E7-8244-660294C4A3ED</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/extract_maximally_parallel_rigid_subgraph_test.vcxproj">
+      <Project>EFE3CE97-0349-44B0-8AFE-78AE2B07C565</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/feature_correspondence_test.vcxproj">
+      <Project>7E557E0F-FCBA-49CC-83F7-C32E3FED2782</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/feature_matcher_utils_test.vcxproj">
+      <Project>CB22ECD8-F1FB-4A3F-968F-4DA71225AD35</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/filter_view_graph_cycles_by_rotation_test.vcxproj">
+      <Project>5BAB21FB-FF3F-4225-AEC6-A23B827E84F6</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/filter_view_pairs_from_orientation_test.vcxproj">
+      <Project>1687E85E-D81E-4A6C-9C78-A62E99E580FA</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/filter_view_pairs_from_relative_translation_test.vcxproj">
+      <Project>46899A48-29F6-4925-80EB-A155127175AA</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/find_common_tracks_in_views_test.vcxproj">
+      <Project>9D834AE9-B635-4829-8E5E-568182A773C2</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/find_common_views_by_name_test.vcxproj">
+      <Project>94FB9044-DF98-414A-A789-A2BD307CB50E</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/find_polynomial_roots_companion_matrix_test.vcxproj">
+      <Project>3CD38D92-481E-4A27-A168-7290120D44D3</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/find_polynomial_roots_jenkins_traub_test.vcxproj">
+      <Project>91ED2B4B-B5AF-498B-9E66-41BD606989B9</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/fisheye_camera_model_test.vcxproj">
+      <Project>4EB85DA4-F0BD-4EAA-90B0-7050EACC6572</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/five_point_focal_length_radial_distortion_test.vcxproj">
+      <Project>2B898060-5F6F-4A98-927A-0F7D602E6AAF</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/five_point_relative_pose_test.vcxproj">
+      <Project>F406C770-BACA-448E-98D8-F2F59D6EA5D1</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/flann/src/cpp/flann_cpp.vcxproj">
+      <Project>92AB2E73-89DD-4541-9B17-37356442C531</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/flann/src/cpp/flann_cpp_s.vcxproj">
+      <Project>93A905A6-1E91-4F9D-A780-B1AE9780AD0C</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/four_point_focal_length_test.vcxproj">
+      <Project>40C5C4CC-231F-43D1-94D4-EC88C43EE178</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/four_point_homography_test.vcxproj">
+      <Project>723FF540-AA4A-4EF4-983A-52D356908924</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/four_point_relative_pose_partial_rotation_test.vcxproj">
+      <Project>E9756A99-E730-4AED-B771-2CAD64D98DF6</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/fov_camera_model_test.vcxproj">
+      <Project>C55911FC-3341-4474-BD95-D8D3F96B62C1</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/fundamental_matrix_util_test.vcxproj">
+      <Project>580AF019-E178-4EC8-801D-980D9A2CC007</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/gauss_jordan_test.vcxproj">
+      <Project>B4B8FB81-B88A-4987-A3EA-D337AB886057</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/gdls_similarity_transform_test.vcxproj">
+      <Project>84B4758D-8D54-45CE-9686-F361034E6FAC</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/gps_converter_test.vcxproj">
+      <Project>7FD39113-B42D-47CD-9BB8-EF2EC9AA2EF6</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/gtest/gtest.vcxproj">
+      <Project>DA225F29-9A07-4C31-96CB-FF8B187214F6</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/gtest/gtest_main.vcxproj">
+      <Project>BA557D03-5C8B-4BD1-9E48-D6D3785407A0</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/guided_epipolar_matcher_test.vcxproj">
+      <Project>D30E14E7-D4C8-480B-A509-E7D1A5E15B0A</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/image_test.vcxproj">
+      <Project>B940EC19-8D86-4BC1-9AA9-DDB9BA0D860E</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/incremental_reconstruction_estimator_test.vcxproj">
+      <Project>799BE657-AAD8-4DD6-84A5-7A85D0870C9E</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/l1_solver_test.vcxproj">
+      <Project>0CDD8BD7-B3CE-496B-A533-75C4AFA0DADE</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/least_unsquared_deviation_position_estimator_test.vcxproj">
+      <Project>386827F9-FFD5-469B-BEBC-29404A9DCA9E</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/linear_position_estimator_test.vcxproj">
+      <Project>4D540923-83D3-474F-9D6C-758B850C06FC</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/linear_rotation_estimator_test.vcxproj">
+      <Project>DE4EA4BC-259D-4497-9CC6-12EA3984B215</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/lmed_test.vcxproj">
+      <Project>8941C163-EF73-47F2-BD96-9C851D536591</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/lru_cache_test.vcxproj">
+      <Project>10CA51C5-FBC2-450A-8378-28B5AED45F9A</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/minimum_spanning_tree_test.vcxproj">
+      <Project>A5785354-60B1-405D-98F7-45AEBF80A63D</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/mutable_priority_queue_test.vcxproj">
+      <Project>C9B3711C-3660-4285-A56A-B35E5508093D</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/nonlinear_position_estimator_test.vcxproj">
+      <Project>4E5CE1F7-9F63-41C8-BD2B-FC762CC8B4BD</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/normalized_graph_cut_test.vcxproj">
+      <Project>8AA989B7-D25B-40F5-A1BE-5CAADFED352D</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/optimize_relative_position_with_known_rotation_test.vcxproj">
+      <Project>4B5C0DB8-ED36-4678-92B9-773BD83BF6FC</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/orientations_from_maximum_spanning_tree_test.vcxproj">
+      <Project>FC197BF0-662F-4A12-9AE2-D2A67B7B0536</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/pairwise_rotation_error_test.vcxproj">
+      <Project>80B61203-3D30-4931-BC2C-67CE5C20024C</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/pairwise_translation_and_scale_error_test.vcxproj">
+      <Project>FD52BC86-D86C-40C9-ABBC-6693065198C6</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/pairwise_translation_error_test.vcxproj">
+      <Project>891A753B-66F8-41C3-ADF1-4C9C3090A77E</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/perspective_three_point_test.vcxproj">
+      <Project>BE9C3773-A762-46AA-B07D-C07BD498DD62</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/pinhole_camera_model_test.vcxproj">
+      <Project>1E9A6099-15A4-4DC7-85E8-B4ECCC682DED</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/pinhole_radial_tangential_camera_model_test.vcxproj">
+      <Project>9E081762-78D3-4C90-9D27-1AB949FF4373</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/polynomial_test.vcxproj">
+      <Project>8299707D-976A-432C-BE4B-BAFF8A09EA6C</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/projection_matrix_utils_test.vcxproj">
+      <Project>D853EF8F-A2EE-4B2C-8761-E1E549D880D9</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/prosac_test.vcxproj">
+      <Project>129F4258-ECBF-4C0F-9B4A-E0FD041A9EFB</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/qp_solver_test.vcxproj">
+      <Project>F6D421F9-39B8-4212-BCEC-9DECD6CC97DB</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/random_sampler_test.vcxproj">
+      <Project>B1FBF207-E7F0-4F84-8507-B7C32583F51C</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/ransac_test.vcxproj">
+      <Project>BF0CCB49-F747-4693-98EA-36D0F45D67B4</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/reconstruction_test.vcxproj">
+      <Project>C6158CEE-7B44-408A-9FDB-C2D89C0E8C23</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/remove_disconnected_view_pairs_test.vcxproj">
+      <Project>9855B63F-3C3E-42ED-B584-477E06B7D402</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/robust_rotation_estimator_test.vcxproj">
+      <Project>D9C7B617-5094-4283-B40C-B611570AFF66</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/rq_decomposition_test.vcxproj">
+      <Project>13B92684-3E1D-4D7F-89D3-CDA5C9299BE5</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/seven_point_fundamental_matrix_test.vcxproj">
+      <Project>22703F36-4846-4334-AAD2-91804F740E71</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/sift_descriptor_test.vcxproj">
+      <Project>8FB1300B-D5EF-40A4-AE96-834664A4753C</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/sift_detector_test.vcxproj">
+      <Project>388DE57A-2C4F-4A1C-B902-7B7D278F6087</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/sim_transform_partial_rotation_test.vcxproj">
+      <Project>A36AEEA5-067A-4ED7-A62A-59B618539CA8</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/sprt_test.vcxproj">
+      <Project>544134F4-6D46-40DB-A183-DAD44D1CDC24</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/statx/statx.vcxproj">
+      <Project>01B40ED9-0816-45E7-90E5-63E953CA76F8</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/stlplus3/stlplus3.vcxproj">
+      <Project>E5CEB704-59A8-48B5-B8EB-CD2A6A5A1940</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/theia.vcxproj">
+      <Project>58F419EC-9214-46AB-A3D8-2423E211E1E4</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/three_point_relative_pose_partial_rotation_test.vcxproj">
+      <Project>F8B66D01-D038-4EDB-87C8-58EE30DA437A</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/track_builder_test.vcxproj">
+      <Project>D07F37AC-6533-4DA4-934D-43A2ADCED23E</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/track_test.vcxproj">
+      <Project>CFFDF383-9576-447F-9FF3-FCA17EFF43D9</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/triangulation_test.vcxproj">
+      <Project>DFF15FC4-FAAA-47AC-B861-6A51A5D798E1</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/triplet_extractor_test.vcxproj">
+      <Project>5C62D9FA-96C0-400A-AFBD-025E4FDF3D6E</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/two_point_pose_partial_rotation_test.vcxproj">
+      <Project>DE3FFA82-53FA-40A7-8DAA-F73A9B2061F2</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/twoview_info_test.vcxproj">
+      <Project>122B4F36-F2F7-450C-BE67-C972F7996AEF</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/undistort_images.vcxproj">
+      <Project>E3226B43-83A6-4F3F-8A08-6CEAC2045955</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/verify_1dsfm_input.vcxproj">
+      <Project>2B1DCC0C-5CAF-4153-8D84-12B7783B5ACE</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/view_graph_test.vcxproj">
+      <Project>7BBE9CF8-3F8C-4FEA-A3AA-F9C165EBDBA4</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/view_reconstruction.vcxproj">
+      <Project>A4902018-CDB5-42D8-850D-E1837BDF93AF</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/src/theia/view_test.vcxproj">
+      <Project>8E5FEE63-9FD9-46D2-BA2E-2FC17F83638A</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/visual_sfm/visual_sfm.vcxproj">
+      <Project>FFA53B8F-C591-49FD-9DDA-57C78CB221A1</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/vlfeat/vlfeat.vcxproj">
+      <Project>0A811ECC-3DC2-4A1C-9D7F-BEEC40B19E6F</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/applications/write_reconstruction_ply_file.vcxproj">
+      <Project>DADC5847-DCB7-4249-BF9F-7A77CFE81704</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

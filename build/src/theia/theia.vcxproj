@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{58F419EC-9214-46AB-A3D8-2423E211E1E4}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>theia</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\file\code\git\3d\TheiaSfM\build\lib\Debug\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">theia.dir\Debug\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">theia-debug</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\file\code\git\3d\TheiaSfM\build\lib\Release\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">theia.dir\Release\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">theia</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\file\code\git\3d\TheiaSfM\build\lib\MinSizeRel\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">theia.dir\MinSizeRel\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">theia</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.lib</TargetExt>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\file\code\git\3d\TheiaSfM\build\lib\RelWithDebInfo\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">theia.dir\RelWithDebInfo\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">theia</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4996;4800;4996;4244;4251</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;GTEST_TESTING_OUTPUT_DIRECTORY="D:/file/code/git/3d/TheiaSfM/build/testing_output";THEIA_DATA_DIR="D:/file/code/git/3d/TheiaSfM/data";THEIA_GFLAGS_NAMESPACE=google;THEIA_SUITESPARSE_VERSION="4.5.0";_VARIADIC_MAX=10;GFLAGS_IS_A_DLL=0;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;GTEST_TESTING_OUTPUT_DIRECTORY=\"D:/file/code/git/3d/TheiaSfM/build/testing_output\";THEIA_DATA_DIR=\"D:/file/code/git/3d/TheiaSfM/data\";THEIA_GFLAGS_NAMESPACE=google;THEIA_SUITESPARSE_VERSION=\"4.5.0\";_VARIADIC_MAX=10;GFLAGS_IS_A_DLL=0;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4018;4099;4996;4800;4996;4244;4251</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat></DebugInformationFormat>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY="D:/file/code/git/3d/TheiaSfM/build/testing_output";THEIA_DATA_DIR="D:/file/code/git/3d/TheiaSfM/data";THEIA_GFLAGS_NAMESPACE=google;THEIA_SUITESPARSE_VERSION="4.5.0";_VARIADIC_MAX=10;GFLAGS_IS_A_DLL=0;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY=\"D:/file/code/git/3d/TheiaSfM/build/testing_output\";THEIA_DATA_DIR=\"D:/file/code/git/3d/TheiaSfM/data\";THEIA_GFLAGS_NAMESPACE=google;THEIA_SUITESPARSE_VERSION=\"4.5.0\";_VARIADIC_MAX=10;GFLAGS_IS_A_DLL=0;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4018;4099;4996;4800;4996;4244;4251</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat></DebugInformationFormat>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY="D:/file/code/git/3d/TheiaSfM/build/testing_output";THEIA_DATA_DIR="D:/file/code/git/3d/TheiaSfM/data";THEIA_GFLAGS_NAMESPACE=google;THEIA_SUITESPARSE_VERSION="4.5.0";_VARIADIC_MAX=10;GFLAGS_IS_A_DLL=0;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY=\"D:/file/code/git/3d/TheiaSfM/build/testing_output\";THEIA_DATA_DIR=\"D:/file/code/git/3d/TheiaSfM/data\";THEIA_GFLAGS_NAMESPACE=google;THEIA_SUITESPARSE_VERSION=\"4.5.0\";_VARIADIC_MAX=10;GFLAGS_IS_A_DLL=0;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4996;4800;4996;4244;4251</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY="D:/file/code/git/3d/TheiaSfM/build/testing_output";THEIA_DATA_DIR="D:/file/code/git/3d/TheiaSfM/data";THEIA_GFLAGS_NAMESPACE=google;THEIA_SUITESPARSE_VERSION="4.5.0";_VARIADIC_MAX=10;GFLAGS_IS_A_DLL=0;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY=\"D:/file/code/git/3d/TheiaSfM/build/testing_output\";THEIA_DATA_DIR=\"D:/file/code/git/3d/TheiaSfM/data\";THEIA_GFLAGS_NAMESPACE=google;THEIA_SUITESPARSE_VERSION=\"4.5.0\";_VARIADIC_MAX=10;GFLAGS_IS_A_DLL=0;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\Include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\external\oiio-1.5.24\include;D:\file\code\sdk\eigen-eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;D:\file\code\git\3d\TheiaSfM\libraries\gtest\include;D:\file\code\git\3d\TheiaSfM\libraries\gtest;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\gflags\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\..\src\theia\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build --check-stamp-file D:\file\code\git\3d\TheiaSfM\build\src\theia\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\file\code\git\3d\TheiaSfM\build\src\theia\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build --check-stamp-file D:\file\code\git\3d\TheiaSfM\build\src\theia\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\file\code\git\3d\TheiaSfM\build\src\theia\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build --check-stamp-file D:\file\code\git\3d\TheiaSfM\build\src\theia\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\file\code\git\3d\TheiaSfM\build\src\theia\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build --check-stamp-file D:\file\code\git\3d\TheiaSfM\build\src\theia\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\file\code\git\3d\TheiaSfM\build\src\theia\CMakeFiles\generate.stamp</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\theia\alignment\alignment.h" />
+    <ClInclude Include="..\..\..\src\theia\image\descriptor\akaze_descriptor.h" />
+    <ClInclude Include="..\..\..\src\theia\image\descriptor\create_descriptor_extractor.h" />
+    <ClInclude Include="..\..\..\src\theia\image\descriptor\descriptor_extractor.h" />
+    <ClInclude Include="..\..\..\src\theia\image\descriptor\sift_descriptor.h" />
+    <ClInclude Include="..\..\..\src\theia\image\image.h" />
+    <ClInclude Include="..\..\..\src\theia\image\image_cache.h" />
+    <ClInclude Include="..\..\..\src\theia\image\keypoint_detector\keypoint.h" />
+    <ClInclude Include="..\..\..\src\theia\image\keypoint_detector\keypoint_detector.h" />
+    <ClInclude Include="..\..\..\src\theia\image\keypoint_detector\sift_detector.h" />
+    <ClInclude Include="..\..\..\src\theia\image\keypoint_detector\sift_parameters.h" />
+    <ClInclude Include="..\..\..\src\theia\io\eigen_serializable.h" />
+    <ClInclude Include="..\..\..\src\theia\io\import_nvm_file.h" />
+    <ClInclude Include="..\..\..\src\theia\io\populate_image_sizes.h" />
+    <ClInclude Include="..\..\..\src\theia\io\read_1dsfm.h" />
+    <ClInclude Include="..\..\..\src\theia\io\read_bundler_files.h" />
+    <ClInclude Include="..\..\..\src\theia\io\read_calibration.h" />
+    <ClInclude Include="..\..\..\src\theia\io\read_keypoints_and_descriptors.h" />
+    <ClInclude Include="..\..\..\src\theia\io\read_matches.h" />
+    <ClInclude Include="..\..\..\src\theia\io\reconstruction_reader.h" />
+    <ClInclude Include="..\..\..\src\theia\io\reconstruction_writer.h" />
+    <ClInclude Include="..\..\..\src\theia\io\sift_binary_file.h" />
+    <ClInclude Include="..\..\..\src\theia\io\sift_text_file.h" />
+    <ClInclude Include="..\..\..\src\theia\io\write_bundler_files.h" />
+    <ClInclude Include="..\..\..\src\theia\io\write_keypoints_and_descriptors.h" />
+    <ClInclude Include="..\..\..\src\theia\io\write_matches.h" />
+    <ClInclude Include="..\..\..\src\theia\io\write_nvm_file.h" />
+    <ClInclude Include="..\..\..\src\theia\io\write_ply_file.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\brute_force_feature_matcher.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\cascade_hasher.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\cascade_hashing_feature_matcher.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\create_feature_matcher.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\distance.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\feature_correspondence.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\feature_matcher.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\feature_matcher_options.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\feature_matcher_utils.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\guided_epipolar_matcher.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\image_pair_match.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\indexed_feature_match.h" />
+    <ClInclude Include="..\..\..\src\theia\matching\keypoints_and_descriptors.h" />
+    <ClInclude Include="..\..\..\src\theia\math\closed_form_polynomial_solver.h" />
+    <ClInclude Include="..\..\..\src\theia\math\distribution.h" />
+    <ClInclude Include="..\..\..\src\theia\math\find_polynomial_roots_companion_matrix.h" />
+    <ClInclude Include="..\..\..\src\theia\math\find_polynomial_roots_jenkins_traub.h" />
+    <ClInclude Include="..\..\..\src\theia\math\graph\connected_components.h" />
+    <ClInclude Include="..\..\..\src\theia\math\graph\minimum_spanning_tree.h" />
+    <ClInclude Include="..\..\..\src\theia\math\graph\normalized_graph_cut.h" />
+    <ClInclude Include="..\..\..\src\theia\math\histogram.h" />
+    <ClInclude Include="..\..\..\src\theia\math\l1_solver.h" />
+    <ClInclude Include="..\..\..\src\theia\math\matrix\gauss_jordan.h" />
+    <ClInclude Include="..\..\..\src\theia\math\matrix\linear_operator.h" />
+    <ClInclude Include="..\..\..\src\theia\math\matrix\rq_decomposition.h" />
+    <ClInclude Include="..\..\..\src\theia\math\matrix\sparse_cholesky_llt.h" />
+    <ClInclude Include="..\..\..\src\theia\math\polynomial.h" />
+    <ClInclude Include="..\..\..\src\theia\math\probability\sequential_probability_ratio.h" />
+    <ClInclude Include="..\..\..\src\theia\math\qp_solver.h" />
+    <ClInclude Include="..\..\..\src\theia\math\util.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\bundle_adjustment\angular_epipolar_error.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\bundle_adjustment\bundle_adjustment.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\bundle_adjustment\bundle_adjust_two_views.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\bundle_adjustment\create_loss_function.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\bundle_adjustment\optimize_relative_position_with_known_rotation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\bundle_adjustment\orthogonal_vector_error.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\bundle_adjustment\unit_norm_three_vector_parameterization.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\camera.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\camera_intrinsics_model.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\camera_intrinsics_model_type.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\create_reprojection_error_cost_function.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\fisheye_camera_model.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\fov_camera_model.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\pinhole_camera_model.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\pinhole_radial_tangential_camera_model.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\projection_matrix_utils.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera\reprojection_error.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\camera_intrinsics_prior.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\colorize_reconstruction.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\create_and_initialize_ransac_variant.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimate_track.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimate_twoview_info.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_calibrated_absolute_pose.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_dominant_plane_from_points.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_essential_matrix.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_fundamental_matrix.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_homography.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_relative_pose.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_similarity_transformation_2d_3d.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_triangulation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_uncalibrated_absolute_pose.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\estimate_uncalibrated_relative_pose.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\estimators\feature_correspondence_2d_3d.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\exif_reader.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\extract_maximally_parallel_rigid_subgraph.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\feature.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\feature_extractor.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\feature_extractor_and_matcher.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\filter_view_graph_cycles_by_rotation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\filter_view_pairs_from_orientation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\filter_view_pairs_from_relative_translation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\find_common_tracks_in_views.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\find_common_views_by_name.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\compute_triplet_baseline_ratios.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\least_unsquared_deviation_position_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\linear_position_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\linear_rotation_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\nonlinear_position_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\nonlinear_rotation_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\pairwise_rotation_error.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\pairwise_translation_and_scale_error.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\pairwise_translation_error.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\position_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\robust_rotation_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_pose_estimation\rotation_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\global_reconstruction_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\gps_converter.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\incremental_reconstruction_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\localize_view_to_reconstruction.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\dls_impl.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\dls_pnp.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\eight_point_fundamental_matrix.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\essential_matrix_utils.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\five_point_focal_length_radial_distortion.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\five_point_relative_pose.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\four_point_focal_length.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\four_point_focal_length_helper.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\four_point_homography.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\four_point_relative_pose_partial_rotation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\fundamental_matrix_util.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\perspective_three_point.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\seven_point_fundamental_matrix.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\sim_transform_partial_rotation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\test_util.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\three_point_relative_pose_partial_rotation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\two_point_pose_partial_rotation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose\util.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\pose_error.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\reconstruction.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\reconstruction_builder.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\reconstruction_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\reconstruction_estimator_options.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\reconstruction_estimator_utils.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\set_camera_intrinsics_from_priors.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\similarity_transformation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\track.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\track_builder.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\transformation\align_point_clouds.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\transformation\align_reconstructions.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\transformation\align_rotations.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\transformation\gdls_similarity_transform.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\transformation\transform_reconstruction.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\triangulation\triangulation.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\twoview_info.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\two_view_match_geometric_verification.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\types.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\undistort_image.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\view.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\view_graph\orientations_from_maximum_spanning_tree.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\view_graph\remove_disconnected_view_pairs.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\view_graph\triplet_extractor.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\view_graph\view_graph.h" />
+    <ClInclude Include="..\..\..\src\theia\sfm\view_triplet.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\arrsac.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\evsac.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\evsac_sampler.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\inlier_support.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\lmed.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\lmed_quality_measurement.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\mle_quality_measurement.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\prosac.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\prosac_sampler.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\quality_measurement.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\random_sampler.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\ransac.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\sampler.h" />
+    <ClInclude Include="..\..\..\src\theia\solvers\sample_consensus_estimator.h" />
+    <ClInclude Include="..\..\..\src\theia\test\test_utils.h" />
+    <ClInclude Include="..\..\..\src\theia\util\enable_enum_bitmask_operators.h" />
+    <ClInclude Include="..\..\..\src\theia\util\filesystem.h" />
+    <ClInclude Include="..\..\..\src\theia\util\hash.h" />
+    <ClInclude Include="..\..\..\src\theia\util\lru_cache.h" />
+    <ClInclude Include="..\..\..\src\theia\util\map_util.h" />
+    <ClInclude Include="..\..\..\src\theia\util\mutable_priority_queue.h" />
+    <ClInclude Include="..\..\..\src\theia\util\random.h" />
+    <ClInclude Include="..\..\..\src\theia\util\string.h" />
+    <ClInclude Include="..\..\..\src\theia\util\stringprintf.h" />
+    <ClInclude Include="..\..\..\src\theia\util\threadpool.h" />
+    <ClInclude Include="..\..\..\src\theia\util\timer.h" />
+    <ClInclude Include="..\..\..\src\theia\util\util.h" />
+    <ClCompile Include="..\..\..\src\theia\image\descriptor\akaze_descriptor.cc"  />
+    <ClCompile Include="..\..\..\src\theia\image\descriptor\create_descriptor_extractor.cc"  />
+    <ClCompile Include="..\..\..\src\theia\image\descriptor\descriptor_extractor.cc"  />
+    <ClCompile Include="..\..\..\src\theia\image\descriptor\sift_descriptor.cc"  />
+    <ClCompile Include="..\..\..\src\theia\image\image.cc"  />
+    <ClCompile Include="..\..\..\src\theia\image\image_cache.cc"  />
+    <ClCompile Include="..\..\..\src\theia\image\keypoint_detector\sift_detector.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\import_nvm_file.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\populate_image_sizes.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\read_1dsfm.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\read_bundler_files.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\read_calibration.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\read_keypoints_and_descriptors.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\read_matches.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\reconstruction_reader.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\reconstruction_writer.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\sift_binary_file.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\sift_text_file.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\write_bundler_files.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\write_keypoints_and_descriptors.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\write_matches.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\write_nvm_file.cc"  />
+    <ClCompile Include="..\..\..\src\theia\io\write_ply_file.cc"  />
+    <ClCompile Include="..\..\..\src\theia\matching\brute_force_feature_matcher.cc"  />
+    <ClCompile Include="..\..\..\src\theia\matching\cascade_hasher.cc"  />
+    <ClCompile Include="..\..\..\src\theia\matching\cascade_hashing_feature_matcher.cc"  />
+    <ClCompile Include="..\..\..\src\theia\matching\create_feature_matcher.cc"  />
+    <ClCompile Include="..\..\..\src\theia\matching\feature_matcher.cc"  />
+    <ClCompile Include="..\..\..\src\theia\matching\feature_matcher_utils.cc"  />
+    <ClCompile Include="..\..\..\src\theia\matching\guided_epipolar_matcher.cc"  />
+    <ClCompile Include="..\..\..\src\theia\math\closed_form_polynomial_solver.cc"  />
+    <ClCompile Include="..\..\..\src\theia\math\find_polynomial_roots_companion_matrix.cc"  />
+    <ClCompile Include="..\..\..\src\theia\math\find_polynomial_roots_jenkins_traub.cc"  />
+    <ClCompile Include="..\..\..\src\theia\math\matrix\sparse_cholesky_llt.cc"  />
+    <ClCompile Include="..\..\..\src\theia\math\polynomial.cc"  />
+    <ClCompile Include="..\..\..\src\theia\math\probability\sequential_probability_ratio.cc"  />
+    <ClCompile Include="..\..\..\src\theia\math\qp_solver.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\bundle_adjustment\bundle_adjust_two_views.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\bundle_adjustment\bundle_adjustment.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\bundle_adjustment\create_loss_function.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\bundle_adjustment\optimize_relative_position_with_known_rotation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\camera\camera.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\camera\camera_intrinsics_model.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\camera\fisheye_camera_model.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\camera\fov_camera_model.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\camera\pinhole_camera_model.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\camera\pinhole_radial_tangential_camera_model.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\camera\projection_matrix_utils.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\colorize_reconstruction.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimate_track.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimate_twoview_info.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_calibrated_absolute_pose.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_dominant_plane_from_points.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_essential_matrix.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_fundamental_matrix.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_homography.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_relative_pose.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_similarity_transformation_2d_3d.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_triangulation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_uncalibrated_absolute_pose.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\estimators\estimate_uncalibrated_relative_pose.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\exif_reader.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\extract_maximally_parallel_rigid_subgraph.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\feature_extractor.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\feature_extractor_and_matcher.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\filter_view_graph_cycles_by_rotation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\filter_view_pairs_from_orientation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\filter_view_pairs_from_relative_translation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\find_common_tracks_in_views.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\find_common_views_by_name.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\compute_triplet_baseline_ratios.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\least_unsquared_deviation_position_estimator.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\linear_position_estimator.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\linear_rotation_estimator.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\nonlinear_position_estimator.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\nonlinear_rotation_estimator.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\pairwise_rotation_error.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\pairwise_translation_and_scale_error.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\pairwise_translation_error.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_pose_estimation\robust_rotation_estimator.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\global_reconstruction_estimator.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\gps_converter.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\incremental_reconstruction_estimator.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\localize_view_to_reconstruction.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\dls_impl.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\dls_pnp.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\eight_point_fundamental_matrix.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\essential_matrix_utils.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\five_point_focal_length_radial_distortion.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\five_point_relative_pose.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\four_point_focal_length.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\four_point_focal_length_helper.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\four_point_homography.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\four_point_relative_pose_partial_rotation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\fundamental_matrix_util.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\perspective_three_point.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\seven_point_fundamental_matrix.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\sim_transform_partial_rotation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\test_util.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\three_point_relative_pose_partial_rotation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\two_point_pose_partial_rotation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\pose\util.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\reconstruction.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\reconstruction_builder.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\reconstruction_estimator.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\reconstruction_estimator_utils.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\set_camera_intrinsics_from_priors.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\track.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\track_builder.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\transformation\align_point_clouds.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\transformation\align_reconstructions.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\transformation\align_rotations.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\transformation\gdls_similarity_transform.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\transformation\transform_reconstruction.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\triangulation\triangulation.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\twoview_info.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\two_view_match_geometric_verification.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\undistort_image.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\view.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\view_graph\orientations_from_maximum_spanning_tree.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\view_graph\remove_disconnected_view_pairs.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\view_graph\triplet_extractor.cc"  />
+    <ClCompile Include="..\..\..\src\theia\sfm\view_graph\view_graph.cc"  />
+    <ClCompile Include="..\..\..\src\theia\util\filesystem.cc"  />
+    <ClCompile Include="..\..\..\src\theia\util\random.cc"  />
+    <ClCompile Include="..\..\..\src\theia\util\stringprintf.cc"  />
+    <ClCompile Include="..\..\..\src\theia\util\threadpool.cc"  />
+    <ClCompile Include="..\..\..\src\theia\util\timer.cc"  />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/ZERO_CHECK.vcxproj">
+      <Project>E74F2D03-9DAA-46BF-854D-E63BB330E037</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/akaze/akaze.vcxproj">
+      <Project>9F1C2697-48DC-4346-8A40-4B0D6D742AFE</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/flann/src/cpp/flann_cpp.vcxproj">
+      <Project>92AB2E73-89DD-4541-9B17-37356442C531</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/statx/statx.vcxproj">
+      <Project>01B40ED9-0816-45E7-90E5-63E953CA76F8</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/stlplus3/stlplus3.vcxproj">
+      <Project>E5CEB704-59A8-48B5-B8EB-CD2A6A5A1940</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/visual_sfm/visual_sfm.vcxproj">
+      <Project>FFA53B8F-C591-49FD-9DDA-57C78CB221A1</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build/libraries/vlfeat/vlfeat.vcxproj">
+      <Project>0A811ECC-3DC2-4A1C-9D7F-BEEC40B19E6F</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

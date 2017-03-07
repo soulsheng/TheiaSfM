@@ -103,10 +103,10 @@ if(STATX_WITH_CERES)
   endif(CERES_FOUND)
 
   # BLAS
-  find_package(BLAS REQUIRED)
+#  find_package(BLAS REQUIRED)
 
   # LAPACK
-  find_package(LAPACK REQUIRED)
+#  find_package(LAPACK REQUIRED)
 endif(STATX_WITH_CERES)
 
 # Find and include optimo headers
@@ -193,7 +193,7 @@ if(STATX_WITH_CERES)
 set(statx_src ${statx_src} ${EVD_PREFIX_DIR}/gev_ceres.cc ${EVD_PREFIX_DIR}/gpd_ceres.cc)
 add_definitions(-DSTATX_WITH_CERES)
 set(default_link_libraries ${default_link_libraries} ${CERES_LIBRARIES}
-  ${SUITESPARSE_LIBRARIES} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+  ${SUITESPARSE_LIBRARIES})
 endif(STATX_WITH_CERES)
 add_library(statx STATIC ${statx_src})
 
