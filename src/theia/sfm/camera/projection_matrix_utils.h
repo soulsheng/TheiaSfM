@@ -59,7 +59,7 @@ void CalibrationMatrixToIntrinsics(const Eigen::Matrix3d& calibration_matrix,
                                    double* principal_point_x,
                                    double* principal_point_y);
 
-bool DecomposeProjectionMatrix(const Matrix3x4d pmatrix,
+bool DecomposeProjectionMatrix(const Matrix3x4d& pmatrix,
                                Eigen::Matrix3d* calibration_matrix,
                                Eigen::Vector3d* rotation,
                                Eigen::Vector3d* position);

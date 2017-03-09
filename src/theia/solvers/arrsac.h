@@ -62,7 +62,7 @@ template <class Datum> struct ScoredData {
 
 // Comparator method so that we can call c++ algorithm sort.
 template <class Datum>
-bool CompareScoredData(ScoredData<Datum> i, ScoredData<Datum> j) {
+bool CompareScoredData(ScoredData<Datum>& i, ScoredData<Datum>& j) {
   return i.score < j.score;
 }
 

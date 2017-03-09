@@ -147,7 +147,7 @@ void Camera::SetCameraIntrinsicsModelType(
 bool Camera::InitializeFromProjectionMatrix(
       const int image_width,
       const int image_height,
-      const Matrix3x4d projection_matrix) {
+      const Matrix3x4d& projection_matrix) {
   DCHECK_GT(image_width, 0);
   DCHECK_GT(image_height, 0);
   image_size_[0] = image_width;

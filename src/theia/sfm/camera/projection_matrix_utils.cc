@@ -73,7 +73,7 @@ void CalibrationMatrixToIntrinsics(const Matrix3d& calibration_matrix,
   *principal_point_y = calibration_matrix(1, 2) / calibration_matrix(2, 2);
 }
 
-bool DecomposeProjectionMatrix(const Matrix3x4d pmatrix,
+bool DecomposeProjectionMatrix(const Matrix3x4d& pmatrix,
                                Matrix3d* calibration_matrix,
                                Vector3d* rotation,
                                Vector3d* position) {

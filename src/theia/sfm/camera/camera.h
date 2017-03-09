@@ -77,7 +77,7 @@ class Camera {
   bool InitializeFromProjectionMatrix(
       const int image_width,
       const int image_height,
-      const Matrix3x4d projection_matrix);
+      const Matrix3x4d& projection_matrix);
 
   // Set the camera parameters (and camera intrinsics type) from the prior.
   void SetFromCameraIntrinsicsPriors(const CameraIntrinsicsPrior& prior);
