@@ -50,7 +50,7 @@ template <int N>
 class Prior {
  public:
   bool is_set = false;
-  double value[N] = {0.0};
+  double value[N];// = {0.0};
 
  private:
   // Templated method for disk I/O with cereal. This method tells cereal which

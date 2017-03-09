@@ -53,6 +53,7 @@ bool AkazeDescriptorExtractor::ComputeDescriptor(const FloatImage& image,
                 "Please use "
                 "AkazeDescriptorExtractor::DetectAndExtractDescriptors() "
                 "instead.";
+  return true;
 }
 
 bool AkazeDescriptorExtractor::DetectAndExtractDescriptors(
