@@ -1,0 +1,22 @@
+
+1 bin
+
+1) boost
+https://sourceforge.net/projects/boost/files/boost-binaries/1.49.0/
+
+2) glew / gtest / ilmbase / jasper / jpeg / libpng / openexr / openjpeg / tbb / tiff / zlib 
+http://www.openimageio.org/external.zip
+
+3) lapack & blas
+
+
+2 code
+
+1) suitesparse 
+https://github.com/soulsheng/suitesparse-metis-for-windows
+
+2) ceres
+ 
+
+3) openimageio
+https://github.com/soulsheng/oiio   (branch RB-1.5)
