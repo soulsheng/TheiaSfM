@@ -70,8 +70,8 @@ class TriangulationEstimator
   double SampleSize() const { return 2; }
 
   // Triangulates the 3D point from 2 observations.
-  bool EstimateModel(const std::vector<PointObservation>& observations,
-                     std::vector<Eigen::Vector4d>* triangulated_points) const {
+  bool EstimateModel(const std::vector<PointObservation, Eigen::aligned_allocator<PointObservation>>& observations,
+                     std::vector<Eigen::Vector4d, Eigen::aligned_allocator<Eigen::Vector4d>>* triangulated_points) const {
     // TODO(cmsweeney): We do not check the angle between the two views at the
     // moment. This requires the ray direction of each feature meaning we would
     // have to either decompose the projection matrix or pass in the ray
@@ -112,8 +112,8 @@ class TriangulationEstimator
 }  // namespace
 
 bool EstimateTriangulation(const RansacParameters& ransac_params,
-                           const std::vector<Matrix3x4d>& projection_matrices,
-                           const std::vector<Eigen::Vector2d>& features,
+                           const std::vector<Matrix3x4d, Eigen::aligned_allocator<Matrix3x4d>>& projection_matrices,
+                           const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& features,
                            Eigen::Vector4d* triangulated_point,
                            RansacSummary* summary) {
   if (projection_matrices.size() < 2) {
@@ -121,7 +121,7 @@ bool EstimateTriangulation(const RansacParameters& ransac_params,
   }
 
   // Create point correspondences.
-  std::vector<PointObservation> point_observations(
+  std::vector<PointObservation, Eigen::aligned_allocator<PointObservation>> point_observations(
       projection_matrices.size());
   for (int i = 0; i < point_observations.size(); i++) {
     point_observations[i].projection_matrix = projection_matrices[i];

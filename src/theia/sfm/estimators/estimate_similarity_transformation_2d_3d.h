@@ -78,7 +78,7 @@ struct CameraAndFeatureCorrespondence2D3D {
 bool EstimateSimilarityTransformation2D3D(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<CameraAndFeatureCorrespondence2D3D>& correspondences,
+    const std::vector<CameraAndFeatureCorrespondence2D3D, Eigen::aligned_allocator<CameraAndFeatureCorrespondence2D3D>>& correspondences,
     SimilarityTransformation* similarity_transformation,
     RansacSummary* ransac_summary);
 

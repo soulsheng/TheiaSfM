@@ -54,7 +54,7 @@ struct RansacSummary;
 bool EstimateHomography(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     Eigen::Matrix3d* homography,
     RansacSummary* ransac_summary);
 

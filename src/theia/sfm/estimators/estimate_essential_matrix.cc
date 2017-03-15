@@ -59,9 +59,9 @@ class EssentialMatrixEstimator
   double SampleSize() const { return 5; }
 
   // Estimates candidate essential matrices from correspondences.
-  bool EstimateModel(const std::vector<FeatureCorrespondence>& correspondences,
-                     std::vector<Eigen::Matrix3d>* essential_matrices) const {
-    std::vector<Eigen::Vector2d> image1_points, image2_points;
+  bool EstimateModel(const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
+                     std::vector<Eigen::Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>>* essential_matrices) const {
+    std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> image1_points, image2_points;
     image1_points.reserve(correspondences.size());
     image2_points.reserve(correspondences.size());
     for (int i = 0; i < correspondences.size(); i++) {
@@ -92,7 +92,7 @@ class EssentialMatrixEstimator
 bool EstimateEssentialMatrix(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<FeatureCorrespondence>& normalized_correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& normalized_correspondences,
     Eigen::Matrix3d* essential_matrix,
     RansacSummary* ransac_summary) {
   EssentialMatrixEstimator essential_matrix_estimator;

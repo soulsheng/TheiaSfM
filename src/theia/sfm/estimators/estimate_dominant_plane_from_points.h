@@ -57,7 +57,7 @@ struct Plane {
 bool EstimateDominantPlaneFromPoints(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<Eigen::Vector3d>& points,
+    const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& points,
     Plane* plane,
     RansacSummary* ransac_summary);
 

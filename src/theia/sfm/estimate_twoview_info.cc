@@ -66,8 +66,8 @@ namespace {
 void NormalizeFeatures(
     const CameraIntrinsicsPrior& prior1,
     const CameraIntrinsicsPrior& prior2,
-    const std::vector<FeatureCorrespondence>& correspondences,
-    std::vector<FeatureCorrespondence>* normalized_correspondences) {
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
+    std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>* normalized_correspondences) {
   CHECK_NOTNULL(normalized_correspondences)->clear();
 
   Camera camera1, camera2;
@@ -92,11 +92,11 @@ bool EstimateTwoViewInfoCalibrated(
     const EstimateTwoViewInfoOptions& options,
     const CameraIntrinsicsPrior& intrinsics1,
     const CameraIntrinsicsPrior& intrinsics2,
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     TwoViewInfo* twoview_info,
     std::vector<int>* inlier_indices) {
   // Normalize features w.r.t focal length.
-  std::vector<FeatureCorrespondence> normalized_correspondences;
+  std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>> normalized_correspondences;
   NormalizeFeatures(intrinsics1,
                     intrinsics2,
                     correspondences,
@@ -152,11 +152,11 @@ bool EstimateTwoViewInfoUncalibrated(
     const EstimateTwoViewInfoOptions& options,
     const CameraIntrinsicsPrior& intrinsics1,
     const CameraIntrinsicsPrior& intrinsics2,
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     TwoViewInfo* twoview_info,
     std::vector<int>* inlier_indices) {
   // Normalize features w.r.t principal point.
-  std::vector<FeatureCorrespondence> centered_correspondences;
+  std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>> centered_correspondences;
   NormalizeFeatures(intrinsics1,
                     intrinsics2,
                     correspondences,
@@ -213,7 +213,7 @@ bool EstimateTwoViewInfo(
     const EstimateTwoViewInfoOptions& options,
     const CameraIntrinsicsPrior& intrinsics1,
     const CameraIntrinsicsPrior& intrinsics2,
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     TwoViewInfo* twoview_info,
     std::vector<int>* inlier_indices) {
   CHECK_NOTNULL(twoview_info);

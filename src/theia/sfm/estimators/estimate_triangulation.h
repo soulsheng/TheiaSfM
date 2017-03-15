@@ -49,8 +49,8 @@ struct RansacSummary;
 // Estimates the triangulated point with RANSAC using triangulation from 2-view
 // observations to find the point with the largest support.
 bool EstimateTriangulation(const RansacParameters& ransac_params,
-                           const std::vector<Matrix3x4d>& projection_matrices,
-                           const std::vector<Eigen::Vector2d>& features,
+                           const std::vector<Matrix3x4d, Eigen::aligned_allocator<Matrix3x4d>>& projection_matrices,
+                           const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& features,
                            Eigen::Vector4d* triangulated_point,
                            RansacSummary* summary);
 

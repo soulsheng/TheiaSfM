@@ -75,9 +75,9 @@ class UncalibratedRelativePoseEstimator
 
   // Estimates candidate relative poses from correspondences.
   bool EstimateModel(
-      const std::vector<FeatureCorrespondence>& centered_correspondences,
-      std::vector<UncalibratedRelativePose>* relative_poses) const {
-    std::vector<Eigen::Vector2d> image1_points, image2_points;
+      const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& centered_correspondences,
+	  std::vector<UncalibratedRelativePose, Eigen::aligned_allocator<UncalibratedRelativePose>>* relative_poses) const {
+    std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> image1_points, image2_points;
     for (int i = 0; i < 8; i++) {
       image1_points.emplace_back(centered_correspondences[i].feature1);
       image2_points.emplace_back(centered_correspondences[i].feature2);
@@ -110,7 +110,7 @@ class UncalibratedRelativePoseEstimator
         essential_matrix.data());
 
     // Normalize the centered_correspondences.
-    std::vector<FeatureCorrespondence> normalized_correspondences(
+    std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>> normalized_correspondences(
         centered_correspondences.size());
     for (int i = 0; i < centered_correspondences.size(); i++) {
       normalized_correspondences[i].feature1 =
@@ -156,7 +156,7 @@ class UncalibratedRelativePoseEstimator
 bool EstimateUncalibratedRelativePose(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<FeatureCorrespondence>& centered_correspondences,
+	const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& centered_correspondences,
     UncalibratedRelativePose* relative_pose,
     RansacSummary* ransac_summary) {
   UncalibratedRelativePoseEstimator relative_pose_estimator;

@@ -59,7 +59,7 @@ struct UncalibratedAbsolutePose {
 bool EstimateUncalibratedAbsolutePose(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<FeatureCorrespondence2D3D>& normalized_correspondences,
+    const std::vector<FeatureCorrespondence2D3D, Eigen::aligned_allocator<FeatureCorrespondence2D3D>>& normalized_correspondences,
     UncalibratedAbsolutePose* absolute_pose,
     RansacSummary* ransac_summary);
 

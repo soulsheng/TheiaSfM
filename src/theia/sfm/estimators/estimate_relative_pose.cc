@@ -69,9 +69,9 @@ class RelativePoseEstimator
   double SampleSize() const { return 5; }
 
   // Estimates candidate relative poses from correspondences.
-  bool EstimateModel(const std::vector<FeatureCorrespondence>& correspondences,
-                     std::vector<RelativePose>* relative_poses) const {
-    std::vector<Eigen::Vector2d> image1_points, image2_points;
+  bool EstimateModel(const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
+	  std::vector<RelativePose, Eigen::aligned_allocator<RelativePose>>* relative_poses) const {
+    std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> image1_points, image2_points;
     image1_points.reserve(correspondences.size());
     image2_points.reserve(correspondences.size());
     for (int i = 0; i < correspondences.size(); i++) {
@@ -79,7 +79,7 @@ class RelativePoseEstimator
       image2_points.emplace_back(correspondences[i].feature2);
     }
 
-    std::vector<Matrix3d> essential_matrices;
+	std::vector<Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>> essential_matrices;
     if (!FivePointRelativePose(image1_points,
                                image2_points,
                                &essential_matrices)) {
@@ -129,7 +129,7 @@ class RelativePoseEstimator
 bool EstimateRelativePose(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<FeatureCorrespondence>& normalized_correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& normalized_correspondences,
     RelativePose* relative_pose,
     RansacSummary* ransac_summary) {
   RelativePoseEstimator relative_pose_estimator;

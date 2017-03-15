@@ -66,9 +66,9 @@ class HomographyEstimator
   double SampleSize() const { return 4; }
 
   // Estimates candidate relative poses from correspondences.
-  bool EstimateModel(const std::vector<FeatureCorrespondence>& correspondences,
-                     std::vector<Eigen::Matrix3d>* homography) const {
-    std::vector<Eigen::Vector2d> image1_points(4), image2_points(4);
+  bool EstimateModel(const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
+                     std::vector<Eigen::Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>>* homography) const {
+	  std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> image1_points(4), image2_points(4);
     for (int i = 0; i < 4; i++) {
       image1_points[i] = correspondences[i].feature1;
       image2_points[i] = correspondences[i].feature2;
@@ -104,7 +104,7 @@ class HomographyEstimator
 bool EstimateHomography(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     Eigen::Matrix3d* homography,
     RansacSummary* ransac_summary) {
   HomographyEstimator homography_estimator;

@@ -81,9 +81,9 @@ class GdlsSimilarityTransformationEstimator
 
   // Estimates candidate absolute poses from correspondences.
   bool EstimateModel(
-      const std::vector<CameraAndFeatureCorrespondence2D3D>& correspondences,
-      std::vector<SimilarityTransformation>* similarity_transformations) const {
-    std::vector<Eigen::Vector3d> ray_origins(4), ray_directions(4),
+      const std::vector<CameraAndFeatureCorrespondence2D3D, Eigen::aligned_allocator<CameraAndFeatureCorrespondence2D3D>>& correspondences,
+	  std::vector<SimilarityTransformation, Eigen::aligned_allocator<SimilarityTransformation>>* similarity_transformations) const {
+    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> ray_origins(4), ray_directions(4),
         world_points(4);
     for (int i = 0; i < 4; i++) {
       ray_origins[i] = correspondences[i].camera.GetPosition();
@@ -100,7 +100,7 @@ class GdlsSimilarityTransformationEstimator
     // where c_i is the camera position, alpha_i is the depth of the feature,
     // x_i is the unit-norm feature observation, and X_i is the 3D point.
     std::vector<Eigen::Quaterniond> rotations;
-    std::vector<Eigen::Vector3d> translations;
+    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> translations;
     std::vector<double> scales;
     GdlsSimilarityTransform(ray_origins,
                             ray_directions,
@@ -158,7 +158,7 @@ class GdlsSimilarityTransformationEstimator
 bool EstimateSimilarityTransformation2D3D(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<CameraAndFeatureCorrespondence2D3D>& correspondences,
+    const std::vector<CameraAndFeatureCorrespondence2D3D, Eigen::aligned_allocator<CameraAndFeatureCorrespondence2D3D>>& correspondences,
     SimilarityTransformation* similarity_transformation,
     RansacSummary* ransac_summary) {
   GdlsSimilarityTransformationEstimator similarity_transformation_estimator;

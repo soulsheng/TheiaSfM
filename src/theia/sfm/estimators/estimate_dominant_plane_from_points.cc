@@ -60,8 +60,8 @@ class DominantPlaneEstimator : public Estimator<Vector3d, Plane> {
   double SampleSize() const { return 3; }
 
   // Estimates candidate dominant planes from three 3D points.
-  bool EstimateModel(const std::vector<Vector3d>& points,
-                     std::vector<Plane>* planes) const {
+  bool EstimateModel(const std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& points,
+	  std::vector<Plane, Eigen::aligned_allocator<Plane>>* planes) const {
     // If the points are collinear, there are no possible solutions.
     static const double kTolerance = 1e-6;
     const Vector3d a = points[1] - points[0];
@@ -95,7 +95,7 @@ class DominantPlaneEstimator : public Estimator<Vector3d, Plane> {
 bool EstimateDominantPlaneFromPoints(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<Vector3d>& points,
+	const std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& points,
     Plane* plane,
     RansacSummary* ransac_summary) {
   DominantPlaneEstimator dominant_plane_estimator;

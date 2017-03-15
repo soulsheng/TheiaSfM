@@ -52,7 +52,7 @@ struct RansacSummary;
 bool EstimateEssentialMatrix(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<FeatureCorrespondence>& normalized_correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& normalized_correspondences,
     Eigen::Matrix3d* essential_matrix,
     RansacSummary* ransac_summary);
 

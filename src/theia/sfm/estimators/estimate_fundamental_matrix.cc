@@ -57,9 +57,9 @@ class FundamentalMatrixEstimator
   double SampleSize() const { return 8; }
 
   // Estimates candidate fundamental matrices from correspondences.
-  bool EstimateModel(const std::vector<FeatureCorrespondence>& correspondences,
-                     std::vector<Eigen::Matrix3d>* fundamental_matrices) const {
-    std::vector<Eigen::Vector2d> image1_points, image2_points;
+  bool EstimateModel(const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
+                     std::vector<Eigen::Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>>* fundamental_matrices) const {
+    std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> image1_points, image2_points;
     for (int i = 0; i < 8; i++) {
       image1_points.emplace_back(correspondences[i].feature1);
       image2_points.emplace_back(correspondences[i].feature2);
@@ -93,7 +93,7 @@ class FundamentalMatrixEstimator
 bool EstimateFundamentalMatrix(
     const RansacParameters& ransac_params,
     const RansacType& ransac_type,
-    const std::vector<FeatureCorrespondence>& normalized_correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& normalized_correspondences,
     Eigen::Matrix3d* fundamental_matrix,
     RansacSummary* ransac_summary) {
   FundamentalMatrixEstimator fundamental_matrix_estimator;
