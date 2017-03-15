@@ -60,8 +60,8 @@ template <class Datum> class RandomSampler : public Sampler<Datum> {
 
   // Samples the input variable data and fills the vector subset with the
   // random samples.
-  bool Sample(const std::vector<Datum>& data,
-              std::vector<Datum>* subset) override {
+  bool Sample(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
+              std::vector<Datum, Eigen::aligned_allocator<Datum>>* subset) override {
     subset->resize(this->min_num_samples_);
     std::vector<int> random_numbers(data.size());
     std::iota(random_numbers.begin(), random_numbers.end(), 0);

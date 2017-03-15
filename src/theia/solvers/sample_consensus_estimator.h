@@ -145,7 +145,7 @@ template <class ModelEstimator> class SampleConsensusEstimator {
   //     and Model type
   //   best_model: The output parameter that will be filled with the best model
   //     estimated from RANSAC
-  virtual bool Estimate(const std::vector<Datum>& data,
+  virtual bool Estimate(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
                         Model* best_model,
                         RansacSummary* summary);
 
@@ -246,7 +246,7 @@ int SampleConsensusEstimator<ModelEstimator>::ComputeMaxIterations(
 
 template <class ModelEstimator>
 bool SampleConsensusEstimator<ModelEstimator>::Estimate(
-    const std::vector<Datum>& data,
+    const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
     Model* best_model,
     RansacSummary* summary) {
   CHECK_GT(data.size(), 0)
@@ -274,14 +274,14 @@ bool SampleConsensusEstimator<ModelEstimator>::Estimate(
        summary->num_iterations < max_iterations;
        summary->num_iterations++) {
     // Sample subset. Proceed if successfully sampled.
-    std::vector<Datum> data_subset;
+    std::vector<Datum, Eigen::aligned_allocator<Datum>> data_subset;
     if (!sampler_->Sample(data, &data_subset)) {
       continue;
     }
 
     // Estimate model from subset. Skip to next iteration if the model fails to
     // estimate.
-    std::vector<Model> temp_models;
+    std::vector<Model, Eigen::aligned_allocator<Model>> temp_models;
     if (!estimator_.EstimateModel(data_subset, &temp_models)) {
       continue;
     }

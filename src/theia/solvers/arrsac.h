@@ -108,7 +108,7 @@ class Arrsac : public SampleConsensusEstimator<ModelEstimator> {
   //   best_model: Output parameter that will be filled with the best estimated
   //     model on success.
   // Return: true on successful estimation, false otherwise.
-  bool Estimate(const std::vector<Datum>& data, Model* best_model,
+  bool Estimate(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data, Model* best_model,
                 RansacSummary* summary);
 
   // This is sort of a hack. We make this method protected so that we can test
@@ -118,8 +118,8 @@ class Arrsac : public SampleConsensusEstimator<ModelEstimator> {
   // initial set of hypotheses from a PROSAC-style sampling. This initial set of
   // hypotheses will be used to generate more hypotheses in the Compute
   // method. Returns the set of initial hypotheses.
-  int GenerateInitialHypothesisSet(const std::vector<Datum>& data_input,
-                                   std::vector<Model>* accepted_hypotheses);
+	 int GenerateInitialHypothesisSet(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data_input,
+                                   std::vector<Model, Eigen::aligned_allocator<Model>>* accepted_hypotheses);
 
  private:
   // Maximum candidate hypotheses to consider at any time.
@@ -144,8 +144,8 @@ class Arrsac : public SampleConsensusEstimator<ModelEstimator> {
 
 template <class ModelEstimator>
 int Arrsac<ModelEstimator>::GenerateInitialHypothesisSet(
-    const std::vector<Datum>& data_input,
-    std::vector<Model>* accepted_hypotheses) {
+	const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data_input,
+    std::vector<Model, Eigen::aligned_allocator<Model>>* accepted_hypotheses) {
   //   set parameters for SPRT test, calculate initial value of A
   double decision_threshold = CalculateSPRTDecisionThreshold(sigma_, epsilon_);
   int k = 1;
@@ -159,7 +159,7 @@ int Arrsac<ModelEstimator>::GenerateInitialHypothesisSet(
   // We need a local copy of the data input so that we can modify/resize it for
   // inner ransac (which uses inliers from previous results as the sampling
   // universe).
-  std::vector<Datum> data;
+  std::vector<Datum, Eigen::aligned_allocator<Datum>> data;
 
   // Vars to keep track of the avg inlier ratio of rejected hypotheses.
   int num_rejected_hypotheses = 0;
@@ -174,17 +174,17 @@ int Arrsac<ModelEstimator>::GenerateInitialHypothesisSet(
   prosac_sampler.Initialize();
 
   while (k <= m_prime) {
-    std::vector<Model> hypotheses;
+    std::vector<Model, Eigen::aligned_allocator<Model>> hypotheses;
     if (!inner_ransac) {
       // Generate hypothesis h(k) with k-th PROSAC sample.
-      std::vector<Datum> prosac_subset;
+		std::vector<Datum, Eigen::aligned_allocator<Datum>> prosac_subset;
       prosac_sampler.SetSampleNumber(k);
       prosac_sampler.Sample(data_input, &prosac_subset);
       this->estimator_.EstimateModel(prosac_subset, &hypotheses);
     } else {
       // Generate hypothesis h(k) with subset generated from inliers of a
       // previous hypothesis.
-      std::vector<Datum> random_subset;
+		std::vector<Datum, Eigen::aligned_allocator<Datum>> random_subset;
       random_sampler.Sample(data, &random_subset);
       this->estimator_.EstimateModel(random_subset, &hypotheses);
 
@@ -254,11 +254,11 @@ int Arrsac<ModelEstimator>::GenerateInitialHypothesisSet(
 }
 
 template <class ModelEstimator>
-bool Arrsac<ModelEstimator>::Estimate(const std::vector<Datum>& data,
+bool Arrsac<ModelEstimator>::Estimate(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
                                       Model* best_model,
                                       RansacSummary* summary) {
   // Generate Initial Hypothesis Test
-  std::vector<Model> initial_hypotheses;
+  std::vector<Model, Eigen::aligned_allocator<Model>> initial_hypotheses;
   int k = GenerateInitialHypothesisSet(data, &initial_hypotheses);
 
   // Score initial set.
@@ -326,11 +326,11 @@ bool Arrsac<ModelEstimator>::Estimate(const std::vector<Datum>& data,
       if (temp_max_candidate_hyps > k) {
         // Generate and evaluate M' - k new hypotheses on i data points.
         for (int j = 0; j < temp_max_candidate_hyps - k; j++) {
-          std::vector<Datum> data_random_subset;
+			std::vector<Datum, Eigen::aligned_allocator<Datum>> data_random_subset;
           random_sampler.Sample(data, &data_random_subset);
 
           // Estimate new hypothesis model.
-          std::vector<Model> estimated_models;
+          std::vector<Model, Eigen::aligned_allocator<Model>> estimated_models;
           this->estimator_.EstimateModel(data_random_subset, &estimated_models);
           for (const Model& estimated_model : estimated_models) {
             ScoredData<Model> new_hypothesis(estimated_model, 0.0);

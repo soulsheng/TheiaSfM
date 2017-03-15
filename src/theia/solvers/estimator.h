@@ -41,6 +41,8 @@
 #endif
 #include <vector>
 
+#include "Eigen/Core"
+
 namespace theia {
 // Templated class for estimating a model for RANSAC. This class is purely a
 // virtual class and should be implemented for the specific task that RANSAC is
@@ -66,20 +68,20 @@ template <typename DatumType, typename ModelType> class Estimator {
   // function appropriately for the task being solved. Returns true for
   // successful model estimation (and outputs model), false for failed
   // estimation. Typically, this is a minimal set, but it is not required to be.
-  virtual bool EstimateModel(const std::vector<Datum>& data,
-                             std::vector<Model>* model) const = 0;
+  virtual bool EstimateModel(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
+                             std::vector<Model, Eigen::aligned_allocator<Model>>* model) const = 0;
 
   // Estimate a model from a non-minimal sampling of the data. E.g. for a line,
   // use SVD on a set of points instead of constructing a line from two points.
   // By default, this simply implements the minimal case.
-  virtual bool EstimateModelNonminimal(const std::vector<Datum>& data,
-                                       std::vector<Model>* model) const {
+  virtual bool EstimateModelNonminimal(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
+                                       std::vector<Model, Eigen::aligned_allocator<Model>>* model) const {
     return EstimateModel(data, model);
   }
 
   // Refine the model based on an updated subset of data, and a pre-computed
   // model. Can be optionally implemented.
-  virtual bool RefineModel(const std::vector<Datum>& data, Model* model) const {
+  virtual bool RefineModel(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data, Model* model) const {
     return true;
   }
 
@@ -92,7 +94,7 @@ template <typename DatumType, typename ModelType> class Estimator {
   // the errors of multiple points may be estimated simultanesously (e.g.,
   // matrix multiplication to compute the reprojection error of many points at
   // once).
-  virtual std::vector<double> Residuals(const std::vector<Datum>& data,
+  virtual std::vector<double> Residuals(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
                                         const Model& model) const {
     std::vector<double> residuals(data.size());
 #pragma omp parallel for
@@ -104,7 +106,7 @@ template <typename DatumType, typename ModelType> class Estimator {
 
   // Returns the set inliers of the data set based on the error threshold
   // provided.
-  std::vector<int> GetInliers(const std::vector<Datum>& data,
+  std::vector<int> GetInliers(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
                               const Model& model,
                               double error_threshold) const {
     std::vector<int> inliers;

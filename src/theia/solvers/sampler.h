@@ -63,8 +63,8 @@ template <class Datum> class Sampler {
 
   // Samples the input variable data and fills the vector subset with the
   // samples.
-  virtual bool Sample(const std::vector<Datum>& data,
-                      std::vector<Datum>* subset) = 0;
+  virtual bool Sample(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
+                      std::vector<Datum, Eigen::aligned_allocator<Datum>>* subset) = 0;
 
  protected:
   std::shared_ptr<RandomNumberGenerator> rng_;

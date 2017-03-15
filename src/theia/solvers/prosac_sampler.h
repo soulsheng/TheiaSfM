@@ -68,7 +68,7 @@ template <class Datum> class ProsacSampler : public Sampler<Datum> {
   // samples.
   // NOTE: This assumes that data is in sorted order by quality where data[i] is
   // of higher quality than data[j] for all i < j.
-  bool Sample(const std::vector<Datum>& data, std::vector<Datum>* subset) {
+  bool Sample(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data, std::vector<Datum, Eigen::aligned_allocator<Datum>>* subset) {
     // Set t_n according to the PROSAC paper's recommendation.
     double t_n = ransac_convergence_iterations_;
     int n = this->min_num_samples_;

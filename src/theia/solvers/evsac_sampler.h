@@ -176,7 +176,7 @@ template <class Datum> class EvsacSampler : public Sampler<Datum> {
 
   // Implementing the Sample method.
   bool Sample(
-      const std::vector<Datum>& data, std::vector<Datum>* subset) override;
+      const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data, std::vector<Datum, Eigen::aligned_allocator<Datum>>* subset) override;
 
   // Implementing the Initialize method.
   bool Initialize() override;
@@ -664,8 +664,8 @@ bool EvsacSampler<Datum>::Initialize() {
 }
 
 template <class Datum>
-bool EvsacSampler<Datum>::Sample(const std::vector<Datum>& data,
-                                 std::vector<Datum>* subset) {
+bool EvsacSampler<Datum>::Sample(const std::vector<Datum, Eigen::aligned_allocator<Datum>>& data,
+                                 std::vector<Datum, Eigen::aligned_allocator<Datum>>* subset) {
   CHECK_EQ(data.size(), sorted_distances_.rows());
   CHECK_NOTNULL(subset)->resize(this->min_num_samples_);
   std::vector<int> random_numbers;
