@@ -103,19 +103,19 @@ class TwoViewMatchGeometricVerification {
   // Perform 2-view geometric verification for the input. The verified matches
   // are returned along with the 2-view info. If the verification fails, false
   // is returned and the outputs are undefined.
-  bool VerifyMatches(std::vector<FeatureCorrespondence>* verified_matches,
+  bool VerifyMatches(std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>* verified_matches,
                      TwoViewInfo* twoview_info);
 
  private:
   // A helper method that creates a vector of FeatureCorrespondence from the
   // matches_ vector of match indices.
   void CreateCorrespondencesFromIndexedMatches(
-      std::vector<FeatureCorrespondence>* correspondences);
+      std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>* correspondences);
 
   // Triangulates the current matches and removes any matches that do not have a
   // small enough reprojection error after initial triangulation (based on the
   // options passed in).
-  void TriangulatePoints(std::vector<Eigen::Vector4d>* triangulated_points);
+  void TriangulatePoints(std::vector<Eigen::Vector4d, Eigen::aligned_allocator<Eigen::Vector4d>>* triangulated_points);
 
   // Bundle adjusts the relative pose by triangulating 3D points. Points are
   // removed before and after bundle adjustment according to their reprojection

@@ -99,7 +99,7 @@ TwoViewMatchGeometricVerification::TwoViewMatchGeometricVerification(
       matches_(matches) {}
 
 void TwoViewMatchGeometricVerification::CreateCorrespondencesFromIndexedMatches(
-    std::vector<FeatureCorrespondence>* correspondences) {
+    std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>* correspondences) {
   CHECK_NOTNULL(correspondences)->clear();
   correspondences->reserve(matches_.size());
   for (int i = 0; i < matches_.size(); i++) {
@@ -111,13 +111,13 @@ void TwoViewMatchGeometricVerification::CreateCorrespondencesFromIndexedMatches(
 }
 
 bool TwoViewMatchGeometricVerification::VerifyMatches(
-    std::vector<FeatureCorrespondence>* verified_matches,
+    std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>* verified_matches,
     TwoViewInfo* twoview_info) {
   if (matches_.size() < options_.min_num_inlier_matches) {
     return false;
   }
 
-  std::vector<FeatureCorrespondence> correspondences;
+  std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>> correspondences;
   CreateCorrespondencesFromIndexedMatches(&correspondences);
 
   // Estimate a homography (before the matches_ container is modified).
@@ -186,7 +186,7 @@ bool TwoViewMatchGeometricVerification::VerifyMatches(
 
 // Triangulates the points and updates the matches_
 void TwoViewMatchGeometricVerification::TriangulatePoints(
-    std::vector<Eigen::Vector4d>* triangulated_points) {
+    std::vector<Eigen::Vector4d, Eigen::aligned_allocator<Eigen::Vector4d>>* triangulated_points) {
   CHECK_NOTNULL(triangulated_points)->reserve(matches_.size());
   const double triangulation_sq_max_reprojection_error_pixels =
       options_.triangulation_max_reprojection_error *
@@ -244,7 +244,7 @@ bool TwoViewMatchGeometricVerification::BundleAdjustRelativePose(
 
   // Triangulate the points. This updates the matches_ container with only the
   // points that could be accurately triangulated.
-  std::vector<Eigen::Vector4d> triangulated_points;
+  std::vector<Eigen::Vector4d, Eigen::aligned_allocator<Eigen::Vector4d>> triangulated_points;
   TriangulatePoints(&triangulated_points);
 
   // Exit early if there are not enough inliers left.
@@ -262,7 +262,7 @@ bool TwoViewMatchGeometricVerification::BundleAdjustRelativePose(
       intrinsics2_.focal_length.is_set;
   two_view_ba_options.ba_options.use_inner_iterations = false;
 
-  std::vector<FeatureCorrespondence> triangulated_correspondences;
+  std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>> triangulated_correspondences;
   CreateCorrespondencesFromIndexedMatches(&triangulated_correspondences);
   BundleAdjustmentSummary summary =
       BundleAdjustTwoViews(two_view_ba_options, triangulated_correspondences,
@@ -327,7 +327,7 @@ int TwoViewMatchGeometricVerification::CountHomographyInliers() {
       1.0 - etvi_options.expected_ransac_confidence;
   RansacSummary homography_summary;
   Eigen::Matrix3d unused_homography;
-  std::vector<FeatureCorrespondence> correspondences;
+  std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>> correspondences;
   CreateCorrespondencesFromIndexedMatches(&correspondences);
   EstimateHomography(homography_params, etvi_options.ransac_type,
                      correspondences, &unused_homography, &homography_summary);
