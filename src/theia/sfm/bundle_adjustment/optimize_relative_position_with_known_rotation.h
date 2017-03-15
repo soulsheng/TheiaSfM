@@ -50,7 +50,7 @@ struct FeatureCorrespondence;
 // algorithm from "Robust Camera Location Estimation by Convex Programming" by
 // Onur Ozyesil and Amit Singer (CVPR 2015).
 bool OptimizeRelativePositionWithKnownRotation(
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     const Eigen::Vector3d& rotation1,
     const Eigen::Vector3d& rotation2,
     Eigen::Vector3d* relative_position);

@@ -51,7 +51,7 @@ namespace {
 // R_i * f_i x R_j * f_j. Given known rotations, we can solve for the
 // relative translation from this constraint matrix.
 void CreateConstraintMatrix(
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     const Eigen::Vector3d& rotation1,
     const Eigen::Vector3d& rotation2,
     Eigen::MatrixXd* constraint_matrix) {
@@ -83,7 +83,7 @@ void CreateConstraintMatrix(
 // more than 50% of correspondences are in front of both cameras and false
 // otherwise.
 bool MajorityOfPointsInFrontOfCameras(
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     const Eigen::Vector3d& rotation1,
     const Eigen::Vector3d& rotation2,
     const Eigen::Vector3d& relative_position) {
@@ -115,7 +115,7 @@ bool MajorityOfPointsInFrontOfCameras(
 // for the relative translation that optimizes the epipolar error
 // f_i * E * f_j^t = 0.
 bool OptimizeRelativePositionWithKnownRotation(
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     const Eigen::Vector3d& rotation1,
     const Eigen::Vector3d& rotation2,
     Eigen::Vector3d* relative_position) {
