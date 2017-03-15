@@ -147,7 +147,7 @@ void FourPointRelativePosePartialRotation(
     const Vector3d image_two_ray_directions[4],
     const Vector3d image_two_ray_origins[4],
     std::vector<Quaterniond>* soln_rotations,
-    std::vector<Vector3d>* soln_translations) {
+	std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* soln_translations) {
   CHECK_DOUBLE_EQ(axis.squaredNorm(), 1.0);
   CHECK_NOTNULL(soln_rotations)->clear();
   CHECK_NOTNULL(soln_translations)->clear();

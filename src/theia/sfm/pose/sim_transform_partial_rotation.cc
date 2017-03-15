@@ -142,7 +142,7 @@ void SimTransformPartialRotation(const Vector3d& axis,
                                  const Vector3d image_two_ray_directions[5],
                                  const Vector3d image_two_ray_origins[5],
                                  std::vector<Quaterniond>* soln_rotations,
-                                 std::vector<Vector3d>* soln_translations,
+								 std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* soln_translations,
                                  std::vector<double>* soln_scales) {
   CHECK_DOUBLE_EQ(axis.squaredNorm(), 1.0);
   CHECK_NOTNULL(soln_rotations)->clear();

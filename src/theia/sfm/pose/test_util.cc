@@ -103,7 +103,7 @@ void CreateRandomPointsInFrustum(const double near_plane_width,
                                  const double far_plane_depth,
                                  const int num_points,
                                  RandomNumberGenerator* rng,
-                                 std::vector<Eigen::Vector3d>* random_points) {
+                                 std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* random_points) {
   CHECK_NOTNULL(rng);
   random_points->reserve(num_points);
   for (int i = 0; i < num_points; i++) {

@@ -209,9 +209,9 @@ Matrix<double, 10, 20> BuildConstraintMatrix(
 
 // Implementation of Nister from "An Efficient Solution to the Five-Point
 // Relative Pose Problem"
-bool FivePointRelativePose(const std::vector<Vector2d>& image1_points,
-                           const std::vector<Vector2d>& image2_points,
-                           std::vector<Matrix3d>* essential_matrices) {
+bool FivePointRelativePose(const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image1_points,
+	const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image2_points,
+	std::vector<Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>>* essential_matrices) {
   CHECK_EQ(image1_points.size(), image2_points.size());
   CHECK_GE(image1_points.size(), 5) << "You must supply at least 5 "
                                        "correspondences for the 5 point "

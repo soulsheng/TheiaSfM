@@ -92,7 +92,7 @@ void GetRigidTransform(const Matrix<double, 3, 4>& points1,
 int FourPointPoseAndFocalLength(
     const std::vector<Eigen::Vector2d>& feature_vectors,
     const std::vector<Eigen::Vector3d>& world_points_vector,
-    std::vector<Eigen::Matrix<double, 3, 4> >* projection_matrices) {
+    std::vector<Eigen::Matrix<double, 3, 4>, Eigen::aligned_allocator<Eigen::Matrix<double, 3, 4>>>* projection_matrices) {
   Eigen::Map<const Matrix<double, 2, 4> > features(feature_vectors[0].data());
   Eigen::Map<const Matrix<double, 3, 4> > world_points(world_points_vector[0]
                                                            .data());
@@ -130,7 +130,7 @@ int FourPointPoseAndFocalLength(
 
   // Call the helper function.
   std::vector<double> focal_length;
-  std::vector<Vector3d> depths;
+  std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> depths;
 
   FourPointFocalLengthHelper(glab, glac, glad, glbc, glbd, glcd,
                              features_normalized, &focal_length, &depths);

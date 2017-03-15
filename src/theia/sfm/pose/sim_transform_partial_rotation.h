@@ -58,7 +58,7 @@ void SimTransformPartialRotation(
     const Eigen::Vector3d image_two_ray_directions[5],
     const Eigen::Vector3d image_two_ray_origins[5],
     std::vector<Eigen::Quaterniond>* soln_rotations,
-    std::vector<Eigen::Vector3d>* soln_translations,
+    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* soln_translations,
     std::vector<double>* soln_scales);
 
 }  // namespace theia

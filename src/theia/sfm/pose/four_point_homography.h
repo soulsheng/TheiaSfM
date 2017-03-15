@@ -45,8 +45,8 @@ namespace theia {
 // 2). Note this is only valid for planar motion (i.e., rotation-only movement,
 // or tracking points on a plane). The DLT algorithm implemented is from
 // Algorithm 4.2 in Hartley and Zisserman (page 109).
-bool FourPointHomography(const std::vector<Eigen::Vector2d>& image_1_points,
-                         const std::vector<Eigen::Vector2d>& image_2_points,
+	bool FourPointHomography(const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image_1_points,
+		const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image_2_points,
                          Eigen::Matrix3d* homography);
 
 }  // namespace theia

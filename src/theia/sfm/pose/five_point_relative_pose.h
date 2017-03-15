@@ -57,9 +57,9 @@ namespace theia {
 //
 // NOTE: At least 5 points must be supplied, but a non-minimal estimate will be
 // computed if more than five are supplied.
-bool FivePointRelativePose(const std::vector<Eigen::Vector2d>& image1_points,
-                           const std::vector<Eigen::Vector2d>& image2_points,
-                           std::vector<Eigen::Matrix3d>* essential_matrices);
+bool FivePointRelativePose(const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image1_points,
+                           const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image2_points,
+						   std::vector<Eigen::Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>>* essential_matrices);
 }  // namespace theia
 
 #endif  // THEIA_SFM_POSE_FIVE_POINT_RELATIVE_POSE_H_

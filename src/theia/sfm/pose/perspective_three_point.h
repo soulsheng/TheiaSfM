@@ -55,8 +55,8 @@ namespace theia {
 // Return: the number of poses computed.
 bool PoseFromThreePoints(const Eigen::Vector2d feature_point[3],
                          const Eigen::Vector3d world_point[3],
-                         std::vector<Eigen::Matrix3d>* solution_rotations,
-                         std::vector<Eigen::Vector3d>* solution_translations);
+                         std::vector<Eigen::Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>>* solution_rotations,
+                         std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* solution_translations);
 
 }  // namespace theia
 

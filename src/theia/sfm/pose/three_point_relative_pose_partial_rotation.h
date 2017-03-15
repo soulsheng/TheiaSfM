@@ -70,7 +70,7 @@ void ThreePointRelativePosePartialRotation(
     const Eigen::Vector3d image_1_rays[3],
     const Eigen::Vector3d image_2_rays[3],
     std::vector<Eigen::Quaterniond>* soln_rotations,
-    std::vector<Eigen::Vector3d>* soln_translations);
+    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* soln_translations);
 
 }  // namespace theia
 

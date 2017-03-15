@@ -67,7 +67,7 @@ void CreateRandomPointsInFrustum(const double near_plane_width,
                                  const double far_plane_depth,
                                  const int num_points,
                                  RandomNumberGenerator* rng,
-                                 std::vector<Eigen::Vector3d>* random_points);
+                                 std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* random_points);
 
 // Constructs a random rotation matrix that is within max_degrees_from_identity
 // of the identity rotation.

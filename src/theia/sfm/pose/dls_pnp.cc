@@ -64,10 +64,10 @@ using dls_impl::LeftMultiplyMatrix;
 // system of equations from the jacobian of the cost function, and solve these
 // equations via a Macaulay matrix to obtain the roots (i.e., the 3 parameters
 // of rotation). The translation can then be obtained through back-substitution.
-void DlsPnp(const std::vector<Vector2d>& feature_position,
-            const std::vector<Vector3d>& world_point,
+void DlsPnp(const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& feature_position,
+            const std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& world_point,
             std::vector<Quaterniond>* solution_rotation,
-            std::vector<Vector3d>* solution_translation) {
+            std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* solution_translation) {
   CHECK_GE(feature_position.size(), 3);
   CHECK_EQ(feature_position.size(), world_point.size());
 
@@ -76,7 +76,7 @@ void DlsPnp(const std::vector<Vector2d>& feature_position,
   // Holds the normalized feature positions cross multiplied with itself
   // i.e. n * n^t. This value is used multiple times so it is efficient to
   // pre-compute it.
-  std::vector<Matrix3d> normalized_feature_cross;
+  std::vector<Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>> normalized_feature_cross;
   normalized_feature_cross.reserve(num_correspondences);
   for (int i = 0; i < num_correspondences; i++) {
     const Vector3d normalized_feature_pos =

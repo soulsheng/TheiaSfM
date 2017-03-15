@@ -51,8 +51,8 @@ namespace {
 // Sets up the constraint y^t * F * x = 0 such that M * F_v = 0 where M is a 7x9
 // matrix and F_v is the vector containing the entries of F.
 Matrix<double, 7, 9> SetupEpipolarConstraint(
-    const std::vector<Eigen::Vector2d>& image1_points,
-    const std::vector<Eigen::Vector2d>& image2_points) {
+    const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image1_points,
+    const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image2_points) {
   Matrix<double, 7, 9> epipolar_constraint;
   for (int i = 0; i < 7; i++) {
     // Fill matrix with the epipolar constraint from q'_t*E*q = 0. Where q is
@@ -75,15 +75,15 @@ Matrix<double, 7, 9> SetupEpipolarConstraint(
 }  // namespace
 
 bool SevenPointFundamentalMatrix(
-    const std::vector<Eigen::Vector2d>& image1_points,
-    const std::vector<Eigen::Vector2d>& image2_points,
-    std::vector<Eigen::Matrix3d>* fundamental_matrices) {
+    const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image1_points,
+    const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image2_points,
+    std::vector<Eigen::Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>>* fundamental_matrices) {
   CHECK_EQ(image1_points.size(), 7);
   CHECK_EQ(image2_points.size(), 7);
   CHECK_NOTNULL(fundamental_matrices)->clear();
 
-  std::vector<Eigen::Vector2d> norm_img1_points(image1_points.size());
-  std::vector<Eigen::Vector2d> norm_img2_points(image2_points.size());
+  std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> norm_img1_points(image1_points.size());
+  std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> norm_img2_points(image2_points.size());
 
   // Normalize the image points.
   Eigen::Matrix3d img1_norm_mat, img2_norm_mat;

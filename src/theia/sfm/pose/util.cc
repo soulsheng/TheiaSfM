@@ -80,8 +80,8 @@ Eigen::Matrix3d CrossProductMatrix(const Vector3d& cross_vec) {
 // Returns the transformation matrix and the transformed points. This assumes
 // that no points are at infinity.
 bool NormalizeImagePoints(
-    const std::vector<Vector2d>& image_points,
-    std::vector<Vector2d>* normalized_image_points,
+	const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image_points,
+	std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>* normalized_image_points,
     Matrix3d* normalization_matrix) {
   Eigen::Map<const Matrix<double, 2, Eigen::Dynamic> > image_points_mat(
       image_points[0].data(), 2, image_points.size());

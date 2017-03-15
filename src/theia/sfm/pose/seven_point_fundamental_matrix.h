@@ -50,9 +50,9 @@ namespace theia {
 //     x2^t * F * x1 = 0 for points x1 in image1_points and x2 in
 //     image2_points.
 bool SevenPointFundamentalMatrix(
-    const std::vector<Eigen::Vector2d>& image1_points,
-    const std::vector<Eigen::Vector2d>& image2_points,
-    std::vector<Eigen::Matrix3d>* fundamental_matrices);
+    const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image1_points,
+    const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image2_points,
+    std::vector<Eigen::Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>>* fundamental_matrices);
 
 }  // namespace theia
 

@@ -59,7 +59,7 @@ namespace theia {
 int FourPointPoseAndFocalLength(
     const std::vector<Eigen::Vector2d>& feature_vectors,
     const std::vector<Eigen::Vector3d>& world_points,
-    std::vector<Eigen::Matrix<double, 3, 4> >* projection_matrices);
+    std::vector<Eigen::Matrix<double, 3, 4>, Eigen::aligned_allocator<Eigen::Matrix<double, 3, 4>>>* projection_matrices);
 
 }  // namespace theia
 

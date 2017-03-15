@@ -42,6 +42,7 @@
 #include <vector>
 
 #include "theia/sfm/pose/util.h"
+#include "theia/alignment/alignment.h"
 
 namespace theia {
 using Eigen::Map;
@@ -69,14 +70,14 @@ inline Matrix<double, 2, 9> CreateActionConstraint(const Vector2d& img1_point,
 // image_1 to image_2 via x' = Hx (where x is in image 1 and x' is in image
 // 2). The DLT algorithm implemented is from Algorithm 4.2 in Hartley and
 // Zisserman (page 109).
-bool FourPointHomography(const std::vector<Vector2d>& image_1_points,
-                         const std::vector<Vector2d>& image_2_points,
+bool FourPointHomography(const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image_1_points,
+	const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image_2_points,
                          Matrix3d* homography) {
   CHECK_GE(image_1_points.size(), 4);
   CHECK_EQ(image_1_points.size(), image_2_points.size());
 
   // Normalize the image points.
-  std::vector<Vector2d> norm_image_1_points, norm_image_2_points;
+  std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> norm_image_1_points, norm_image_2_points;
   Matrix3d norm_image_1_mat, norm_image_2_mat;
   NormalizeImagePoints(image_1_points, &norm_image_1_points, &norm_image_1_mat);
   NormalizeImagePoints(image_2_points, &norm_image_2_points, &norm_image_2_mat);

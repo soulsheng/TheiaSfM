@@ -58,8 +58,8 @@ Eigen::Matrix3d CrossProductMatrix(const Eigen::Vector3d& cross_vec);
 // the origin and the average distance from the centroid is sqrt(2). Returns the
 // transformation matrix and the transformed points.
 bool NormalizeImagePoints(
-    const std::vector<Eigen::Vector2d>& image_points,
-    std::vector<Eigen::Vector2d>* normalized_image_points,
+	const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image_points,
+	std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>* normalized_image_points,
     Eigen::Matrix3d* normalization_matrix);
 
 // Projects a 3x3 matrix to the rotation matrix in SO3 space with the closest

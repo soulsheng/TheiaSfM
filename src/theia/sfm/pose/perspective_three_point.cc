@@ -183,8 +183,8 @@ void Backsubstitute(const Matrix3d& intermediate_world_frame,
 
 bool PoseFromThreePoints(const Vector2d feature_point[3],
                          const Vector3d points_3d[3],
-                         std::vector<Matrix3d>* solution_rotations,
-                         std::vector<Vector3d>* solution_translations) {
+						 std::vector<Matrix3d, Eigen::aligned_allocator<Eigen::Matrix3d>>* solution_rotations,
+						 std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* solution_translations) {
   Vector3d normalized_image_points[3];
   // Store points_3d in world_points for ease of use. NOTE: we cannot use a
   // const ref or a Map because the world_points entries may be swapped later.

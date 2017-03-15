@@ -52,14 +52,14 @@ using Eigen::Vector2d;
 using Eigen::Vector3d;
 
 bool NormalizedEightPointFundamentalMatrix(
-    const std::vector<Vector2d>& image_1_points,
-    const std::vector<Vector2d>& image_2_points,
+	const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image_1_points,
+	const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& image_2_points,
     Matrix3d* fundamental_matrix) {
   CHECK_EQ(image_1_points.size(), image_2_points.size());
   CHECK_GE(image_1_points.size(), 8);
 
-  std::vector<Vector2d> norm_img1_points(image_1_points.size());
-  std::vector<Vector2d> norm_img2_points(image_2_points.size());
+  std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> norm_img1_points(image_1_points.size());
+  std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> norm_img2_points(image_2_points.size());
 
   // Normalize the image points.
   Matrix3d img1_norm_mat, img2_norm_mat;

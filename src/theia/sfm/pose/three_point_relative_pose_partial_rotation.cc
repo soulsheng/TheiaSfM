@@ -59,7 +59,7 @@ namespace {
 
 bool SolveQEP(const Matrix3d& M, const Matrix3d& C, const Matrix3d& K,
               std::vector<double>* eigenvalues,
-              std::vector<Vector3d>* eigenvectors) {
+			  std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* eigenvectors) {
   // Solves the quadratic eigenvalue problem:
   //
   //   Q(s)x = 0
@@ -146,7 +146,7 @@ void ThreePointRelativePosePartialRotation(
     const Vector3d image_1_rays[3],
     const Vector3d image_2_rays[3],
     std::vector<Quaterniond>* soln_rotations,
-    std::vector<Vector3d>* soln_translations) {
+	std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* soln_translations) {
   CHECK_DOUBLE_EQ(axis.squaredNorm(), 1.0);
   CHECK_NOTNULL(soln_rotations)->clear();
   CHECK_NOTNULL(soln_translations)->clear();
@@ -187,7 +187,7 @@ void ThreePointRelativePosePartialRotation(
   }
 
   std::vector<double> eigenvalues;
-  std::vector<Vector3d> eigenvectors;
+  std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> eigenvectors;
   if (SolveQEP(M, C, K, &eigenvalues, &eigenvectors)) {
     // Extracts the translations and rotations from the eigenvalues and
     // eigenvectors of the QEP problem.
