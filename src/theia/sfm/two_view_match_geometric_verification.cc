@@ -105,8 +105,8 @@ void TwoViewMatchGeometricVerification::CreateCorrespondencesFromIndexedMatches(
   for (int i = 0; i < matches_.size(); i++) {
     const Keypoint& keypoint1 = features1_.keypoints[matches_[i].feature1_ind];
     const Keypoint& keypoint2 = features2_.keypoints[matches_[i].feature2_ind];
-    correspondences->emplace_back(Feature(keypoint1.x(), keypoint1.y()),
-                                  Feature(keypoint2.x(), keypoint2.y()));
+	correspondences->emplace_back( FeatureCorrespondence(Feature(keypoint1.x(), keypoint1.y()),
+                                  Feature(keypoint2.x(), keypoint2.y())) );
   }
 }
 
