@@ -245,9 +245,10 @@ void FeatureExtractorAndMatcher::ProcessImage(
               << " did not contain an EXIF focal length. Skipping this image.";
     return;
   } else {
-    LOG(INFO) << "Image " << image_filepath
-              << " is initialized with the focal length: "
-              << intrinsics.focal_length.value[0];
+	  LOG(INFO) << "Image ";
+	  LOG(INFO) << image_filepath;
+	  LOG(INFO) << " is initialized with the focal length: ";
+	  //LOG(INFO) << intrinsics.focal_length.value[0];
   }
 
   // Get the image filename without the directory.
