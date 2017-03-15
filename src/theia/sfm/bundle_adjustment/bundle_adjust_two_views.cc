@@ -112,10 +112,10 @@ void AddCameraParametersToProblem(const bool constant_extrinsic_parameters,
 // points and cameras.
 BundleAdjustmentSummary BundleAdjustTwoViews(
     const TwoViewBundleAdjustmentOptions& options,
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     Camera* camera1,
     Camera* camera2,
-    std::vector<Eigen::Vector4d>* points3d) {
+    std::vector<Eigen::Vector4d, Eigen::aligned_allocator<Eigen::Vector4d>>* points3d) {
   CHECK_NOTNULL(camera1);
   CHECK_NOTNULL(camera2);
   CHECK_NOTNULL(points3d);
@@ -193,7 +193,7 @@ BundleAdjustmentSummary BundleAdjustTwoViews(
 
 BundleAdjustmentSummary BundleAdjustTwoViewsAngular(
     const BundleAdjustmentOptions& options,
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     TwoViewInfo* info) {
   CHECK_NOTNULL(info);
 

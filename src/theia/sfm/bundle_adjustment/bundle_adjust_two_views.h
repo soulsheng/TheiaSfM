@@ -63,10 +63,10 @@ struct TwoViewBundleAdjustmentOptions {
 // correspondences should match the 3D point indices.
 BundleAdjustmentSummary BundleAdjustTwoViews(
     const TwoViewBundleAdjustmentOptions& options,
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     Camera* camera1,
     Camera* camera2,
-    std::vector<Eigen::Vector4d>* points3d);
+    std::vector<Eigen::Vector4d, Eigen::aligned_allocator<Eigen::Vector4d>>* points3d);
 
 // Performs bundle adjustment to find the optimal rotation and translation
 // describing the two views. This is done without the need for 3D points, as
@@ -77,7 +77,7 @@ BundleAdjustmentSummary BundleAdjustTwoViews(
 // principal point.
 BundleAdjustmentSummary BundleAdjustTwoViewsAngular(
     const BundleAdjustmentOptions& options,
-    const std::vector<FeatureCorrespondence>& correspondences,
+    const std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>& correspondences,
     TwoViewInfo* info);
 
 }  // namespace theia

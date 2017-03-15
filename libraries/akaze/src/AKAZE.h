@@ -34,8 +34,8 @@ struct AKAZEKeypoint {
 typedef Eigen::Matrix<uint8_t, Eigen::Dynamic, 1> BinaryVectorX;
 
 struct AKAZEDescriptors {
-  std::vector<Eigen::VectorXf> float_descriptor;
-  std::vector<BinaryVectorX> binary_descriptor;
+	std::vector<Eigen::VectorXf> float_descriptor;
+  std::vector<BinaryVectorX, Eigen::aligned_allocator<BinaryVectorX>> binary_descriptor;
 };
 
 class AKAZE {

@@ -45,7 +45,7 @@ namespace theia {
 
 // Gather points from tracks.
 void GatherTracks(const Reconstruction& reconstruction,
-                  std::vector<Eigen::Vector3d>* points_to_write,
+                  std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* points_to_write,
                   std::vector<Eigen::Vector3i>* colors_to_write) {
   for (const TrackId track_id : reconstruction.TrackIds()) {
     const Track& track = *reconstruction.Track(track_id);
@@ -58,7 +58,7 @@ void GatherTracks(const Reconstruction& reconstruction,
 
 // Gather camera positions.
 void GatherCameras(const Reconstruction& reconstruction,
-                   std::vector<Eigen::Vector3d>* points_to_write,
+                   std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* points_to_write,
                    std::vector<Eigen::Vector3i>* colors_to_write) {
   for (const ViewId view_id : reconstruction.ViewIds()) {
     const View& view = *reconstruction.View(view_id);
@@ -96,7 +96,7 @@ bool WritePlyFile(const std::string& ply_file,
   }
 
   // Extract points that we will write to the PLY file.
-  std::vector<Eigen::Vector3d> points_to_write;
+  std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> points_to_write;
   std::vector<Eigen::Vector3i> colors_to_write;
   GatherTracks(reconstruction, &points_to_write, &colors_to_write);
   GatherCameras(reconstruction, &points_to_write, &colors_to_write);

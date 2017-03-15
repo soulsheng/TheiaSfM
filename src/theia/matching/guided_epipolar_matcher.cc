@@ -52,12 +52,13 @@
 #include "theia/util/map_util.h"
 #include "theia/util/hash.h"
 #include "theia/util/random.h"
+#include "theia/alignment/alignment.h"
 
 namespace theia {
 namespace {
 
 // Encodes the line endpoints into an uint64_t for fast sorting.
-uint64_t EncodeLineEndpoints(const std::vector<Eigen::Vector2d>& endpoints) {
+	uint64_t EncodeLineEndpoints(const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& endpoints) {
   uint64_t encoded_endpoint = 0;
   const uint16_t x1 = static_cast<uint16_t>(endpoints[0].x());
   const uint16_t y1 = static_cast<uint16_t>(endpoints[0].y());
@@ -71,7 +72,7 @@ uint64_t EncodeLineEndpoints(const std::vector<Eigen::Vector2d>& endpoints) {
 }
 
 void DecodeLineEndpoints(const uint64_t encoded_endpoint,
-                         std::vector<Eigen::Vector2d>* endpoints) {
+	std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>* endpoints) {
   // Create a bitmask to isolate the last 16 bits.
   uint64_t s = 0;
   s = ~s;
@@ -82,8 +83,8 @@ void DecodeLineEndpoints(const uint64_t encoded_endpoint,
   const uint16_t x2 = static_cast<uint16_t>(s & (encoded_endpoint >> 16));
   const uint16_t y2 = static_cast<uint16_t>(s & (encoded_endpoint >> 0));
 
-  endpoints->emplace_back(static_cast<double>(x1), static_cast<double>(y1));
-  endpoints->emplace_back(static_cast<double>(x2), static_cast<double>(y2));
+  endpoints->emplace_back(Eigen::Vector2d(static_cast<double>(x1), static_cast<double>(y1)));
+  endpoints->emplace_back(Eigen::Vector2d(static_cast<double>(x2), static_cast<double>(y2)));
 }
 
 }  // namespace
@@ -226,7 +227,7 @@ void GuidedEpipolarMatcher::GroupEpipolarLines(
     // Find the points where the epipolar line intersects the bounding box of
     // the features in image 2. If the line is outside of the box (i.e. when we
     // cannot find two line endpoints), skip this feature for matching.
-    std::vector<Eigen::Vector2d> line_endpoints;
+	std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> line_endpoints;
     FindEpipolarLineIntersection(epipolar_line, &line_endpoints);
     if (line_endpoints.size() != 2) {
       continue;
@@ -244,7 +245,7 @@ void GuidedEpipolarMatcher::GroupEpipolarLines(
       options_.guided_matching_max_distance_pixels;
 
   for (int i = 0; i < sorted_endpoints.size(); i++) {
-    std::vector<Eigen::Vector2d> line_endpoints;
+	  std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> line_endpoints;
     DecodeLineEndpoints(sorted_endpoints[i].first, &line_endpoints);
 
     // See if an epipolar endpoint exists nearby. If it does not, then add a new
@@ -278,7 +279,7 @@ void GuidedEpipolarMatcher::FindFeaturesNearEpipolarLines(
     std::vector<int>* candidate_keypoint_indices) {
   static const int kMinNumMatchesFound = 50;
 
-  const std::vector<Eigen::Vector2d>& line_endpoints = epiline_group.endpoints;
+  const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& line_endpoints = epiline_group.endpoints;
 
   // The number of steps required to "walk" between the line endpoints.
   const int num_steps =
@@ -319,7 +320,7 @@ void GuidedEpipolarMatcher::FindFeaturesNearEpipolarLines(
 
 void GuidedEpipolarMatcher::FindEpipolarLineIntersection(
     const Eigen::Vector3d& epipolar_line,
-    std::vector<Eigen::Vector2d>* lines) {
+	std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>* lines) {
   const double y_of_left_intersection =
       -(epipolar_line.z() + epipolar_line.x() * top_left_.x()) /
       epipolar_line.y();

@@ -114,7 +114,7 @@ class GuidedEpipolarMatcher {
 
   // Holds a group of features with similar epiplines as a single epiline.
   struct EpilineGroup {
-    std::vector<Eigen::Vector2d> endpoints;
+	  std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> endpoints;
     std::vector<int> features;
   };
 
@@ -133,7 +133,7 @@ class GuidedEpipolarMatcher {
   // Finds the intersection of an epipolar line with the bounding box of the
   // features.
   void FindEpipolarLineIntersection(const Eigen::Vector3d& epipolar_line,
-                                    std::vector<Eigen::Vector2d>* lines);
+	  std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>* lines);
 
   // Computes a fundamental matrix from the cameras.
   Eigen::Matrix3d ComputeFundamentalMatrix();

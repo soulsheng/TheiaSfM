@@ -76,7 +76,7 @@ bool DoesViewHaveKnownIntrinsics(const Reconstruction& reconstruction,
 void GetNormalized2D3DMatches(const Reconstruction& reconstruction,
                               const View& view,
                               const bool known_intrinsics,
-                              std::vector<FeatureCorrespondence2D3D>* matches) {
+                              std::vector<FeatureCorrespondence2D3D, Eigen::aligned_allocator<FeatureCorrespondence2D3D>>* matches) {
   const Camera& camera = view.Camera();
   const auto& tracks_in_view = view.TrackIds();
   matches->reserve(tracks_in_view.size());
@@ -124,7 +124,7 @@ bool LocalizeViewToReconstruction(
   Camera* camera = view->MutableCamera();
 
   // Gather all 2D-3D correspondences.
-  std::vector<FeatureCorrespondence2D3D> matches;
+  std::vector<FeatureCorrespondence2D3D, Eigen::aligned_allocator<FeatureCorrespondence2D3D>> matches;
   GetNormalized2D3DMatches(*reconstruction, *view, known_intrinsics, &matches);
 
   // Exit early if there are not enough putative matches.

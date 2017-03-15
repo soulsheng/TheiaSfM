@@ -91,7 +91,7 @@ class LinearPositionEstimator : public PositionEstimator {
   // Sets up the linear system with the constraints that each triplet adds.
   void CreateLinearSystem(
       const std::unordered_map<ViewId, Eigen::Vector3d>& orientations,
-      const std::vector<Eigen::Vector3d>& baselines,
+      const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& baselines,
       Eigen::SparseMatrix<double>* constraint_matrix);
 
   // Positions are estimated from an eigenvector that is unit-norm with an

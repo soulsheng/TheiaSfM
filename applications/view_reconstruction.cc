@@ -63,7 +63,7 @@ DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
 
 // Containers for the data.
 std::vector<theia::Camera> cameras;
-std::vector<Eigen::Vector3d> world_points;
+std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> world_points;
 std::vector<Eigen::Vector3f> point_colors;
 std::vector<int> num_views_for_track;
 

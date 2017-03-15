@@ -59,7 +59,7 @@ struct ImagePairMatch {
 
   // Feature locations in pixel coordinates. If the match is a verified match
   // then this only contains inlier correspondences.
-  std::vector<FeatureCorrespondence> correspondences;
+  std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>> correspondences;
 
  private:
   // Templated method for disk I/O with cereal. This method tells cereal which

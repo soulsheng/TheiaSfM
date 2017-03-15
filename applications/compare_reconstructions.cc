@@ -94,7 +94,7 @@ void EvaluateRotations(const Reconstruction& reference_reconstruction,
                        const Reconstruction& reconstruction_to_align,
                        const std::vector<std::string>& common_view_names) {
   // Gather all the rotations in common with both views.
-  std::vector<Eigen::Vector3d> rotations1, rotations2;
+  std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> rotations1, rotations2;
   rotations1.reserve(common_view_names.size());
   rotations2.reserve(common_view_names.size());
   for (const std::string& view_name : common_view_names) {

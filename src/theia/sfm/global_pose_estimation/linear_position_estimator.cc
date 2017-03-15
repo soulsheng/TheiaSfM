@@ -101,7 +101,7 @@ void AddTripletConstraint(const ViewTriplet& triplet,
                           const int start_row,
                           const std::vector<int> cols,
                           const double w,
-                          const std::vector<Vector3d>& orientations,
+						  const std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& orientations,
                           const Vector3d& baselines,
                           std::vector<Eigen::Triplet<double> >* triplet_list) {
   // Relative camera positions.
@@ -225,7 +225,7 @@ bool LinearPositionEstimator::EstimatePositions(
   VLOG(2) << "Determining baseline ratios within each triplet...";
   // Baselines where (x, y, z) corresponds to the baseline of the first, second,
   // and third view pair in the triplet.
-  std::vector<Vector3d> baselines(triplets_.size());
+  std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> baselines(triplets_.size());
   std::unique_ptr<ThreadPool> pool(new ThreadPool(options_.num_threads));
   for (int i = 0; i < triplets_.size(); i++) {
     pool->Add(&LinearPositionEstimator::ComputeBaselineRatioForTriplet,
@@ -308,7 +308,7 @@ void LinearPositionEstimator::ComputeBaselineRatioForTriplet(
 // Sets up the linear system with the constraints that each triplet adds.
 void LinearPositionEstimator::CreateLinearSystem(
     const std::unordered_map<ViewId, Vector3d>& orientations,
-    const std::vector<Vector3d>& baselines,
+	const std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& baselines,
     Eigen::SparseMatrix<double>* constraint_matrix) {
   const int num_views = num_triplets_for_view_.size();
 
@@ -323,7 +323,7 @@ void LinearPositionEstimator::CreateLinearSystem(
     }
 
     const ViewTriplet& triplet = triplets_[i];
-    const std::vector<Vector3d> triplet_orientations = {
+	const std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> triplet_orientations = {
       FindOrDie(orientations, triplet.view_ids[0]),
       FindOrDie(orientations, triplet.view_ids[1]),
       FindOrDie(orientations, triplet.view_ids[2])
