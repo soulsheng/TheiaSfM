@@ -43,8 +43,8 @@ namespace theia {
 // Rotates the "rotation" set of orientations such that the orientations are
 // most closely aligned in an L2 sense. That is, "rotation" is transformed such
 // that R_rotation * R_gt_rotation^t is minimized.
-void AlignRotations(const std::vector<Eigen::Vector3d>& gt_rotation,
-                    std::vector<Eigen::Vector3d>* rotation);
+void AlignRotations(const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& gt_rotation,
+                    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* rotation);
 
 }  // namespace theia
 

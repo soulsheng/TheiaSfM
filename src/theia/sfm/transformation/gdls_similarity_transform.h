@@ -66,11 +66,11 @@ namespace theia {
 //   solution_rotation: the rotation quaternion of the candidate solutions
 //   solution_translation: the translation of the candidate solutions
 //   solution_scale: the scale of the candidate solutions
-void GdlsSimilarityTransform(const std::vector<Eigen::Vector3d>& ray_origin,
-                             const std::vector<Eigen::Vector3d>& ray_direction,
-                             const std::vector<Eigen::Vector3d>& world_point,
+void GdlsSimilarityTransform(const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& ray_origin,
+                             const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& ray_direction,
+                             const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& world_point,
                              std::vector<Eigen::Quaterniond>* solution_rotation,
-                             std::vector<Eigen::Vector3d>* solution_translation,
+                             std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* solution_translation,
                              std::vector<double>* solution_scale);
 }  // namespace theia
 

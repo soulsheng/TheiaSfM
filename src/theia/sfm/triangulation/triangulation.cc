@@ -181,8 +181,8 @@ bool TriangulateDLT(const Matrix3x4d& pose1,
 }
 
 // Triangulates N views by computing SVD that minimizes the error.
-bool TriangulateNViewSVD(const std::vector<Matrix3x4d>& poses,
-                         const std::vector<Vector2d>& points,
+bool TriangulateNViewSVD(const std::vector<Matrix3x4d, Eigen::aligned_allocator<Matrix3x4d>>& poses,
+	const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& points,
                          Vector4d* triangulated_point) {
   CHECK_EQ(poses.size(), points.size());
 
@@ -200,8 +200,8 @@ bool TriangulateNViewSVD(const std::vector<Matrix3x4d>& poses,
   return true;
 }
 
-bool TriangulateNView(const std::vector<Matrix3x4d>& poses,
-                      const std::vector<Vector2d>& points,
+bool TriangulateNView(const std::vector<Matrix3x4d, Eigen::aligned_allocator<Matrix3x4d>>& poses,
+	const std::vector<Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& points,
                       Vector4d* triangulated_point) {
   CHECK_EQ(poses.size(), points.size());
 

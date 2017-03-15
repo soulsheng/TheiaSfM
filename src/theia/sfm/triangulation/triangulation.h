@@ -76,8 +76,8 @@ bool TriangulateDLT(const Matrix3x4d& pose1,
 // minimize reprojection error. The inputs are the projection matrices and the
 // image observations. Returns true on success and false on failure.
 bool TriangulateNViewSVD(
-    const std::vector<Matrix3x4d>& poses,
-    const std::vector<Eigen::Vector2d>& points,
+    const std::vector<Matrix3x4d, Eigen::aligned_allocator<Matrix3x4d>>& poses,
+	const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& points,
     Eigen::Vector4d* triangulated_point);
 
 // Computes n-view triangulation by an efficient L2 minimization of the
@@ -85,8 +85,8 @@ bool TriangulateNViewSVD(
 // it is extremely scalable. It gives better reprojection errors in the results
 // and is significantly faster. The inputs are the projection matrices and the
 // image observations. Returns true on success and false on failure.
-bool TriangulateNView(const std::vector<Matrix3x4d>& poses,
-                      const std::vector<Eigen::Vector2d>& points,
+bool TriangulateNView(const std::vector<Matrix3x4d, Eigen::aligned_allocator<Matrix3x4d>>& poses,
+	const std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>& points,
                       Eigen::Vector4d* triangulated_point);
 
 // Determines if the 3D point is in front of the camera or not. We can simply
@@ -100,7 +100,7 @@ bool IsTriangulatedPointInFrontOfCameras(
 // Returns true if the triangulation angle between any two observations is
 // sufficient.
 bool SufficientTriangulationAngle(
-    const std::vector<Eigen::Vector3d>& ray_directions,
+	const std::vector<Eigen::Vector3d>& ray_directions,
     const double min_triangulation_angle_degrees);
 
 }  // namespace theia

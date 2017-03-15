@@ -39,8 +39,8 @@
 
 namespace theia {
 
-void AlignPointCloudsUmeyama(const std::vector<Eigen::Vector3d>& left,
-                             const std::vector<Eigen::Vector3d>& right,
+void AlignPointCloudsUmeyama(const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& left,
+                             const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& right,
                              Eigen::Matrix3d* rotation,
                              Eigen::Vector3d* translation, double* scale) {
   std::vector<double> weights(left.size(), 1.0);
@@ -49,8 +49,8 @@ void AlignPointCloudsUmeyama(const std::vector<Eigen::Vector3d>& left,
 }
 
 void AlignPointCloudsUmeyamaWithWeights(
-    const std::vector<Eigen::Vector3d>& left,
-    const std::vector<Eigen::Vector3d>& right,
+    const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& left,
+    const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& right,
     const std::vector<double>& weights, Eigen::Matrix3d* rotation,
     Eigen::Vector3d* translation, double* scale) {
   CHECK_EQ(left.size(), right.size());

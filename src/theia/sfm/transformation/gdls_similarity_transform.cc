@@ -65,11 +65,11 @@ using dls_impl::LeftMultiplyMatrix;
 // cost function, and solve these equations via a Macaulay matrix to obtain the
 // roots (i.e., the 3 parameters of rotation). The translation and scale can
 // then be obtained through back-substitution.
-void GdlsSimilarityTransform(const std::vector<Vector3d>& ray_origin,
-                             const std::vector<Vector3d>& ray_direction,
-                             const std::vector<Vector3d>& world_point,
+void GdlsSimilarityTransform(const std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& ray_origin,
+	const std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& ray_direction,
+							 const std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& world_point,
                              std::vector<Quaterniond>* solution_rotation,
-                             std::vector<Vector3d>* solution_translation,
+							 std::vector<Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* solution_translation,
                              std::vector<double>* solution_scale) {
   CHECK_GE(ray_direction.size(), 4);
 

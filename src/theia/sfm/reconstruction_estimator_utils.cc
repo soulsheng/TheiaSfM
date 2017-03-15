@@ -64,7 +64,7 @@ namespace {
 // are normalized according to the camera intrinsics.
 void GetNormalizedFeatureCorrespondences(
     const View& view1, const View& view2,
-    std::vector<FeatureCorrespondence>* matches) {
+    std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>>* matches) {
   const Camera& camera1 = view1.Camera();
   const Camera& camera2 = view2.Camera();
   const std::vector<TrackId>& tracks = view1.TrackIds();
@@ -253,7 +253,7 @@ void RefineRelativeTranslationsWithKnownRotations(
   // Refine the translation estimation for each view pair.
   for (const auto& view_pair : view_pairs) {
     // Get all feature correspondences common to both views.
-    std::vector<FeatureCorrespondence> matches;
+    std::vector<FeatureCorrespondence, Eigen::aligned_allocator<FeatureCorrespondence>> matches;
     const View* view1 = reconstruction.View(view_pair.first.first);
     const View* view2 = reconstruction.View(view_pair.first.second);
     GetNormalizedFeatureCorrespondences(*view1, *view2, &matches);

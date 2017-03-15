@@ -48,8 +48,8 @@ namespace theia {
 // where A is "left" and B is "right". Implementation is based on the paper by
 // Umeyama "Least-squares estimation of transformation parameters between two
 // point patterns".
-void AlignPointCloudsUmeyama(const std::vector<Eigen::Vector3d>& left,
-                             const std::vector<Eigen::Vector3d>& right,
+void AlignPointCloudsUmeyama(const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& left,
+                             const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& right,
                              Eigen::Matrix3d* rotation,
                              Eigen::Vector3d* translation, double* scale);
 
@@ -58,8 +58,8 @@ void AlignPointCloudsUmeyama(const std::vector<Eigen::Vector3d>& left,
 // Sum(wi * || yi - (c.R.xi + T) ||^2)
 // The weights must be positive
 void AlignPointCloudsUmeyamaWithWeights(
-    const std::vector<Eigen::Vector3d>& left,
-    const std::vector<Eigen::Vector3d>& right,
+    const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& left,
+    const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& right,
     const std::vector<double>& weights, Eigen::Matrix3d* rotation,
     Eigen::Vector3d* translation, double* scale);
 

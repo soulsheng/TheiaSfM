@@ -98,7 +98,7 @@ struct RotationAlignmentError {
 
 // Apply the rotation alignment to all rotations in the vector.
 void ApplyRotationTransformation(const Eigen::Vector3d& rotation_alignment,
-                                 std::vector<Eigen::Vector3d>* rotation) {
+                                 std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* rotation) {
   Eigen::Matrix3d rotation_alignment_mat;
   ceres::AngleAxisToRotationMatrix(
       rotation_alignment.data(),
@@ -129,8 +129,8 @@ void ApplyRotationTransformation(const Eigen::Vector3d& rotation_alignment,
 // This could potentially be set up as a linear system, however, that does not
 // guarantee that R will remaind a valid rotation. Instead, we simply use a
 // nonlinear system to ensure that R is a valid rotation.
-void AlignRotations(const std::vector<Eigen::Vector3d>& gt_rotation,
-                    std::vector<Eigen::Vector3d>* rotation) {
+void AlignRotations(const std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>& gt_rotation,
+                    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>* rotation) {
   CHECK_EQ(gt_rotation.size(), rotation->size());
 
   Eigen::Vector3d rotation_alignment = Eigen::Vector3d::Zero();

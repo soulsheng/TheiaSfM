@@ -64,11 +64,11 @@ class CameraAlignmentEstimator
   double SampleSize() const { return 4; }
 
   bool EstimateModel(
-      const std::vector<CameraCorrespondence>& correspondences,
-      std::vector<SimilarityTransformation>* sim_transforms) const {
+	  const std::vector<CameraCorrespondence, Eigen::aligned_allocator<CameraCorrespondence>>& correspondences,
+	  std::vector<SimilarityTransformation, Eigen::aligned_allocator<SimilarityTransformation>>* sim_transforms) const {
     SimilarityTransformation sim_transform;
-    std::vector<Eigen::Vector3d> positions1(correspondences.size());
-    std::vector<Eigen::Vector3d> positions2(correspondences.size());
+    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> positions1(correspondences.size());
+    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> positions2(correspondences.size());
     for (int i = 0; i < correspondences.size(); i++) {
       positions1[i] = correspondences[i].camera1;
       positions2[i] = correspondences[i].camera2;
@@ -102,8 +102,8 @@ void AlignReconstructions(const Reconstruction& reconstruction1,
       FindCommonViewsByName(reconstruction1, *reconstruction2);
 
   // Collect the positions of all common views.
-  std::vector<Eigen::Vector3d> positions1(common_view_names.size());
-  std::vector<Eigen::Vector3d> positions2(common_view_names.size());
+  std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> positions1(common_view_names.size());
+  std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> positions2(common_view_names.size());
   for (int i = 0; i < common_view_names.size(); i++) {
     const ViewId view_id1 =
         reconstruction1.ViewIdFromName(common_view_names[i]);
@@ -139,7 +139,7 @@ void AlignReconstructionsRobust(
       FindCommonViewsByName(reconstruction1, *reconstruction2);
 
   // Collect the positions of all common views.
-  std::vector<CameraCorrespondence> correspondences(common_view_names.size());
+  std::vector<CameraCorrespondence, Eigen::aligned_allocator<CameraCorrespondence>> correspondences(common_view_names.size());
   for (int i = 0; i < common_view_names.size(); i++) {
     const ViewId view_id1 =
         reconstruction1.ViewIdFromName(common_view_names[i]);
@@ -171,8 +171,8 @@ void AlignReconstructionsRobust(
          "transformation. Try using a higher error threshold.";
 
   // Align the reconstructions using the inliers.
-  std::vector<Eigen::Vector3d> positions1(summary.inliers.size());
-  std::vector<Eigen::Vector3d> positions2(summary.inliers.size());
+  std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> positions1(summary.inliers.size());
+  std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> positions2(summary.inliers.size());
   for (int i = 0; i < summary.inliers.size(); i++) {
     positions1[i] = correspondences[summary.inliers[i]].camera1;
     positions2[i] = correspondences[summary.inliers[i]].camera2;
