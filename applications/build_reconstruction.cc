@@ -450,7 +450,9 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < reconstructions.size(); i++) {
     const std::string output_file =
         theia::StringPrintf("%s-%d", FLAGS_output_reconstruction.c_str(), i);
+#if USE_LOG_INFO
     LOG(INFO) << "Writing reconstruction " << i << " to " << output_file;
+#endif
     CHECK(theia::WriteReconstruction(*reconstructions[i], output_file))
         << "Could not write reconstruction to file.";
   }

@@ -202,8 +202,10 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
     summary.success = false;
     return summary;
   }
+#if USE_LOG_INFO
   LOG(INFO) << positions_.size()
             << " camera positions were estimated successfully.";
+#endif
   global_estimator_timings.position_estimation_time =
       timer.ElapsedTimeInSeconds();
 
@@ -258,7 +260,9 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
         options_.max_reprojection_error_in_pixels,
         options_.min_triangulation_angle_degrees,
         reconstruction_);
+#if USE_LOG_INFO
     LOG(INFO) << num_points_removed << " outlier points were removed.";
+#endif
   }
 
   // Set the output parameters.

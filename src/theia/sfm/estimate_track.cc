@@ -192,9 +192,10 @@ TrackEstimator::Summary TrackEstimator::EstimateTracks(
       summary.estimated_tracks.insert(track_id);
     }
   }
-
+#if USE_LOG_INFO
   LOG(INFO) << summary.estimated_tracks.size() << " tracks were estimated of "
             << summary.num_triangulation_attempts << " possible tracks.";
+#endif
   return summary;
 }
 

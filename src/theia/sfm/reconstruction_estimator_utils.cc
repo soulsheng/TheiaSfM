@@ -345,14 +345,14 @@ int RemoveOutlierFeatures(const std::unordered_set<TrackId>& track_ids,
       track->SetEstimated(false);
     }
   }
-
+#if USE_LOG_INFO
   LOG_IF(INFO, num_bad_reprojections > 0 || num_insufficient_viewing_angles > 0)
       << num_bad_reprojections
       << " points were removed because of bad reprojection errors. "
       << num_insufficient_viewing_angles
       << " points were removed because they had insufficient viewing angles "
          "and were poorly constrained.";
-
+#endif
   return num_bad_reprojections + num_insufficient_viewing_angles;
 }
 

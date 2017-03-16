@@ -248,3 +248,4 @@
 /build12/libraries/akaze/lib
 /build12/applications/*.dir
 /build12/libraries/akaze/bin
+/build12/libraries/statx/*.user

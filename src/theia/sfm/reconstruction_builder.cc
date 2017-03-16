@@ -267,9 +267,10 @@ bool ReconstructionBuilder::ExtractAndMatchFeatures() {
   // Log how many view pairs were geometrically verified.
   const int num_total_view_pairs =
       image_filepaths_.size() * (image_filepaths_.size() - 1) / 2;
+  #if USE_LOG_INFO
   LOG(INFO) << matches.size() << " of " << num_total_view_pairs
             << " view pairs were matched and geometrically verified.";
-
+  #endif
   // Add the EXIF data to each view.
   std::vector<std::string> image_filenames(image_filepaths_.size());
   for (int i = 0; i < image_filepaths_.size(); i++) {
@@ -357,10 +358,11 @@ bool ReconstructionBuilder::BuildReconstruction(
   }
 
   while (reconstruction_->NumViews() > 1) {
+#if USE_LOG_INFO
     LOG(INFO) << "Attempting to reconstruct " << reconstruction_->NumViews()
               << " images from " << view_graph_->NumEdges()
               << " two view matches.";
-
+#endif
     std::unique_ptr<ReconstructionEstimator> reconstruction_estimator(
         ReconstructionEstimator::Create(
             options_.reconstruction_estimator_options));
@@ -372,7 +374,7 @@ bool ReconstructionBuilder::BuildReconstruction(
     if (!summary.success) {
       return reconstructions->size() > 0;
     }
-
+#if USE_LOG_INFO
     LOG(INFO)
         << "\nReconstruction estimation statistics: "
         << "\n\tNum estimated views = " << summary.estimated_views.size()
@@ -384,7 +386,7 @@ bool ReconstructionBuilder::BuildReconstruction(
         << "\n\tBundle Adjustment time = " << summary.bundle_adjustment_time
         << "\n\tTotal time = " << summary.total_time
         << "\n\n" << summary.message;
-
+#endif
     // Remove estimated views and tracks and attempt to create a reconstruction
     // from the remaining unestimated parts.
     reconstructions->emplace_back(
