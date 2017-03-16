@@ -101,7 +101,7 @@ void TrackBuilder::BuildTracks(Reconstruction* reconstruction) {
       continue;
     }
 
-    std::vector<std::pair<ViewId, Feature> > track;
+	std::vector<std::pair<ViewId, Feature>, Eigen::aligned_allocator<std::pair<ViewId, Feature>> > track;
     track.reserve(component.second.size());
 
     // Add all features in the connected component to the track.

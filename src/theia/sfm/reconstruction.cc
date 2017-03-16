@@ -58,7 +58,7 @@ namespace {
 
 // Return whether the track contains the same view twice.
 bool DuplicateViewsExistInTrack(
-    const std::vector<std::pair<ViewId, Feature> >& track) {
+    const std::vector<std::pair<ViewId, Feature>, Eigen::aligned_allocator<std::pair<ViewId, Feature>> >& track) {
   std::vector<ViewId> view_ids;
   view_ids.reserve(track.size());
   for (const auto& feature : track) {
@@ -222,7 +222,7 @@ int Reconstruction::NumCameraIntrinsicGroups() const {
 }
 
 TrackId Reconstruction::AddTrack(
-    const std::vector<std::pair<ViewId, Feature> >& track) {
+    const std::vector<std::pair<ViewId, Feature>, Eigen::aligned_allocator<std::pair<ViewId, Feature>> >& track) {
   if (track.size() < 2) {
     LOG(WARNING) << "Tracks must have at least 2 observations (" << track.size()
                  << " were given). Cannot add track to the reconstruction";
@@ -255,7 +255,7 @@ TrackId Reconstruction::AddTrack(
     view->AddFeature(new_track_id, observation.second);
   }
 
-  tracks_.emplace(new_track_id, new_track);
+  tracks_.emplace(std::pair<ViewId, class Track>(new_track_id, new_track));
   ++next_track_id_;
   return new_track_id;
 }

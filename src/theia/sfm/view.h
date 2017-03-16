@@ -97,7 +97,7 @@ class View {
   bool is_estimated_;
   class Camera camera_;
   struct CameraIntrinsicsPrior camera_intrinsics_prior_;
-  std::unordered_map<TrackId, Feature> features_;
+  std::unordered_map<ViewId, Feature, std::hash<ViewId>, std::equal_to<ViewId>, Eigen::aligned_allocator<std::pair<const ViewId, Feature> > > features_;
 };
 
 }  // namespace theia

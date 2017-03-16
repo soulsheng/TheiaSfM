@@ -108,7 +108,7 @@ class Reconstruction {
   // Add a new track to the reconstruction. If successful, the new track id is
   // returned. Failure results when multiple features from the same image are
   // present, and kInvalidTrackId is returned.
-  TrackId AddTrack(const std::vector<std::pair<ViewId, Feature> >& track);
+  TrackId AddTrack(const std::vector<std::pair<ViewId, Feature>, Eigen::aligned_allocator<std::pair<ViewId, Feature>> >& track);
 
   // Removes the track from the reconstruction including the corresponding
   // features that are present in the view that observe it.
@@ -152,8 +152,8 @@ class Reconstruction {
   CameraIntrinsicsGroupId next_camera_intrinsics_group_id_;
 
   std::unordered_map<std::string, ViewId> view_name_to_id_;
-  std::unordered_map<ViewId, class View> views_;
-  std::unordered_map<TrackId, class Track> tracks_;
+  std::unordered_map<ViewId, class View, std::hash<ViewId>, std::equal_to<ViewId>, Eigen::aligned_allocator<std::pair<const ViewId, class View> > > views_;
+  std::unordered_map<ViewId, class Track, std::hash<ViewId>, std::equal_to<ViewId>, Eigen::aligned_allocator<std::pair<const ViewId, class Track> > > tracks_;
 
   std::unordered_map<ViewId, CameraIntrinsicsGroupId>
       view_id_to_camera_intrinsics_group_id_;

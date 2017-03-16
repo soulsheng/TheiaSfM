@@ -118,7 +118,7 @@ bool ImportNVMFile(const std::string& nvm_filepath,
   }
 
   // Create the track correspondences.
-  std::unordered_map<int, std::vector<std::pair<ViewId, Feature>>>
+  std::unordered_map<int, std::vector<std::pair<ViewId, Feature>, Eigen::aligned_allocator<std::pair<ViewId, Feature>> >>
       tracks;
   for (int i = 0; i < vsfm_reconstruction.measurements.size(); i++) {
     const Feature feature(vsfm_reconstruction.measurements[i].x,

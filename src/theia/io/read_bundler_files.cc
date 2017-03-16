@@ -300,7 +300,7 @@ bool ReadBundlerFiles(const std::string& lists_file,
     p = p2;
 
     // Reserve the view list for this 3D point.
-    std::vector<std::pair<ViewId, Feature> > track;
+    std::vector<std::pair<ViewId, Feature>, Eigen::aligned_allocator<std::pair<ViewId, Feature>> > track;
     for (int j = 0; j < num_views; j++) {
       // Camera key x y
       const int camera_index = strtol(p, &p2, 10);
@@ -319,7 +319,7 @@ bool ReadBundlerFiles(const std::string& lists_file,
 
       // Push the sift key correspondence to the view list if the view is valid.
       if (!ContainsKey(views_to_remove, camera_index)) {
-        track.emplace_back(camera_index, feature);
+		  track.emplace_back( std::pair<ViewId, Feature>(camera_index, feature) );
       }
     }
 
