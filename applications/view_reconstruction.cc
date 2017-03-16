@@ -49,8 +49,8 @@
 #else  // __APPLE__
 #ifdef _WIN32
 #include <windows.h>
-#include <GL/glew.h>
-#include <GL/glut.h>
+#include <glew.h>
+#include <glut.h>
 #else  // _WIN32
 #define GL_GLEXT_PROTOTYPES 1
 #include <GL/gl.h>
