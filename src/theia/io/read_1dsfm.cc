@@ -259,7 +259,7 @@ bool Input1DSFM::ReadTracks() {
     int num_features;
     ifs >> num_features;
 
-    std::vector<std::pair<ViewId, Feature> > track;
+    std::vector<std::pair<ViewId, Feature>, Eigen::aligned_allocator<std::pair<ViewId, Feature>> > track;
     track.reserve(num_features);
     int feature_id;
     ViewId view_id;
