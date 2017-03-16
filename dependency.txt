@@ -2,11 +2,11 @@
 
 theia
 	|	
-	-- glog, blas, lapack
+	-- glog v0.3.3-vc10-32, blas+lapack
 	|	
 	-- mfc( msvcp120d, msvcr120d )
 	|	
-	-- vlfeat
+	-- vlfeat, flann
 	|
 	-- oiio v1.5.24-vc12-32
 	|	|
@@ -34,10 +34,10 @@ theia
 	|	
 	|-- static lib( stlplus3, visual_sfm, flann_cpp, akaze )
 	|	
-	-- static lib ( libamdd.lib, libbtfd.lib, libcamdd.lib, libccolamdd.lib, 
+	-- static lib : gflag v2.2.0-vc12-32, SuiteSparse v1.3.1-vc10-32( libamdd.lib, libbtfd.lib, libcamdd.lib, libccolamdd.lib, 
 	|				libcholmodd.lib, libcolamdd.lib, ibcxsparsed.lib, libklud.lib, 
 	|				libldld.lib, libspqrd.lib, libumfpackd.lib, metisd.lib, 
-	|				suitesparseconfigd.lib )	SuiteSparse v1.3.1-vc10-32
+	|				suitesparseconfigd.lib )	
 
 	|	
 		
@@ -48,24 +48,29 @@ theia
 1) boost  v1_60_0-msvc-12.0-32
 https://excellmedia.dl.sourceforge.net/project/boost/boost-binaries/1.60.0/boost_1_60_0-msvc-12.0-32.exe
 
-
 2) glew-1.5.1 / jpeg-6b / libpng-1.2.3 / openjpeg-1.3  / tiff-3.8.2 / zlib-1.2.3 
 http://www.openimageio.org/external.zip
 
-
-
-4) lapack & blas
-
+3) lapack & blas v3.4.1 
+https://github.com/soulsheng/suitesparse-metis-for-windows/lapack_windows
 
 2 code
 
-1) suitesparse 
+1) suitesparse  v1.3.1-vc10-32
 https://github.com/soulsheng/suitesparse-metis-for-windows
 
-2) ceres
+2) ceres  v1.12-vc12-32
+https://github.com/soulsheng/ceres-solver
  
-3) IlmBase v2.2  SHA-1: 20d043d017d4b752356bb76946ffdffaa9c15c72  2017/1/10
-https://github.com/openexr/openexr
+3) IlmBase v2.2-vc12-32  SHA-1: 20d043d017d4b752356bb76946ffdffaa9c15c72  2017/1/10
+https://github.com/soulsheng/openexr
 
-3) openimageio
+3) openimageio v1.5.24-vc12-32
 https://github.com/soulsheng/oiio   (branch RB-1.5)
+
+4) glog v0.3.3-vc10-32
+https://github.com/soulsheng/glog	(branch master)
+
+5) gflag v2.2.0-vc12-32
+https://github.com/gflags/gflags	(branch master)
+
