@@ -247,3 +247,4 @@
 /build12/src/theia/*.user
 /build12/libraries/akaze/lib
 /build12/applications/*.dir
+/build12/libraries/akaze/bin
