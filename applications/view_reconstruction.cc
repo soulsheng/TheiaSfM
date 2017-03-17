@@ -90,7 +90,7 @@ bool draw_cameras = false;
 bool draw_axes = false;
 float point_size = 1.0;
 float normalized_focal_length = 1.0;
-int min_num_views_for_track = 3;
+int min_num_views_for_track = 10;
 double anti_aliasing_blend = 0.3;
 
 int y_up_direction = -1;// 1-up,  -1-down 
@@ -282,6 +282,9 @@ void RenderScene() {
       DrawCamera(cameras[i]);
     }
   }
+  static int nFrameCount = 0;
+  if ( 0 == nFrameCount++ % 120 )
+	min_num_views_for_track--;
 
   glutSwapBuffers();
 }
@@ -362,7 +365,7 @@ void Keyboard(unsigned char key, int x, int y) {
   switch (key) {
     case 'r':  // reset viewpoint
       viewer_position.setZero();
-      zoom = -50.0;
+      zoom = -500.0;
       navigation_rotation.setZero();
       mouse_pressed_x = 0;
       mouse_pressed_y = 0;
@@ -371,6 +374,8 @@ void Keyboard(unsigned char key, int x, int y) {
       left_mouse_button_active = 0;
       right_mouse_button_active = 0;
       point_size = 1.0;
+	  min_num_views_for_track = 10;
+	  navigation_rotation[0] = 45.0;
       break;
     case 'z':
       zoom *= delta_zoom;
