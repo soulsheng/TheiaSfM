@@ -257,7 +257,7 @@ void RenderScene() {
   // Transformation from the viewer origin to the reconstruction origin.
   glTranslatef(viewer_position[0], viewer_position[1], viewer_position[2]);
 
-  glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+  glClearColor(0.5f, 0.6f, 0.8f, 1.0f);
 
   // Each 3D point is rendered 3 times with different point sizes, color
   // intensity, and alpha blending. This allows for a more complete texture-like
