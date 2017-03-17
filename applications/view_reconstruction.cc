@@ -73,11 +73,11 @@ int height = 800;
 
 // OpenGL camera parameters.
 Eigen::Vector3f viewer_position(0.0, 0.0, 0.0);
-float zoom = -50.0;
+float zoom = -500.0;
 float delta_zoom = 1.1;
 
 // Rotation values for the navigation
-Eigen::Vector2f navigation_rotation(0.0, 0.0);
+Eigen::Vector2f navigation_rotation(45.0, 0.0);
 
 // Position of the mouse when pressed
 int mouse_pressed_x = 0, mouse_pressed_y = 0;
@@ -86,12 +86,14 @@ float last_x_offset = 0.0, last_y_offset = 0.0;
 int left_mouse_button_active = 0, right_mouse_button_active = 0;
 
 // Visualization parameters.
-bool draw_cameras = true;
+bool draw_cameras = false;
 bool draw_axes = false;
 float point_size = 1.0;
 float normalized_focal_length = 1.0;
 int min_num_views_for_track = 3;
-double anti_aliasing_blend = 0.01;
+double anti_aliasing_blend = 0.3;
+
+int y_up_direction = -1;// 1-up,  -1-down 
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
   double focal_length = 800.0;
@@ -230,13 +232,13 @@ void DrawPoints(const float point_scale,
     if (num_views_for_track[i] < min_num_views_for_track) {
       continue;
     }
-    const Eigen::Vector3f color = point_colors[i] / 255.0;
+	const Eigen::Vector3f color = Eigen::Vector3f(0.8, 1.0, 1.0);// point_colors[i] / 255.0;
     glColor4f(color_scale * color[0],
               color_scale * color[1],
               color_scale * color[2],
               alpha_scale * default_alpha_scale);
 
-    glVertex3d(world_points[i].x(), world_points[i].y(), world_points[i].z());
+	glVertex3d(world_points[i].x(), world_points[i].y() * y_up_direction, world_points[i].z());
   }
   glEnd();
 }
