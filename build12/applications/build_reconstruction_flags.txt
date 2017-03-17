@@ -2,12 +2,12 @@
 # Input/output files.
 # Set these if a matches file is not present. Images should be a filepath with a
 # wildcard e.g., /home/my_username/my_images/*.jpg
---images=D:\file\data\3d\VolumeImg-ori-200w\*.jpg
---output_matches_file=D:\file\data\3d\VolumeImg-ori-200w\output.matches
+--images=D:\file\data\3d\VolumeImg-ori-200w-31\*.jpg
+--output_matches_file=D:\file\data\3d\VolumeImg-ori-200w-31\output.matches
 
 # If a matches file has already been created, set the filepath here. This avoids
 # having to recompute all features and matches.
---matches_file=D:\file\data\3d\VolumeImg-ori-200w\output.matches
+--matches_file=D:\file\data\3d\VolumeImg-ori-200w-31\output.matches
 
 # The calibration file indicates possibly known calibration e.g, from EXIF or
 # explicit calibration. Theia attempts to extract EXIF focal lengths if calibration
@@ -32,7 +32,7 @@
 # During feature matching, features are saved to disk so that out-of-core
 # matching may be performed. This directory specifies which directory those
 # features should be saved to.
---matching_working_directory=D:\file\data\3d\VolumeImg-ori-200w\features
+--matching_working_directory=D:\file\data\3d\VolumeImg-ori-200w-31\features
 
 # During feature matching we utilize an LRU cache for out-of-core matching. The size
 # of that cache (in terms of number of images) is controlled by this parameter. The
