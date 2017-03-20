@@ -42,6 +42,18 @@
 #include "build_common.h"
 #include "view_common.h"
 
+// OpenGL camera parameters.
+float zoom_default = -400.0;
+float zoom = zoom_default;
+
+// Rotation values for the navigation
+Eigen::Vector2f navigation_rotation_default(60.0, 0.0);
+Eigen::Vector2f navigation_rotation(navigation_rotation_default);
+
+int n_fps = 240; // frame per second
+
+Eigen::Vector2i window_position(200, 100);
+
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
@@ -102,7 +114,7 @@ int main(int argc, char* argv[]) {
 
   // Set up opengl and glut.
   glutInit(&argc, argv);
-  glutInitWindowPosition(600, 600);
+  glutInitWindowPosition(window_position[0], window_position[1]);
   glutInitWindowSize(1200, 800);
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
   glutCreateWindow("Theia Reconstruction Viewer");

@@ -58,11 +58,13 @@ int height = 800;
 
 // OpenGL camera parameters.
 Eigen::Vector3f viewer_position(0.0, 0.0, 0.0);
-float zoom = -500.0;
+extern float zoom_default;// = -500.0;
+extern float zoom;// = -500.0;
 float delta_zoom = 1.1;
 
 // Rotation values for the navigation
-Eigen::Vector2f navigation_rotation(45.0, 0.0);
+extern Eigen::Vector2f navigation_rotation_default;// (45.0, 0.0);
+extern Eigen::Vector2f navigation_rotation;// (45.0, 0.0);
 
 // Position of the mouse when pressed
 int mouse_pressed_x = 0, mouse_pressed_y = 0;
@@ -79,6 +81,7 @@ int min_num_views_for_track = 10;
 double anti_aliasing_blend = 0.3;
 
 int y_up_direction = -1;// 1-up,  -1-down 
+extern int n_fps; // frame per second
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
   double focal_length = 800.0;
@@ -268,7 +271,7 @@ void RenderScene() {
     }
   }
   static int nFrameCount = 0;
-  if ( 0 == nFrameCount++ % 120 )
+  if (0 == nFrameCount++ % n_fps)
 	min_num_views_for_track--;
 
   glutSwapBuffers();
@@ -350,7 +353,7 @@ void Keyboard(unsigned char key, int x, int y) {
   switch (key) {
     case 'r':  // reset viewpoint
       viewer_position.setZero();
-      zoom = -500.0;
+	  zoom = zoom_default;
       navigation_rotation.setZero();
       mouse_pressed_x = 0;
       mouse_pressed_y = 0;
@@ -360,7 +363,7 @@ void Keyboard(unsigned char key, int x, int y) {
       right_mouse_button_active = 0;
       point_size = 1.0;
 	  min_num_views_for_track = 10;
-	  navigation_rotation[0] = 45.0;
+	  navigation_rotation = navigation_rotation_default;
       break;
     case 'z':
       zoom *= delta_zoom;
