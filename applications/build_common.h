@@ -31,9 +31,7 @@
 //
 // Please contact the author of this library if you have any questions.
 // Author: Chris Sweeney (cmsweeney@cs.ucsb.edu)
-#if 1
-#include "build_common.h"
-#else
+
 #include <glog/logging.h>
 #include <gflags/gflags.h>
 #include <time.h>
@@ -422,40 +420,4 @@ void AddImagesToReconstructionBuilder(
 
   // Extract and match features.
   CHECK(reconstruction_builder->ExtractAndMatchFeatures());
-}
-#endif
-int main(int argc, char *argv[]) {
-  THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-  google::InitGoogleLogging(argv[0]);
-
-  CHECK_GT(FLAGS_output_reconstruction.size(), 0)
-      << "Must specify a filepath to output the reconstruction.";
-
-  const ReconstructionBuilderOptions options =
-      SetReconstructionBuilderOptions();
-
-  ReconstructionBuilder reconstruction_builder(options);
-  // If matches are provided, load matches otherwise load images.
-  if (FLAGS_matches_file.size() != 0) {
-    AddMatchesToReconstructionBuilder(&reconstruction_builder);
-  } else if (FLAGS_images.size() != 0) {
-    AddImagesToReconstructionBuilder(&reconstruction_builder);
-  } else {
-    LOG(FATAL)
-        << "You must specifiy either images to reconstruct or a match file.";
-  }
-
-  std::vector<Reconstruction*> reconstructions;
-  CHECK(reconstruction_builder.BuildReconstruction(&reconstructions))
-      << "Could not create a reconstruction.";
-
-  for (int i = 0; i < reconstructions.size(); i++) {
-    const std::string output_file =
-        theia::StringPrintf("%s-%d", FLAGS_output_reconstruction.c_str(), i);
-#if USE_LOG_INFO
-    LOG(INFO) << "Writing reconstruction " << i << " to " << output_file;
-#endif
-    CHECK(theia::WriteReconstruction(*reconstructions[i], output_file))
-        << "Could not write reconstruction to file.";
-  }
 }

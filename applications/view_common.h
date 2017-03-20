@@ -38,28 +38,11 @@
 #include <theia/theia.h>
 #include <string>
 #include <vector>
-#if 1
-#include "view_common.h"
-#else
-#ifdef __APPLE__
-#include <OpenGL/OpenGL.h>
-#ifdef FREEGLUT
-#include <GL/freeglut.h>
-#else  // FREEGLUT
-#include <GLUT/glut.h>
-#endif  // FREEGLUT
-#else  // __APPLE__
-#ifdef _WIN32
+
 #include <windows.h>
 #include <glew.h>
 #include <glut.h>
-#else  // _WIN32
-#define GL_GLEXT_PROTOTYPES 1
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#endif  // _WIN32
-#endif  // __APPLE__
+
 
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
 
@@ -420,73 +403,4 @@ void Keyboard(unsigned char key, int x, int y) {
       }
       break;
   }
-}
-
-#endif
-int main(int argc, char* argv[]) {
-  THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-  google::InitGoogleLogging(argv[0]);
-
-  // Output as a binary file.
-  std::unique_ptr<theia::Reconstruction> reconstruction(
-      new theia::Reconstruction());
-  CHECK(ReadReconstruction(FLAGS_reconstruction, reconstruction.get()))
-      << "Could not read reconstruction file.";
-
-  // Centers the reconstruction based on the absolute deviation of 3D points.
-  reconstruction->Normalize();
-
-  // Set up camera drawing.
-  cameras.reserve(reconstruction->NumViews());
-  for (const theia::ViewId view_id : reconstruction->ViewIds()) {
-    const auto* view = reconstruction->View(view_id);
-    if (view == nullptr || !view->IsEstimated()) {
-      continue;
-    }
-    cameras.emplace_back(view->Camera());
-  }
-
-  // Set up world points and colors.
-  world_points.reserve(reconstruction->NumTracks());
-  point_colors.reserve(reconstruction->NumTracks());
-  for (const theia::TrackId track_id : reconstruction->TrackIds()) {
-    const auto* track = reconstruction->Track(track_id);
-    if (track == nullptr || !track->IsEstimated()) {
-      continue;
-    }
-    world_points.emplace_back(track->Point().hnormalized());
-    point_colors.emplace_back(track->Color().cast<float>());
-    num_views_for_track.emplace_back(track->NumViews());
-  }
-
-  reconstruction.release();
-
-  // Set up opengl and glut.
-  glutInit(&argc, argv);
-  glutInitWindowPosition(600, 600);
-  glutInitWindowSize(1200, 800);
-  glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-  glutCreateWindow("Theia Reconstruction Viewer");
-
-#ifdef _WIN32
-  // Set up glew.
-  CHECK_EQ(GLEW_OK, glewInit())
-      << "Failed initializing GLEW.";
-#endif
-
-  // Set the camera
-  gluLookAt(0.0f, 0.0f, -6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-
-  // register callbacks
-  glutDisplayFunc(RenderScene);
-  glutReshapeFunc(ChangeSize);
-  glutMouseFunc(MouseButton);
-  glutMotionFunc(MouseMove);
-  glutKeyboardFunc(Keyboard);
-  glutIdleFunc(RenderScene);
-
-  // enter GLUT event processing loop
-  glutMainLoop();
-
-  return 0;
 }

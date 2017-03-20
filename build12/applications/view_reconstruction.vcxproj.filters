@@ -13,4 +13,7 @@
       <UniqueIdentifier>{E0E7CEE7-AB82-4AB0-BF69-F03D37D17519}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\applications\view_common.h" />
+  </ItemGroup>
 </Project>

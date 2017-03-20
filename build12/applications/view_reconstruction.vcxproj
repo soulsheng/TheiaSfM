@@ -349,6 +349,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>E01309CE-F729-4EDA-BE4C-534169522975</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\applications\view_common.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
