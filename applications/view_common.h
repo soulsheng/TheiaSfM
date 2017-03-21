@@ -220,7 +220,7 @@ void DrawPoints(const float point_scale,
     if (num_views_for_track[i] < min_num_views_for_track) {
       continue;
     }
-	const Eigen::Vector3f color = Eigen::Vector3f(0.8, 1.0, 1.0);// point_colors[i] / 255.0;
+	const Eigen::Vector3f color = point_colors[i] / 255.0;
     glColor4f(color_scale * color[0],
               color_scale * color[1],
               color_scale * color[2],
