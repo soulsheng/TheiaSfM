@@ -74,6 +74,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "build_view_reconstruction",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "colorize_reconstruction", "applications\colorize_reconstruction.vcxproj", "{6430F184-3F3C-4D09-A7AA-B823658B70DA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "export_reconstruction_to_pmvs", "applications\export_reconstruction_to_pmvs.vcxproj", "{276CF925-F148-4CCD-A061-BB566D2DACB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -194,6 +196,14 @@ Global
 		{6430F184-3F3C-4D09-A7AA-B823658B70DA}.Release|Win32.Build.0 = Release|Win32
 		{6430F184-3F3C-4D09-A7AA-B823658B70DA}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
 		{6430F184-3F3C-4D09-A7AA-B823658B70DA}.RelWithDebInfo|Win32.Build.0 = RelWithDebInfo|Win32
+		{276CF925-F148-4CCD-A061-BB566D2DACB1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{276CF925-F148-4CCD-A061-BB566D2DACB1}.Debug|Win32.Build.0 = Debug|Win32
+		{276CF925-F148-4CCD-A061-BB566D2DACB1}.MinSizeRel|Win32.ActiveCfg = MinSizeRel|Win32
+		{276CF925-F148-4CCD-A061-BB566D2DACB1}.MinSizeRel|Win32.Build.0 = MinSizeRel|Win32
+		{276CF925-F148-4CCD-A061-BB566D2DACB1}.Release|Win32.ActiveCfg = Release|Win32
+		{276CF925-F148-4CCD-A061-BB566D2DACB1}.Release|Win32.Build.0 = Release|Win32
+		{276CF925-F148-4CCD-A061-BB566D2DACB1}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
+		{276CF925-F148-4CCD-A061-BB566D2DACB1}.RelWithDebInfo|Win32.Build.0 = RelWithDebInfo|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
