@@ -42,6 +42,10 @@
 #include "build_common.h"
 #include "view_common.h"
 
+DEFINE_string(image_directory, "",
+	"Full path to the directory containing the images used to create "
+	"the reconstructions. Must contain a trailing slash.");
+
 void prepare_points_to_draw(Reconstruction *reconstruction)
 {
 	// Centers the reconstruction based on the absolute deviation of 3D points.
@@ -85,7 +89,7 @@ int n_fps = 240; // frame per second
 
 Eigen::Vector2i window_position(200, 100);
 
-void build_reconstruction(std::vector<Reconstruction *> reconstructions)
+void build_reconstruction(std::vector<Reconstruction *>& reconstructions)
 {
 	const ReconstructionBuilderOptions options =
 		SetReconstructionBuilderOptions();
@@ -150,6 +154,10 @@ int main(int argc, char* argv[]) {
 	  reconstruction = reconstructions[0];
   else
 	  return -1;
+
+  theia::ColorizeReconstruction(FLAGS_image_directory,
+	  FLAGS_num_threads,
+	  reconstruction);
 
   prepare_points_to_draw( reconstruction );
 
