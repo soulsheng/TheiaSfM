@@ -42,6 +42,10 @@
 #include "build_common.h"
 #include "view_common.h"
 
+#include <Shellapi.h>
+
+typedef std::string	String;
+
 DEFINE_string(image_directory, "",
 	"Full path to the directory containing the images used to create "
 	"the reconstructions. Must contain a trailing slash.");
@@ -250,6 +254,49 @@ void export_to_pmvs(theia::Reconstruction& reconstruction)
 	CHECK(theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file));
 }
 
+void lanch_external_bin(String& bin, String& parameter, String& path)
+{
+	String zipParameter = String("a -m0 -inul -idp -sfxDefault.SFX -ibck -iiconVRGIS.ico -zsescript ");
+
+	SHELLEXECUTEINFO ShExecInfo = { 0 };
+	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+	ShExecInfo.hwnd = NULL;
+	ShExecInfo.lpVerb = NULL;
+	ShExecInfo.lpFile = bin.c_str();
+	ShExecInfo.lpParameters = parameter.c_str();
+	ShExecInfo.lpDirectory = path.c_str();
+	ShExecInfo.nShow = SW_HIDE;
+	ShExecInfo.hInstApp = NULL;
+	ShellExecuteEx(&ShExecInfo);
+
+	long waitStatus = WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
+
+	if (waitStatus)
+		printf("failed \n");
+	else
+		printf("succeed \n");
+
+}
+
+String getPath(String& strFullPath)
+{
+	int indexEnd = strFullPath.find_last_of('\\');
+	return strFullPath.substr(0, indexEnd);
+}
+
+void run_pmvs(char *exeFullPath)
+{
+	String exePath = getPath(String(exeFullPath));
+	lanch_external_bin(String("cmvs.exe"), FLAGS_pmvs_working_directory, exePath);
+
+	lanch_external_bin(String("genOption.exe"), FLAGS_pmvs_working_directory, exePath);
+
+	String parameter = FLAGS_pmvs_working_directory + " option-0000";
+	lanch_external_bin(String("pmvs2.exe"), parameter, exePath);
+
+}
+
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
@@ -268,10 +315,15 @@ int main(int argc, char* argv[]) {
 	  FLAGS_num_threads,
 	  reconstruction);
 
+#if 1
   export_to_pmvs(*reconstruction);
+#endif
 
   prepare_points_to_draw( reconstruction );
 
+#if 1
+  run_pmvs(argv[0]);
+#endif
 
   gl_draw_points(argc, argv);
 
