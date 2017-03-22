@@ -301,11 +301,14 @@ int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
+
+  Reconstruction* reconstruction = NULL;
+
+#if 0
   std::vector<Reconstruction*> reconstructions;
 
   build_reconstruction(reconstructions);
 
-  Reconstruction* reconstruction = NULL;
   if (reconstructions.size())
 	  reconstruction = reconstructions[0];
   else
@@ -314,6 +317,19 @@ int main(int argc, char* argv[]) {
   theia::ColorizeReconstruction(FLAGS_image_directory,
 	  FLAGS_num_threads,
 	  reconstruction);
+
+  theia::WriteReconstruction(*reconstruction,
+	  FLAGS_output_reconstruction );
+
+#else
+  reconstruction = new theia::Reconstruction();
+
+  CHECK(ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
+	  << "Could not read reconstruction file.";
+
+  // Centers the reconstruction based on the absolute deviation of 3D points.
+  reconstruction->Normalize();
+#endif
 
 #if 1
   export_to_pmvs(*reconstruction);
