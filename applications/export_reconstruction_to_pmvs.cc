@@ -130,30 +130,36 @@ void WritePMVSOptions(const std::string& working_dir,
   ofs << "oimages 0" << std::endl;
 }
 
+void export_to_pmvs(theia::Reconstruction& reconstruction)
+{
+	// Set up output directories.
+	CreateDirectoryIfDoesNotExist(FLAGS_pmvs_working_directory);
+	const std::string visualize_dir = FLAGS_pmvs_working_directory + "/visualize";
+	CreateDirectoryIfDoesNotExist(visualize_dir);
+	const std::string txt_dir = FLAGS_pmvs_working_directory + "/txt";
+	CreateDirectoryIfDoesNotExist(txt_dir);
+	const std::string models_dir = FLAGS_pmvs_working_directory + "/models";
+	CreateDirectoryIfDoesNotExist(models_dir);
+
+	const int num_cameras = WriteCamerasToPMVS(reconstruction);
+	WritePMVSOptions(FLAGS_pmvs_working_directory, num_cameras);
+
+	const std::string lists_file = FLAGS_pmvs_working_directory + "/list.txt";
+	const std::string bundle_file =
+		FLAGS_pmvs_working_directory + "/bundle.rd.out";
+	CHECK(theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file));
+}
+
 int main(int argc, char* argv[]) {
   google::InitGoogleLogging(argv[0]);
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-
-  // Set up output directories.
-  CreateDirectoryIfDoesNotExist(FLAGS_pmvs_working_directory);
-  const std::string visualize_dir = FLAGS_pmvs_working_directory + "/visualize";
-  CreateDirectoryIfDoesNotExist(visualize_dir);
-  const std::string txt_dir = FLAGS_pmvs_working_directory + "/txt";
-  CreateDirectoryIfDoesNotExist(txt_dir);
-  const std::string models_dir = FLAGS_pmvs_working_directory + "/models";
-  CreateDirectoryIfDoesNotExist(models_dir);
 
   theia::Reconstruction reconstruction;
   CHECK(theia::ReadReconstruction(FLAGS_reconstruction, &reconstruction))
       << "Could not read Reconstruction files.";
 
-  const int num_cameras = WriteCamerasToPMVS(reconstruction);
-  WritePMVSOptions(FLAGS_pmvs_working_directory, num_cameras);
+  export_to_pmvs(reconstruction);
 
-  const std::string lists_file = FLAGS_pmvs_working_directory + "/list.txt";
-  const std::string bundle_file =
-      FLAGS_pmvs_working_directory + "/bundle.rd.out";
-  CHECK(theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file));
 
   return 0;
 }
