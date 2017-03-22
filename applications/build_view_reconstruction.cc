@@ -42,6 +42,37 @@
 #include "build_common.h"
 #include "view_common.h"
 
+void prepare_points_to_draw(Reconstruction *reconstruction)
+{
+	// Centers the reconstruction based on the absolute deviation of 3D points.
+	reconstruction->Normalize();
+
+	// Set up camera drawing.
+	cameras.reserve(reconstruction->NumViews());
+	for (const theia::ViewId view_id : reconstruction->ViewIds()) {
+		const auto* view = reconstruction->View(view_id);
+		if (view == nullptr || !view->IsEstimated()) {
+			continue;
+		}
+		cameras.emplace_back(view->Camera());
+	}
+
+	// Set up world points and colors.
+	world_points.reserve(reconstruction->NumTracks());
+	point_colors.reserve(reconstruction->NumTracks());
+	for (const theia::TrackId track_id : reconstruction->TrackIds()) {
+		const auto* track = reconstruction->Track(track_id);
+		if (track == nullptr || !track->IsEstimated()) {
+			continue;
+		}
+		world_points.emplace_back(track->Point().hnormalized());
+		point_colors.emplace_back(track->Color().cast<float>());
+		num_views_for_track.emplace_back(track->NumViews());
+	}
+
+	//reconstruction.release();
+}
+
 // OpenGL camera parameters.
 float zoom_default = -400.0;
 float zoom = zoom_default;
@@ -54,29 +85,65 @@ int n_fps = 240; // frame per second
 
 Eigen::Vector2i window_position(200, 100);
 
+void build_reconstruction(std::vector<Reconstruction *> reconstructions)
+{
+	const ReconstructionBuilderOptions options =
+		SetReconstructionBuilderOptions();
+
+	ReconstructionBuilder reconstruction_builder(options);
+	// If matches are provided, load matches otherwise load images.
+	if (FLAGS_matches_file.size() != 0) {
+		AddMatchesToReconstructionBuilder(&reconstruction_builder);
+	}
+	else if (FLAGS_images.size() != 0) {
+		AddImagesToReconstructionBuilder(&reconstruction_builder);
+	}
+	else {
+		LOG(FATAL)
+			<< "You must specifiy either images to reconstruct or a match file.";
+	}
+
+	CHECK(reconstruction_builder.BuildReconstruction(&reconstructions))
+		<< "Could not create a reconstruction.";
+}
+
+void gl_draw_points(int argc, char** argv)
+{
+	// Set up opengl and glut.
+	glutInit(&argc, argv);
+	glutInitWindowPosition(window_position[0], window_position[1]);
+	glutInitWindowSize(1200, 800);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+	glutCreateWindow("Theia Reconstruction Viewer");
+
+#ifdef _WIN32
+	// Set up glew.
+	CHECK_EQ(GLEW_OK, glewInit())
+		<< "Failed initializing GLEW.";
+#endif
+
+	// Set the camera
+	gluLookAt(0.0f, 0.0f, -6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
+	// register callbacks
+	glutDisplayFunc(RenderScene);
+	glutReshapeFunc(ChangeSize);
+	glutMouseFunc(MouseButton);
+	glutMotionFunc(MouseMove);
+	glutKeyboardFunc(Keyboard);
+	glutIdleFunc(RenderScene);
+
+	// enter GLUT event processing loop
+	glutMainLoop();
+}
+
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
-  const ReconstructionBuilderOptions options =
-	  SetReconstructionBuilderOptions();
-
-  ReconstructionBuilder reconstruction_builder(options);
-  // If matches are provided, load matches otherwise load images.
-  if (FLAGS_matches_file.size() != 0) {
-	  AddMatchesToReconstructionBuilder(&reconstruction_builder);
-  }
-  else if (FLAGS_images.size() != 0) {
-	  AddImagesToReconstructionBuilder(&reconstruction_builder);
-  }
-  else {
-	  LOG(FATAL)
-		  << "You must specifiy either images to reconstruct or a match file.";
-  }
-
   std::vector<Reconstruction*> reconstructions;
-  CHECK(reconstruction_builder.BuildReconstruction(&reconstructions))
-	  << "Could not create a reconstruction.";
+
+  build_reconstruction(reconstructions);
 
   Reconstruction* reconstruction = NULL;
   if (reconstructions.size())
@@ -84,60 +151,11 @@ int main(int argc, char* argv[]) {
   else
 	  return -1;
 
-  // Centers the reconstruction based on the absolute deviation of 3D points.
-  reconstruction->Normalize();
+  prepare_points_to_draw( reconstruction );
 
-  // Set up camera drawing.
-  cameras.reserve(reconstruction->NumViews());
-  for (const theia::ViewId view_id : reconstruction->ViewIds()) {
-    const auto* view = reconstruction->View(view_id);
-    if (view == nullptr || !view->IsEstimated()) {
-      continue;
-    }
-    cameras.emplace_back(view->Camera());
-  }
 
-  // Set up world points and colors.
-  world_points.reserve(reconstruction->NumTracks());
-  point_colors.reserve(reconstruction->NumTracks());
-  for (const theia::TrackId track_id : reconstruction->TrackIds()) {
-    const auto* track = reconstruction->Track(track_id);
-    if (track == nullptr || !track->IsEstimated()) {
-      continue;
-    }
-    world_points.emplace_back(track->Point().hnormalized());
-    point_colors.emplace_back(track->Color().cast<float>());
-    num_views_for_track.emplace_back(track->NumViews());
-  }
+  gl_draw_points(argc, argv);
 
-  //reconstruction.release();
-
-  // Set up opengl and glut.
-  glutInit(&argc, argv);
-  glutInitWindowPosition(window_position[0], window_position[1]);
-  glutInitWindowSize(1200, 800);
-  glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-  glutCreateWindow("Theia Reconstruction Viewer");
-
-#ifdef _WIN32
-  // Set up glew.
-  CHECK_EQ(GLEW_OK, glewInit())
-      << "Failed initializing GLEW.";
-#endif
-
-  // Set the camera
-  gluLookAt(0.0f, 0.0f, -6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-
-  // register callbacks
-  glutDisplayFunc(RenderScene);
-  glutReshapeFunc(ChangeSize);
-  glutMouseFunc(MouseButton);
-  glutMotionFunc(MouseMove);
-  glutKeyboardFunc(Keyboard);
-  glutIdleFunc(RenderScene);
-
-  // enter GLUT event processing loop
-  glutMainLoop();
 
   return 0;
 }
