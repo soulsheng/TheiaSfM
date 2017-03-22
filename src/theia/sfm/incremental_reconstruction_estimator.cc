@@ -549,7 +549,10 @@ void IncrementalReconstructionEstimator::RemoveOutlierTracks(
       max_reprojection_error_in_pixels,
       options_.min_triangulation_angle_degrees,
       reconstruction_);
+
+#if USE_LOG_INFO
   LOG(INFO) << num_points_removed << " outlier points were removed.";
+#endif
 }
 
 void IncrementalReconstructionEstimator::SetUnderconstrainedAsUnestimated() {
