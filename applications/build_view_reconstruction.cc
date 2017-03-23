@@ -44,6 +44,8 @@
 
 #include <Shellapi.h>
 
+#include "theia/io/read_ply_file.h"
+
 typedef std::string	String;
 
 DEFINE_string(image_directory, "",
@@ -93,6 +95,16 @@ int n_fps = 240; // frame per second
 
 Eigen::Vector2i window_position(200, 100);
 
+int		nColorPoint[3];
+extern float point_size;
+
+void getColorFromString(std::string str, int * cColor)
+{
+	std::istringstream in(str);
+	char tmp;
+	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
+}
+
 void build_reconstruction(std::vector<Reconstruction *>& reconstructions)
 {
 	const ReconstructionBuilderOptions options =
@@ -132,6 +144,16 @@ void gl_draw_points(int argc, char** argv)
 
 	// Set the camera
 	gluLookAt(0.0f, 0.0f, -6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
+	// Set sky color
+	int cColor[3];
+	getColorFromString(std::string(FLAGS_color_sky), cColor);
+
+	glClearColor(cColor[0] / 255.0f, cColor[1] / 255.0f, cColor[2] / 255.0f, 1.0f);
+
+	// Set point color / size
+	getColorFromString(std::string(FLAGS_color_point), nColorPoint);
+	point_size = FLAGS_draw_point_size;
 
 	// register callbacks
 	glutDisplayFunc(RenderScene);
@@ -297,6 +319,13 @@ void run_pmvs(char *exeFullPath)
 
 }
 
+void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size)
+{
+	num_views_for_track.reserve(size);
+	for (int i = 0; i < size; i++)
+		num_views_for_track.emplace_back(rand() % 10);
+}
+
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
@@ -304,7 +333,7 @@ int main(int argc, char* argv[]) {
 
   Reconstruction* reconstruction = NULL;
 
-#if 0
+#if 1
   std::vector<Reconstruction*> reconstructions;
 
   build_reconstruction(reconstructions);
@@ -335,11 +364,17 @@ int main(int argc, char* argv[]) {
   export_to_pmvs(*reconstruction);
 #endif
 
-  prepare_points_to_draw( reconstruction );
+  //prepare_points_to_draw( reconstruction );
 
 #if 1
   run_pmvs(argv[0]);
 #endif
+
+
+  if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
+	  printf("can not open ply file!\n");
+
+  rand_num_views_for_track(num_views_for_track, world_points.size());
 
   gl_draw_points(argc, argv);
 

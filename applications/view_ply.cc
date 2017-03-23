@@ -43,9 +43,6 @@
 #include "theia/io/read_ply_file.h"
 
 
-DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
-DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
-DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 
 // OpenGL camera parameters.
 float zoom_default = -400.0;

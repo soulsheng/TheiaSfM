@@ -2,18 +2,18 @@
 # Input/output files.
 # Set these if a matches file is not present. Images should be a filepath with a
 # wildcard e.g., /home/my_username/my_images/*.jpg
---images=D:\file\data\3d\VolumeImg-ori-200w-31\*.jpg
---output_matches_file=D:\file\data\3d\VolumeImg-ori-200w-31\output.matches
+--images=D:\file\data\3d\2017_03-5\*.jpg
+--output_matches_file=D:\file\data\3d\2017_03-5\output.matches
 
 # If a matches file has already been created, set the filepath here. This avoids
 # having to recompute all features and matches.
---matches_file=D:\file\data\3d\VolumeImg-ori-200w-31\output.matches
+--matches_file=
 
 # The calibration file indicates possibly known calibration e.g, from EXIF or
 # explicit calibration. Theia attempts to extract EXIF focal lengths if calibration
 # is not supplied for a given image.
 --calibration_file=
---output_reconstruction=result
+--output_reconstruction=D:\file\data\3d\2017_03-5\result
 
 ############### Multithreading ###############
 # Set to the number of threads you want to use.
@@ -32,7 +32,7 @@
 # During feature matching, features are saved to disk so that out-of-core
 # matching may be performed. This directory specifies which directory those
 # features should be saved to.
---matching_working_directory=D:\file\data\3d\VolumeImg-ori-200w-31\features
+--matching_working_directory=D:\file\data\3d\2017_03-5\features
 
 # During feature matching we utilize an LRU cache for out-of-core matching. The size
 # of that cache (in terms of number of images) is controlled by this parameter. The
@@ -133,3 +133,13 @@
 --logtostderr
 # Increase this number to get more verbose logging.
 --v=1
+
+############### other options  ###############
+--pmvs_working_directory=D:\file\data\3d\2017_03-5\pmvs\
+--image_directory=D:\file\data\3d\2017_03-5\
+
+--same_color_point=0
+--color_point=(255,255,255)
+--color_sky=(128,150,200)
+--draw_point_size=1
+--ply_file=D:\file\data\3d\2017_03-5\pmvs\models\option-0000.ply

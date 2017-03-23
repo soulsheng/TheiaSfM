@@ -47,6 +47,9 @@
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
 DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
 DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
+DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
+DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
+DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 
 // Containers for the data.
 std::vector<theia::Camera> cameras;
