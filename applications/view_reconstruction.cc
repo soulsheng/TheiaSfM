@@ -424,8 +424,8 @@ void Keyboard(unsigned char key, int x, int y) {
 
 #endif
 
-DEFINE_string(color_sky, "", "color of sky. eg:(128,150,200)blue ");
-DEFINE_string(color_point, "", "color of point. eg:(255,255,255)white ");
+DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
+DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
 
 // OpenGL camera parameters.
 float zoom_default = -400.0;

@@ -47,14 +47,14 @@ class Reconstruction;
 // Read a PLY file - a common format of MeshLab.
 bool ReadPlyFile(const std::string& ply_file,
 	Vector3dVec& points_to_read,
-	Vector3dVec& normals_to_read,
-	Vector3iVec& colors_to_read);
+	Vector3fVec& normals_to_read,
+	Vector3fVec& colors_to_read);
 
 // Write a PLY file - a common format of MeshLab.
 bool WritePlyFile(const std::string& ply_file,
 	Vector3dVec& points_to_read,
-	Vector3dVec& normals_to_read,
-	Vector3iVec& colors_to_read);
+	Vector3fVec& normals_to_read,
+	Vector3fVec& colors_to_read);
 
 }  // namespace theia
 

@@ -59,6 +59,7 @@ typedef Eigen::Matrix<double, 3, 4> Matrix3x4d;
 
 typedef std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> Vector3dVec;
 typedef std::vector<Eigen::Vector3i, Eigen::aligned_allocator<Eigen::Vector3i>> Vector3iVec;
+typedef std::vector<Eigen::Vector3f, Eigen::aligned_allocator<Eigen::Vector3f>> Vector3fVec;
 
 }  // namespace theia
 

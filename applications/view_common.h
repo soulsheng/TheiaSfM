@@ -50,8 +50,9 @@ DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 
 
 // Containers for the data.
 std::vector<theia::Camera> cameras;
-std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> world_points;
-std::vector<Eigen::Vector3f> point_colors;
+theia::Vector3dVec world_points;
+theia::Vector3fVec point_colors;
+theia::Vector3fVec point_normals;
 std::vector<int> num_views_for_track;
 
 // Parameters for OpenGL.

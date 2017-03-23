@@ -51,18 +51,22 @@ namespace theia {
 		PROPERTY_COUNT
 	};
 
-void getPointCountFromPlyHeader(std::ifstream &ply_reader, int& nPointCount, bool* bProperty)
+bool getPointCountFromPlyHeader(std::ifstream &ply_reader, int& nPointCount, bool* bProperty)
 {
 	char	sBuffer[128];
 
 	// ignore first 2 lines
-	for (int i = 0; i < 2; i++)
-		ply_reader.getline(sBuffer, sizeof(sBuffer));
+	ply_reader.getline(sBuffer, sizeof(sBuffer));
+	if (-1 == std::string(sBuffer).find("ply"))
+		return false;
+
+	ply_reader.getline(sBuffer, sizeof(sBuffer));
 
 	// get point count from the third line
 	ply_reader >> sBuffer;
 	ply_reader >> sBuffer;
 	ply_reader >> nPointCount;
+	ply_reader >> sBuffer;
 
 	// ignore 10 lines more
 	std::string sPointProperty ;
@@ -86,13 +90,14 @@ void getPointCountFromPlyHeader(std::ifstream &ply_reader, int& nPointCount, boo
 	if (-1 != sPointProperty.find("red"))
 		bProperty[COLOR] = true;
 
+	return true;
 }
 
 // Reads a PLY file - a common format of MeshLab.
 bool ReadPlyFile(const std::string& ply_file,
 				  Vector3dVec& points_to_read,
-				  Vector3dVec& normals_to_read,
-				  Vector3iVec& colors_to_read)
+				  Vector3fVec& normals_to_read,
+				  Vector3fVec& colors_to_read)
 {
   CHECK_GT(ply_file.length(), 0);
 
@@ -108,7 +113,8 @@ bool ReadPlyFile(const std::string& ply_file,
   // Extract points that we will read to the PLY file.
   int nPointCount = 0;
   bool	bProperty[3] = {false, false, false};	// position, normal, color
-  getPointCountFromPlyHeader(ply_reader, nPointCount, bProperty);
+  if (!getPointCountFromPlyHeader(ply_reader, nPointCount, bProperty))
+	  return false;
 
   points_to_read.reserve(nPointCount);
   normals_to_read.reserve(nPointCount);
@@ -129,14 +135,14 @@ bool ReadPlyFile(const std::string& ply_file,
 	  if (bProperty[NORMAL])
 	  {
 		  ply_reader >> fNormal[0] >> fNormal[1] >> fNormal[2];
-		  normals_to_read.emplace_back(Eigen::Vector3d(fNormal[0], fNormal[1], fNormal[2]) );
+		  normals_to_read.emplace_back(Eigen::Vector3f(fNormal[0], fNormal[1], fNormal[2]) );
 		  normals_to_read[i].transpose();
 	  }
 
 	  if (bProperty[COLOR])
 	  {
 		  ply_reader >> cColor[0] >> cColor[1] >> cColor[2];
-		  colors_to_read.emplace_back(Eigen::Vector3i(cColor[0], cColor[1], cColor[2]) );
+		  colors_to_read.emplace_back(Eigen::Vector3f(cColor[0], cColor[1], cColor[2]) );
 		  colors_to_read[i].transpose();
 	  }
 
@@ -145,7 +151,7 @@ bool ReadPlyFile(const std::string& ply_file,
   return true;
 }
 
-bool WritePlyFile(const std::string& ply_file, Vector3dVec& points_to_write, Vector3dVec& normals_to_write, Vector3iVec& colors_to_write)
+bool WritePlyFile(const std::string& ply_file, Vector3dVec& points_to_write, Vector3fVec& normals_to_write, Vector3fVec& colors_to_write)
 {
 
 	// Return false if the file cannot be opened for writing.

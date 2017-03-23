@@ -62,8 +62,8 @@ int main(int argc, char* argv[]) {
 #else
 
   theia::Vector3dVec points_to_read;
-  theia::Vector3dVec normals_to_read;
-  theia::Vector3iVec colors_to_read;
+  theia::Vector3fVec normals_to_read;
+  theia::Vector3fVec colors_to_read;
   theia::ReadPlyFile(FLAGS_ply_file, points_to_read, normals_to_read, colors_to_read);
   theia::WritePlyFile(FLAGS_ply_file_test, points_to_read, normals_to_read, colors_to_read);
 
