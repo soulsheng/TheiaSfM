@@ -424,6 +424,9 @@ void Keyboard(unsigned char key, int x, int y) {
 
 #endif
 
+DEFINE_string(color_sky, "", "color of sky. eg:(128,150,200)blue ");
+DEFINE_string(color_point, "", "color of point. eg:(255,255,255)white ");
+
 // OpenGL camera parameters.
 float zoom_default = -400.0;
 float zoom = zoom_default;
@@ -435,6 +438,16 @@ Eigen::Vector2f navigation_rotation(navigation_rotation_default);
 int n_fps = 240; // frame per second
 
 Eigen::Vector2i window_position(200, 100);
+
+int		nColorPoint[3];
+extern float point_size;
+
+void getColorFromString(std::string str, int * cColor)
+{
+	std::istringstream in(str);
+	char tmp;
+	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
+}
 
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
@@ -489,6 +502,16 @@ int main(int argc, char* argv[]) {
 
   // Set the camera
   gluLookAt(0.0f, 0.0f, -6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
+  // Set sky color
+  int cColor[3];   
+  getColorFromString( std::string(FLAGS_color_sky), cColor);
+
+  glClearColor(cColor[0] / 255.0f, cColor[1] / 255.0f, cColor[2] / 255.0f, 1.0f);
+
+  // Set point color / size
+  getColorFromString(std::string(FLAGS_color_point), nColorPoint);
+  point_size = FLAGS_draw_point_size;
 
   // register callbacks
   glutDisplayFunc(RenderScene);

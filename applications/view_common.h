@@ -45,6 +45,8 @@
 
 
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
+DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
+DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
 
 // Containers for the data.
 std::vector<theia::Camera> cameras;
@@ -82,6 +84,8 @@ double anti_aliasing_blend = 0.3;
 
 int y_up_direction = -1;// 1-up,  -1-down 
 extern int n_fps; // frame per second
+
+extern int		nColorPoint[];
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
   double focal_length = 800.0;
@@ -220,7 +224,11 @@ void DrawPoints(const float point_scale,
     if (num_views_for_track[i] < min_num_views_for_track) {
       continue;
     }
-	const Eigen::Vector3f color = point_colors[i] / 255.0;
+	Eigen::Vector3f color;
+	if (FLAGS_same_color_point)
+		color = Eigen::Vector3f(nColorPoint[0], nColorPoint[1], nColorPoint[2]) / 255.0;
+	else
+		color = point_colors[i] / 255.0;
     glColor4f(color_scale * color[0],
               color_scale * color[1],
               color_scale * color[2],
@@ -360,7 +368,7 @@ void Keyboard(unsigned char key, int x, int y) {
       last_y_offset = 0.0;
       left_mouse_button_active = 0;
       right_mouse_button_active = 0;
-      point_size = 1.0;
+	  point_size = FLAGS_draw_point_size;
 	  min_num_views_for_track = 10;
 	  navigation_rotation = navigation_rotation_default;
       break;
