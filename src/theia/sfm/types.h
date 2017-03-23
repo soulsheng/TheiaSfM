@@ -40,6 +40,7 @@
 #include <cstdint>
 #include <limits>
 #include <utility>
+#include <vector>
 
 namespace theia {
 
@@ -55,6 +56,9 @@ static const CameraIntrinsicsGroupId kInvalidCameraIntrinsicsGroupId =
 
 // Used as the projection matrix type.
 typedef Eigen::Matrix<double, 3, 4> Matrix3x4d;
+
+typedef std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> Vector3dVec;
+typedef std::vector<Eigen::Vector3i, Eigen::aligned_allocator<Eigen::Vector3i>> Vector3iVec;
 
 }  // namespace theia
 

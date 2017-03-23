@@ -36,16 +36,20 @@
 #include <gflags/gflags.h>
 #include <theia/theia.h>
 
+
+#include "theia/io/read_ply_file.h"
+
 DEFINE_string(reconstruction, "", "Theia Reconstruction file.");
 DEFINE_string(ply_file, "", "Output PLY file.");
 DEFINE_int32(min_num_observations_per_point, 3,
              "Minimum number of observations for a point to be written out to "
              "the PLY file. This helps reduce noise in the resulty PLY file.");
+DEFINE_string(ply_file_test, "", "test io PLY file.");
 
 int main(int argc, char* argv[]) {
   google::InitGoogleLogging(argv[0]);
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-
+#if 1
   theia::Reconstruction reconstruction;
   CHECK(theia::ReadReconstruction(FLAGS_reconstruction, &reconstruction))
       << "Could not read Reconstruction files.";
@@ -54,5 +58,16 @@ int main(int argc, char* argv[]) {
                      reconstruction,
                      FLAGS_min_num_observations_per_point))
       << "Could not write out PLY file.";
+
+#else
+
+  theia::Vector3dVec points_to_read;
+  theia::Vector3dVec normals_to_read;
+  theia::Vector3iVec colors_to_read;
+  theia::ReadPlyFile(FLAGS_ply_file, points_to_read, normals_to_read, colors_to_read);
+  theia::WritePlyFile(FLAGS_ply_file_test, points_to_read, normals_to_read, colors_to_read);
+
+#endif
+
   return 0;
 }

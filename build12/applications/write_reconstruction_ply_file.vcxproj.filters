@@ -4,6 +4,7 @@
     <ClCompile Include="..\..\applications\write_reconstruction_ply_file.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\theia\io\read_ply_file.cc" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\applications\CMakeLists.txt" />
@@ -12,5 +13,8 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{E0E7CEE7-AB82-4AB0-BF69-F03D37D17519}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\theia\io\read_ply_file.h" />
   </ItemGroup>
 </Project>
