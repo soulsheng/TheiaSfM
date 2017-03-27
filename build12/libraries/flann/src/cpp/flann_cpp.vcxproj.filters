@@ -12,9 +12,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\..\..\..\libraries\flann\src\cpp\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{E0E7CEE7-AB82-4AB0-BF69-F03D37D17519}</UniqueIdentifier>
     </Filter>

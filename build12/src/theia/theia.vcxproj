@@ -203,62 +203,6 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\..\src\theia\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build12 --check-stamp-file D:\file\code\git\3d\TheiaSfM\build12\src\theia\CMakeFiles\generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\file\code\git\3d\TheiaSfM\build12\src\theia\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build12 --check-stamp-file D:\file\code\git\3d\TheiaSfM\build12\src\theia\CMakeFiles\generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\file\code\git\3d\TheiaSfM\build12\src\theia\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
-"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build12 --check-stamp-file D:\file\code\git\3d\TheiaSfM\build12\src\theia\CMakeFiles\generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\file\code\git\3d\TheiaSfM\build12\src\theia\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
-"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build12 --check-stamp-file D:\file\code\git\3d\TheiaSfM\build12\src\theia\CMakeFiles\generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:/file/code/git/3d/TheiaSfM/src/theia/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\src\theia\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\file\code\git\3d\TheiaSfM\build12\src\theia\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\..\..\src\theia\alignment\alignment.h" />
     <ClInclude Include="..\..\..\src\theia\image\descriptor\akaze_descriptor.h" />
     <ClInclude Include="..\..\..\src\theia\image\descriptor\create_descriptor_extractor.h" />
