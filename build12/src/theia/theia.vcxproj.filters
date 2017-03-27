@@ -385,6 +385,7 @@
     <ClCompile Include="..\..\..\src\theia\util\timer.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\theia\io\read_ply_file.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\theia\alignment\alignment.h">
@@ -954,6 +955,7 @@
     <ClInclude Include="..\..\..\src\theia\util\util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\theia\io\read_ply_file.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

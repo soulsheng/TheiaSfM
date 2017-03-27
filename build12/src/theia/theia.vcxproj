@@ -222,6 +222,7 @@
     <ClInclude Include="..\..\..\src\theia\io\read_calibration.h" />
     <ClInclude Include="..\..\..\src\theia\io\read_keypoints_and_descriptors.h" />
     <ClInclude Include="..\..\..\src\theia\io\read_matches.h" />
+    <ClInclude Include="..\..\..\src\theia\io\read_ply_file.h" />
     <ClInclude Include="..\..\..\src\theia\io\reconstruction_reader.h" />
     <ClInclude Include="..\..\..\src\theia\io\reconstruction_writer.h" />
     <ClInclude Include="..\..\..\src\theia\io\sift_binary_file.h" />
@@ -406,6 +407,7 @@
     <ClCompile Include="..\..\..\src\theia\io\read_calibration.cc" />
     <ClCompile Include="..\..\..\src\theia\io\read_keypoints_and_descriptors.cc" />
     <ClCompile Include="..\..\..\src\theia\io\read_matches.cc" />
+    <ClCompile Include="..\..\..\src\theia\io\read_ply_file.cc" />
     <ClCompile Include="..\..\..\src\theia\io\reconstruction_reader.cc" />
     <ClCompile Include="..\..\..\src\theia\io\reconstruction_writer.cc" />
     <ClCompile Include="..\..\..\src\theia\io\sift_binary_file.cc" />

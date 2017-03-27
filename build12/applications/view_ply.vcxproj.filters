@@ -7,10 +7,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\applications\view_common.h" />
-    <ClInclude Include="..\..\src\theia\io\read_ply_file.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\applications\view_ply.cc" />
-    <ClCompile Include="..\..\src\theia\io\read_ply_file.cc" />
   </ItemGroup>
 </Project>
