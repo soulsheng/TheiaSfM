@@ -249,3 +249,6 @@
 /build12/applications/*.dir
 /build12/libraries/akaze/bin
 /build12/libraries/statx/*.user
+/build12/3DRebuilder/Debug
+/build12/Debug
+/build12/Release
