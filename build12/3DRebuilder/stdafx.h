@@ -42,6 +42,9 @@
 #include <cmath>
 
 
+#include <gl/glew.h>
+#include <gl/GL.h>
+#include <gl/glu.h>
 
 
 

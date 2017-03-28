@@ -38,12 +38,30 @@ public:
 #endif
 
 protected:
+	// point cloud
 	theia::Vector3dVec world_points;
 	theia::Vector3fVec point_colors;
 	theia::Vector3fVec point_normals;
 	std::vector<int> num_views_for_track;
 
 	void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size);
+
+protected:
+	// opengl
+	HDC hdc;
+	HGLRC hglrc;
+
+	int MySetPixelFormat(HDC hdc);
+	void cleanup();
+	void initializeGL();
+
+	void renderScene();
+	void renderPointsCloud();
+	void DrawColorBox(void);
+
+protected:
+	// other 
+	float step, s;
 
 // 生成的消息映射函数
 protected:
@@ -53,6 +71,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnMenuViewPly();
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本
