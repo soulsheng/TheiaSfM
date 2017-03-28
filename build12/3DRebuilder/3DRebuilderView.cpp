@@ -11,7 +11,7 @@
 
 #include "3DRebuilderDoc.h"
 #include "3DRebuilderView.h"
-
+#define	FLAGS_ply_file	"option-0000.ply"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -28,6 +28,7 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CMy3DRebuilderView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
+	ON_COMMAND(ID_Menu_View_PLY, &CMy3DRebuilderView::OnMenuViewPly)
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView 构造/析构
@@ -125,3 +126,22 @@ CMy3DRebuilderDoc* CMy3DRebuilderView::GetDocument() const // 非调试版本是内联的
 
 
 // CMy3DRebuilderView 消息处理程序
+
+
+void CMy3DRebuilderView::rand_num_views_for_track(std::vector<int>& num_views_for_track, int size)
+{
+	num_views_for_track.reserve(size);
+	for (int i = 0; i < size; i++)
+		num_views_for_track.emplace_back(rand() % 10);
+}
+
+void CMy3DRebuilderView::OnMenuViewPly()
+{
+	// TODO:  在此添加命令处理程序代码
+
+	if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
+		printf("can not open ply file!\n");
+
+	rand_num_views_for_track(num_views_for_track, world_points.size());
+
+}

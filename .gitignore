@@ -252,3 +252,6 @@
 /build12/3DRebuilder/Debug
 /build12/Debug
 /build12/Release
+/build12/3DRebuilder/Release
+/build12/ipch
+/build12/3DRebuilder/*.aps

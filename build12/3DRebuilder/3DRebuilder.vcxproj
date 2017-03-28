@@ -20,7 +20,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -28,7 +28,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -43,6 +43,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>D:\file\code\git\3d\TheiaSfM\build12\bin\Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -52,12 +53,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;GLOG_NO_ABBREVIATED_SEVERITIES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\include;D:\file\code\sdk\glog\src\windows;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\COLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\oiio\src\include;D:\file\code\sdk\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;\include;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\external\glew-1.5.1\include;D:\file\code\sdk\external\glut-3.7\include;D:\file\code\sdk\boost_1_60_0-vc12;D:\file\code\sdk\gl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\libraries\akaze\lib\Debug\akaze-debug.lib;..\lib\Debug\flann_cpp_s-debug.lib;..\lib\Debug\statx-debug.lib;..\lib\Debug\stlplus3-debug.lib;..\lib\Debug\vlfeat-debug.lib;..\lib\Debug\visual_sfm-debug.lib;..\lib\Debug\theia-debug.lib;libglog.lib;gflags_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\file\code\sdk\boost_1_60_0-vc12\lib32-msvc-12.0;D:\file\code\sdk\gflags\build12\lib\$(Configuration);D:\file\code\sdk\glog-0.3.3\lib\$(Configuration);D:\file\code\sdk\oiio\build12\src\libOpenImageIO\$(Configuration);D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\build\lib\$(Configuration);D:\file\code\sdk\ceres-solver-1.12.0\build12\lib\$(Configuration);D:\file\code\sdk\lapack_windows-3.4.1\x32;D:\file\code\sdk\external\glut-3.7\lib;D:\file\code\sdk\external\glew-1.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -77,14 +81,18 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GLOG_NO_ABBREVIATED_SEVERITIES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\sdk\ceres-solver-1.12.0\include;D:\file\code\sdk\gflags\bin\include;D:\file\code\sdk\glog-0.3.3\include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\COLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\sdk\oiio\src\include;D:\file\code\sdk\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries;D:\file\code\git\3d\TheiaSfM\libraries\spectra;D:\file\code\git\3d\TheiaSfM\libraries\akaze;D:\file\code\git\3d\TheiaSfM\libraries\cereal;D:\file\code\git\3d\TheiaSfM\libraries\cereal\include;D:\file\code\git\3d\TheiaSfM\libraries\flann;D:\file\code\git\3d\TheiaSfM\libraries\flann\src\cpp;\include;D:\file\code\git\3d\TheiaSfM\libraries\optimo;D:\file\code\git\3d\TheiaSfM\libraries\statx;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3;D:\file\code\git\3d\TheiaSfM\libraries\vlfeat;D:\file\code\git\3d\TheiaSfM\libraries\visual_sfm;D:\file\code\sdk\external\glew-1.5.1\include;D:\file\code\sdk\external\glut-3.7\include;D:\file\code\sdk\boost_1_60_0-vc12;%(AdditionalIncludeDirectories)
+</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>..\lib\$(Configuration)\theia.lib;shlwapi.lib;..\libraries\akaze\lib\$(Configuration)\akaze.lib;..\lib\$(Configuration)\flann_cpp_s.lib;..\lib\$(Configuration)\statx.lib;..\lib\$(Configuration)\stlplus3.lib;..\lib\$(Configuration)\vlfeat.lib;..\lib\$(Configuration)\visual_sfm.lib;libamd.lib;libbtf.lib;libcamd.lib;libccolamd.lib;libcholmod.lib;libcolamd.lib;libcxsparse.lib;libklu.lib;libldl.lib;libspqr.lib;libumfpack.lib;metis.lib;suitesparseconfig.lib;libglog.lib;gflags_static.lib;OpenImageIO.lib;ceres.lib;libblas.lib;liblapack.lib;glu32.lib;opengl32.lib;glut32.lib;glew.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\file\code\sdk\boost_1_60_0-vc12\lib32-msvc-12.0;D:\file\code\sdk\gflags\build12\lib\$(Configuration);D:\file\code\sdk\glog-0.3.3\lib\$(Configuration);D:\file\code\sdk\oiio\build12\src\libOpenImageIO\$(Configuration);D:\file\code\sdk\suitesparse-metis-for-windows-1.3.1\build\lib\$(Configuration);D:\file\code\sdk\ceres-solver-1.12.0\build12\lib\$(Configuration);D:\file\code\sdk\lapack_windows-3.4.1\x32;D:\file\code\sdk\external\glut-3.7\lib;D:\file\code\sdk\external\glew-1.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -145,4 +153,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="3DRebuilder.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

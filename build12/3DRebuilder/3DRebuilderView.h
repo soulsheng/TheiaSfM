@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <theia/theia.h>
+#include "theia/io/read_ply_file.h"
 
 class CMy3DRebuilderView : public CView
 {
@@ -36,6 +38,12 @@ public:
 #endif
 
 protected:
+	theia::Vector3dVec world_points;
+	theia::Vector3fVec point_colors;
+	theia::Vector3fVec point_normals;
+	std::vector<int> num_views_for_track;
+
+	void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size);
 
 // 生成的消息映射函数
 protected:
@@ -43,6 +51,8 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnMenuViewPly();
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本

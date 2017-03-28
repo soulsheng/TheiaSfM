@@ -79,6 +79,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "view_ply", "applications\view_ply.vcxproj", "{29822474-2145-4FE6-B050-206C5CE6C3C7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DRebuilder", "3DRebuilder\3DRebuilder.vcxproj", "{6D60945B-B82A-4E26-B2CC-FF161A6E343F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{443CDC57-4AE9-46C5-B9F7-681263BB6ABC} = {443CDC57-4AE9-46C5-B9F7-681263BB6ABC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
