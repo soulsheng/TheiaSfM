@@ -11,7 +11,12 @@
 
 #include "3DRebuilderDoc.h"
 #include "3DRebuilderView.h"
-#define	FLAGS_ply_file	"option-0000.ply"
+
+#include <gflags/gflags.h>
+
+DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
+
+//#define	FLAGS_ply_file	"option-0000.ply"
 
 #include "MainFrm.h"
 

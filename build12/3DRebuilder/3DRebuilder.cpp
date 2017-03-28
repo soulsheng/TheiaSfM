@@ -11,10 +11,14 @@
 #include "3DRebuilderDoc.h"
 #include "3DRebuilderView.h"
 
+#include <gflags/gflags.h>
+#include <theia/theia.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+#define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
 
 // CMy3DRebuilderApp
 
@@ -135,6 +139,12 @@ BOOL CMy3DRebuilderApp::InitInstance()
 	// 唯一的一个窗口已初始化，因此显示它并对其进行更新
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
+
+	HINSTANCE hInst = AfxGetApp()->m_hInstance;
+	char path_buffer[_MAX_PATH];
+	GetModuleFileName(hInst, path_buffer, sizeof(path_buffer));//得到exe文件的全路径
+	google::ReadFromFlagsFile(FLAG_FILE_NAME, path_buffer, false);
+
 	return TRUE;
 }
 
