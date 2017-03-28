@@ -165,7 +165,7 @@ class NormalizedGraphCut {
     const double step_size = (stop_y - start_y) / num_steps;
 
     double best_cut_value = 0;
-    double best_cut_cost = std::numeric_limits<double>::max();
+    double best_cut_cost = (std::numeric_limits<double>::max)();
 
     const auto& node_weight_diag = node_weight_.diagonal();
     const double node_weight_sum = node_weight_diag.sum();

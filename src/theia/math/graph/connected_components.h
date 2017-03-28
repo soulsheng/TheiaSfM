@@ -69,7 +69,7 @@ class ConnectedComponents {
   };
 
   ConnectedComponents()
-      : max_connected_component_size_(std::numeric_limits<T>::max()) {}
+      : max_connected_component_size_((std::numeric_limits<T>::max)()) {}
 
   // Specify the maximum connected component size.
   explicit ConnectedComponents(const int max_size)

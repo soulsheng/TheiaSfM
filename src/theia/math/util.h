@@ -56,7 +56,7 @@ inline double DegToRad(double angle_degrees) {
 }
 
 inline double Clamp(const double val, const double min, const double max) {
-  return std::max(min, std::min(val, max));
+  return (std::max)(min, (std::min)(val, max));
 }
 
 }  // namespace theia

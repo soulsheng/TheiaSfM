@@ -160,7 +160,7 @@ class L1Solver {
       const double s_norm =
           (-options_.rho * a_.transpose() * (z - z_old)).norm();
       const double max_norm =
-          std::max({a_times_x.norm(), z.norm(), rhs_norm});
+          (std::max)({a_times_x.norm(), z.norm(), rhs_norm});
       const double primal_eps =
           primal_abs_tolerance_eps + options_.relative_tolerance * max_norm;
       const double dual_eps = dual_abs_tolerance_eps +

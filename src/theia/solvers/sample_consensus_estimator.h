@@ -60,7 +60,7 @@ struct RansacParameters {
         failure_probability(0.01),
         min_inlier_ratio(0),
         min_iterations(100),
-        max_iterations(std::numeric_limits<int>::max()),
+        max_iterations((std::numeric_limits<int>::max)()),
         use_mle(false),
         use_Tdd_test(false) {}
 
@@ -258,7 +258,7 @@ bool SampleConsensusEstimator<ModelEstimator>::Estimate(
   CHECK_NOTNULL(best_model);
 
   const double log_failure_prob = log(ransac_params_.failure_probability);
-  double best_cost = std::numeric_limits<double>::max();
+  double best_cost = (std::numeric_limits<double>::max)();
   int max_iterations = ransac_params_.max_iterations;
 
   // Set the max iterations if the inlier ratio is set.
