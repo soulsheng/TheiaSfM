@@ -41,6 +41,7 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_ERASEBKGND()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView 构造/析构
@@ -48,6 +49,8 @@ END_MESSAGE_MAP()
 CMy3DRebuilderView::CMy3DRebuilderView()
 {
 	// TODO:  在此处添加构造代码
+	step = 0.0;
+	s = 0.1;
 
 }
 
@@ -176,6 +179,10 @@ int CMy3DRebuilderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// TODO:  在此添加您专用的创建代码
 	initializeGL();
 
+	// 设置计时器,10ms刷新一次
+	SetTimer(1, 10, 0);
+
+
 	return 0;
 }
 
@@ -261,7 +268,7 @@ void CMy3DRebuilderView::renderScene()
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	//m_camera.look();
+	m_camera.look();
 
 	renderPointsCloud();
 
@@ -392,4 +399,13 @@ BOOL CMy3DRebuilderView::OnEraseBkgnd(CDC* pDC)
 	// TODO:  在此添加消息处理程序代码和/或调用默认值
 
 	return TRUE;// CView::OnEraseBkgnd(pDC);
+}
+
+
+void CMy3DRebuilderView::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	renderScene();
+
+	CView::OnTimer(nIDEvent);
 }

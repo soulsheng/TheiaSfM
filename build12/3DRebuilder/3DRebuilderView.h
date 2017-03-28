@@ -6,6 +6,7 @@
 
 #include <theia/theia.h>
 #include "theia/io/read_ply_file.h"
+#include "glCameraNode.h"
 
 class CMy3DRebuilderView : public CView
 {
@@ -51,6 +52,8 @@ protected:
 	HDC hdc;
 	HGLRC hglrc;
 
+	cameranode	m_camera;
+
 	int MySetPixelFormat(HDC hdc);
 	void cleanup();
 	void initializeGL();
@@ -74,6 +77,7 @@ public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本
