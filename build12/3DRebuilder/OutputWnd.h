@@ -50,6 +50,8 @@ protected:
 public:
 	virtual ~COutputWnd();
 
+	void FillBuildWindow(std::string& msg);
+
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);

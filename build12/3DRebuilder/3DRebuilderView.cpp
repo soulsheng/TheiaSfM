@@ -12,6 +12,9 @@
 #include "3DRebuilderDoc.h"
 #include "3DRebuilderView.h"
 #define	FLAGS_ply_file	"option-0000.ply"
+
+#include "MainFrm.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -144,4 +147,10 @@ void CMy3DRebuilderView::OnMenuViewPly()
 
 	rand_num_views_for_track(num_views_for_track, world_points.size());
 
+	CMainFrame* pMFram = (CMainFrame*)AfxGetMainWnd();
+
+	std::ostringstream os;
+	os << "load " << world_points.size() << " points. ";
+
+	pMFram->FillBuildWindow(os.str());
 }

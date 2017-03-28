@@ -18,6 +18,7 @@ public:
 
 // ²Ù×÷
 public:
+	void FillBuildWindow(std::string& msg);
 
 // ÖØÐ´
 public:

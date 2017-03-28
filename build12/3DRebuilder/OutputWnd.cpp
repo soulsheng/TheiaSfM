@@ -111,6 +111,11 @@ void COutputWnd::FillBuildWindow()
 	m_wndOutputBuild.AddString(_T("但您可以根据需要更改其显示方式..."));
 }
 
+void COutputWnd::FillBuildWindow(std::string& msg)
+{
+	m_wndOutputBuild.AddString((LPCTSTR)msg.c_str());
+}
+
 void COutputWnd::FillDebugWindow()
 {
 	m_wndOutputDebug.AddString(_T("调试输出正显示在此处。"));
