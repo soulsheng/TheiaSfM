@@ -26,6 +26,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
 	ON_WM_SETTINGCHANGE()
+	ON_UPDATE_COMMAND_UI(ID_INDICATOR_FPS, OnUpdateTimeIndicator)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -34,6 +35,7 @@ static UINT indicators[] =
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
 	ID_INDICATOR_SCRL,
+	ID_INDICATOR_FPS,
 };
 
 // CMainFrame ¹¹Ôì/Îö¹¹
@@ -160,6 +162,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_VIEW_APPLOOK_WINDOWS_7);
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
+
+	//SetTimer(TIME_STATUSBAR, 60000, NULL);
+	memset(m_strStatus, '\0', sizeof(m_strStatus));
 
 	return 0;
 }
@@ -370,4 +375,15 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CFrameWndEx::OnSettingChange(uFlags, lpszSection);
 	m_wndOutput.UpdateFonts();
+}
+
+void CMainFrame::OnUpdateTimeIndicator(CCmdUI *pCmdUI)
+{
+	CString strStatus;
+
+	strStatus.Format(ID_INDICATOR_FPS, m_strStatus);
+
+	m_wndStatusBar.SetPaneText(
+		m_wndStatusBar.CommandToIndex(ID_INDICATOR_FPS),
+		strStatus);
 }

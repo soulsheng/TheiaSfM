@@ -29,6 +29,7 @@ DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 #define new DEBUG_NEW
 #endif
 
+#define TIME_DRAW		1
 
 // CMy3DRebuilderView
 
@@ -168,12 +169,26 @@ void CMy3DRebuilderView::OnMenuViewPly()
 	
 	rand_num_views_for_track(num_views_for_track, world_points.size());
 
+	outputInfo(world_points.size(), "points number is: " );
+
+}
+
+
+void CMy3DRebuilderView::outputInfo(int info, char* message, bool bOutputORStatus)
+{
 	CMainFrame* pMFram = (CMainFrame*)AfxGetMainWnd();
 
 	std::ostringstream os;
-	os << "load " << world_points.size() << " points. ";
+	os << message << info ;
+	if (bOutputORStatus)
+		pMFram->FillBuildWindow(os.str());
+	else
+	{
+		char* p_status = pMFram->getCustomStatusString();
+		memset(p_status, '\0', sizeof(p_status));
+		strncpy(p_status, os.str().c_str(), os.str().size());
+	}
 
-	pMFram->FillBuildWindow(os.str());
 }
 
 
@@ -186,7 +201,7 @@ int CMy3DRebuilderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	initializeGL();
 
 	// 设置计时器,10ms刷新一次
-	SetTimer(1, 10, 0);
+	SetTimer(TIME_DRAW, 10, 0);
 
 	getColorFromString(std::string(FLAGS_color_point), nColorPoint);
 
@@ -438,6 +453,10 @@ void CMy3DRebuilderView::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO:  在此添加消息处理程序代码和/或调用默认值
 	renderScene();
+
+	fps_mm.check();
+
+	outputInfo( fps_mm.fps(), "fps:", false );
 
 	CView::OnTimer(nIDEvent);
 }

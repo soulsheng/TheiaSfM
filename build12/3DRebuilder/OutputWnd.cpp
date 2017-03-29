@@ -114,6 +114,8 @@ void COutputWnd::FillBuildWindow()
 void COutputWnd::FillBuildWindow(std::string& msg)
 {
 	m_wndOutputBuild.AddString((LPCTSTR)msg.c_str());
+
+	m_wndOutputBuild.SetCaretIndex( m_wndOutputBuild.GetCount() );
 }
 
 void COutputWnd::FillDebugWindow()

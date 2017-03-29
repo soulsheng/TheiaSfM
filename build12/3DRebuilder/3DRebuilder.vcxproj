@@ -113,6 +113,7 @@
     <ClInclude Include="3DRebuilder.h" />
     <ClInclude Include="3DRebuilderDoc.h" />
     <ClInclude Include="3DRebuilderView.h" />
+    <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="glCameraNode.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="OutputWnd.h" />
@@ -125,6 +126,7 @@
     <ClCompile Include="3DRebuilder.cpp" />
     <ClCompile Include="3DRebuilderDoc.cpp" />
     <ClCompile Include="3DRebuilderView.cpp" />
+    <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="glCameraNode.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OutputWnd.cpp" />

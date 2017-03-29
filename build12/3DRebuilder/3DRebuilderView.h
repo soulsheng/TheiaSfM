@@ -7,6 +7,7 @@
 #include <theia/theia.h>
 #include "theia/io/read_ply_file.h"
 #include "glCameraNode.h"
+#include "FPSCounter.h"
 
 class CMy3DRebuilderView : public CView
 {
@@ -58,6 +59,7 @@ protected:
 	int y_up_direction = -1;// 1-up,  -1-down 
 	int min_num_views_for_track = 10;
 	int n_fps = 240; // frame per second
+	FPSCounter fps_mm;
 
 	int MySetPixelFormat(HDC hdc);
 	void cleanup();
@@ -81,6 +83,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnMenuViewPly();
+
+	void outputInfo(int info, char* message, bool bOutputORStatus=true);	// print to output window or status bar
+
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
