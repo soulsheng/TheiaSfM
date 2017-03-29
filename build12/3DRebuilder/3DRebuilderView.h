@@ -54,6 +54,11 @@ protected:
 
 	cameranode	m_camera;
 
+	int		nColorPoint[3];
+	int y_up_direction = -1;// 1-up,  -1-down 
+	int min_num_views_for_track = 10;
+	int n_fps = 240; // frame per second
+
 	int MySetPixelFormat(HDC hdc);
 	void cleanup();
 	void initializeGL();
@@ -61,6 +66,8 @@ protected:
 	void renderScene();
 	void renderPointsCloud();
 	void DrawColorBox(void);
+
+	void getColorFromString(std::string str, int * cColor);
 
 protected:
 	// other 

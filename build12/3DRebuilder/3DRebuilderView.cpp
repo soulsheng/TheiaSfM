@@ -14,6 +14,10 @@
 
 #include <gflags/gflags.h>
 
+DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
+DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
+DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
+DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
 DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 
 //#define	FLAGS_ply_file	"option-0000.ply"
@@ -160,6 +164,8 @@ void CMy3DRebuilderView::OnMenuViewPly()
 	if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
 		printf("can not open ply file!\n");
 
+	min_num_views_for_track = 10;
+	
 	rand_num_views_for_track(num_views_for_track, world_points.size());
 
 	CMainFrame* pMFram = (CMainFrame*)AfxGetMainWnd();
@@ -182,6 +188,7 @@ int CMy3DRebuilderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 设置计时器,10ms刷新一次
 	SetTimer(1, 10, 0);
 
+	getColorFromString(std::string(FLAGS_color_point), nColorPoint);
 
 	return 0;
 }
@@ -256,7 +263,12 @@ void CMy3DRebuilderView::initializeGL()
 		AfxMessageBox("glewInit failed, something is seriously wrong.");
 	}
 
-	glClearColor(0.5f, 0.6f, 0.8f, 1.0f);
+	//glClearColor(0.5f, 0.6f, 0.8f, 1.0f);
+	// Set sky color
+	int cColor[3];
+	getColorFromString(std::string(FLAGS_color_sky), cColor);
+	glClearColor(cColor[0] / 255.0f, cColor[1] / 255.0f, cColor[2] / 255.0f, 1.0f);
+
 	glEnable(GL_DEPTH_TEST);// 开启遮挡
 
 }
@@ -271,6 +283,10 @@ void CMy3DRebuilderView::renderScene()
 	m_camera.look();
 
 	renderPointsCloud();
+
+	static int nFrameCount = 0;
+	if (0 == nFrameCount++ % n_fps)
+		min_num_views_for_track--;
 
 #if 1
 	s += 0.005;
@@ -294,6 +310,22 @@ void CMy3DRebuilderView::renderScene()
 void CMy3DRebuilderView::renderPointsCloud()
 {
 
+	glPointSize( FLAGS_draw_point_size );
+	glBegin(GL_POINTS);
+	for (int i = 0; i < world_points.size(); i++) {
+		if (num_views_for_track[i] < min_num_views_for_track) {
+			continue;
+		}
+		Eigen::Vector3f color;
+		if (FLAGS_same_color_point)
+			color = Eigen::Vector3f(nColorPoint[0], nColorPoint[1], nColorPoint[2]) / 255.0;
+		else
+			color = point_colors[i] / 255.0;
+		glColor3f( color[0], color[1], color[2] );
+
+		glVertex3d(world_points[i].x(), world_points[i].y() * y_up_direction, world_points[i].z());
+	}
+	glEnd();
 }
 
 void CMy3DRebuilderView::OnSize(UINT nType, int cx, int cy)
@@ -408,4 +440,11 @@ void CMy3DRebuilderView::OnTimer(UINT_PTR nIDEvent)
 	renderScene();
 
 	CView::OnTimer(nIDEvent);
+}
+
+void CMy3DRebuilderView::getColorFromString(std::string str, int * cColor)
+{
+	std::istringstream in(str);
+	char tmp;
+	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
 }
