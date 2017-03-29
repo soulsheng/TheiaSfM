@@ -14,11 +14,16 @@
 
 #include <gflags/gflags.h>
 
+#include "build_common.h"
+
 DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
 DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
 DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
 DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
 DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
+DEFINE_string(image_directory, "",
+	"Full path to the directory containing the images used to create "
+	"the reconstructions. Must contain a trailing slash.");
 
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
@@ -47,6 +52,8 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_WM_SIZE()
 	ON_WM_ERASEBKGND()
 	ON_WM_TIMER()
+	ON_COMMAND(ID_SELECT_IMAGE_PATH, &CMy3DRebuilderView::OnSelectImagePath)
+	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION, &CMy3DRebuilderView::OnExecuteReconstruction)
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView 构造/析构
@@ -466,4 +473,58 @@ void CMy3DRebuilderView::getColorFromString(std::string str, int * cColor)
 	std::istringstream in(str);
 	char tmp;
 	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
+}
+
+
+void CMy3DRebuilderView::OnSelectImagePath()
+{
+	// TODO:  在此添加命令处理程序代码
+
+}
+
+void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& reconstructions)
+{
+	const ReconstructionBuilderOptions options =
+		SetReconstructionBuilderOptions();
+
+	ReconstructionBuilder reconstruction_builder(options);
+	// If matches are provided, load matches otherwise load images.
+	if (FLAGS_matches_file.size() != 0) {
+		AddMatchesToReconstructionBuilder(&reconstruction_builder);
+	}
+	else if (FLAGS_images.size() != 0) {
+		AddImagesToReconstructionBuilder(&reconstruction_builder);
+	}
+	else {
+		LOG(FATAL)
+			<< "You must specifiy either images to reconstruct or a match file.";
+	}
+
+	CHECK(reconstruction_builder.BuildReconstruction(&reconstructions))
+		<< "Could not create a reconstruction.";
+
+
+	if (reconstructions.size())
+		reconstruction = reconstructions[0];
+	else
+		return ;
+
+	theia::ColorizeReconstruction(FLAGS_image_directory,
+		FLAGS_num_threads,
+		reconstruction);
+
+	theia::WriteReconstruction(*reconstruction,
+		FLAGS_output_reconstruction);
+
+}
+
+void CMy3DRebuilderView::OnExecuteReconstruction()
+{
+	// TODO:  在此添加命令处理程序代码
+	FLAGS_image_directory;
+
+	build_reconstruction(reconstructions);
+
+
+
 }

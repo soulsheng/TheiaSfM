@@ -192,6 +192,8 @@ BEGIN
     POPUP "重建(&R)"
     BEGIN
         MENUITEM "可视化(&V)",                     ID_Menu_View_PLY
+        MENUITEM "打开图片路径(&I)",                  ID_SELECT_IMAGE_PATH
+        MENUITEM "执行重建(&R)",                    ID_EXECUTE_RECONSTRUCTION
     END
 END
 

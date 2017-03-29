@@ -8,6 +8,9 @@
 #include "theia/io/read_ply_file.h"
 #include "glCameraNode.h"
 #include "FPSCounter.h"
+#include <theia/theia.h>
+
+using namespace theia;
 
 class CMy3DRebuilderView : public CView
 {
@@ -72,6 +75,13 @@ protected:
 	void getColorFromString(std::string str, int * cColor);
 
 protected:
+	// reconstruction
+	Reconstruction* reconstruction = NULL;
+	std::vector<Reconstruction*> reconstructions;
+
+	void build_reconstruction(std::vector<Reconstruction *>& reconstructions);
+
+protected:
 	// other 
 	float step, s;
 
@@ -90,6 +100,8 @@ public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnSelectImagePath();
+	afx_msg void OnExecuteReconstruction();
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本
