@@ -214,6 +214,7 @@ void CMy3DRebuilderView::outputInfo(const char* message, bool bOutputORStatus /*
 		memset(p_status, '\0', sizeof(p_status));
 		strncpy(p_status, message, sizeof(message) );
 	}
+	Sleep(100);
 }
 
 int CMy3DRebuilderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -496,7 +497,149 @@ void CMy3DRebuilderView::getColorFromString(std::string str, int * cColor)
 void CMy3DRebuilderView::OnSelectImagePath()
 {
 	// TODO:  在此添加命令处理程序代码
+	BROWSEINFO bi;
+	char Buffer[MAX_PATH];
 
+	//初始化入口参数bi开始
+	bi.hwndOwner = NULL;
+	bi.pidlRoot = NULL;//初始化制定的root目录很不容易
+	bi.pszDisplayName = Buffer;//此参数如为NULL则不能显示对话框
+	bi.lpszTitle = "选择图片路径";
+	bi.ulFlags = BIF_EDITBOX;//带编辑框的风格
+	bi.lpfn = NULL;
+	bi.lParam = 0;
+	bi.iImage = IDR_MAINFRAME;
+	//初始化入口参数bi结束
+
+	std::string strMessage = m_imagePath;
+	strMessage = m_imagePath + "正在选择图片路径...";
+	outputInfo(strMessage.c_str());
+
+	LPITEMIDLIST pIDList = SHBrowseForFolder(&bi);//调用显示选择对话框
+
+	if (pIDList)
+	{
+		SHGetPathFromIDList(pIDList, Buffer);
+
+		//取得文件夹路径到Buffer里
+		m_imagePath = std::string(Buffer) + "\\";
+
+		outputInfo(m_imagePath.c_str());
+		outputInfo("图片路径已选中");
+	}
+
+	
+	// free memory used   
+	IMalloc * imalloc = 0;
+	if (SUCCEEDED(SHGetMalloc(&imalloc)))
+	{
+		imalloc->Free(pIDList);
+		imalloc->Release();
+	}
+}
+
+
+void CMy3DRebuilderView::AddImagesToReconstructionBuilderDIY(
+	ReconstructionBuilder* reconstruction_builder) {
+	std::vector<std::string> image_files;
+	std::string strWildcard = m_imagePath + "*.jpg";
+
+	outputInfo(strWildcard.c_str());
+	if (false == theia::GetFilepathsFromWildcard(strWildcard, &image_files))
+	{
+		outputInfo("路径中无法找到图片文件！");
+		return;
+		//<< "Could not find images that matched the filepath: " << m_imagePath
+		//<< ". NOTE that the ~ filepath is not supported.";
+	}
+	else
+	{
+		outputInfo("路径中已经找到图片文件！");
+	}
+
+	// Load calibration file if it is provided.
+	std::unordered_map<std::string, theia::CameraIntrinsicsPrior>
+		camera_intrinsics_prior;
+	if (FLAGS_calibration_file.size() != 0) {
+		CHECK(theia::ReadCalibration(FLAGS_calibration_file,
+			&camera_intrinsics_prior))
+			<< "Could not read calibration file.";
+	}
+
+	// Add images with possible calibration. When the intrinsics group id is
+	// invalid, the reconstruction builder will assume that the view does not
+	// share its intrinsics with any other views.
+	theia::CameraIntrinsicsGroupId intrinsics_group_id =
+		theia::kInvalidCameraIntrinsicsGroupId;
+	if (FLAGS_shared_calibration) {
+		intrinsics_group_id = 0;
+	}
+
+	for (const std::string& image_file : image_files) {
+		std::string image_filename;
+		CHECK(theia::GetFilenameFromFilepath(image_file, true, &image_filename));
+
+		const theia::CameraIntrinsicsPrior* image_camera_intrinsics_prior =
+			FindOrNull(camera_intrinsics_prior, image_filename);
+		if (image_camera_intrinsics_prior != nullptr) {
+			CHECK(reconstruction_builder->AddImageWithCameraIntrinsicsPrior(
+				image_file, *image_camera_intrinsics_prior, intrinsics_group_id));
+		}
+		else {
+			CHECK(reconstruction_builder->AddImage(image_file, intrinsics_group_id));
+		}
+
+		outputInfo(image_file.c_str());
+		outputInfo("成功导入！");
+
+	}
+
+	// Add black and write image masks for any images if those are provided.
+	// The white part of the mask indicates the area for the keypoints extraction.
+	// The mask is a basic black and white image (jpg, png, tif etc.), where white
+	// is 1.0 and black is 0.0. Its name must content the associated image's name
+	// (e.g. 'image0001_mask.jpg' is the mask of 'image0001.png').
+	std::vector<std::string> mask_files;
+	if (FLAGS_image_masks.size() != 0) {
+		CHECK(theia::GetFilepathsFromWildcard(FLAGS_image_masks, &mask_files))
+			<< "Could not find image masks that matched the filepath: "
+			<< FLAGS_image_masks
+			<< ". NOTE that the ~ filepath is not supported.";
+		if (mask_files.size() > 0) {
+			for (const std::string& image_file : image_files) {
+				std::string image_filename;
+				CHECK(theia::GetFilenameFromFilepath(image_file,
+					false,
+					&image_filename));
+				// Find and add the associated mask
+				for (const std::string& mask_file : mask_files) {
+					if (mask_file.find(image_filename) != std::string::npos) {
+						CHECK(reconstruction_builder->AddMaskForFeaturesExtraction(
+							image_file,
+							mask_file));
+						break;
+					}
+				}
+			}
+		}
+		else {
+			LOG(WARNING) << "No image masks found in: " << FLAGS_image_masks;
+		}
+	}
+
+	// Extract and match features.
+	if (reconstruction_builder->ExtractAndMatchFeatures())
+	{
+		std::string strMessage = FLAGS_matches_file;
+		outputInfo(strMessage.c_str());
+		outputInfo("匹配文件已保存，成功提取特征点并完成匹配");
+	}
+	else
+	{
+		std::string strMessage = FLAGS_matches_file;
+		outputInfo(strMessage.c_str());
+		outputInfo("匹配文件无法保存，特征提取或匹配过程出现异常");
+	}
 }
 
 void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& reconstructions)
@@ -510,7 +653,7 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 		AddMatchesToReconstructionBuilder(&reconstruction_builder);
 	}
 	else if (FLAGS_images.size() != 0) {
-		AddImagesToReconstructionBuilder(&reconstruction_builder);
+		AddImagesToReconstructionBuilderDIY(&reconstruction_builder);
 	}
 	else {
 		//LOG(FATAL)
@@ -527,7 +670,7 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 	else
 		return ;
 
-	theia::ColorizeReconstruction(FLAGS_image_directory,
+	theia::ColorizeReconstruction(m_imagePath.c_str(),
 		FLAGS_num_threads,
 		reconstruction);
 	outputInfo("点云匹配颜色");
@@ -536,14 +679,19 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 		FLAGS_output_reconstruction);
 
 	std::string resultPath(FLAGS_output_reconstruction);
-	resultPath += "点云文件成功保存，稀疏重建完成！";
 	outputInfo(resultPath.c_str());
+	outputInfo("点云文件成功保存，稀疏重建完成！");
 }
 
 void CMy3DRebuilderView::OnExecuteReconstructionSparse()
 {
 	// TODO:  在此添加命令处理程序代码
-	FLAGS_image_directory;
+
+	if (m_imagePath.empty())
+		m_imagePath = FLAGS_image_directory;
+
+	outputInfo(m_imagePath.c_str());
+	outputInfo("正在进行稀释重建...");
 
 	build_reconstruction(reconstructions);
 
@@ -706,15 +854,13 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 		reconstruction = new theia::Reconstruction();
 		reconstructions.push_back(reconstruction);
 
-		std::ostringstream os;
-		os << FLAGS_output_reconstruction;
+		std::string strMessage = FLAGS_output_reconstruction;
+		outputInfo(strMessage.c_str());
 
 		if (false == ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
-			os << " 稀疏重建数据无法读取";
+			outputInfo(" 稀疏重建数据无法读取");
 		else
-			os << " 稀疏重建数据成功读取";
-
-		outputInfo(os.str().c_str());
+			outputInfo(" 稀疏重建数据成功读取");
 
 		// Centers the reconstruction based on the absolute deviation of 3D points.
 		reconstruction->Normalize();
@@ -730,8 +876,9 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 	GetModuleFileName(hInst, path_buffer, sizeof(path_buffer));//得到exe文件的全路径
 	run_pmvs(path_buffer);
 
-	String resultPath = FLAGS_pmvs_working_directory + " option-0000点云文件成功保存，稠密重建完成！";
+	String resultPath = FLAGS_pmvs_working_directory + "option-0000";
 	outputInfo(resultPath.c_str(), "");
+	outputInfo("点云文件成功保存，稠密重建完成！");
 
 #endif
 }
