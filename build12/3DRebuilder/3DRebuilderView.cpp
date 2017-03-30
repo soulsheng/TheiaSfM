@@ -40,6 +40,7 @@ DEFINE_string(eye_position, "(-50,180,550)", "position of eye.");
 #endif
 
 #define TIME_DRAW		1
+#define ENABLE_UNDISTORT	1
 
 // CMy3DRebuilderView
 
@@ -766,10 +767,14 @@ int CMy3DRebuilderView::WriteCamerasToPMVS(const theia::Reconstruction& reconstr
 
 		theia::FloatImage distorted_image(image_files[i]);
 		theia::FloatImage undistorted_image;
+#if ENABLE_UNDISTORT
 		CHECK(theia::UndistortImage(distorted_camera,
 			distorted_image,
 			undistorted_camera,
 			&undistorted_image));
+#else
+		undistorted_image = distorted_image;
+#endif
 
 		LOG(INFO) << "Exporting parameters for image: " << image_name;
 
