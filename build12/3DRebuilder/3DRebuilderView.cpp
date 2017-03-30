@@ -713,10 +713,18 @@ int CMy3DRebuilderView::WriteCamerasToPMVS(const theia::Reconstruction& reconstr
 	const std::string visualize_dir = FLAGS_pmvs_working_directory + "/visualize";
 
 	std::vector<std::string> image_files;
-	CHECK(theia::GetFilepathsFromWildcard(FLAGS_images, &image_files))
-		<< "Could not find images that matched the filepath: " << FLAGS_images
-		<< ". NOTE that the ~ filepath is not supported.";
-	CHECK_GT(image_files.size(), 0) << "No images found in: " << FLAGS_images;
+	std::string strWildcard = m_imagePath + "*.jpg";
+
+	outputInfo(strWildcard.c_str());
+	if (false == theia::GetFilepathsFromWildcard(strWildcard, &image_files))
+	{
+		outputInfo("路径中无法找到图片文件！");
+		return -1;
+	}
+	else
+	{
+		outputInfo("路径中已经找到图片文件！");
+	}
 
 	// Format for printing eigen matrices.
 	const Eigen::IOFormat unaligned(Eigen::StreamPrecision, Eigen::DontAlignCols);
@@ -801,7 +809,11 @@ void CMy3DRebuilderView::export_to_pmvs(theia::Reconstruction& reconstruction)
 	const std::string lists_file = FLAGS_pmvs_working_directory + "/list.txt";
 	const std::string bundle_file =
 		FLAGS_pmvs_working_directory + "/bundle.rd.out";
-	CHECK(theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file));
+	if(theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file))
+		outputInfo(" 导出pmvs成功");
+	else
+		outputInfo(" 导出pmvs失败");
+
 }
 
 void CMy3DRebuilderView::lanch_external_bin(String& bin, String& parameter, String& path)
@@ -865,6 +877,9 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 		// Centers the reconstruction based on the absolute deviation of 3D points.
 		reconstruction->Normalize();
 	}
+
+	if (m_imagePath.empty())
+		m_imagePath = FLAGS_image_directory;
 
 #if 1
 	export_to_pmvs(*reconstruction);
