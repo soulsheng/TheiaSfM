@@ -116,6 +116,7 @@ public:
 	afx_msg void OnSelectImagePath();
 	afx_msg void OnExecuteReconstructionSparse();
 	afx_msg void OnExecuteReconstructionDense();
+	afx_msg void OnViewSparseResult();
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本

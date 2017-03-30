@@ -58,6 +58,7 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_COMMAND(ID_SELECT_IMAGE_PATH, &CMy3DRebuilderView::OnSelectImagePath)
 	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION_SPARSE, &CMy3DRebuilderView::OnExecuteReconstructionSparse)
 	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION_DENSE, &CMy3DRebuilderView::OnExecuteReconstructionDense)
+	ON_COMMAND(ID_VIEW_SPARSE_RESULT, &CMy3DRebuilderView::OnViewSparseResult)
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView 构造/析构
@@ -896,4 +897,41 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 	outputInfo("点云文件成功保存，稠密重建完成！");
 
 #endif
+}
+
+
+void CMy3DRebuilderView::OnViewSparseResult()
+{
+	// TODO:  在此添加命令处理程序代码
+
+	if (NULL == reconstruction)
+	{
+		reconstruction = new theia::Reconstruction();
+		reconstructions.push_back(reconstruction);
+
+		std::string strMessage = FLAGS_output_reconstruction;
+		outputInfo(strMessage.c_str());
+
+		if (false == ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
+			outputInfo(" 稀疏重建数据无法读取");
+		else
+			outputInfo(" 稀疏重建数据成功读取");
+
+		// Centers the reconstruction based on the absolute deviation of 3D points.
+		reconstruction->Normalize();
+	}
+
+	// Set up world points and colors.
+	world_points.reserve(reconstruction->NumTracks());
+	point_colors.reserve(reconstruction->NumTracks());
+	for (const theia::TrackId track_id : reconstruction->TrackIds()) {
+		const auto* track = reconstruction->Track(track_id);
+		if (track == nullptr || !track->IsEstimated()) {
+			continue;
+		}
+		world_points.emplace_back(track->Point().hnormalized());
+		point_colors.emplace_back(track->Color().cast<float>());
+		num_views_for_track.emplace_back(track->NumViews());
+	}
+
 }
