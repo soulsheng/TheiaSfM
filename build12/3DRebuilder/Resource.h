@@ -51,7 +51,7 @@
 #define ID_Menu                         32771
 #define ID_Menu_View_PLY                32772
 #define ID_SELECT_IMAGE_PATH            32773
-#define ID_EXECUTE_RECONSTRUCTION       32774
+#define ID_EXECUTE_RECONSTRUCTION_SPARSE       32774
 
 // Next default values for new objects
 // 

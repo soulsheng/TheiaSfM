@@ -53,7 +53,7 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_WM_ERASEBKGND()
 	ON_WM_TIMER()
 	ON_COMMAND(ID_SELECT_IMAGE_PATH, &CMy3DRebuilderView::OnSelectImagePath)
-	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION, &CMy3DRebuilderView::OnExecuteReconstruction)
+	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION_SPARSE, &CMy3DRebuilderView::OnExecuteReconstruction)
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView ¹¹Ôì/Îö¹¹
