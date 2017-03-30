@@ -175,6 +175,15 @@ void CMy3DRebuilderView::rand_num_views_for_track(std::vector<int>& num_views_fo
 void CMy3DRebuilderView::OnMenuViewPly()
 {
 	// TODO:  在此添加命令处理程序代码
+	loadAndDisplayDenseResult();
+
+
+}
+
+
+void CMy3DRebuilderView::loadAndDisplayDenseResult()
+{
+	outputInfo("正在显示稠密重建结果...");
 
 	if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
 		printf("can not open ply file!\n");
@@ -184,6 +193,8 @@ void CMy3DRebuilderView::OnMenuViewPly()
 	rand_num_views_for_track(num_views_for_track, world_points.size());
 
 	outputInfo(world_points.size(), "points number is: " );
+
+	outputInfo("稠密重建结果显示完成...");
 
 }
 
@@ -208,14 +219,24 @@ void CMy3DRebuilderView::outputInfo(int info, const char* message, bool bOutputO
 
 void CMy3DRebuilderView::outputInfo(const char* message, bool bOutputORStatus /*= true*/)
 {
+	char szTime[32];
+	CTime time;
+	time = CTime::GetCurrentTime();
+	sprintf(szTime, "%4d-%.2d-%.2d %.2d:%.2d:%.2d",
+		time.GetYear(), time.GetMonth(), time.GetDay(),
+		time.GetHour(), time.GetMinute(), time.GetSecond());
+
+	std::string strMessage(szTime);
+	strMessage += message;
+
 	CMainFrame* pMFram = (CMainFrame*)AfxGetMainWnd();
 	if (bOutputORStatus)
-		pMFram->FillBuildWindow( std::string(message) );
+		pMFram->FillBuildWindow(strMessage);
 	else
 	{
 		char* p_status = pMFram->getCustomStatusString();
 		memset(p_status, '\0', sizeof(p_status));
-		strncpy(p_status, message, sizeof(message) );
+		strncpy(p_status, strMessage.c_str(), strMessage.size());
 	}
 	Sleep(100);
 }
@@ -694,7 +715,7 @@ void CMy3DRebuilderView::OnExecuteReconstructionSparse()
 
 	build_reconstruction(reconstructions);
 
-
+	loadAndDisplaySparseResult();
 
 }
 
@@ -793,6 +814,8 @@ void CMy3DRebuilderView::WritePMVSOptions(const std::string& working_dir,
 
 void CMy3DRebuilderView::export_to_pmvs(theia::Reconstruction& reconstruction)
 {
+	outputInfo("正在预备稠密重建...");
+
 	// Set up output directories.
 	CreateDirectoryIfDoesNotExist(FLAGS_pmvs_working_directory);
 	const std::string visualize_dir = FLAGS_pmvs_working_directory + "/visualize";
@@ -809,7 +832,7 @@ void CMy3DRebuilderView::export_to_pmvs(theia::Reconstruction& reconstruction)
 	const std::string bundle_file =
 		FLAGS_pmvs_working_directory + "/bundle.rd.out";
 	if(theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file))
-		outputInfo(" 导出pmvs成功");
+		outputInfo(" 导出pmvs成功，稠密重建已经做好预备");
 	else
 		outputInfo(" 导出pmvs失败");
 
@@ -857,9 +880,12 @@ void CMy3DRebuilderView::run_pmvs(char *exeFullPath)
 	lanch_external_bin(String("pmvs2.exe"), parameter, exePath);
 
 }
+
 void CMy3DRebuilderView::OnExecuteReconstructionDense()
 {
 	// TODO:  在此添加命令处理程序代码
+	outputInfo("正在进行稠密重建...");
+
 	if ( NULL == reconstruction )
 	{
 		reconstruction = new theia::Reconstruction();
@@ -895,12 +921,22 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 	outputInfo("点云文件成功保存，稠密重建完成！");
 
 #endif
+	loadAndDisplayDenseResult();
 }
 
 
 void CMy3DRebuilderView::OnViewSparseResult()
 {
 	// TODO:  在此添加命令处理程序代码
+
+	loadAndDisplaySparseResult();
+
+
+}
+
+void CMy3DRebuilderView::loadAndDisplaySparseResult()
+{
+	outputInfo("正在显示稀释重建结果...");
 
 	if (NULL == reconstruction)
 	{
@@ -931,5 +967,5 @@ void CMy3DRebuilderView::OnViewSparseResult()
 		point_colors.emplace_back(track->Color().cast<float>());
 		num_views_for_track.emplace_back(track->NumViews());
 	}
-
+	outputInfo("稀释重建结果显示完成...");
 }

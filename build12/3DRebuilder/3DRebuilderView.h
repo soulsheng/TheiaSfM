@@ -94,6 +94,9 @@ private:
 	String getPath(String& strFullPath);
 	void AddImagesToReconstructionBuilderDIY(ReconstructionBuilder* reconstruction_builder);
 
+	void loadAndDisplayDenseResult();
+	void loadAndDisplaySparseResult();
+
 protected:
 	// other 
 	float step, s;
@@ -118,6 +121,8 @@ public:
 	afx_msg void OnExecuteReconstructionSparse();
 	afx_msg void OnExecuteReconstructionDense();
 	afx_msg void OnViewSparseResult();
+
+
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本
