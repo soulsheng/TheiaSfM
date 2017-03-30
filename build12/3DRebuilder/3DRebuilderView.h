@@ -80,6 +80,15 @@ protected:
 	std::vector<Reconstruction*> reconstructions;
 
 	void build_reconstruction(std::vector<Reconstruction *>& reconstructions);
+	void run_pmvs(char *exeFullPath);
+	void export_to_pmvs(theia::Reconstruction& reconstruction);
+
+private:
+	void CreateDirectoryIfDoesNotExist(const std::string& directory);
+	int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction);
+	void WritePMVSOptions(const std::string& working_dir, const int num_images);
+	void lanch_external_bin(String& bin, String& parameter, String& path);
+	String getPath(String& strFullPath);
 
 protected:
 	// other 
@@ -94,14 +103,16 @@ protected:
 public:
 	afx_msg void OnMenuViewPly();
 
-	void outputInfo(int info, char* message, bool bOutputORStatus=true);	// print to output window or status bar
+	void outputInfo(int info, const char* message, bool bOutputORStatus = true);	// print to output window or status bar
+	void outputInfo(const char* message, bool bOutputORStatus = true);	// print to output window or status bar
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnSelectImagePath();
-	afx_msg void OnExecuteReconstruction();
+	afx_msg void OnExecuteReconstructionSparse();
+	afx_msg void OnExecuteReconstructionDense();
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本

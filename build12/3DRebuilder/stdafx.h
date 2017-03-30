@@ -40,7 +40,9 @@
 #include <vector>
 #include <chrono>  // NOLINT
 #include <cmath>
+#include <fstream>
 
+typedef std::string	String;
 
 #include <gl/glew.h>
 #include <gl/GL.h>

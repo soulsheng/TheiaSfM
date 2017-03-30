@@ -25,6 +25,9 @@ DEFINE_string(image_directory, "",
 	"Full path to the directory containing the images used to create "
 	"the reconstructions. Must contain a trailing slash.");
 
+DEFINE_string(pmvs_working_directory, "",
+	"A directory to store the necessary pmvs files.");
+
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
 
@@ -53,7 +56,8 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_WM_ERASEBKGND()
 	ON_WM_TIMER()
 	ON_COMMAND(ID_SELECT_IMAGE_PATH, &CMy3DRebuilderView::OnSelectImagePath)
-	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION_SPARSE, &CMy3DRebuilderView::OnExecuteReconstruction)
+	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION_SPARSE, &CMy3DRebuilderView::OnExecuteReconstructionSparse)
+	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION_DENSE, &CMy3DRebuilderView::OnExecuteReconstructionDense)
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView 构造/析构
@@ -181,7 +185,7 @@ void CMy3DRebuilderView::OnMenuViewPly()
 }
 
 
-void CMy3DRebuilderView::outputInfo(int info, char* message, bool bOutputORStatus)
+void CMy3DRebuilderView::outputInfo(int info, const char* message, bool bOutputORStatus)
 {
 	CMainFrame* pMFram = (CMainFrame*)AfxGetMainWnd();
 
@@ -198,6 +202,19 @@ void CMy3DRebuilderView::outputInfo(int info, char* message, bool bOutputORStatu
 
 }
 
+
+void CMy3DRebuilderView::outputInfo(const char* message, bool bOutputORStatus /*= true*/)
+{
+	CMainFrame* pMFram = (CMainFrame*)AfxGetMainWnd();
+	if (bOutputORStatus)
+		pMFram->FillBuildWindow( std::string(message) );
+	else
+	{
+		char* p_status = pMFram->getCustomStatusString();
+		memset(p_status, '\0', sizeof(p_status));
+		strncpy(p_status, message, sizeof(message) );
+	}
+}
 
 int CMy3DRebuilderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
@@ -496,12 +513,13 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 		AddImagesToReconstructionBuilder(&reconstruction_builder);
 	}
 	else {
-		LOG(FATAL)
-			<< "You must specifiy either images to reconstruct or a match file.";
+		//LOG(FATAL)
+			// You must specifiy either images to reconstruct or a match file.";
+		outputInfo("未提供原始图片路径或中间匹配结果match文件");
 	}
 
-	CHECK(reconstruction_builder.BuildReconstruction(&reconstructions))
-		<< "Could not create a reconstruction.";
+	if (false == reconstruction_builder.BuildReconstruction(&reconstructions))
+		outputInfo("无法重构");//" Could not create a reconstruction.";
 
 
 	if (reconstructions.size())
@@ -512,13 +530,17 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 	theia::ColorizeReconstruction(FLAGS_image_directory,
 		FLAGS_num_threads,
 		reconstruction);
+	outputInfo("点云匹配颜色");
 
 	theia::WriteReconstruction(*reconstruction,
 		FLAGS_output_reconstruction);
 
+	std::string resultPath(FLAGS_output_reconstruction);
+	resultPath += "点云文件成功保存，稀疏重建完成！";
+	outputInfo(resultPath.c_str());
 }
 
-void CMy3DRebuilderView::OnExecuteReconstruction()
+void CMy3DRebuilderView::OnExecuteReconstructionSparse()
 {
 	// TODO:  在此添加命令处理程序代码
 	FLAGS_image_directory;
@@ -527,4 +549,189 @@ void CMy3DRebuilderView::OnExecuteReconstruction()
 
 
 
+}
+
+
+void CMy3DRebuilderView::CreateDirectoryIfDoesNotExist(const std::string& directory) {
+	if (!theia::DirectoryExists(directory)) {
+		CHECK(theia::CreateNewDirectory(directory))
+			<< "Could not create the directory: " << directory;
+	}
+}
+
+int CMy3DRebuilderView::WriteCamerasToPMVS(const theia::Reconstruction& reconstruction) {
+	const std::string txt_dir = FLAGS_pmvs_working_directory + "/txt";
+	CreateDirectoryIfDoesNotExist(txt_dir);
+	const std::string visualize_dir = FLAGS_pmvs_working_directory + "/visualize";
+
+	std::vector<std::string> image_files;
+	CHECK(theia::GetFilepathsFromWildcard(FLAGS_images, &image_files))
+		<< "Could not find images that matched the filepath: " << FLAGS_images
+		<< ". NOTE that the ~ filepath is not supported.";
+	CHECK_GT(image_files.size(), 0) << "No images found in: " << FLAGS_images;
+
+	// Format for printing eigen matrices.
+	const Eigen::IOFormat unaligned(Eigen::StreamPrecision, Eigen::DontAlignCols);
+
+	int current_image_index = 0;
+	for (int i = 0; i < image_files.size(); i++) {
+		std::string image_name;
+		CHECK(theia::GetFilenameFromFilepath(image_files[i], true, &image_name));
+		const theia::ViewId view_id = reconstruction.ViewIdFromName(image_name);
+		if (view_id == theia::kInvalidViewId) {
+			continue;
+		}
+
+		LOG(INFO) << "Undistorting image " << image_name;
+		const theia::Camera& distorted_camera =
+			reconstruction.View(view_id)->Camera();
+		theia::Camera undistorted_camera;
+		CHECK(theia::UndistortCamera(distorted_camera, &undistorted_camera));
+
+		theia::FloatImage distorted_image(image_files[i]);
+		theia::FloatImage undistorted_image;
+		CHECK(theia::UndistortImage(distorted_camera,
+			distorted_image,
+			undistorted_camera,
+			&undistorted_image));
+
+		LOG(INFO) << "Exporting parameters for image: " << image_name;
+
+		// Copy the image into a jpeg format with the filename in the form of
+		// %08d.jpg.
+		const std::string new_image_file = theia::StringPrintf(
+			"%s/%08d.jpg", visualize_dir.c_str(), current_image_index);
+		undistorted_image.Write(new_image_file);
+
+		// Write the camera projection matrix.
+		const std::string txt_file = theia::StringPrintf(
+			"%s/%08d.txt", txt_dir.c_str(), current_image_index);
+		theia::Matrix3x4d projection_matrix;
+		undistorted_camera.GetProjectionMatrix(&projection_matrix);
+		std::ofstream ofs(txt_file);
+		ofs << "CONTOUR" << std::endl;
+		ofs << projection_matrix.format(unaligned);
+		ofs.close();
+
+		++current_image_index;
+	}
+
+	return current_image_index;
+}
+
+void CMy3DRebuilderView::WritePMVSOptions(const std::string& working_dir,
+	const int num_images) {
+	std::ofstream ofs(working_dir + "/pmvs_options.txt");
+	ofs << "level 1" << std::endl;
+	ofs << "csize 2" << std::endl;
+	ofs << "threshold 0.7" << std::endl;
+	ofs << "wsize 7" << std::endl;
+	ofs << "minImageNum 3" << std::endl;
+	ofs << "CPU " << FLAGS_num_threads << std::endl;
+	ofs << "setEdge 0" << std::endl;
+	ofs << "useBound 0" << std::endl;
+	ofs << "useVisData 0" << std::endl;
+	ofs << "sequence -1" << std::endl;
+	ofs << "timages -1 0 " << num_images << std::endl;
+	ofs << "oimages 0" << std::endl;
+}
+
+void CMy3DRebuilderView::export_to_pmvs(theia::Reconstruction& reconstruction)
+{
+	// Set up output directories.
+	CreateDirectoryIfDoesNotExist(FLAGS_pmvs_working_directory);
+	const std::string visualize_dir = FLAGS_pmvs_working_directory + "/visualize";
+	CreateDirectoryIfDoesNotExist(visualize_dir);
+	const std::string txt_dir = FLAGS_pmvs_working_directory + "/txt";
+	CreateDirectoryIfDoesNotExist(txt_dir);
+	const std::string models_dir = FLAGS_pmvs_working_directory + "/models";
+	CreateDirectoryIfDoesNotExist(models_dir);
+
+	const int num_cameras = WriteCamerasToPMVS(reconstruction);
+	WritePMVSOptions(FLAGS_pmvs_working_directory, num_cameras);
+
+	const std::string lists_file = FLAGS_pmvs_working_directory + "/list.txt";
+	const std::string bundle_file =
+		FLAGS_pmvs_working_directory + "/bundle.rd.out";
+	CHECK(theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file));
+}
+
+void CMy3DRebuilderView::lanch_external_bin(String& bin, String& parameter, String& path)
+{
+	String zipParameter = String("a -m0 -inul -idp -sfxDefault.SFX -ibck -iiconVRGIS.ico -zsescript ");
+
+	SHELLEXECUTEINFO ShExecInfo = { 0 };
+	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+	ShExecInfo.hwnd = NULL;
+	ShExecInfo.lpVerb = NULL;
+	ShExecInfo.lpFile = bin.c_str();
+	ShExecInfo.lpParameters = parameter.c_str();
+	ShExecInfo.lpDirectory = path.c_str();
+	ShExecInfo.nShow = SW_HIDE;
+	ShExecInfo.hInstApp = NULL;
+	ShellExecuteEx(&ShExecInfo);
+
+	long waitStatus = WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
+
+	if (waitStatus)
+		printf("failed \n");
+	else
+		printf("succeed \n");
+
+}
+
+String CMy3DRebuilderView::getPath(String& strFullPath)
+{
+	int indexEnd = strFullPath.find_last_of('\\');
+	return strFullPath.substr(0, indexEnd);
+}
+
+void CMy3DRebuilderView::run_pmvs(char *exeFullPath)
+{
+	String exePath = getPath(String(exeFullPath));
+	lanch_external_bin(String("cmvs.exe"), FLAGS_pmvs_working_directory, exePath);
+
+	lanch_external_bin(String("genOption.exe"), FLAGS_pmvs_working_directory, exePath);
+
+	String parameter = FLAGS_pmvs_working_directory + " option-0000";
+	lanch_external_bin(String("pmvs2.exe"), parameter, exePath);
+
+}
+void CMy3DRebuilderView::OnExecuteReconstructionDense()
+{
+	// TODO:  在此添加命令处理程序代码
+	if ( NULL == reconstruction )
+	{
+		reconstruction = new theia::Reconstruction();
+		reconstructions.push_back(reconstruction);
+
+		std::ostringstream os;
+		os << FLAGS_output_reconstruction;
+
+		if (false == ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
+			os << " 稀疏重建数据无法读取";
+		else
+			os << " 稀疏重建数据成功读取";
+
+		outputInfo(os.str().c_str());
+
+		// Centers the reconstruction based on the absolute deviation of 3D points.
+		reconstruction->Normalize();
+	}
+
+#if 1
+	export_to_pmvs(*reconstruction);
+#endif
+
+#if 1
+	HINSTANCE hInst = AfxGetApp()->m_hInstance;
+	char path_buffer[_MAX_PATH];
+	GetModuleFileName(hInst, path_buffer, sizeof(path_buffer));//得到exe文件的全路径
+	run_pmvs(path_buffer);
+
+	String resultPath = FLAGS_pmvs_working_directory + " option-0000点云文件成功保存，稠密重建完成！";
+	outputInfo(resultPath.c_str(), "");
+
+#endif
 }
