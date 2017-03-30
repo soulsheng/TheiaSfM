@@ -61,7 +61,7 @@ protected:
 	int		nColorPoint[3];
 	int y_up_direction = -1;// 1-up,  -1-down 
 	int min_num_views_for_track = 10;
-	int n_fps = 240; // frame per second
+	int n_fps = 30; // frame per second
 	FPSCounter fps_mm;
 
 	int MySetPixelFormat(HDC hdc);

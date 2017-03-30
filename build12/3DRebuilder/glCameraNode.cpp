@@ -9,9 +9,9 @@
 cameranode::cameranode()
 {
 	//	视点位置
-	g_eye[0] = 0.0f;	
-	g_eye[1] = 0.0f;	
-	g_eye[2] = 10.0f;	
+	g_eye[0] = -50.0f;	
+	g_eye[1] = 200.0f;	
+	g_eye[2] = 550.0f;	
 
 	//	视线方向
 	g_dir[0] = 0.0f;	
