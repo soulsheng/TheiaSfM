@@ -28,6 +28,8 @@ DEFINE_string(image_directory, "",
 DEFINE_string(pmvs_working_directory, "",
 	"A directory to store the necessary pmvs files.");
 
+DEFINE_string(eye_position, "(-50,180,550)", "position of eye.");
+
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
 
@@ -229,7 +231,10 @@ int CMy3DRebuilderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 设置计时器,10ms刷新一次
 	SetTimer(TIME_DRAW, 10, 0);
 
-	getColorFromString(std::string(FLAGS_color_point), nColorPoint);
+	getValueFromString(std::string(FLAGS_color_point), nColorPoint);
+
+	int temp[3];
+	getValueFromString(std::string(FLAGS_eye_position), m_camera.getEye());
 
 	return 0;
 }
@@ -307,7 +312,7 @@ void CMy3DRebuilderView::initializeGL()
 	//glClearColor(0.5f, 0.6f, 0.8f, 1.0f);
 	// Set sky color
 	int cColor[3];
-	getColorFromString(std::string(FLAGS_color_sky), cColor);
+	getValueFromString(std::string(FLAGS_color_sky), cColor);
 	glClearColor(cColor[0] / 255.0f, cColor[1] / 255.0f, cColor[2] / 255.0f, 1.0f);
 
 	glEnable(GL_DEPTH_TEST);// 开启遮挡
@@ -485,13 +490,6 @@ void CMy3DRebuilderView::OnTimer(UINT_PTR nIDEvent)
 	outputInfo( fps_mm.fps(), "fps:", false );
 
 	CView::OnTimer(nIDEvent);
-}
-
-void CMy3DRebuilderView::getColorFromString(std::string str, int * cColor)
-{
-	std::istringstream in(str);
-	char tmp;
-	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
 }
 
 

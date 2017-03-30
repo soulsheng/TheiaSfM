@@ -72,7 +72,8 @@ protected:
 	void renderPointsCloud();
 	void DrawColorBox(void);
 
-	void getColorFromString(std::string str, int * cColor);
+	template<typename T>
+	void getValueFromString(std::string str, T * cColor);
 
 protected:
 	// reconstruction
@@ -124,3 +125,10 @@ inline CMy3DRebuilderDoc* CMy3DRebuilderView::GetDocument() const
    { return reinterpret_cast<CMy3DRebuilderDoc*>(m_pDocument); }
 #endif
 
+template<typename T>
+void CMy3DRebuilderView::getValueFromString(std::string str, T * cColor)
+{
+	std::istringstream in(str);
+	char tmp;
+	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
+}

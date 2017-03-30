@@ -61,3 +61,20 @@ void cameranode::look()
 		g_up[0],	g_up[1],	g_up[2]);
 
 }
+
+void cameranode::setEye(float* p)
+{
+	memcpy(g_eye, p, sizeof(float) * 3);
+}
+
+void cameranode::setEye(float x, float y, float z)
+{
+	g_eye[0] = x;
+	g_eye[1] = y;
+	g_eye[2] = z;
+}
+
+float* cameranode::getEye()
+{
+	return g_eye;
+}
