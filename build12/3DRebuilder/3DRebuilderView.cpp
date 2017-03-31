@@ -29,6 +29,7 @@ DEFINE_string(pmvs_working_directory, "",
 	"A directory to store the necessary pmvs files.");
 
 DEFINE_string(eye_position, "(-50,180,550)", "position of eye.");
+DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
@@ -40,7 +41,6 @@ DEFINE_string(eye_position, "(-50,180,550)", "position of eye.");
 #endif
 
 #define TIME_DRAW		1
-#define ENABLE_UNDISTORT	1
 
 // CMy3DRebuilderView
 
@@ -767,14 +767,14 @@ int CMy3DRebuilderView::WriteCamerasToPMVS(const theia::Reconstruction& reconstr
 
 		theia::FloatImage distorted_image(image_files[i]);
 		theia::FloatImage undistorted_image;
-#if ENABLE_UNDISTORT
+		if( FLAGS_undistort )
 		CHECK(theia::UndistortImage(distorted_camera,
 			distorted_image,
 			undistorted_camera,
 			&undistorted_image));
-#else
-		undistorted_image = distorted_image;
-#endif
+		else
+			undistorted_image = distorted_image;
+
 
 		LOG(INFO) << "Exporting parameters for image: " << image_name;
 
