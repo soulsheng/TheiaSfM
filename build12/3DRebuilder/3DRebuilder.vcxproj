@@ -112,6 +112,7 @@
     <ClInclude Include="3DRebuilder.h" />
     <ClInclude Include="3DRebuilderDoc.h" />
     <ClInclude Include="3DRebuilderView.h" />
+    <ClInclude Include="bmpHeader.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="glCameraNode.h" />
     <ClInclude Include="MainFrm.h" />

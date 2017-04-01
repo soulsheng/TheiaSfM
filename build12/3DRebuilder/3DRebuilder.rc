@@ -163,6 +163,7 @@ BEGIN
     END
     POPUP "视图(&V)"
     BEGIN
+        MENUITEM "截屏(&P)",                      ID_PRINT_SCREEN
         POPUP "工具栏和停靠窗口(&T)"
         BEGIN
             MENUITEM "<占位符>",                       ID_VIEW_TOOLBAR

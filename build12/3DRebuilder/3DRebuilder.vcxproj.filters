@@ -51,6 +51,9 @@
     <ClInclude Include="FPSCounter.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="bmpHeader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DRebuilder.cpp">

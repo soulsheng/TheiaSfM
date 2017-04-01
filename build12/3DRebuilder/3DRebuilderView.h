@@ -123,6 +123,7 @@ public:
 	afx_msg void OnViewSparseResult();
 
 
+	afx_msg void OnPrintScreen();
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本

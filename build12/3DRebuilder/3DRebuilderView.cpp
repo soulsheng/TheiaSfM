@@ -16,6 +16,8 @@
 
 #include "build_common.h"
 
+#include "bmpHeader.h"
+
 DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
 DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
 DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
@@ -62,6 +64,7 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION_SPARSE, &CMy3DRebuilderView::OnExecuteReconstructionSparse)
 	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION_DENSE, &CMy3DRebuilderView::OnExecuteReconstructionDense)
 	ON_COMMAND(ID_VIEW_SPARSE_RESULT, &CMy3DRebuilderView::OnViewSparseResult)
+	ON_COMMAND(ID_PRINT_SCREEN, &CMy3DRebuilderView::OnPrintScreen)
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView 构造/析构
@@ -973,4 +976,20 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 		num_views_for_track.emplace_back(track->NumViews());
 	}
 	outputInfo("稀释重建结果显示完成...");
+}
+
+
+void CMy3DRebuilderView::OnPrintScreen()
+{
+	// TODO:  在此添加命令处理程序代码
+	int m_bmpWidth = 1024;
+	int m_bmpHeight = 768;
+
+	char* buf = new char[3 * m_bmpWidth * m_bmpHeight];
+	glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
+	glReadPixels(0, 0, m_bmpWidth, m_bmpHeight, GL_BGR, GL_UNSIGNED_BYTE, buf);
+
+	saveBMPFile("1.bmp", m_bmpWidth, m_bmpHeight, buf);
+
+	delete[] buf;
 }
