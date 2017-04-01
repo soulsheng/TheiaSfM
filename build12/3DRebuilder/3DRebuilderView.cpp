@@ -35,6 +35,7 @@ DEFINE_string(eye_position, "(-50,180,550)", "position of eye.");
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
 DEFINE_string(output_image_directory, "./output/", "output image directory");
+DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
 
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
@@ -393,7 +394,7 @@ void CMy3DRebuilderView::renderScene()
 			printScreen(os.str());
 		}
 
-		if (min_num_views_for_track==-1)
+		if (min_num_views_for_track == -1 && FLAGS_output_image_type == 1)
 		{
 			bmp2gif	b2g(100);
 			std::string strPathGIF = strPathBMP + "1.GIF";
