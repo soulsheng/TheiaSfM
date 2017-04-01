@@ -100,6 +100,7 @@ private:
 protected:
 	// other 
 	float step, s;
+	bool	m_bDenseFinish;
 
 // 生成的消息映射函数
 protected:
@@ -124,6 +125,9 @@ public:
 
 
 	afx_msg void OnPrintScreen();
+
+	void printScreen(std::string filename, int width = 1024, int height = 768);
+
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本

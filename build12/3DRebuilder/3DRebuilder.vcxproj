@@ -112,6 +112,7 @@
     <ClInclude Include="3DRebuilder.h" />
     <ClInclude Include="3DRebuilderDoc.h" />
     <ClInclude Include="3DRebuilderView.h" />
+    <ClInclude Include="bmp2gif.h" />
     <ClInclude Include="bmpHeader.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="glCameraNode.h" />
@@ -119,8 +120,10 @@
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="simpleBMP.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WriteGIF.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DRebuilder.cpp" />
@@ -135,6 +138,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WriteGIF.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="3DRebuilder.rc" />

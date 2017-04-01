@@ -17,6 +17,7 @@
 #include "build_common.h"
 
 #include "bmpHeader.h"
+#include "bmp2gif.h"
 
 DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
 DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
@@ -32,6 +33,8 @@ DEFINE_string(pmvs_working_directory, "",
 
 DEFINE_string(eye_position, "(-50,180,550)", "position of eye.");
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
+
+DEFINE_string(output_image_directory, "./output/", "output image directory");
 
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
@@ -74,7 +77,7 @@ CMy3DRebuilderView::CMy3DRebuilderView()
 	// TODO:  在此处添加构造代码
 	step = 0.0;
 	s = 0.1;
-
+	m_bDenseFinish = false;
 }
 
 CMy3DRebuilderView::~CMy3DRebuilderView()
@@ -355,10 +358,6 @@ void CMy3DRebuilderView::renderScene()
 
 	renderPointsCloud();
 
-	static int nFrameCount = 0;
-	if (0 == nFrameCount++ % n_fps)
-		min_num_views_for_track--;
-
 #if 1
 	s += 0.005;
 	if (s > 1.0)
@@ -376,6 +375,32 @@ void CMy3DRebuilderView::renderScene()
 	glFlush();
 #endif
 	SwapBuffers(hdc);
+
+	if (m_bDenseFinish)
+	{
+		static int nPrintScreen = 0;
+		static int nFrameCount = 0;
+		std::string strPathBMP = FLAGS_output_image_directory;
+		
+		if (!theia::DirectoryExists(strPathBMP))
+			theia::CreateNewDirectory(strPathBMP);
+
+		if (0 == nFrameCount++ % n_fps && min_num_views_for_track >= -1)
+		{
+			min_num_views_for_track--;
+			std::ostringstream os;
+			os << strPathBMP << nPrintScreen++ << ".bmp";
+			printScreen(os.str());
+		}
+
+		if (min_num_views_for_track==-1)
+		{
+			bmp2gif	b2g(100);
+			std::string strPathGIF = strPathBMP + "1.GIF";
+			b2g.run(strPathBMP.c_str(), strPathGIF.c_str(), 10);
+			m_bDenseFinish = false;
+		}
+	}
 }
 
 void CMy3DRebuilderView::renderPointsCloud()
@@ -930,6 +955,8 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 
 #endif
 	loadAndDisplayDenseResult();
+
+	m_bDenseFinish = true;
 }
 
 
@@ -982,14 +1009,17 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 void CMy3DRebuilderView::OnPrintScreen()
 {
 	// TODO:  在此添加命令处理程序代码
-	int m_bmpWidth = 1024;
-	int m_bmpHeight = 768;
+	printScreen("1.bmp");
 
-	char* buf = new char[3 * m_bmpWidth * m_bmpHeight];
+}
+
+void CMy3DRebuilderView::printScreen(std::string filename, int width, int height)
+{
+	char* buf = new char[3 * width * height];
 	glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
-	glReadPixels(0, 0, m_bmpWidth, m_bmpHeight, GL_BGR, GL_UNSIGNED_BYTE, buf);
+	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, buf);
 
-	saveBMPFile("1.bmp", m_bmpWidth, m_bmpHeight, buf);
+	saveBMPFile(filename, width, height, buf);
 
 	delete[] buf;
 }

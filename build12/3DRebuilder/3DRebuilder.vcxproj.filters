@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="custom">
+      <UniqueIdentifier>{f0cfff5a-0b98-4144-8d91-dd02c7785989}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -48,11 +51,20 @@
     <ClInclude Include="glCameraNode.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="bmp2gif.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="simpleBMP.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="WriteGIF.h">
+      <Filter>custom</Filter>
+    </ClInclude>
     <ClInclude Include="FPSCounter.h">
-      <Filter>头文件</Filter>
+      <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="bmpHeader.h">
-      <Filter>头文件</Filter>
+      <Filter>custom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,8 +92,11 @@
     <ClCompile Include="glCameraNode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="WriteGIF.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
     <ClCompile Include="FPSCounter.cpp">
-      <Filter>源文件</Filter>
+      <Filter>custom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
