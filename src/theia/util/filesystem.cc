@@ -107,4 +107,9 @@ bool CreateNewDirectory(const std::string& directory) {
   return stlplus::folder_create(directory);
 }
 
+// delete the given directory.
+bool DeleteDirectory(const std::string& directory, bool recurse) {
+	return stlplus::folder_delete(directory, recurse);
+}
+
 }  // namespace theia

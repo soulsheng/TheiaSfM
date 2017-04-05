@@ -54,7 +54,7 @@ DEFINE_int32(point_size, 1, "bool on/off to use same color for point. eg:0 ");
 DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
 DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
 
-DEFINE_string(output_image_directory, "./output/", "output image directory");
+DEFINE_string(output_images, "./output/", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
 
 // Containers for the data.
@@ -317,7 +317,7 @@ void RenderScene() {
  
 	  static int nPrintScreen = 0;
 	  static int nFrameCount = 0;
-	  std::string strPathBMP = FLAGS_output_image_directory;
+	  std::string strPathBMP = FLAGS_input_images + FLAGS_output_images;
 
 	  if (!theia::DirectoryExists(strPathBMP))
 		  theia::CreateNewDirectory(strPathBMP);

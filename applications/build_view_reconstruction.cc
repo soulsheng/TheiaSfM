@@ -48,9 +48,7 @@
 
 typedef std::string	String;
 
-DEFINE_string(image_directory, "",
-	"Full path to the directory containing the images used to create "
-	"the reconstructions. Must contain a trailing slash.");
+
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(90,0,0)", "angle of eye.");
@@ -352,12 +350,12 @@ int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
-  FLAGS_images = FLAGS_image_directory + "*.jpg";
-  FLAGS_output_matches_file = FLAGS_image_directory + "output.matches";
-  FLAGS_output_reconstruction = FLAGS_image_directory + "result";
-  FLAGS_matching_working_directory = FLAGS_image_directory + "features\\";
-  FLAGS_pmvs_working_directory = FLAGS_image_directory + "pmvs\\";
-  FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\option-0000.ply";
+  FLAGS_images = FLAGS_input_images + "*.jpg";
+  FLAGS_output_matches_file = FLAGS_input_images + "output.matches";
+  FLAGS_output_reconstruction = FLAGS_input_images + "result";
+  FLAGS_matching_working_directory = FLAGS_input_images + "features\\";
+  FLAGS_pmvs_working_directory = FLAGS_input_images + "pmvs\\";
+  FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
 
   CreateDirectoryIfDoesNotExist(FLAGS_matching_working_directory);
 
@@ -374,7 +372,7 @@ int main(int argc, char* argv[]) {
   else
 	  return -1;
 
-  theia::ColorizeReconstruction(FLAGS_image_directory,
+  theia::ColorizeReconstruction(FLAGS_input_images,
 	  FLAGS_num_threads,
 	  reconstruction);
 

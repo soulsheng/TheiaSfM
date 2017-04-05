@@ -66,6 +66,9 @@ bool DirectoryExists(const std::string& directory);
 // Creates the given directory.
 bool CreateNewDirectory(const std::string& directory);
 
+// delete the given directory.
+bool DeleteDirectory(const std::string& directory, bool recurse=true);
+
 }  // namespace theia
 
 #endif  // THEIA_UTIL_FILESYSTEM_H_
