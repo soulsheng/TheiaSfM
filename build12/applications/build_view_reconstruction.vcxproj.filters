@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\applications\build_view_reconstruction.cc" />
+    <ClCompile Include="..\common\WriteGIF.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="custom">
+      <UniqueIdentifier>{77eeab37-ea42-4521-a3a3-7430e4231522}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="..\..\applications\view_common.h" />
+    <ClInclude Include="..\common\bmp2gif.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\bmpHeader.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\simpleBMP.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\WriteGIF.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -19,7 +19,7 @@ public:
 bool bmp2gif::run(const char* inPathBmp, const char* outFilenameGif, int FrameCount)
 {
 
-	char sPath[20];
+	char sPath[256];
 	_snprintf( sPath, sizeof(sPath), FORMAT_PATH, inPathBmp, 1, '\0');
 	ClImgBMP	bmp;
 	bmp.LoadImage( sPath );

@@ -2,7 +2,7 @@
 # Input/output files.
 # Set these if a matches file is not present. Images should be a filepath with a
 # wildcard e.g., /home/my_username/my_images/*.jpg
---images=D:\file\data\3d\2017_03-5\*.jpg
+--input_images=D:\file\data\3d\2017_03-5\
 --output_matches_file=D:\file\data\3d\2017_03-5\output.matches
 
 # If a matches file has already been created, set the filepath here. This avoids
