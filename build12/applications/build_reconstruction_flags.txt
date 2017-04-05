@@ -143,3 +143,7 @@
 --color_sky=(128,150,200)
 --draw_point_size=1
 --ply_file=D:\file\data\3d\2017_03-5\pmvs\models\option-0000.ply
+--eye_position=(0,0,0)
+--eye_angle=(90,0,0)
+#--eye_position=(-50,180,500)
+--undistort=0

@@ -46,6 +46,8 @@
 #include "bmpHeader.h"
 //#include "bmp2gif.h"
 
+#define		PI		3.1415926	
+
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
 DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
 DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
@@ -68,7 +70,8 @@ int width = 1200;
 int height = 800;
 
 // OpenGL camera parameters.
-Eigen::Vector3f viewer_position(0.0, 0.0, 0.0);
+extern Eigen::Vector3f eye_position;
+extern Eigen::Vector3f eye_position_default;
 extern float zoom_default;// = -500.0;
 extern float zoom;// = -500.0;
 float delta_zoom = 1.1;
@@ -264,6 +267,17 @@ void RenderScene() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
+#if 1
+  float g_dir[3];
+  g_dir[0] = cos(PI*navigation_rotation[0] / 180.0f);
+  g_dir[2] = sin(PI*navigation_rotation[0] / 180.0f);
+  g_dir[1] = sin(PI*navigation_rotation[1] / 180.0f);
+
+  gluLookAt(
+	  eye_position[0],	eye_position[1],	eye_position[2],
+	  eye_position[0] + g_dir[0],	eye_position[1] + g_dir[1],	eye_position[2] + g_dir[2],
+	  0,	1,	0);
+#else
   // Transformation to the viewer origin.
   glTranslatef(0.0, 0.0, zoom);
   glRotatef(navigation_rotation[0], 1.0f, 0.0f, 0.0f);
@@ -273,8 +287,8 @@ void RenderScene() {
   }
 
   // Transformation from the viewer origin to the reconstruction origin.
-  glTranslatef(viewer_position[0], viewer_position[1], viewer_position[2]);
-
+  glTranslatef(eye_position[0], eye_position[1], eye_position[2]);
+#endif
 
   // Each 3D point is rendered 3 times with different point sizes, color
   // intensity, and alpha blending. This allows for a more complete texture-like
@@ -309,7 +323,7 @@ void RenderScene() {
 	  if (!theia::DirectoryExists(strPathBMP))
 		  theia::CreateNewDirectory(strPathBMP);
 
-	  if (0 == nFrameCount++ % n_fps && min_num_views_for_track >= -1)
+	  if (0 == ++nFrameCount % n_fps && min_num_views_for_track >= -1)
 	  {
 		  min_num_views_for_track--;
 		  std::ostringstream os;
@@ -324,6 +338,18 @@ void RenderScene() {
 		  b2g.run(strPathBMP.c_str(), strPathGIF.c_str(), 10);
 	  }
 #endif
+}
+
+void setEyeParameter(float pos[], float angle[])
+{
+	navigation_rotation_default[0] = angle[0];
+	navigation_rotation_default[1] = angle[1];
+	navigation_rotation = navigation_rotation_default;
+
+	eye_position_default[0] = pos[0];
+	eye_position_default[1] = pos[1];
+	eye_position_default[2] = pos[2];
+	eye_position = eye_position_default;
 }
 
 void MouseButton(int button, int state, int x, int y) {
@@ -393,7 +419,7 @@ void MouseMove(int x, int y) {
     last_y_offset = y_offset;
 
     // Compute the new viewer origin origin.
-    viewer_position +=
+    eye_position +=
         rotation.inverse() * Eigen::Vector3f(delta_x, delta_y, 0);
   }
 }
@@ -401,7 +427,7 @@ void MouseMove(int x, int y) {
 void Keyboard(unsigned char key, int x, int y) {
   switch (key) {
     case 'r':  // reset viewpoint
-      viewer_position.setZero();
+      eye_position.setZero();
 	  zoom = zoom_default;
       navigation_rotation.setZero();
       mouse_pressed_x = 0;

@@ -52,6 +52,8 @@ DEFINE_string(image_directory, "",
 	"Full path to the directory containing the images used to create "
 	"the reconstructions. Must contain a trailing slash.");
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
+DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
+DEFINE_string(eye_angle, "(90,0,0)", "angle of eye.");
 
 void prepare_points_to_draw(Reconstruction *reconstruction)
 {
@@ -85,8 +87,11 @@ void prepare_points_to_draw(Reconstruction *reconstruction)
 }
 
 // OpenGL camera parameters.
-float zoom_default = -400.0;
+float zoom_default = 0.0;
 float zoom = zoom_default;
+
+Eigen::Vector3f eye_position;
+Eigen::Vector3f eye_position_default;
 
 // Rotation values for the navigation
 Eigen::Vector2f navigation_rotation_default(60.0, 0.0);
@@ -330,6 +335,14 @@ void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size)
 		num_views_for_track.emplace_back(rand() % 10);
 }
 
+template<typename T>
+void getValueFromString(std::string str, T * cColor)
+{
+	std::istringstream in(str);
+	char tmp;
+	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
+}
+
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
@@ -379,6 +392,12 @@ int main(int argc, char* argv[]) {
 	  printf("can not open ply file!\n");
 
   rand_num_views_for_track(num_views_for_track, world_points.size());
+
+  float fEyePosition[3];
+  getValueFromString(std::string(FLAGS_eye_position), fEyePosition);
+  float fEyeAngle[3];
+  getValueFromString(std::string(FLAGS_eye_angle), fEyeAngle);
+  setEyeParameter(fEyePosition, fEyeAngle);
 
   gl_draw_points(argc, argv);
 
