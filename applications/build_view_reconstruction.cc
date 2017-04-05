@@ -55,6 +55,14 @@ DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(90,0,0)", "angle of eye.");
 
+#if 1
+String FLAGS_pmvs_working_directory;
+String FLAGS_ply_file;
+#else
+DEFINE_string(pmvs_working_directory, "",
+	"A directory to store the necessary pmvs files.");
+DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
+#endif
 void prepare_points_to_draw(Reconstruction *reconstruction)
 {
 	// Centers the reconstruction based on the absolute deviation of 3D points.
@@ -159,7 +167,7 @@ void gl_draw_points(int argc, char** argv)
 
 	// Set point color / size
 	getColorFromString(std::string(FLAGS_color_point), nColorPoint);
-	point_size = FLAGS_draw_point_size;
+	point_size = FLAGS_point_size;
 
 	// register callbacks
 	glutDisplayFunc(RenderScene);
@@ -174,9 +182,6 @@ void gl_draw_points(int argc, char** argv)
 }
 
 #include <fstream>  // NOLINT
-
-DEFINE_string(pmvs_working_directory, "",
-	"A directory to store the necessary pmvs files.");
 
 void CreateDirectoryIfDoesNotExist(const std::string& directory) {
 	if (!theia::DirectoryExists(directory)) {
@@ -348,6 +353,14 @@ int main(int argc, char* argv[]) {
   google::InitGoogleLogging(argv[0]);
 
   FLAGS_images = FLAGS_image_directory + "*.jpg";
+  FLAGS_output_matches_file = FLAGS_image_directory + "output.matches";
+  FLAGS_output_reconstruction = FLAGS_image_directory + "result";
+  FLAGS_matching_working_directory = FLAGS_image_directory + "features\\";
+  FLAGS_pmvs_working_directory = FLAGS_image_directory + "pmvs\\";
+  FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\option-0000.ply";
+
+  CreateDirectoryIfDoesNotExist(FLAGS_matching_working_directory);
+
 
   Reconstruction* reconstruction = NULL;
 

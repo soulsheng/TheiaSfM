@@ -49,11 +49,10 @@
 #define		PI		3.1415926	
 
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
-DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
-DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
+DEFINE_bool(same_color, false, "bool on/off to use same color for point. eg:0 ");
+DEFINE_int32(point_size, 1, "bool on/off to use same color for point. eg:0 ");
 DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
 DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
-DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 
 DEFINE_string(output_image_directory, "./output/", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
@@ -237,7 +236,7 @@ void DrawPoints(const float point_scale,
       continue;
     }
 	Eigen::Vector3f color;
-	if (FLAGS_same_color_point)
+	if (FLAGS_same_color)
 		color = Eigen::Vector3f(nColorPoint[0], nColorPoint[1], nColorPoint[2]) / 255.0;
 	else
 		color = point_colors[i] / 255.0;
@@ -436,7 +435,7 @@ void Keyboard(unsigned char key, int x, int y) {
       last_y_offset = 0.0;
       left_mouse_button_active = 0;
       right_mouse_button_active = 0;
-	  point_size = FLAGS_draw_point_size;
+	  point_size = FLAGS_point_size;
 	  min_num_views_for_track = 10;
 	  navigation_rotation = navigation_rotation_default;
       break;

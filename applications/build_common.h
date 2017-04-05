@@ -45,9 +45,13 @@
 // Input/output files.
 #if 1
 std::string FLAGS_images;
+std::string FLAGS_image_masks;
+std::string FLAGS_matches_file;
+std::string FLAGS_calibration_file;
+std::string FLAGS_output_matches_file;
+std::string FLAGS_output_reconstruction;
+std::string FLAGS_matching_working_directory;
 #else
-DEFINE_string(images, "", "Wildcard of images to reconstruct.");
-#endif
 DEFINE_string(image_masks, "", "Wildcard of image masks to reconstruct.");
 DEFINE_string(matches_file, "", "Filename of the matches file.");
 DEFINE_string(calibration_file, "",
@@ -61,6 +65,11 @@ DEFINE_string(
     output_reconstruction, "",
     "Filename to write reconstruction to. The filename will be appended with "
     "the reconstruction number if multiple reconstructions are created.");
+DEFINE_string(images, "", "Wildcard of images to reconstruct.");
+DEFINE_string(matching_working_directory, "",
+	"Directory used during matching to store features for "
+	"out-of-core matching.");
+#endif
 
 // Multithreading.
 DEFINE_int32(num_threads, 1,
@@ -81,9 +90,7 @@ DEFINE_bool(match_out_of_core, true,
             "Perform matching out of core by saving features to disk and "
             "reading them as needed. Set to false to perform matching all in "
             "memory.");
-DEFINE_string(matching_working_directory, "",
-              "Directory used during matching to store features for "
-              "out-of-core matching.");
+
 DEFINE_int32(matching_max_num_images_in_cache, 128,
              "Maximum number of images to store in the LRU cache during "
              "feature matching. The higher this number is the more memory is "
