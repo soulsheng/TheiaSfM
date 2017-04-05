@@ -347,6 +347,7 @@ int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
+  FLAGS_images = FLAGS_image_directory + "*.jpg";
 
   Reconstruction* reconstruction = NULL;
 

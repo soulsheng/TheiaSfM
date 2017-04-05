@@ -43,7 +43,11 @@
 #include "applications/command_line_helpers.h"
 
 // Input/output files.
+#if 1
+std::string FLAGS_images;
+#else
 DEFINE_string(images, "", "Wildcard of images to reconstruct.");
+#endif
 DEFINE_string(image_masks, "", "Wildcard of image masks to reconstruct.");
 DEFINE_string(matches_file, "", "Filename of the matches file.");
 DEFINE_string(calibration_file, "",
