@@ -43,6 +43,8 @@
 #include <glew.h>
 #include <glut.h>
 
+#include "bmpHeader.h"
+//#include "bmp2gif.h"
 
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
 DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
@@ -50,6 +52,9 @@ DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 
 DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
 DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
 DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
+
+DEFINE_string(output_image_directory, "./output/", "output image directory");
+DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
 
 // Containers for the data.
 std::vector<theia::Camera> cameras;
@@ -243,6 +248,17 @@ void DrawPoints(const float point_scale,
   glEnd();
 }
 
+void printScreen(std::string filename, int width = 1024, int height = 768)
+{
+	char* buf = new char[3 * width * height];
+	glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
+	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, buf);
+
+	saveBMPFile(filename, width, height, buf);
+
+	delete[] buf;
+}
+
 void RenderScene() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
@@ -281,11 +297,33 @@ void RenderScene() {
       DrawCamera(cameras[i]);
     }
   }
-  static int nFrameCount = 0;
-  if (0 == nFrameCount++ % n_fps)
-	min_num_views_for_track--;
 
   glutSwapBuffers();
+
+
+ 
+	  static int nPrintScreen = 0;
+	  static int nFrameCount = 0;
+	  std::string strPathBMP = FLAGS_output_image_directory;
+
+	  if (!theia::DirectoryExists(strPathBMP))
+		  theia::CreateNewDirectory(strPathBMP);
+
+	  if (0 == nFrameCount++ % n_fps && min_num_views_for_track >= -1)
+	  {
+		  min_num_views_for_track--;
+		  std::ostringstream os;
+		  os << strPathBMP << nPrintScreen++ << ".bmp";
+		  printScreen(os.str());
+	  }
+#if 0
+	  if (min_num_views_for_track == -1 && FLAGS_output_image_type == 1)
+	  {
+		  bmp2gif	b2g(100);
+		  std::string strPathGIF = strPathBMP + "1.GIF";
+		  b2g.run(strPathBMP.c_str(), strPathGIF.c_str(), 10);
+	  }
+#endif
 }
 
 void MouseButton(int button, int state, int x, int y) {

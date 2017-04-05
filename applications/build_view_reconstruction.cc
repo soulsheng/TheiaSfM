@@ -51,6 +51,7 @@ typedef std::string	String;
 DEFINE_string(image_directory, "",
 	"Full path to the directory containing the images used to create "
 	"the reconstructions. Must contain a trailing slash.");
+DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
 void prepare_points_to_draw(Reconstruction *reconstruction)
 {
@@ -210,10 +211,13 @@ int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction) {
 
 		theia::FloatImage distorted_image(image_files[i]);
 		theia::FloatImage undistorted_image;
+		if (FLAGS_undistort)
 		CHECK(theia::UndistortImage(distorted_camera,
 			distorted_image,
 			undistorted_camera,
 			&undistorted_image));
+		else
+			undistorted_image = distorted_image;
 
 		LOG(INFO) << "Exporting parameters for image: " << image_name;
 

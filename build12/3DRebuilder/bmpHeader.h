@@ -43,6 +43,11 @@ typedef struct BMP_INFO
 void	saveBMPFile(std::string filename, int width, int height, char* buf)
 {
 	FILE*     pDummyFile = fopen("dummy.bmp", "rb");
+	if (NULL == pDummyFile)
+	{
+		printf("无法打开bmp文件格式模板%s", "dummy.bmp");
+		return;
+	}
 	FILE*     pWritingFile = fopen(filename.c_str(), "wb");
 	GLubyte   BMP_Header[BMP_Header_Length];
 	fread(BMP_Header, sizeof(BMP_Header), 1, pDummyFile);
