@@ -240,10 +240,10 @@ void DrawPoints(const float point_scale,
 		color = Eigen::Vector3f(nColorPoint[0], nColorPoint[1], nColorPoint[2]) / 255.0;
 	else
 		color = point_colors[i] / 255.0;
-    glColor4f(color_scale * color[0],
-              color_scale * color[1],
-              color_scale * color[2],
-              alpha_scale * default_alpha_scale);
+	glColor3f(color_scale * color[0],
+		color_scale * color[1],
+		color_scale * color[2]);
+             // , alpha_scale * default_alpha_scale);
 
 	glVertex3d(world_points[i].x(), world_points[i].y() * y_up_direction, world_points[i].z());
   }
@@ -301,8 +301,8 @@ void RenderScene() {
               large_alpha_scale = 3.3;
 
   DrawPoints(small_point_scale, small_color_scale, small_alpha_scale);
-  DrawPoints(medium_point_scale, medium_color_scale, medium_alpha_scale);
-  DrawPoints(large_point_scale, large_color_scale, large_alpha_scale);
+  //DrawPoints(medium_point_scale, medium_color_scale, medium_alpha_scale);
+  //DrawPoints(large_point_scale, large_color_scale, large_alpha_scale);
 
   // Draw the cameras.
   if (draw_cameras) {
