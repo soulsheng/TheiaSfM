@@ -52,6 +52,8 @@ typedef std::string	String;
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(90,0,0)", "angle of eye.");
+DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
+DEFINE_bool(view, true, "bool on/off to view. eg:0 ");
 
 #if 1
 String FLAGS_pmvs_working_directory;
@@ -359,60 +361,64 @@ int main(int argc, char* argv[]) {
 
   CreateDirectoryIfDoesNotExist(FLAGS_matching_working_directory);
 
-
-  Reconstruction* reconstruction = NULL;
+  if (FLAGS_build)
+  {
+	  Reconstruction* reconstruction = NULL;
 
 #if 1
-  std::vector<Reconstruction*> reconstructions;
+	  std::vector<Reconstruction*> reconstructions;
 
-  build_reconstruction(reconstructions);
+	  build_reconstruction(reconstructions);
 
-  if (reconstructions.size())
-	  reconstruction = reconstructions[0];
-  else
-	  return -1;
+	  if (reconstructions.size())
+		  reconstruction = reconstructions[0];
+	  else
+		  return -1;
 
-  theia::ColorizeReconstruction(FLAGS_input_images,
-	  FLAGS_num_threads,
-	  reconstruction);
+	  theia::ColorizeReconstruction(FLAGS_input_images,
+		  FLAGS_num_threads,
+		  reconstruction);
 
-  theia::WriteReconstruction(*reconstruction,
-	  FLAGS_output_reconstruction );
+	  theia::WriteReconstruction(*reconstruction,
+		  FLAGS_output_reconstruction);
 
 #else
-  reconstruction = new theia::Reconstruction();
+	  reconstruction = new theia::Reconstruction();
 
-  CHECK(ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
-	  << "Could not read reconstruction file.";
+	  CHECK(ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
+		  << "Could not read reconstruction file.";
 
-  // Centers the reconstruction based on the absolute deviation of 3D points.
-  reconstruction->Normalize();
+	  // Centers the reconstruction based on the absolute deviation of 3D points.
+	  reconstruction->Normalize();
 #endif
 
 #if 1
-  export_to_pmvs(*reconstruction);
+	  export_to_pmvs(*reconstruction);
 #endif
 
-  //prepare_points_to_draw( reconstruction );
+	  //prepare_points_to_draw( reconstruction );
 
 #if 1
-  run_pmvs(argv[0]);
+	  run_pmvs(argv[0]);
 #endif
 
+  }// if (FLAGS_build)
 
-  if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
-	  printf("can not open ply file!\n");
+  if (FLAGS_view)
+  {
+	  if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
+		  printf("can not open ply file!\n");
 
-  rand_num_views_for_track(num_views_for_track, world_points.size());
+	  rand_num_views_for_track(num_views_for_track, world_points.size());
 
-  float fEyePosition[3];
-  getValueFromString(std::string(FLAGS_eye_position), fEyePosition);
-  float fEyeAngle[3];
-  getValueFromString(std::string(FLAGS_eye_angle), fEyeAngle);
-  setEyeParameter(fEyePosition, fEyeAngle);
+	  float fEyePosition[3];
+	  getValueFromString(std::string(FLAGS_eye_position), fEyePosition);
+	  float fEyeAngle[3];
+	  getValueFromString(std::string(FLAGS_eye_angle), fEyeAngle);
+	  setEyeParameter(fEyePosition, fEyeAngle);
 
-  gl_draw_points(argc, argv);
-
+	  gl_draw_points(argc, argv);
+  }
 
   return 0;
 }
