@@ -148,7 +148,7 @@ void gl_draw_points(int argc, char** argv)
 	glutInitWindowPosition(window_position[0], window_position[1]);
 	glutInitWindowSize(1200, 800);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-	glutCreateWindow("Theia Reconstruction Viewer");
+	glutCreateWindow("SDIOI Reconstruction Viewer");
 
 #ifdef _WIN32
 	// Set up glew.

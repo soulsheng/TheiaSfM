@@ -56,6 +56,7 @@ DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)whi
 
 DEFINE_string(output_images, "./output/", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
+DEFINE_int32(y_direction, 1, "y direction 1-up,  -1-down");
 
 // Containers for the data.
 std::vector<theia::Camera> cameras;
@@ -93,7 +94,7 @@ float normalized_focal_length = 1.0;
 int min_num_views_for_track = 10;
 double anti_aliasing_blend = 0.3;
 
-int y_up_direction = -1;// 1-up,  -1-down 
+//int y_up_direction = -1;// 1-up,  -1-down 
 extern int n_fps; // frame per second
 
 extern int		nColorPoint[];
@@ -245,7 +246,7 @@ void DrawPoints(const float point_scale,
 		color_scale * color[2]);
              // , alpha_scale * default_alpha_scale);
 
-	glVertex3d(world_points[i].x(), world_points[i].y() * y_up_direction, world_points[i].z());
+	glVertex3d(world_points[i].x(), world_points[i].y() * FLAGS_y_direction, world_points[i].z());
   }
   glEnd();
 }
