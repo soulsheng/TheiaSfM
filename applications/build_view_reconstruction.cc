@@ -53,6 +53,7 @@ DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(90,0,0)", "angle of eye.");
 DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
+#define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
 
 #if 1
 String FLAGS_pmvs_working_directory;
@@ -123,7 +124,7 @@ void build_reconstruction(std::vector<Reconstruction *>& reconstructions)
 	const ReconstructionBuilderOptions options =
 		SetReconstructionBuilderOptions();
 
-	ReconstructionBuilder reconstruction_builder(options);
+	ReconstructionBuilder reconstruction_builder(options, strPathExe);
 	// If matches are provided, load matches otherwise load images.
 	if (FLAGS_matches_file.size() != 0) {
 		AddMatchesToReconstructionBuilder(&reconstruction_builder);
@@ -351,6 +352,11 @@ int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
+  strPathExe = argv[0];
+  strPathExe = strPathExe.substr(0, strPathExe.find_last_of("\\") + 1);
+
+  //google::ReadFromFlagsFile(FLAG_FILE_NAME, strPathExe.c_str(), false);
+  //std::cout << "exe path..." << strPathExe << std::endl;
   FLAGS_images = FLAGS_input_images + "*.jpg";
   FLAGS_output_matches_file = FLAGS_input_images + "output.matches";
   FLAGS_output_reconstruction = FLAGS_input_images + "result";

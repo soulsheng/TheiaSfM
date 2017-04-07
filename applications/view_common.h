@@ -99,6 +99,7 @@ double anti_aliasing_blend = 0.3;
 extern int n_fps; // frame per second
 
 extern int		nColorPoint[];
+extern std::string strPathExe;
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
   double focal_length = 800.0;
@@ -258,7 +259,7 @@ void printScreen(std::string filename, int width = 1024, int height = 768)
 	glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
 	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, buf);
 
-	saveBMPFile(filename, width, height, buf);
+	saveBMPFile(filename, width, height, buf, strPathExe);
 
 	delete[] buf;
 }

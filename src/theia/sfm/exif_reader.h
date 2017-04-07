@@ -68,8 +68,9 @@ class ExifReader {
       const std::string& image_file,
       CameraIntrinsicsPrior* camera_intrinsics_prior) const;
 
+	 void LoadSensorWidthDatabase(std::string path);
+
  private:
-  void LoadSensorWidthDatabase();
 
   // Sets the focal length from the focal plane resolution. Returns true if a
   // valid focal length is found and false otherwise.

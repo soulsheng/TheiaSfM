@@ -40,9 +40,10 @@ typedef struct BMP_INFO
 
 #define BMP_Header_Length 54  
 
-void	saveBMPFile(std::string filename, int width, int height, char* buf)
+void	saveBMPFile(std::string filename, int width, int height, char* buf, std::string path)
 {
-	FILE*     pDummyFile = fopen("dummy.bmp", "rb");
+	std::string dir = path + "dummy.bmp";
+	FILE*     pDummyFile = fopen(dir.c_str(), "rb");
 	if (NULL == pDummyFile)
 	{
 		printf("无法打开bmp文件格式模板%s", "dummy.bmp");

@@ -82,7 +82,7 @@ class FeatureExtractorAndMatcher {
     FeatureMatcherOptions feature_matcher_options;
   };
 
-  explicit FeatureExtractorAndMatcher(const Options& options);
+  explicit FeatureExtractorAndMatcher(const Options& options, std::string exePath);
 
   // Add an image to the image matcher queue.
   bool AddImage(const std::string& image_filepath);
@@ -112,7 +112,7 @@ class FeatureExtractorAndMatcher {
   void ProcessImage(const int i);
 
   const Options options_;
-
+  std::string exePath_;
   // Local copies of the images to be matches, masks for use and any priors on
   // the camera intrinsics.
   std::vector<std::string> image_filepaths_;

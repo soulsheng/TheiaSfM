@@ -131,8 +131,9 @@ void ExtractFeatures(
 }  // namespace
 
 FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
-    const FeatureExtractorAndMatcher::Options& options)
-    : options_(options) {
+	const FeatureExtractorAndMatcher::Options& options, std::string exePath)
+    : options_(options)
+	, exePath_(exePath) {
   // Create the feature matcher.
   FeatureMatcherOptions matcher_options = options_.feature_matcher_options;
   matcher_options.num_threads = options_.num_threads;
@@ -142,6 +143,7 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
       options_.min_num_inlier_matches;
 
   matcher_ = CreateFeatureMatcher(options_.matching_strategy, matcher_options);
+  exif_reader_.LoadSensorWidthDatabase(exePath_);
 }
 
 bool FeatureExtractorAndMatcher::AddImage(const std::string& image_filepath) {

@@ -51,6 +51,7 @@ std::string FLAGS_calibration_file;
 std::string FLAGS_output_matches_file;
 std::string FLAGS_output_reconstruction;
 std::string FLAGS_matching_working_directory;
+std::string strPathExe;
 #else
 DEFINE_string(image_masks, "", "Wildcard of image masks to reconstruct.");
 DEFINE_string(matches_file, "", "Filename of the matches file.");

@@ -89,11 +89,12 @@ std::vector<std::string> SplitString(const std::string &s, const char delim) {
 }
 
 ExifReader::ExifReader() {
-  LoadSensorWidthDatabase();
+  //LoadSensorWidthDatabase();
 }
 
-void ExifReader::LoadSensorWidthDatabase() {
-	const std::string sensor_width_file = std::string("camera_sensor_database.txt");
+
+void ExifReader::LoadSensorWidthDatabase(std::string path) {
+	const std::string sensor_width_file = path + std::string("camera_sensor_database.txt");
       //std::string(THEIA_DATA_DIR) + "/camera_sensor_database.txt";
 
   std::ifstream ifs(sensor_width_file.c_str(), std::ios::in);
