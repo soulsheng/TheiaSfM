@@ -53,7 +53,6 @@ DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(90,0,0)", "angle of eye.");
 DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
-DEFINE_bool(view, true, "bool on/off to view. eg:0 ");
 
 #if 1
 String FLAGS_pmvs_working_directory;
@@ -404,7 +403,7 @@ int main(int argc, char* argv[]) {
 
   }// if (FLAGS_build)
 
-  if (FLAGS_view)
+  //if (FLAGS_view)
   {
 	  if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
 		  printf("can not open ply file!\n");

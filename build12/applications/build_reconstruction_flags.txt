@@ -2,8 +2,7 @@
 # Input/output files.
 # Set these if a matches file is not present. Images should be a filepath with a
 # wildcard e.g., /home/my_username/my_images/*.jpg
---input_images=D:\file\data\3d\2017_03-5\
---output_matches_file=D:\file\data\3d\2017_03-5\output.matches
+--input_images=D:\file\data\3d\2017_03-new\
 
 # If a matches file has already been created, set the filepath here. This avoids
 # having to recompute all features and matches.
@@ -13,7 +12,6 @@
 # explicit calibration. Theia attempts to extract EXIF focal lengths if calibration
 # is not supplied for a given image.
 --calibration_file=
---output_reconstruction=D:\file\data\3d\2017_03-5\result
 
 ############### Multithreading ###############
 # Set to the number of threads you want to use.
@@ -32,7 +30,6 @@
 # During feature matching, features are saved to disk so that out-of-core
 # matching may be performed. This directory specifies which directory those
 # features should be saved to.
---matching_working_directory=D:\file\data\3d\2017_03-5\features
 
 # During feature matching we utilize an LRU cache for out-of-core matching. The size
 # of that cache (in terms of number of images) is controlled by this parameter. The
@@ -135,15 +132,14 @@
 --v=1
 
 ############### other options  ###############
---pmvs_working_directory=D:\file\data\3d\2017_03-5\pmvs\
---image_directory=D:\file\data\3d\2017_03-5\
 
 --same_color_point=0
 --color_point=(255,255,255)
---color_sky=(128,150,200)
---draw_point_size=1
---ply_file=D:\file\data\3d\2017_03-5\pmvs\models\option-0000.ply
---eye_position=(0,0,0)
---eye_angle=(90,0,0)
+#--color_sky=(128,150,200)
+--color_sky=(0,0,0)
+--draw_point_size=3
+
+--eye_position=(2,-10,-3)
+--eye_angle=(90,30,0)
 #--eye_position=(-50,180,500)
 --undistort=0

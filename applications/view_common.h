@@ -57,6 +57,7 @@ DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)whi
 DEFINE_string(output_images, "./output/", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
 DEFINE_int32(y_direction, 1, "y direction 1-up,  -1-down");
+DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 
 // Containers for the data.
 std::vector<theia::Camera> cameras;
@@ -263,6 +264,10 @@ void printScreen(std::string filename, int width = 1024, int height = 768)
 }
 
 void RenderScene() {
+
+	if (!FLAGS_view) // µÚÒ»Ö¡
+		glutHideWindow();
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -330,6 +335,12 @@ void RenderScene() {
 		  os << strPathBMP << nPrintScreen++ << ".bmp";
 		  printScreen(os.str());
 	  }
+
+
+	if (min_num_views_for_track == -1)
+	{
+		exit(0);
+	}
 #if 0
 	  if (min_num_views_for_track == -1 && FLAGS_output_image_type == 1)
 	  {
