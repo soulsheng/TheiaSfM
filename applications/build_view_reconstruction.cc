@@ -105,7 +105,7 @@ Eigen::Vector3f eye_position_default;
 Eigen::Vector2f navigation_rotation_default(60.0, 0.0);
 Eigen::Vector2f navigation_rotation(navigation_rotation_default);
 
-int n_fps = 240; // frame per second
+//int n_fps = 240; // frame per second
 
 Eigen::Vector2i window_position(200, 100);
 

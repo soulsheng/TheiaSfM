@@ -58,6 +58,7 @@ DEFINE_string(output_images, "./output/", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
 DEFINE_int32(y_direction, 1, "y direction 1-up,  -1-down");
 DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
+DEFINE_int32(output_speed, 1000, "output speed 1-1000");
 
 // Containers for the data.
 std::vector<theia::Camera> cameras;
@@ -96,7 +97,7 @@ int min_num_views_for_track = 10;
 double anti_aliasing_blend = 0.3;
 
 //int y_up_direction = -1;// 1-up,  -1-down 
-extern int n_fps; // frame per second
+//extern int n_fps; // frame per second
 
 extern int		nColorPoint[];
 extern std::string strPathExe;
@@ -329,7 +330,8 @@ void RenderScene() {
 	  if (!theia::DirectoryExists(strPathBMP))
 		  theia::CreateNewDirectory(strPathBMP);
 
-	  if (0 == ++nFrameCount % n_fps && min_num_views_for_track >= -1)
+	  int nFrameInterval = 1000.0f / FLAGS_output_speed + 1;
+	  if (0 == ++nFrameCount % nFrameInterval && min_num_views_for_track >= -1)
 	  {
 		  min_num_views_for_track--;
 		  std::ostringstream os;
