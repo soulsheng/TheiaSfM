@@ -333,6 +333,7 @@ void RenderScene() {
 	  int nFrameInterval = 1000.0f / FLAGS_output_speed + 1;
 	  if (0 == ++nFrameCount % nFrameInterval && min_num_views_for_track >= -1)
 	  {
+		  //std::cout << "output: " << min_num_views_for_track  << "at time: " << clock() << std::endl;
 		  min_num_views_for_track--;
 		  std::ostringstream os;
 		  os << strPathBMP << nPrintScreen++ << ".bmp";

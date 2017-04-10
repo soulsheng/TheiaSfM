@@ -411,8 +411,11 @@ int main(int argc, char* argv[]) {
 
   //if (FLAGS_view)
   {
+	  clock_t tBegin = clock();
+	  std::cout << "ReadPlyFile begin: " << tBegin << std::endl;
 	  if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
 		  printf("can not open ply file!\n");
+	  std::cout << "ReadPlyFile cost " << (clock() - tBegin) / 1000 << " seconds" << std::endl;
 
 	  rand_num_views_for_track(num_views_for_track, world_points.size());
 
