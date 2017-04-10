@@ -324,7 +324,7 @@ void RenderScene() {
  
 	  static int nPrintScreen = 0;
 	  static int nFrameCount = 0;
-	  std::string strPathBMP = FLAGS_input_images + FLAGS_output_images;
+	  std::string strPathBMP = FLAGS_output_images;
 
 	  if (!theia::DirectoryExists(strPathBMP))
 		  theia::CreateNewDirectory(strPathBMP);

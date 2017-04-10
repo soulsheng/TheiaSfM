@@ -26,5 +26,6 @@
     <ClInclude Include="..\common\WriteGIF.h">
       <Filter>custom</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\applications\build_common.h" />
   </ItemGroup>
 </Project>
