@@ -265,6 +265,12 @@ int CMy3DRebuilderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	int temp[3];
 	getValueFromString(std::string(FLAGS_eye_position), m_camera.getEye());
 
+	HINSTANCE hInst = AfxGetApp()->m_hInstance;
+	char path_buffer[_MAX_PATH];
+	GetModuleFileName(hInst, path_buffer, sizeof(path_buffer));//得到exe文件的全路径
+
+	m_strPathExe = path_buffer;
+
 	return 0;
 }
 
@@ -697,7 +703,7 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 	const ReconstructionBuilderOptions options =
 		SetReconstructionBuilderOptions();
 
-	ReconstructionBuilder reconstruction_builder(options);
+	ReconstructionBuilder reconstruction_builder(options, m_strPathExe);
 	// If matches are provided, load matches otherwise load images.
 	if (FLAGS_matches_file.size() != 0) {
 		AddMatchesToReconstructionBuilder(&reconstruction_builder);
@@ -903,7 +909,7 @@ String CMy3DRebuilderView::getPath(String& strFullPath)
 	return strFullPath.substr(0, indexEnd);
 }
 
-void CMy3DRebuilderView::run_pmvs(char *exeFullPath)
+void CMy3DRebuilderView::run_pmvs(const char *exeFullPath)
 {
 	String exePath = getPath(String(exeFullPath));
 	lanch_external_bin(String("cmvs.exe"), FLAGS_pmvs_working_directory, exePath);
@@ -945,10 +951,7 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 #endif
 
 #if 1
-	HINSTANCE hInst = AfxGetApp()->m_hInstance;
-	char path_buffer[_MAX_PATH];
-	GetModuleFileName(hInst, path_buffer, sizeof(path_buffer));//得到exe文件的全路径
-	run_pmvs(path_buffer);
+	run_pmvs(m_strPathExe.c_str());
 
 	String resultPath = FLAGS_pmvs_working_directory + "option-0000";
 	outputInfo(resultPath.c_str(), "");
@@ -1020,7 +1023,7 @@ void CMy3DRebuilderView::printScreen(std::string filename, int width, int height
 	glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
 	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, buf);
 
-	saveBMPFile(filename, width, height, buf);
+	saveBMPFile(filename, width, height, buf, m_strPathExe);
 
 	delete[] buf;
 }

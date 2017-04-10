@@ -83,7 +83,7 @@ protected:
 	std::string		m_imagePath;
 
 	void build_reconstruction(std::vector<Reconstruction *>& reconstructions);
-	void run_pmvs(char *exeFullPath);
+	void run_pmvs(const char *exeFullPath);
 	void export_to_pmvs(theia::Reconstruction& reconstruction);
 
 private:
@@ -101,6 +101,7 @@ protected:
 	// other 
 	float step, s;
 	bool	m_bDenseFinish;
+	std::string m_strPathExe;
 
 // 生成的消息映射函数
 protected:

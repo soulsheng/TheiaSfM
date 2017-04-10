@@ -48,22 +48,22 @@
     <ClInclude Include="PropertiesWnd.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="glCameraNode.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="bmp2gif.h">
+    <ClInclude Include="..\common\bmp2gif.h">
       <Filter>custom</Filter>
     </ClInclude>
-    <ClInclude Include="simpleBMP.h">
+    <ClInclude Include="..\common\bmpHeader.h">
       <Filter>custom</Filter>
     </ClInclude>
-    <ClInclude Include="WriteGIF.h">
+    <ClInclude Include="..\common\FPSCounter.h">
       <Filter>custom</Filter>
     </ClInclude>
-    <ClInclude Include="FPSCounter.h">
+    <ClInclude Include="..\common\simpleBMP.h">
       <Filter>custom</Filter>
     </ClInclude>
-    <ClInclude Include="bmpHeader.h">
+    <ClInclude Include="..\common\WriteGIF.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\glCameraNode.h">
       <Filter>custom</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,13 +89,13 @@
     <ClCompile Include="PropertiesWnd.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="glCameraNode.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WriteGIF.cpp">
+    <ClCompile Include="..\common\FPSCounter.cpp">
       <Filter>custom</Filter>
     </ClCompile>
-    <ClCompile Include="FPSCounter.cpp">
+    <ClCompile Include="..\common\WriteGIF.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\glCameraNode.cpp">
       <Filter>custom</Filter>
     </ClCompile>
   </ItemGroup>
