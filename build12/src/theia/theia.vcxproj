@@ -527,9 +527,6 @@
     <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build12/libraries/akaze/akaze.vcxproj">
       <Project>8C977957-700F-4614-8C3C-EF9F91D99B03</Project>
     </ProjectReference>
-    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build12/libraries/flann/src/cpp/flann_cpp.vcxproj">
-      <Project>7874725E-9C84-446A-957B-88FAF8AF49EB</Project>
-    </ProjectReference>
     <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build12/libraries/statx/statx.vcxproj">
       <Project>D7450D3D-7B2A-47FF-AA8B-2B08731F7E2F</Project>
     </ProjectReference>
