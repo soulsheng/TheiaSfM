@@ -45,6 +45,8 @@
 
 #include "bmpHeader.h"
 //#include "bmp2gif.h"
+#include <OpenImageIO/imagebuf.h>
+#include <stlplus3/file_system.hpp>
 
 #define		PI		3.1415926	
 
@@ -101,6 +103,8 @@ double anti_aliasing_blend = 0.3;
 
 extern int		nColorPoint[];
 extern std::string strPathExe;
+
+int		nImageCountOutput=0;
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
   double focal_length = 800.0;
@@ -265,6 +269,30 @@ void printScreen(std::string filename, int width = 1024, int height = 768)
 	delete[] buf;
 }
 
+void convertBMP2JPG()
+{
+	for (int i = 0; i < nImageCountOutput; i++)
+	{
+		std::ostringstream osIn;
+		osIn << FLAGS_output_images << i << ".bmp";
+		OpenImageIO::ImageBuf image(osIn.str());
+
+		std::ostringstream osOut;
+		osOut << FLAGS_output_images << i << ".jpg";
+		image.write(osOut.str(), "jpg");
+
+		image.clear();
+
+		bool breturn = stlplus::file_delete(osIn.str());
+		if (!breturn)
+		{
+			std::cout << "failed to delete " << osIn.str();
+		}
+
+	}
+
+}
+
 void RenderScene() {
 
 	if (!FLAGS_view) // µÚÒ»Ö¡
@@ -338,11 +366,13 @@ void RenderScene() {
 		  std::ostringstream os;
 		  os << strPathBMP << nPrintScreen++ << ".bmp";
 		  printScreen(os.str());
+		  nImageCountOutput++;
 	  }
 
 
 	if (min_num_views_for_track == -1)
 	{
+		convertBMP2JPG();
 		exit(0);
 	}
 #if 0
