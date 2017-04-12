@@ -397,9 +397,10 @@ int main(int argc, char* argv[]) {
 	  CHECK(ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
 		  << "Could not read reconstruction file.";
 
+#endif
+
 	  // Centers the reconstruction based on the absolute deviation of 3D points.
 	  reconstruction->Normalize();
-#endif
 
 #if 1
 	  export_to_pmvs(*reconstruction);

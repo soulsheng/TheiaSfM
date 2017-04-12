@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>--flagfile=build_reconstruction_flags.txt --build=0 --view=0 --color_sky=(100,100,200) --point_size=3 --input_images=e:\3d\2017_03\ --output_images=e:\3d\output\</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--flagfile=build_reconstruction_flags.txt --build=0 --view=0 --color_sky=(100,100,200) --point_size=3 --input_images=e:\3d\2017_03\ --output_images=e:\3d\output\ --window_width=800 --window_height=600</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
