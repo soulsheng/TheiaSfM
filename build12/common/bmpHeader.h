@@ -13,27 +13,27 @@ typedef unsigned int dword;	// sizeof(int)=4, sizeof(long)=8  under linux 64bit
 /*file head of bitmap*/
 typedef struct BMP_FILE_HEADER
 {
-	word bType;             /*  file identifier          */
+	word bType = 0x4D42;             /*  file identifier          */
 	dword bSize;            /*  file size                */
-	word bReserved1;        /*  retention value,must 0   */       
-	word bReserved2;        /*  retention value,must 0   */
-	dword bOffset;          /*  The offset from the last file header to the start of image data bits. */
+	word bReserved1=0;        /*  retention value,must 0   */       
+	word bReserved2=0;        /*  retention value,must 0   */
+	dword bOffset = 54;          /*  The offset from the last file header to the start of image data bits. */
 } BMPFILEHEADER;
 
 /*bitmap header*/
 typedef struct BMP_INFO
 {
-	dword bInfoSize;       /*  size of the message header */
+	dword bInfoSize = 40;       /*  size of the message header */
 	dword bWidth;          /*  width of the image         */
 	dword bHeight;         /*  height of the image        */
-	word bPlanes;          /*  number of bit-plane image  */
-	word bBitCount;        /*  number of bits per pixel   */
-	dword bCompression;    /*  compression Type           */
+	word bPlanes = 1;          /*  number of bit-plane image  */
+	word bBitCount = 24;        /*  number of bits per pixel   */
+	dword bCompression = 0;    /*  compression Type           */
 	dword bmpImageSize;    /*  image size, in bytes       */
-	dword bXPelsPerMeter;  /*  horizontal resolution      */
-	dword bYPelsPerMeter;  /*  vertical resolution        */
-	dword bClrUsed;        /*  number of colors used      */
-	dword bClrImportant;   /*  significant number of colors*/
+	dword bXPelsPerMeter = 0;  /*  horizontal resolution      */
+	dword bYPelsPerMeter = 0;  /*  vertical resolution        */
+	dword bClrUsed = 0;        /*  number of colors used      */
+	dword bClrImportant = 0;   /*  significant number of colors*/
 } BMPINF;
 
 #pragma pack()
@@ -42,28 +42,21 @@ typedef struct BMP_INFO
 
 void	saveBMPFile(std::string filename, int width, int height, char* buf, std::string path)
 {
-	std::string dir = path + "dummy.bmp";
-	FILE*     pDummyFile = fopen(dir.c_str(), "rb");
-	if (NULL == pDummyFile)
-	{
-		printf("无法打开bmp文件格式模板%s", "dummy.bmp");
-		return;
-	}
 	FILE*     pWritingFile = fopen(filename.c_str(), "wb");
-	GLubyte   BMP_Header[BMP_Header_Length];
-	fread(BMP_Header, sizeof(BMP_Header), 1, pDummyFile);
-	fwrite(BMP_Header, sizeof(BMP_Header), 1, pWritingFile);
-#if 0
-	fseek(pWritingFile, 0x0012, SEEK_SET);
-	fwrite(&width, sizeof(width), 1, pWritingFile);
-	fwrite(&height, sizeof(height), 1, pWritingFile);
-#endif
+	BMPFILEHEADER header;
+	BMPINF	info;
+
+	header.bSize = width * height * 3 + 54;
+	info.bWidth = width;
+	info.bHeight = height;
+	info.bmpImageSize = width * height * 3;
+
+	fwrite(&header, sizeof(BMPFILEHEADER), 1, pWritingFile);
+	fwrite(&info, sizeof(BMPINF), 1, pWritingFile);
 
 	// 写入像素数据  
-	fseek(pWritingFile, 0, SEEK_END);
 	fwrite(buf, 3 * width * height, 1, pWritingFile);
 
 	// 释放内存和关闭文件  
-	fclose(pDummyFile);
 	fclose(pWritingFile);
 }

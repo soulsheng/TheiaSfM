@@ -148,7 +148,9 @@ void gl_draw_points(int argc, char** argv)
 	// Set up opengl and glut.
 	glutInit(&argc, argv);
 	glutInitWindowPosition(window_position[0], window_position[1]);
-	glutInitWindowSize(1200, 800);
+	window_size[0] = FLAGS_window_width;
+	window_size[1] = FLAGS_window_height;
+	glutInitWindowSize(window_size[0], window_size[1]);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutCreateWindow("SDIOI Reconstruction Viewer");
 
