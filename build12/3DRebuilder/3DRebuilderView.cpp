@@ -19,6 +19,8 @@
 #include "bmpHeader.h"
 #include "bmp2gif.h"
 
+#include "SettingRebuildShowMode.h"
+
 DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
 DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
 DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
@@ -69,6 +71,7 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_COMMAND(ID_EXECUTE_RECONSTRUCTION_DENSE, &CMy3DRebuilderView::OnExecuteReconstructionDense)
 	ON_COMMAND(ID_VIEW_SPARSE_RESULT, &CMy3DRebuilderView::OnViewSparseResult)
 	ON_COMMAND(ID_PRINT_SCREEN, &CMy3DRebuilderView::OnPrintScreen)
+	ON_COMMAND(ID_REBUILD_ONE_KEY, &CMy3DRebuilderView::OnRebuildOneKey)
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView 构造/析构
@@ -878,10 +881,8 @@ void CMy3DRebuilderView::export_to_pmvs(theia::Reconstruction& reconstruction)
 
 }
 
-void CMy3DRebuilderView::lanch_external_bin(String& bin, String& parameter, String& path)
+void CMy3DRebuilderView::lanch_external_bin(String& bin, String& parameter, String& path, int nShowType)
 {
-	String zipParameter = String("a -m0 -inul -idp -sfxDefault.SFX -ibck -iiconVRGIS.ico -zsescript ");
-
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
 	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
@@ -890,7 +891,7 @@ void CMy3DRebuilderView::lanch_external_bin(String& bin, String& parameter, Stri
 	ShExecInfo.lpFile = bin.c_str();
 	ShExecInfo.lpParameters = parameter.c_str();
 	ShExecInfo.lpDirectory = path.c_str();
-	ShExecInfo.nShow = SW_HIDE;
+	ShExecInfo.nShow = nShowType;
 	ShExecInfo.hInstApp = NULL;
 	ShellExecuteEx(&ShExecInfo);
 
@@ -1026,4 +1027,22 @@ void CMy3DRebuilderView::printScreen(std::string filename, int width, int height
 	saveBMPFile(filename, width, height, buf, m_strPathExe);
 
 	delete[] buf;
+}
+
+
+void CMy3DRebuilderView::OnRebuildOneKey()
+{
+	// TODO:  在此添加命令处理程序代码
+	CSettingRebuildShowMode dlg;
+	dlg.DoModal();
+
+	lanch_external_bin(String("build_view_reconstruction.exe"),
+String("--input_images=E:\\3d\\2017_03\\ --output_images=E:\\3d\\output\\ \
+--same_color=0 --color_point=(0,255,0) --color_sky=(0,0,0) \
+--point_size=3 --eye_position=(2,-10,-3) --eye_angle=(90,30,0) \
+--flagfile=E:\\3d\\exe\\build_reconstruction_flags.txt \
+--view=0 --build=0"),
+String("E:\\3d\\exe\\"),
+dlg.m_showMode);
+
 }

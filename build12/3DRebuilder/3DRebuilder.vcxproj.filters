@@ -66,6 +66,9 @@
     <ClInclude Include="..\common\glCameraNode.h">
       <Filter>custom</Filter>
     </ClInclude>
+    <ClInclude Include="SettingRebuildShowMode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DRebuilder.cpp">
@@ -97,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="..\common\glCameraNode.cpp">
       <Filter>custom</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingRebuildShowMode.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

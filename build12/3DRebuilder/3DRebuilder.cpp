@@ -68,7 +68,7 @@ BOOL CMy3DRebuilderApp::InitInstance()
 	HINSTANCE hInst = AfxGetApp()->m_hInstance;
 	char path_buffer[_MAX_PATH];
 	GetModuleFileName(hInst, path_buffer, sizeof(path_buffer));//得到exe文件的全路径
-	google::ReadFromFlagsFile(FLAG_FILE_NAME, path_buffer, false);
+	//google::ReadFromFlagsFile(FLAG_FILE_NAME, path_buffer, false);
 	google::InitGoogleLogging(path_buffer);
 
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要

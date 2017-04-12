@@ -90,7 +90,7 @@ private:
 	void CreateDirectoryIfDoesNotExist(const std::string& directory);
 	int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction);
 	void WritePMVSOptions(const std::string& working_dir, const int num_images);
-	void lanch_external_bin(String& bin, String& parameter, String& path);
+	void lanch_external_bin(String& bin, String& parameter, String& path, int nShowType = SW_HIDE);
 	String getPath(String& strFullPath);
 	void AddImagesToReconstructionBuilderDIY(ReconstructionBuilder* reconstruction_builder);
 
@@ -102,6 +102,7 @@ protected:
 	float step, s;
 	bool	m_bDenseFinish;
 	std::string m_strPathExe;
+	int		m_nShowMode = SW_HIDE;
 
 // 生成的消息映射函数
 protected:
@@ -129,6 +130,7 @@ public:
 
 	void printScreen(std::string filename, int width = 1024, int height = 768);
 
+	afx_msg void OnRebuildOneKey();
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本
