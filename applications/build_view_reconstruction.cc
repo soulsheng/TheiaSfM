@@ -55,6 +55,8 @@ DEFINE_string(eye_angle, "(90,0,0)", "angle of eye.");
 DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
 #define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
 
+#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
+
 #if 1
 String FLAGS_pmvs_working_directory;
 String FLAGS_ply_file;
