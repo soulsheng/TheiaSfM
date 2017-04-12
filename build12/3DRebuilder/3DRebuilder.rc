@@ -197,7 +197,7 @@ BEGIN
         MENUITEM "稀疏重建可视化(&R)",                 ID_VIEW_SPARSE_RESULT
         MENUITEM "稠密重建(&D)",                    ID_EXECUTE_RECONSTRUCTION_DENSE
         MENUITEM "稠密重建可视化(&V)",                 ID_Menu_View_PLY
-		MENUITEM "一键重建",						IDD_DLG_SHOW_MODE_REBUILD
+		MENUITEM "一键重建",						ID_REBUILD_ONE_KEY
     END
 END
 
