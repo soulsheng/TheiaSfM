@@ -63,6 +63,9 @@ DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
 DEFINE_int32(window_width, 1280, "window width");
 DEFINE_int32(window_height, 1024, "window height");
+DEFINE_double(distance, 1.2, "window height");
+DEFINE_bool(draw_box, false, "window height");
+DEFINE_bool(exit_fast, true, "window height");
 
 Eigen::Vector2i window_size(1280, 1024);
 
@@ -72,6 +75,9 @@ theia::Vector3dVec world_points;
 theia::Vector3fVec point_colors;
 theia::Vector3fVec point_normals;
 std::vector<int> num_views_for_track;
+
+int nMaxValue = 1 << 30;
+Eigen::Vector3d minPoint(nMaxValue, nMaxValue, nMaxValue), maxPoint(-nMaxValue, -nMaxValue, -nMaxValue);
 
 // Parameters for OpenGL.
 int width = 1200;
@@ -214,6 +220,64 @@ void DrawCamera(const theia::Camera& camera) {
   glPopMatrix();
 }
 
+
+void DrawBox(float xMin, float yMin, float zMin, 
+	float xMax, float yMax, float zMax)
+{
+	GLfloat p1[] = { xMax, yMin, zMin }, p2[] = { xMax, yMax, zMin },
+		p3[] = { xMax, yMax, zMax }, p4[] = { xMax, yMin, zMax },
+		p5[] = { xMin, yMin, zMax }, p6[] = { xMin, yMax, zMax },
+		p7[] = { xMin, yMax, zMin }, p8[] = { xMin, yMin, zMin };
+
+
+#if 0
+	   6_______ 3	
+	  /		  /|
+	 /		 / |
+	7------2   |
+	|	   |   |
+	|   5--|   4	
+	|	   |  /
+	|	   | /
+	8------1
+#endif
+
+	glBegin(GL_QUADS); //绘制多个四边形
+
+	glVertex3fv(p1);
+	glVertex3fv(p2);
+	glVertex3fv(p3);
+	glVertex3fv(p4);
+
+	glVertex3fv(p5);
+	glVertex3fv(p6);
+	glVertex3fv(p7);
+	glVertex3fv(p8);
+
+	glVertex3fv(p5);
+	glVertex3fv(p6);
+	glVertex3fv(p3);
+	glVertex3fv(p4);
+
+	glVertex3fv(p1);
+	glVertex3fv(p2);
+	glVertex3fv(p7);
+	glVertex3fv(p8);
+
+	glVertex3fv(p2);
+	glVertex3fv(p3);
+	glVertex3fv(p6);
+	glVertex3fv(p7);
+
+	glVertex3fv(p1);
+	glVertex3fv(p4);
+	glVertex3fv(p5);
+	glVertex3fv(p8);
+
+	glEnd();
+
+}
+
 void DrawPoints(const float point_scale,
                 const float color_scale,
                 const float alpha_scale) {
@@ -260,6 +324,14 @@ void DrawPoints(const float point_scale,
 	glVertex3d(world_points[i].x(), world_points[i].y() * FLAGS_y_direction, world_points[i].z());
   }
   glEnd();
+
+	// draw box
+	if (FLAGS_draw_box)
+	{
+		DrawBox(minPoint.x(), minPoint.y(), minPoint.z(),
+		maxPoint.x(), maxPoint.y(), maxPoint.z());
+	}
+
 }
 
 void printScreen(std::string filename, int width = 1024, int height = 768)
@@ -306,15 +378,32 @@ void RenderScene() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-#if 1
-  float g_dir[3];
-  g_dir[0] = cos(PI*navigation_rotation[0] / 180.0f);
-  g_dir[2] = sin(PI*navigation_rotation[0] / 180.0f);
-  g_dir[1] = sin(PI*navigation_rotation[1] / 180.0f);
+  Eigen::Vector3d midPoint = (maxPoint + minPoint) / 2;
+  Eigen::Vector3d sizeRect = maxPoint - minPoint;
+
+  double lengthMax = sizeRect.x() > sizeRect.z() ? sizeRect.x() : sizeRect.z();
+
+  Eigen::Vector3d eyePoint = midPoint + sizeRect*FLAGS_distance;
+  eyePoint[0] = eye_position[0] + midPoint.x();
+  eyePoint[1] = eye_position[1] + midPoint.y();
+  eyePoint[2] = eye_position[2] + midPoint.z() + lengthMax*FLAGS_distance;
+
+#if 0
 
   gluLookAt(
-	  eye_position[0],	eye_position[1],	eye_position[2],
-	  eye_position[0] + g_dir[0],	eye_position[1] + g_dir[1],	eye_position[2] + g_dir[2],
+	  eyePoint.x(),	eyePoint.y(),	eyePoint.z(),
+	  minPoint.x(),	minPoint.y(),	minPoint.z(),
+	  0,	1,	0);
+
+#elif 1
+  float g_dir[3];
+  g_dir[0] = -sin(PI*navigation_rotation[0] / 180.0f);
+  g_dir[2] = -cos(PI*navigation_rotation[0] / 180.0f);
+  g_dir[1] = -sin(PI*navigation_rotation[1] / 180.0f);
+
+  gluLookAt(
+	  eyePoint[0], eyePoint[1], eyePoint[2],
+	  eyePoint[0] + g_dir[0],	eyePoint[1] + g_dir[1],	eyePoint[2] + g_dir[2],
 	  0,	1,	0);
 #else
   // Transformation to the viewer origin.
@@ -377,7 +466,8 @@ void RenderScene() {
 	if (min_num_views_for_track == -1)
 	{
 		convertBMP2JPG();
-		exit(0);
+		if (FLAGS_exit_fast)
+			exit(0);
 	}
 #if 0
 	  if (min_num_views_for_track == -1 && FLAGS_output_image_type == 1)

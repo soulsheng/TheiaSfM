@@ -51,7 +51,7 @@ typedef std::string	String;
 
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
-DEFINE_string(eye_angle, "(90,0,0)", "angle of eye.");
+DEFINE_string(eye_angle, "(0,0,0)", "angle of eye.");
 DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
 #define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
 
@@ -352,6 +352,31 @@ void getValueFromString(std::string str, T * cColor)
 	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
 }
 
+void  calculate(Eigen::Vector3d& minPoint, Eigen::Vector3d& maxPoint, theia::Vector3dVec& allPoints)
+{
+	for (theia::Vector3dVec::iterator itr = allPoints.begin(); itr != allPoints.end(); itr++)
+	{
+		double x = itr->x();
+		double y = itr->y();
+		double z = itr->z();
+
+		double tmp = y;
+		y = -z;
+		z = y;
+
+		itr->y() = y;
+		itr->z() = z;
+
+		if (x < minPoint.x())	minPoint.x() = x;
+		if (y < minPoint.y())	minPoint.y() = y;
+		if (z < minPoint.z())	minPoint.z() = z;
+
+		if (x > maxPoint.x())	maxPoint.x() = x;
+		if (y > maxPoint.y())	maxPoint.y() = y;
+		if (z > maxPoint.z())	maxPoint.z() = z;
+	}
+}
+
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
@@ -428,6 +453,9 @@ int main(int argc, char* argv[]) {
 	  getValueFromString(std::string(FLAGS_eye_position), fEyePosition);
 	  float fEyeAngle[3];
 	  getValueFromString(std::string(FLAGS_eye_angle), fEyeAngle);
+
+	  calculate(minPoint, maxPoint, world_points);
+
 	  setEyeParameter(fEyePosition, fEyeAngle);
 
 	  gl_draw_points(argc, argv);
