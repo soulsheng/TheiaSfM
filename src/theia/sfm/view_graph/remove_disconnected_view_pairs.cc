@@ -87,10 +87,17 @@ std::unordered_set<ViewId> RemoveDisconnectedViewPairs(ViewGraph* view_graph) {
 
   const int num_removed_view_pairs =
       num_view_pairs_before_filtering - view_graph->NumEdges();
+#if USE_LOG_INFO
   LOG_IF(INFO, num_removed_view_pairs > 0)
       << num_removed_view_pairs
       << " view pairs were disconnected from the largest connected component "
          "of the view graph and were removed.";
+#else
+  if(num_removed_view_pairs > 0)
+	  std::cout << num_removed_view_pairs << " of " << num_view_pairs_before_filtering
+      << " view pairs were disconnected from the largest connected component "
+         "of the view graph and were removed." << std::endl; 
+#endif
   return removed_views;
 }
 

@@ -389,7 +389,9 @@ BundleAdjustmentSummary BundleAdjustPartialReconstruction(
   const double internal_setup_time = timer.ElapsedTimeInSeconds();
   ceres::Solver::Summary solver_summary;
   ceres::Solve(solver_options, &problem, &solver_summary);
+#if USE_LOG_INFO
   LOG_IF(INFO, options.verbose) << solver_summary.FullReport();
+#endif
 
   // Copy the shared intrinsics to all views that share those intrinsics.
   CopySharedIntrinsicsToViews(shared_intrinsics_by_group_id, reconstruction);

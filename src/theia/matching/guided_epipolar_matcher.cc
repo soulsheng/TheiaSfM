@@ -186,11 +186,13 @@ bool GuidedEpipolarMatcher::GetMatches(
   }
 
   const int num_added_matches = matches->size() - num_input_matches;
+#if USE_LOG_INFO
   LOG_IF(INFO, num_added_matches > 0)
       << "Guided matching added " << num_added_matches << " features to "
       << num_input_matches << " existing matches out of "
       << (std::min(features1_.keypoints.size(), features2_.keypoints.size()))
       << " possible matches.";
+#endif
 
   return true;
 }

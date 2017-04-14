@@ -250,9 +250,11 @@ bool gevfit_mle(const vector<double>& data,
   *sigma = x(1);
   *xi = x(2);
   exit_flag = res == 0;
+#if USE_LOG_INFO
   LOG_IF(INFO, !exit_flag) << "MLE did not converge: res=" << res;
   VLOG_IF(1, !exit_flag) << "Values: " << x.block<3, 1>(0, 0).transpose()
                          << " min_val: " << min_val;
+#endif
 
   return exit_flag;
 }

@@ -177,7 +177,9 @@ BundleAdjustmentSummary BundleAdjustTwoViews(
   // Solve the problem.
   ceres::Solver::Summary solver_summary;
   ceres::Solve(solver_options, &problem, &solver_summary);
+#if USE_LOG_INFO
   LOG_IF(INFO, options.ba_options.verbose) << solver_summary.FullReport();
+#endif
 
   // Set the BundleAdjustmentSummary.
   summary.solve_time_in_seconds = solver_summary.total_time_in_seconds;
@@ -239,7 +241,9 @@ BundleAdjustmentSummary BundleAdjustTwoViewsAngular(
   // Solve the problem.
   ceres::Solver::Summary solver_summary;
   ceres::Solve(solver_options, &problem, &solver_summary);
+#if USE_LOG_INFO
   LOG_IF(INFO, options.verbose) << solver_summary.FullReport();
+#endif
 
   // Set the BundleAdjustmentSummary.
   summary.solve_time_in_seconds = solver_summary.total_time_in_seconds;
