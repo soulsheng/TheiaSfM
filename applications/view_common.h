@@ -63,7 +63,7 @@ DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
 DEFINE_int32(window_width, 1280, "window width");
 DEFINE_int32(window_height, 1024, "window height");
-DEFINE_double(distance, 1.2, "window height");
+DEFINE_double(distance, 0.75, "window height");
 DEFINE_bool(draw_box, false, "window height");
 DEFINE_bool(exit_fast, true, "window height");
 
