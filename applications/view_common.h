@@ -379,14 +379,6 @@ void RenderScene() {
   glLoadIdentity();
 
   Eigen::Vector3d midPoint = (maxPoint + minPoint) / 2;
-  Eigen::Vector3d sizeRect = maxPoint - minPoint;
-
-  double lengthMax = sizeRect.x() > sizeRect.z() ? sizeRect.x() : sizeRect.z();
-
-  Eigen::Vector3d eyePoint = midPoint + sizeRect*FLAGS_distance;
-  eyePoint[0] = eye_position[0] + midPoint.x();
-  eyePoint[1] = eye_position[1] + midPoint.y();
-  eyePoint[2] = eye_position[2] + midPoint.z() + lengthMax*FLAGS_distance;
 
 #if 0
 
@@ -402,8 +394,8 @@ void RenderScene() {
   g_dir[1] = -sin(PI*navigation_rotation[1] / 180.0f);
 
   gluLookAt(
-	  eyePoint[0], eyePoint[1], eyePoint[2],
-	  eyePoint[0] + g_dir[0],	eyePoint[1] + g_dir[1],	eyePoint[2] + g_dir[2],
+	  eye_position[0], eye_position[1], eye_position[2],
+	  eye_position[0] + g_dir[0],	eye_position[1] + g_dir[1],	eye_position[2] + g_dir[2],
 	  0,	1,	0);
 #else
   // Transformation to the viewer origin.

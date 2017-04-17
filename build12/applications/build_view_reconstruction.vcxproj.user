@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>--eye_angle=(0,0,0) --draw_box=1 --distance=2.5 --input_images=D:\file\data\3d\0414\ --output_images=e:\3d\output\ --flagfile=e:\3d\exe\build_reconstruction_flags.txt --build=0 --view=1 --point_size=3 --window_width=800 --window_height=600</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--distance=1.5 --eye_angle=(0,0,0) --exit_fast=0 --draw_box=0 --input_images=e:\3d\2017_03\ --output_images=e:\3d\output\ --flagfile=e:\3d\exe\build_reconstruction_flags.txt --build=0 --view=1 --point_size=3 --window_width=800 --window_height=600</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -456,6 +456,15 @@ int main(int argc, char* argv[]) {
 
 	  calculate(minPoint, maxPoint, world_points);
 
+	  Eigen::Vector3d midPoint = (maxPoint + minPoint) / 2;
+	  Eigen::Vector3d sizeRect = maxPoint - minPoint;
+
+	  double lengthMax = sizeRect.x() > sizeRect.z() ? sizeRect.x() : sizeRect.z();
+
+	  fEyePosition[0] += midPoint.x();
+	  fEyePosition[1] += midPoint.y();
+	  fEyePosition[2] += midPoint.z() + lengthMax*FLAGS_distance;
+
 	  setEyeParameter(fEyePosition, fEyeAngle);
 
 	  gl_draw_points(argc, argv);
