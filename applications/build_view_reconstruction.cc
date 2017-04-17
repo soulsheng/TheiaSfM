@@ -362,7 +362,7 @@ void  calculate(Eigen::Vector3d& minPoint, Eigen::Vector3d& maxPoint, theia::Vec
 
 		double tmp = y;
 		y = -z;
-		z = y;
+		z = tmp;
 
 		itr->y() = y;
 		itr->z() = z;
