@@ -360,12 +360,15 @@ void  calculate(Eigen::Vector3d& minPoint, Eigen::Vector3d& maxPoint, theia::Vec
 		double y = itr->y();
 		double z = itr->z();
 
-		double tmp = y;
-		y = -z;
-		z = tmp;
+		if (FLAGS_swap_yz) 
+		{
+			double tmp = y;
+			y = -z;
+			z = tmp;
 
-		itr->y() = y;
-		itr->z() = z;
+			itr->y() = y;
+			itr->z() = z;
+		}
 
 		if (x < minPoint.x())	minPoint.x() = x;
 		if (y < minPoint.y())	minPoint.y() = y;

@@ -66,6 +66,7 @@ DEFINE_int32(window_height, 1024, "window height");
 DEFINE_double(distance, 0.75, "window height");
 DEFINE_bool(draw_box, false, "window height");
 DEFINE_bool(exit_fast, true, "window height");
+DEFINE_bool(swap_yz, false, "window height");
 
 Eigen::Vector2i window_size(1280, 1024);
 
@@ -570,7 +571,8 @@ void Keyboard(unsigned char key, int x, int y) {
 	  point_size = FLAGS_point_size;
 	  min_num_views_for_track = 10;
 	  navigation_rotation = navigation_rotation_default;
-      break;
+	  eye_position = eye_position_default;
+	  break;
     case 'z':
       zoom *= delta_zoom;
       break;
