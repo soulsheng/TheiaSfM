@@ -475,6 +475,18 @@ int main(int argc, char* argv[]) {
 	  fEyePosition[1] += midPoint.y();
 	  fEyePosition[2] += midPoint.z() + lengthMax*FLAGS_distance;
 
+	  if (FLAGS_save_camera)
+	  {
+		  std::string filename = FLAGS_output_images + "camera.txt";
+		  fileCameraIn.open(filename);
+		  if ( fileCameraIn.is_open() )
+		  {
+			  fileCameraIn >> fEyePosition[0] >> fEyePosition[1] >> fEyePosition[2];
+			  fileCameraIn >> fEyeAngle[0] >> fEyeAngle[1] >> fEyeAngle[2];
+		  }
+		  fileCameraIn.close();
+	  }
+
 	  setEyeParameter(fEyePosition, fEyeAngle);
 
 	  speed = lengthMax * 0.01;

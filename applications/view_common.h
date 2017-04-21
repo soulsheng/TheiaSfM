@@ -47,6 +47,7 @@
 //#include "bmp2gif.h"
 #include <OpenImageIO/imagebuf.h>
 #include <stlplus3/file_system.hpp>
+#include <fstream>
 
 #define		PI		3.1415926	
 
@@ -63,11 +64,12 @@ DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
 DEFINE_int32(window_width, 1280, "window width");
 DEFINE_int32(window_height, 1024, "window height");
-DEFINE_double(distance, 0.75, "window height");
-DEFINE_bool(draw_box, false, "window height");
-DEFINE_bool(exit_fast, true, "window height");
-DEFINE_bool(swap_yz, false, "window height");
-DEFINE_bool(head_flip, true, "window height");
+DEFINE_double(distance, 0.75, "set distance of view");
+DEFINE_bool(draw_box, false, "draw bounding box");
+DEFINE_bool(exit_fast, true, "exit when output finish");
+DEFINE_bool(swap_yz, false, "swap y and z");
+DEFINE_bool(head_flip, true, "head flip");
+DEFINE_bool(save_camera, false, "save camera property to file");
 
 Eigen::Vector2i window_size(1280, 1024);
 
@@ -111,6 +113,8 @@ float point_size = 1.0;
 float normalized_focal_length = 1.0;
 int min_num_views_for_track = 10;
 double anti_aliasing_blend = 0.3;
+std::ofstream fileCameraOut;
+std::ifstream fileCameraIn;
 
 //int y_up_direction = -1;// 1-up,  -1-down 
 //extern int n_fps; // frame per second
@@ -603,6 +607,15 @@ void Keyboard(unsigned char key, int x, int y) {
 	  break;
 	case 'o':	// output jpg or  gif/mp4
 	  min_num_views_for_track = 10;
+
+	  if (FLAGS_save_camera)
+	  {
+		  std::string filename = FLAGS_output_images + "camera.txt";
+		  fileCameraOut.open(filename);
+		  fileCameraOut << eye_position << std::endl
+			   << navigation_rotation;
+		  fileCameraOut.close();
+	  }
 	  break;
 	case 'w':	// z
 		eye_position.z() += speed;
