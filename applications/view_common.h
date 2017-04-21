@@ -69,7 +69,7 @@ DEFINE_bool(draw_box, false, "draw bounding box");
 DEFINE_bool(exit_fast, true, "exit when output finish");
 DEFINE_bool(swap_yz, false, "swap y and z");
 DEFINE_bool(head_flip, true, "head flip");
-DEFINE_bool(save_camera, false, "save camera property to file");
+DEFINE_bool(save_camera, true, "save camera property to file");
 
 Eigen::Vector2i window_size(1280, 1024);
 
@@ -610,7 +610,7 @@ void Keyboard(unsigned char key, int x, int y) {
 
 	  if (FLAGS_save_camera)
 	  {
-		  std::string filename = FLAGS_output_images + "camera.txt";
+		  std::string filename = FLAGS_input_images + "camera.txt";
 		  fileCameraOut.open(filename);
 		  fileCameraOut << eye_position << std::endl
 			   << navigation_rotation;

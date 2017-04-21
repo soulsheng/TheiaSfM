@@ -477,7 +477,7 @@ int main(int argc, char* argv[]) {
 
 	  if (FLAGS_save_camera)
 	  {
-		  std::string filename = FLAGS_output_images + "camera.txt";
+		  std::string filename = FLAGS_input_images + "camera.txt";
 		  fileCameraIn.open(filename);
 		  if ( fileCameraIn.is_open() )
 		  {

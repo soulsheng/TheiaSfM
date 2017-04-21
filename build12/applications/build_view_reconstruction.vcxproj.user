@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>--distance=1.5 --eye_angle=(0,0,0) --exit_fast=0 --draw_box=0 --input_images=e:\3d\2017_03\ --output_images=e:\3d\output\ --flagfile=e:\3d\exe\build_reconstruction_flags.txt --build=0 --view=1 --point_size=3 --window_width=800 --window_height=600</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--save_camera=1 --exit_fast=0 --input_images=E:\3d\1-del\ --output_images=E:\3d\output\ --same_color=0 --color_point=(0,255,0) --color_sky=(0,0,0) --point_size=3 --eye_position=(0,0,0) --eye_angle=(0,0,0) --flagfile=E:\3d\exe\build_reconstruction_flags.txt --view=1 --build=0 --distance=0.75</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>--eye_position=(0,0,0) --eye_angle=(0,0,0) --distance=1 --input_images=e:\3d\2017_03\ --output_images=e:\3d\output\ --flagfile=e:\3d\exe\build_reconstruction_flags.txt --build=0 --view=1 --point_size=3 --window_width=800 --window_height=600</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--save_camera=1 --exit_fast=0 --input_images=E:\3d\1-del\ --output_images=E:\3d\output\ --same_color=0 --color_point=(0,255,0) --color_sky=(0,0,0) --point_size=3 --eye_position=(0,0,0) --eye_angle=(0,0,0) --flagfile=E:\3d\exe\build_reconstruction_flags.txt --view=1 --build=0 --distance=0.75</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
