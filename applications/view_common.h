@@ -58,7 +58,7 @@ DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)whi
 
 DEFINE_string(output_images, "./output/", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
-DEFINE_int32(y_direction, 1, "y direction 1-up,  -1-down");
+DEFINE_bool(y_flip, true, "y direction 1-up,  -1-down");
 DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
 DEFINE_int32(window_width, 1280, "window width");
@@ -322,7 +322,7 @@ void DrawPoints(const float point_scale,
 		color_scale * color[2]);
              // , alpha_scale * default_alpha_scale);
 
-	glVertex3d(world_points[i].x(), world_points[i].y() * FLAGS_y_direction, world_points[i].z());
+	glVertex3d(world_points[i].x(), world_points[i].y(), world_points[i].z());
   }
   glEnd();
 
@@ -572,6 +572,9 @@ void Keyboard(unsigned char key, int x, int y) {
 	  min_num_views_for_track = 10;
 	  navigation_rotation = navigation_rotation_default;
 	  eye_position = eye_position_default;
+	  break;
+	case 'o':	// output jpg or  gif/mp4
+	  min_num_views_for_track = 10;
 	  break;
     case 'z':
       zoom *= delta_zoom;

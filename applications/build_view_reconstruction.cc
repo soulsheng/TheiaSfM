@@ -363,11 +363,17 @@ void  calculate(Eigen::Vector3d& minPoint, Eigen::Vector3d& maxPoint, theia::Vec
 		if (FLAGS_swap_yz) 
 		{
 			double tmp = y;
-			y = -z;
+			y = z;
 			z = tmp;
 
 			itr->y() = y;
 			itr->z() = z;
+		}
+
+		if (FLAGS_y_flip)
+		{
+			y = -y;
+			itr->y() = y;
 		}
 
 		if (x < minPoint.x())	minPoint.x() = x;
