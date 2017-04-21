@@ -58,7 +58,7 @@ DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)whi
 
 DEFINE_string(output_images, "./output/", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
-DEFINE_bool(y_flip, true, "y direction 1-up,  -1-down");
+DEFINE_bool(y_flip, false, "y direction 1-up,  -1-down");
 DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
 DEFINE_int32(window_width, 1280, "window width");
@@ -67,6 +67,7 @@ DEFINE_double(distance, 0.75, "window height");
 DEFINE_bool(draw_box, false, "window height");
 DEFINE_bool(exit_fast, true, "window height");
 DEFINE_bool(swap_yz, false, "window height");
+DEFINE_bool(head_flip, true, "window height");
 
 Eigen::Vector2i window_size(1280, 1024);
 
@@ -395,11 +396,14 @@ void RenderScene() {
   g_dir[0] = -sin(PI*navigation_rotation[0] / 180.0f);
   g_dir[2] = -cos(PI*navigation_rotation[0] / 180.0f);
   g_dir[1] = -sin(PI*navigation_rotation[1] / 180.0f);
+  float head_dir = 1;
+  if (FLAGS_head_flip)
+	  head_dir = -1;
 
   gluLookAt(
 	  eye_position[0], eye_position[1], eye_position[2],
 	  eye_position[0] + g_dir[0],	eye_position[1] + g_dir[1],	eye_position[2] + g_dir[2],
-	  0,	1,	0);
+	  0,	head_dir,	0);
 #else
   // Transformation to the viewer origin.
   glTranslatef(0.0, 0.0, zoom);
