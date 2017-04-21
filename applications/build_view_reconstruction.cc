@@ -479,6 +479,12 @@ int main(int argc, char* argv[]) {
 
 	  speed = lengthMax * 0.01;
 
+	  if (FLAGS_head_flip)
+	  {
+		  speed *= -1;
+		  speed_angle *= -1;
+	  }
+
 	  gl_draw_points(argc, argv);
   }
 

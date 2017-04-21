@@ -92,7 +92,7 @@ extern float zoom_default;// = -500.0;
 extern float zoom;// = -500.0;
 float delta_zoom = 1.1;
 float speed = 0.1;
-float speed_angle = 0.1;
+float speed_angle = 0.5;
 
 // Rotation values for the navigation
 extern Eigen::Vector2f navigation_rotation_default;// (45.0, 0.0);
