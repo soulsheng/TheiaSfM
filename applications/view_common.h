@@ -90,6 +90,8 @@ extern Eigen::Vector3f eye_position_default;
 extern float zoom_default;// = -500.0;
 extern float zoom;// = -500.0;
 float delta_zoom = 1.1;
+float speed = 0.1;
+float speed_angle = 0.1;
 
 // Rotation values for the navigation
 extern Eigen::Vector2f navigation_rotation_default;// (45.0, 0.0);
@@ -556,6 +558,28 @@ void MouseMove(int x, int y) {
   }
 }
 
+void processSpecialKeys(int key, int x, int y) {
+	switch (key) {
+	case GLUT_KEY_HOME:	// y
+		eye_position.y() += speed;
+		break;
+	case GLUT_KEY_END:	// -y
+		eye_position.y() -= speed;
+		break;
+	case GLUT_KEY_LEFT:	// - angle around x axis
+		navigation_rotation.x() += speed_angle;
+		break;
+	case GLUT_KEY_RIGHT:	// - angle around x axis
+		navigation_rotation.x() -= speed_angle;
+		break;
+	case GLUT_KEY_UP:	// - angle around y axis
+		navigation_rotation.y() += speed_angle;
+		break;
+	case GLUT_KEY_DOWN:	// - angle around y axis
+		navigation_rotation.y() -= speed_angle;
+		break;
+	}
+}
 void Keyboard(unsigned char key, int x, int y) {
   switch (key) {
     case 'r':  // reset viewpoint
@@ -576,6 +600,18 @@ void Keyboard(unsigned char key, int x, int y) {
 	case 'o':	// output jpg or  gif/mp4
 	  min_num_views_for_track = 10;
 	  break;
+	case 'w':	// z
+		eye_position.z() += speed;
+		break;
+	case 's':	// -z
+		eye_position.z() -= speed;
+		break;
+	case 'd':	// x
+		eye_position.x() += speed;
+		break;
+	case 'a':	// -x
+		eye_position.x() -= speed;
+		break;
     case 'z':
       zoom *= delta_zoom;
       break;
@@ -597,9 +633,9 @@ void Keyboard(unsigned char key, int x, int y) {
     case 'c':
       draw_cameras = !draw_cameras;
       break;
-    case 'a':
+/*    case 'a':
       draw_axes = !draw_axes;
-      break;
+      break;*/
     case 't':
       ++min_num_views_for_track;
       break;

@@ -180,6 +180,7 @@ void gl_draw_points(int argc, char** argv)
 	glutMotionFunc(MouseMove);
 	glutKeyboardFunc(Keyboard);
 	glutIdleFunc(RenderScene);
+	glutSpecialFunc(processSpecialKeys);
 
 	// enter GLUT event processing loop
 	glutMainLoop();
@@ -475,6 +476,8 @@ int main(int argc, char* argv[]) {
 	  fEyePosition[2] += midPoint.z() + lengthMax*FLAGS_distance;
 
 	  setEyeParameter(fEyePosition, fEyeAngle);
+
+	  speed = lengthMax * 0.01;
 
 	  gl_draw_points(argc, argv);
   }
