@@ -57,6 +57,7 @@
 #include "theia/util/filesystem.h"
 #include "theia/util/string.h"
 #include "theia/util/threadpool.h"
+#include "theia/util/timer.h"
 
 namespace theia {
 namespace {
@@ -272,6 +273,9 @@ void FeatureExtractorAndMatcher::ProcessImage(
     return;
   }
 
+  Timer timer;
+  timer.Reset();
+
   // Extract Features.
   std::vector<Keypoint> keypoints;
   std::vector<Eigen::VectorXf> descriptors;
@@ -280,6 +284,8 @@ void FeatureExtractorAndMatcher::ProcessImage(
                   mask_filepath,
                   &keypoints,
                   &descriptors);
+
+  std::cout << "ExtractFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
 
   // Add the relevant image and feature data to the feature matcher. This allows
   // the feature matcher to control fine-grained things like multi-threading and

@@ -59,6 +59,7 @@
 #include "theia/util/map_util.h"
 #include "theia/util/threadpool.h"
 #include "theia/util/util.h"
+#include "theia/util/timer.h"
 
 namespace theia {
 
@@ -257,6 +258,10 @@ void FeatureMatcher::MatchAndVerifyImagePairs(
             FeatureFilenameFromImage(image2_name));
     features2->image_name = image2_name;
 
+
+	Timer timer;
+	timer.Reset();
+
     // Compute the visual matches from feature descriptors.
     std::vector<IndexedFeatureMatch> putative_matches;
     if (!MatchImagePair(*features1, *features2, &putative_matches)) {
@@ -265,6 +270,10 @@ void FeatureMatcher::MatchAndVerifyImagePairs(
           << image1_name << " and " << image2_name;
       continue;
     }
+
+	std::cout << "MatchFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
+
+	timer.Reset();
 
     // Perform geometric verification if applicable.
     if (options_.perform_geometric_verification) {
@@ -299,6 +308,8 @@ void FeatureMatcher::MatchAndVerifyImagePairs(
             Feature(keypoint2.x(), keypoint2.y())) );
       }
     }
+
+	std::cout << "MatchVerify time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
 
     // Log information about the matching results.
     VLOG(1) << "Images " << image1_name << " and " << image2_name
