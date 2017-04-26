@@ -388,14 +388,15 @@ void RenderScene() {
 
   Eigen::Vector3d midPoint = (maxPoint + minPoint) / 2;
 
-#if 0
+#if 1
 
-  gluLookAt(
-	  eyePoint.x(),	eyePoint.y(),	eyePoint.z(),
-	  minPoint.x(),	minPoint.y(),	minPoint.z(),
-	  0,	1,	0);
+  glTranslatef(0.0f, 0.0f, -4.0*0.034 / abs(eye_position.z() / maxPoint.z()));
 
-#elif 1
+  gluLookAt(eye_position.x(), eye_position.y(), eye_position.z(),
+	  midPoint.x(), midPoint.y(), midPoint.z(), 
+	  0.0, -1.0, 0.0);
+
+#elif 0
   float g_dir[3];
   g_dir[0] = -sin(PI*navigation_rotation[0] / 180.0f);
   g_dir[2] = -cos(PI*navigation_rotation[0] / 180.0f);

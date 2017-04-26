@@ -387,6 +387,140 @@ void  calculate(Eigen::Vector3d& minPoint, Eigen::Vector3d& maxPoint, theia::Vec
 	}
 }
 
+double getA(double arcs[][3], int n)//按第一行展开计算|A|  
+{
+	if (n == 1)
+	{
+		return arcs[0][0];
+	}
+	double ans = 0;
+	double temp[3][3];
+	int i, j, k;
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n - 1; j++)
+		{
+			for (k = 0; k < n - 1; k++)
+			{
+				temp[j][k] = arcs[j + 1][(k >= i) ? k + 1 : k];
+
+			}
+		}
+		double t = getA(temp, n - 1);
+		if (i % 2 == 0)
+		{
+			ans += arcs[0][i] * t;
+		}
+		else
+		{
+			ans -= arcs[0][i] * t;
+		}
+	}
+	return ans;
+}
+
+void getAStart(double arcs[][3], int n, double ans[][3])//计算每一行每一列的每个元素所对应的余子式，组成A*  
+{
+	if (n == 1)
+	{
+		ans[0][0] = 1;
+		return;
+	}
+	int i, j, k, t;
+	double temp[3][3];
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			for (k = 0; k < n - 1; k++)
+			{
+				for (t = 0; t < n - 1; t++)
+				{
+					temp[k][t] = arcs[k >= i ? k + 1 : k][t >= j ? t + 1 : t];
+				}
+			}
+
+			ans[j][i] = getA(temp, n - 1);
+			if ((i + j) % 2 == 1)
+			{
+				ans[j][i] = -ans[j][i];
+			}
+		}
+	}
+}
+
+
+void camera(double RMatrix[][3], double TMatrix[], float camerap[])
+{
+	int i, j;
+	double astar[3][3];
+	double a = getA(RMatrix, 3);
+	if (a == 0)
+	{
+		printf("can not transform!\n");
+	}
+	else
+	{
+		getAStart(RMatrix, 3, astar);
+		for (i = 0; i < 3; i++)
+		{
+			for (j = 0; j < 3; j++)
+			{
+				printf("%.3lf ", (double)astar[i][j] / a);
+			}
+			printf("\n");
+		}
+	}
+	printf("\n");
+
+	for (i = 0; i < 3; i++)
+	{
+		camerap[i] = -(astar[i][0] / a*TMatrix[0] + astar[i][1] / a*TMatrix[1] + astar[i][2] / a*TMatrix[2]);
+		printf("camerap[%d]=%f ", i, camerap[i]);
+	}
+
+	printf("\n");
+}
+
+void getEyePositionFromBundle(float fEyePosition[])
+{
+
+	double RMatrix[3][3], TMatrix[3];//第一个相机的旋转矩阵和平移矩阵
+
+	std::string strFileBundle = FLAGS_pmvs_working_directory + "bundle.rd.out";
+
+	FILE *fp;
+	if ((fp = fopen(strFileBundle.c_str(), "r")) == NULL) //相机参数文件
+	{
+		printf("can not open the bundle file\n");
+		return;
+	}
+
+	// ignore first 3 lines
+	char buffer[256];
+	fgets(buffer, 256, fp);
+	fgets(buffer, 256, fp);
+	fgets(buffer, 256, fp);
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			fscanf(fp, "%lf", &RMatrix[i][j]);  //相机旋转矩阵
+			printf("RMatrix[%d][%d]=%f\n", i, j, RMatrix[i][j]);
+		}
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		fscanf(fp, "%lf", &TMatrix[i]); //相机平移矩阵
+		printf("TMatrix[%d][0]=%f\n", i, TMatrix[i]);
+	}
+	fclose(fp);
+
+	camera(RMatrix, TMatrix, fEyePosition);//计算第一个相机的坐标
+
+}
+
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
@@ -486,6 +620,8 @@ int main(int argc, char* argv[]) {
 		  }
 		  fileCameraIn.close();
 	  }
+
+	  getEyePositionFromBundle(fEyePosition);
 
 	  setEyeParameter(fEyePosition, fEyeAngle);
 
