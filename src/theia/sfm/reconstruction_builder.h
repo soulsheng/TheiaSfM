@@ -197,8 +197,8 @@ class ReconstructionBuilder {
   std::vector<std::string> image_filepaths_;
 
   // Module for performing feature extraction and matching.
-  std::unique_ptr<FeatureExtractorAndMatcher> feature_extractor_and_matcher_;
-
+  //std::unique_ptr<FeatureExtractorAndMatcher> feature_extractor_and_matcher_;
+  FeatureExtractorAndMatcher* feature_extractor_and_matcher_;
   DISALLOW_COPY_AND_ASSIGN(ReconstructionBuilder);
 };
 }  // namespace theia

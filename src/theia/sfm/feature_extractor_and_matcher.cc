@@ -59,6 +59,8 @@
 #include "theia/util/threadpool.h"
 #include "theia/util/timer.h"
 
+#define USE_GPU			1
+
 namespace theia {
 namespace {
 
@@ -279,11 +281,46 @@ void FeatureExtractorAndMatcher::ProcessImage(
   // Extract Features.
   std::vector<Keypoint> keypoints;
   std::vector<Eigen::VectorXf> descriptors;
+
+#if !USE_GPU
+
   ExtractFeatures(options_,
                   image_filepath,
                   mask_filepath,
                   &keypoints,
                   &descriptors);
+
+#else
+
+  std::vector<float> descriptors_h(1);
+  std::vector<SiftGPU::SiftKeypoint> keys_h(1);
+
+  if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED) 
+	  std::cout << "siftgpu failed to CreateContextGL" << std::endl;
+
+  sift.RunSIFT(image_filepath.c_str());
+
+  //get feature count
+  int num1 = sift.GetFeatureNum();
+  //allocate memory
+  keys_h.resize(num1);    descriptors_h.resize(128 * num1);
+
+  sift.GetFeatureVector(&keys_h[0], &descriptors_h[0]);
+
+  for (int i = 0; i < keys_h.size();i++)
+  {
+	  Keypoint kp;
+	  kp.set_x(keys_h[i].x);
+	  kp.set_y(keys_h[i].y);
+	  kp.set_scale(keys_h[i].s);
+	  kp.set_orientation(keys_h[i].o);
+	  keypoints.push_back(kp);
+
+	  descriptors.emplace_back(128);
+	  memcpy(descriptors.back().data(), descriptors_h.data() + i*128, sizeof(float)*128 );
+  }
+
+#endif
 
   std::cout << "ExtractFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
 

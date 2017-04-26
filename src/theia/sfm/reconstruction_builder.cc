@@ -175,11 +175,14 @@ ReconstructionBuilder::ReconstructionBuilder(
   feam_options.feature_matcher_options.geometric_verification_options
       .estimate_twoview_info_options.rng = options_.rng;
 
-  feature_extractor_and_matcher_.reset(
-	  new FeatureExtractorAndMatcher(feam_options, exePath));
+  feature_extractor_and_matcher_ = new FeatureExtractorAndMatcher(feam_options, exePath);
 }
 
-ReconstructionBuilder::~ReconstructionBuilder() {}
+ReconstructionBuilder::~ReconstructionBuilder() {
+	std::cout << "~ReconstructionBuilder begin " << std::endl;
+	delete feature_extractor_and_matcher_;
+	std::cout << "~ReconstructionBuilder end " << std::endl;
+}
 
 bool ReconstructionBuilder::AddImage(const std::string& image_filepath) {
   return AddImage(image_filepath, kInvalidCameraIntrinsicsGroupId);

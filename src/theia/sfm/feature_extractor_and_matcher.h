@@ -45,6 +45,8 @@
 #include "theia/matching/feature_matcher_options.h"
 #include "theia/sfm/exif_reader.h"
 
+#include "SiftGPU.h"
+
 namespace theia {
 struct CameraIntrinsicsPrior;
 struct ImagePairMatch;
@@ -127,6 +129,9 @@ class FeatureExtractorAndMatcher {
   // Feature matcher and mutex for thread-safe access.
   std::unique_ptr<FeatureMatcher> matcher_;
   std::mutex intrinsics_mutex_, matcher_mutex_;
+
+  SiftGPU sift;
+
 };
 
 }  // namespace theia
