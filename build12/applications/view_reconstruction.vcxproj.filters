@@ -9,8 +9,20 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{E0E7CEE7-AB82-4AB0-BF69-F03D37D17519}</UniqueIdentifier>
     </Filter>
+    <Filter Include="custom">
+      <UniqueIdentifier>{d6ede40a-1c44-46b0-b670-7021e4687882}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\applications\view_common.h" />
+    <ClInclude Include="..\common\bmp2gif.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\bmpHeader.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\simpleBMP.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

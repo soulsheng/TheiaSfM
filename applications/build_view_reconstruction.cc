@@ -100,12 +100,12 @@ void prepare_points_to_draw(Reconstruction *reconstruction)
 float zoom_default = 0.0;
 float zoom = zoom_default;
 
-Eigen::Vector3f eye_position;
-Eigen::Vector3f eye_position_default;
+//Eigen::Vector3f eye_position;
+//Eigen::Vector3f eye_position_default;
 
 // Rotation values for the navigation
-Eigen::Vector2f navigation_rotation_default(60.0, 0.0);
-Eigen::Vector2f navigation_rotation(navigation_rotation_default);
+//Eigen::Vector2f navigation_rotation_default(60.0, 0.0);
+//Eigen::Vector2f navigation_rotation(navigation_rotation_default);
 
 //int n_fps = 240; // frame per second
 

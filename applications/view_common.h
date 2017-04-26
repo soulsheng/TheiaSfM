@@ -88,8 +88,8 @@ int width = 1200;
 int height = 800;
 
 // OpenGL camera parameters.
-extern Eigen::Vector3f eye_position;
-extern Eigen::Vector3f eye_position_default;
+Eigen::Vector3f eye_position;
+Eigen::Vector3f eye_position_default;
 extern float zoom_default;// = -500.0;
 extern float zoom;// = -500.0;
 float delta_zoom = 1.1;
@@ -97,8 +97,8 @@ float speed = 0.1;
 float speed_angle = 0.5;
 
 // Rotation values for the navigation
-extern Eigen::Vector2f navigation_rotation_default;// (45.0, 0.0);
-extern Eigen::Vector2f navigation_rotation;// (45.0, 0.0);
+Eigen::Vector2f navigation_rotation_default;// (45.0, 0.0);
+Eigen::Vector2f navigation_rotation;// (45.0, 0.0);
 
 // Position of the mouse when pressed
 int mouse_pressed_x = 0, mouse_pressed_y = 0;
@@ -120,7 +120,7 @@ std::ifstream fileCameraIn;
 //extern int n_fps; // frame per second
 
 extern int		nColorPoint[];
-extern std::string strPathExe;
+std::string strPathExe;
 
 int		nImageCountOutput=0;
 
