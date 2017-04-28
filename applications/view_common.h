@@ -64,12 +64,13 @@ DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
 DEFINE_int32(window_width, 1280, "window width");
 DEFINE_int32(window_height, 1024, "window height");
-DEFINE_double(distance, 0.75, "set distance of view");
+DEFINE_string(distance, "(0.2,0.5,0.5)", "set distance of view");
 DEFINE_bool(draw_box, false, "draw bounding box");
 DEFINE_bool(exit_fast, true, "exit when output finish");
 DEFINE_bool(swap_yz, false, "swap y and z");
 DEFINE_bool(head_flip, true, "head flip");
 DEFINE_bool(save_camera, true, "save camera property to file");
+DEFINE_int32(view_type, 0, "0-perspective, 1-camera, 2-top, 3-free, 4-common");
 
 Eigen::Vector2i window_size(1280, 1024);
 
@@ -81,7 +82,7 @@ theia::Vector3fVec point_normals;
 std::vector<int> num_views_for_track;
 
 int nMaxValue = 1 << 30;
-Eigen::Vector3d minPoint(nMaxValue, nMaxValue, nMaxValue), maxPoint(-nMaxValue, -nMaxValue, -nMaxValue);
+Eigen::Vector3f minPoint(nMaxValue, nMaxValue, nMaxValue), maxPoint(-nMaxValue, -nMaxValue, -nMaxValue);
 
 // Parameters for OpenGL.
 int width = 1200;
@@ -109,6 +110,7 @@ int left_mouse_button_active = 0, right_mouse_button_active = 0;
 // Visualization parameters.
 bool draw_cameras = false;
 bool draw_axes = false;
+bool draw_box = false;
 float point_size = 1.0;
 float normalized_focal_length = 1.0;
 int min_num_views_for_track = 10;
@@ -123,6 +125,16 @@ extern int		nColorPoint[];
 std::string strPathExe;
 
 int		nImageCountOutput=0;
+
+enum EnumViewType
+{
+	VIEW_PERSPECTIVE,
+	VIEW_CAMERA, 
+	VIEW_TOP,
+	VIEW_FREE,
+	VIEW_COMMON,
+	VIEW_TYPE_COUNT
+};
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
   double focal_length = 800.0;
@@ -334,7 +346,7 @@ void DrawPoints(const float point_scale,
   glEnd();
 
 	// draw box
-	if (FLAGS_draw_box)
+  if (FLAGS_draw_box && draw_box)
 	{
 		DrawBox(minPoint.x(), minPoint.y(), minPoint.z(),
 		maxPoint.x(), maxPoint.y(), maxPoint.z());
@@ -386,41 +398,72 @@ void RenderScene() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  Eigen::Vector3d midPoint = (maxPoint + minPoint) / 2;
+  Eigen::Vector3f midPoint = (maxPoint + minPoint) / 2;
+  Eigen::Vector3f sizePoint = maxPoint - minPoint;
 
-#if 1
-
-  glTranslatef(0.0f, 0.0f, -4.0*0.034 / abs(eye_position.z() / maxPoint.z()));
-
-  gluLookAt(eye_position.x(), eye_position.y(), eye_position.z(),
-	  midPoint.x(), midPoint.y(), midPoint.z(), 
-	  0.0, -1.0, 0.0);
-
-#elif 0
   float g_dir[3];
-  g_dir[0] = -sin(PI*navigation_rotation[0] / 180.0f);
-  g_dir[2] = -cos(PI*navigation_rotation[0] / 180.0f);
-  g_dir[1] = -sin(PI*navigation_rotation[1] / 180.0f);
   float head_dir = 1;
-  if (FLAGS_head_flip)
-	  head_dir = -1;
+  switch ( FLAGS_view_type )
+  {
+  case VIEW_PERSPECTIVE:
 
-  gluLookAt(
-	  eye_position[0], eye_position[1], eye_position[2],
-	  eye_position[0] + g_dir[0],	eye_position[1] + g_dir[1],	eye_position[2] + g_dir[2],
-	  0,	head_dir,	0);
-#else
-  // Transformation to the viewer origin.
-  glTranslatef(0.0, 0.0, zoom);
-  glRotatef(navigation_rotation[0], 1.0f, 0.0f, 0.0f);
-  glRotatef(navigation_rotation[1], 0.0f, 1.0f, 0.0f);
-  if (draw_axes) {
-    DrawAxes(10.0);
+	  glTranslatef(0.0f, 0.0f, -0.5 * sizePoint.z() );
+
+	  gluLookAt(eye_position.x(), eye_position.y(), eye_position.z(),
+		  midPoint.x(), midPoint.y(), midPoint.z(),
+		  0.0, -1.0, 0.0);
+	  break;
+
+  case VIEW_TOP:
+
+	  gluLookAt(eye_position.x(), eye_position.y(), eye_position.z(),
+		  midPoint.x(), midPoint.y(), midPoint.z(),
+		  0.0, 0.0, -1.0);
+	  break;
+
+  case VIEW_CAMERA:
+
+	  glTranslatef(0.0f, 0.0f, -4.0*0.034 / abs(eye_position.z() / maxPoint.z()));
+
+	  gluLookAt(eye_position.x(), eye_position.y(), eye_position.z(),
+		  midPoint.x(), midPoint.y(), midPoint.z(),
+		  0.0, -1.0, 0.0);
+
+	  break;
+
+  case VIEW_FREE:
+
+	  g_dir[0] = -sin(PI*navigation_rotation[0] / 180.0f);
+	  g_dir[2] = -cos(PI*navigation_rotation[0] / 180.0f);
+	  g_dir[1] = -sin(PI*navigation_rotation[1] / 180.0f);
+	  if (FLAGS_head_flip)
+		  head_dir = -1;
+
+	  gluLookAt(
+		  eye_position[0], eye_position[1], eye_position[2],
+		  eye_position[0] + g_dir[0], eye_position[1] + g_dir[1], eye_position[2] + g_dir[2],
+		  0, head_dir, 0);
+
+	  break;
+
+  case VIEW_COMMON:
+
+	  // Transformation to the viewer origin.
+	  glTranslatef(0.0, 0.0, zoom);
+	  glRotatef(navigation_rotation[0], 1.0f, 0.0f, 0.0f);
+	  glRotatef(navigation_rotation[1], 0.0f, 1.0f, 0.0f);
+	  if (draw_axes) {
+		  DrawAxes(10.0);
+	  }
+
+	  // Transformation from the viewer origin to the reconstruction origin.
+	  glTranslatef(eye_position[0], eye_position[1], eye_position[2]);
+
+	  break;
+
+  default:
+	  break;
   }
-
-  // Transformation from the viewer origin to the reconstruction origin.
-  glTranslatef(eye_position[0], eye_position[1], eye_position[2]);
-#endif
 
   // Each 3D point is rendered 3 times with different point sizes, color
   // intensity, and alpha blending. This allows for a more complete texture-like
@@ -661,6 +704,7 @@ void Keyboard(unsigned char key, int x, int y) {
       --min_num_views_for_track;
       break;
     case 'b':
+		draw_box = !draw_box;
       if (anti_aliasing_blend > 0) {
         anti_aliasing_blend -= 0.01;
       }

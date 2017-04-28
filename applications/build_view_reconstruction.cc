@@ -353,7 +353,7 @@ void getValueFromString(std::string str, T * cColor)
 	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
 }
 
-void  calculate(Eigen::Vector3d& minPoint, Eigen::Vector3d& maxPoint, theia::Vector3dVec& allPoints)
+void  calculate(Eigen::Vector3f& minPoint, Eigen::Vector3f& maxPoint, theia::Vector3dVec& allPoints)
 {
 	for (theia::Vector3dVec::iterator itr = allPoints.begin(); itr != allPoints.end(); itr++)
 	{
@@ -462,24 +462,13 @@ void camera(double RMatrix[][3], double TMatrix[], float camerap[])
 	else
 	{
 		getAStart(RMatrix, 3, astar);
-		for (i = 0; i < 3; i++)
-		{
-			for (j = 0; j < 3; j++)
-			{
-				printf("%.3lf ", (double)astar[i][j] / a);
-			}
-			printf("\n");
-		}
 	}
-	printf("\n");
 
 	for (i = 0; i < 3; i++)
 	{
 		camerap[i] = -(astar[i][0] / a*TMatrix[0] + astar[i][1] / a*TMatrix[1] + astar[i][2] / a*TMatrix[2]);
-		printf("camerap[%d]=%f ", i, camerap[i]);
 	}
 
-	printf("\n");
 }
 
 void getEyePositionFromBundle(float fEyePosition[])
@@ -507,13 +496,11 @@ void getEyePositionFromBundle(float fEyePosition[])
 		for (int j = 0; j < 3; j++)
 		{
 			fscanf(fp, "%lf", &RMatrix[i][j]);  //相机旋转矩阵
-			printf("RMatrix[%d][%d]=%f\n", i, j, RMatrix[i][j]);
 		}
 	}
 	for (int i = 0; i < 3; i++)
 	{
 		fscanf(fp, "%lf", &TMatrix[i]); //相机平移矩阵
-		printf("TMatrix[%d][0]=%f\n", i, TMatrix[i]);
 	}
 	fclose(fp);
 
@@ -600,14 +587,41 @@ int main(int argc, char* argv[]) {
 
 	  calculate(minPoint, maxPoint, world_points);
 
-	  Eigen::Vector3d midPoint = (maxPoint + minPoint) / 2;
-	  Eigen::Vector3d sizeRect = maxPoint - minPoint;
+	  Eigen::Vector3f midPoint = (maxPoint + minPoint) / 2;
+	  Eigen::Vector3f sizeRect = maxPoint - minPoint;
 
 	  double lengthMax = sizeRect.x() > sizeRect.z() ? sizeRect.x() : sizeRect.z();
 
-	  fEyePosition[0] += midPoint.x();
-	  fEyePosition[1] += midPoint.y();
-	  fEyePosition[2] += midPoint.z() + lengthMax*FLAGS_distance;
+	  float fDistance[3];
+	  getValueFromString(std::string(FLAGS_distance), fDistance);
+
+	  // 场景竖直情况，采用相机视角
+	  if (sizeRect.y() >lengthMax)
+	  	  FLAGS_view_type = VIEW_CAMERA;
+
+	  switch (FLAGS_view_type)
+	  {
+	  case VIEW_PERSPECTIVE:
+		  fEyePosition[0] += midPoint.x() - sizeRect.x() * fDistance[0];
+		  fEyePosition[1] += midPoint.y() - sizeRect.y() * fDistance[1];
+		  fEyePosition[2] += midPoint.z() - sizeRect.z() * fDistance[2];
+		  break;
+
+	  case VIEW_TOP:
+		  fEyePosition[0] += midPoint.x();
+		  fEyePosition[1] += midPoint.y() + sizeRect.y()*fDistance[1];
+		  fEyePosition[2] += midPoint.z();
+		  break;
+
+	  case VIEW_FREE:
+		  fEyePosition[0] += midPoint.x();
+		  fEyePosition[1] += midPoint.y();
+		  fEyePosition[2] += midPoint.z() + lengthMax*fDistance[2];
+		  break;
+
+	  default:
+		  break;
+	  }
 
 	  if (FLAGS_save_camera)
 	  {
@@ -621,7 +635,8 @@ int main(int argc, char* argv[]) {
 		  fileCameraIn.close();
 	  }
 
-	  getEyePositionFromBundle(fEyePosition);
+	  if ( VIEW_CAMERA == FLAGS_view_type )
+		getEyePositionFromBundle(fEyePosition);
 
 	  setEyeParameter(fEyePosition, fEyeAngle);
 
