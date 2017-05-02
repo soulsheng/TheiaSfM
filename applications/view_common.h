@@ -71,6 +71,14 @@ DEFINE_bool(swap_yz, false, "swap y and z");
 DEFINE_bool(head_flip, true, "head flip");
 DEFINE_bool(save_camera, true, "save camera property to file");
 DEFINE_int32(view_type, 0, "0-perspective, 1-camera, 2-top, 3-free, 4-common");
+DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
+DEFINE_string(eye_angle, "(0,0,0)", "angle of eye.");
+
+std::string FLAGS_pmvs_working_directory;
+
+Eigen::Vector2i window_position(200, 100);
+
+int		nColorPoint[3];
 
 Eigen::Vector2i window_size(1280, 1024);
 
@@ -91,8 +99,8 @@ int height = 800;
 // OpenGL camera parameters.
 Eigen::Vector3f eye_position;
 Eigen::Vector3f eye_position_default;
-extern float zoom_default;// = -500.0;
-extern float zoom;// = -500.0;
+float zoom_default;// = -500.0;
+float zoom;// = -500.0;
 float delta_zoom = 1.1;
 float speed = 0.1;
 float speed_angle = 0.5;
@@ -715,4 +723,288 @@ void Keyboard(unsigned char key, int x, int y) {
       }
       break;
   }
+}
+
+
+template<typename T>
+void getValueFromString(std::string str, T * cColor)
+{
+	std::istringstream in(str);
+	char tmp;
+	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
+}
+
+double getA(double arcs[][3], int n)//按第一行展开计算|A|  
+{
+	if (n == 1)
+	{
+		return arcs[0][0];
+	}
+	double ans = 0;
+	double temp[3][3];
+	int i, j, k;
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n - 1; j++)
+		{
+			for (k = 0; k < n - 1; k++)
+			{
+				temp[j][k] = arcs[j + 1][(k >= i) ? k + 1 : k];
+
+			}
+		}
+		double t = getA(temp, n - 1);
+		if (i % 2 == 0)
+		{
+			ans += arcs[0][i] * t;
+		}
+		else
+		{
+			ans -= arcs[0][i] * t;
+		}
+	}
+	return ans;
+}
+
+void getAStart(double arcs[][3], int n, double ans[][3])//计算每一行每一列的每个元素所对应的余子式，组成A*  
+{
+	if (n == 1)
+	{
+		ans[0][0] = 1;
+		return;
+	}
+	int i, j, k, t;
+	double temp[3][3];
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			for (k = 0; k < n - 1; k++)
+			{
+				for (t = 0; t < n - 1; t++)
+				{
+					temp[k][t] = arcs[k >= i ? k + 1 : k][t >= j ? t + 1 : t];
+				}
+			}
+
+			ans[j][i] = getA(temp, n - 1);
+			if ((i + j) % 2 == 1)
+			{
+				ans[j][i] = -ans[j][i];
+			}
+		}
+	}
+}
+
+
+void camera(double RMatrix[][3], double TMatrix[], float camerap[])
+{
+	int i, j;
+	double astar[3][3];
+	double a = getA(RMatrix, 3);
+	if (a == 0)
+	{
+		printf("can not transform!\n");
+	}
+	else
+	{
+		getAStart(RMatrix, 3, astar);
+	}
+
+	for (i = 0; i < 3; i++)
+	{
+		camerap[i] = -(astar[i][0] / a*TMatrix[0] + astar[i][1] / a*TMatrix[1] + astar[i][2] / a*TMatrix[2]);
+	}
+
+}
+
+void getEyePositionFromBundle(float fEyePosition[])
+{
+
+	double RMatrix[3][3], TMatrix[3];//第一个相机的旋转矩阵和平移矩阵
+
+	std::string strFileBundle = FLAGS_pmvs_working_directory + "bundle.rd.out";
+
+	FILE *fp;
+	if ((fp = fopen(strFileBundle.c_str(), "r")) == NULL) //相机参数文件
+	{
+		printf("can not open the bundle file\n");
+		return;
+	}
+
+	// ignore first 3 lines
+	char buffer[256];
+	fgets(buffer, 256, fp);
+	fgets(buffer, 256, fp);
+	fgets(buffer, 256, fp);
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			fscanf(fp, "%lf", &RMatrix[i][j]);  //相机旋转矩阵
+		}
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		fscanf(fp, "%lf", &TMatrix[i]); //相机平移矩阵
+	}
+	fclose(fp);
+
+	camera(RMatrix, TMatrix, fEyePosition);//计算第一个相机的坐标
+
+}
+
+void setDefaultCameraProperty()
+{
+
+	float fEyePosition[3];
+	getValueFromString(std::string(FLAGS_eye_position), fEyePosition);
+	float fEyeAngle[3];
+	getValueFromString(std::string(FLAGS_eye_angle), fEyeAngle);
+
+	Eigen::Vector3f midPoint = (maxPoint + minPoint) / 2;
+	Eigen::Vector3f sizeRect = maxPoint - minPoint;
+
+	double lengthMax = sizeRect.x() > sizeRect.z() ? sizeRect.x() : sizeRect.z();
+
+	float fDistance[3];
+	getValueFromString(std::string(FLAGS_distance), fDistance);
+
+	// 场景竖直情况，采用相机视角
+	if (sizeRect.y() > lengthMax)
+		FLAGS_view_type = VIEW_CAMERA;
+
+	switch (FLAGS_view_type)
+	{
+	case VIEW_PERSPECTIVE:
+		fEyePosition[0] += midPoint.x() - sizeRect.x() * fDistance[0];
+		fEyePosition[1] += midPoint.y() - sizeRect.y() * fDistance[1];
+		fEyePosition[2] += midPoint.z() - sizeRect.z() * fDistance[2];
+		break;
+
+	case VIEW_TOP:
+		fEyePosition[0] += midPoint.x();
+		fEyePosition[1] += midPoint.y() + sizeRect.y()*fDistance[1];
+		fEyePosition[2] += midPoint.z();
+		break;
+
+	case VIEW_FREE:
+		fEyePosition[0] += midPoint.x();
+		fEyePosition[1] += midPoint.y();
+		fEyePosition[2] += midPoint.z() + lengthMax*fDistance[2];
+		break;
+
+	default:
+		break;
+	}
+
+	if (FLAGS_save_camera)
+	{
+		std::string filename = FLAGS_input_images + "camera.txt";
+		fileCameraIn.open(filename);
+		if (fileCameraIn.is_open())
+		{
+			fileCameraIn >> fEyePosition[0] >> fEyePosition[1] >> fEyePosition[2];
+			fileCameraIn >> fEyeAngle[0] >> fEyeAngle[1] >> fEyeAngle[2];
+		}
+		fileCameraIn.close();
+	}
+
+	if (VIEW_CAMERA == FLAGS_view_type)
+		getEyePositionFromBundle(fEyePosition);
+
+	setEyeParameter(fEyePosition, fEyeAngle);
+
+	speed = lengthMax * 0.01;
+
+	if (FLAGS_head_flip)
+	{
+		speed *= -1;
+		speed_angle *= -1;
+	}
+}
+
+void getInt3FromString(std::string str, int * cColor)
+{
+	std::istringstream in(str);
+	char tmp;
+	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
+}
+
+void gl_draw_points(int argc, char** argv)
+{
+	// Set up opengl and glut.
+	glutInit(&argc, argv);
+	glutInitWindowPosition(window_position[0], window_position[1]);
+	window_size[0] = FLAGS_window_width;
+	window_size[1] = FLAGS_window_height;
+	glutInitWindowSize(window_size[0], window_size[1]);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+	glutCreateWindow("SDIOI Reconstruction Viewer");
+
+#ifdef _WIN32
+	// Set up glew.
+	CHECK_EQ(GLEW_OK, glewInit())
+		<< "Failed initializing GLEW.";
+#endif
+
+	// Set the camera
+	gluLookAt(0.0f, 0.0f, -6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
+	// Set sky color
+	int cColor[3];
+	getInt3FromString(std::string(FLAGS_color_sky), cColor);
+
+	glClearColor(cColor[0] / 255.0f, cColor[1] / 255.0f, cColor[2] / 255.0f, 1.0f);
+
+	// Set point color / size
+	getInt3FromString(std::string(FLAGS_color_point), nColorPoint);
+	point_size = FLAGS_point_size;
+
+	// register callbacks
+	glutDisplayFunc(RenderScene);
+	glutReshapeFunc(ChangeSize);
+	glutMouseFunc(MouseButton);
+	glutMotionFunc(MouseMove);
+	glutKeyboardFunc(Keyboard);
+	glutIdleFunc(RenderScene);
+	glutSpecialFunc(processSpecialKeys);
+
+	// enter GLUT event processing loop
+	glutMainLoop();
+}
+
+void  calculate(Eigen::Vector3f& minPoint, Eigen::Vector3f& maxPoint, theia::Vector3dVec& allPoints)
+{
+	for (theia::Vector3dVec::iterator itr = allPoints.begin(); itr != allPoints.end(); itr++)
+	{
+		double x = itr->x();
+		double y = itr->y();
+		double z = itr->z();
+
+		if (FLAGS_swap_yz)
+		{
+			double tmp = y;
+			y = z;
+			z = tmp;
+
+			itr->y() = y;
+			itr->z() = z;
+		}
+
+		if (FLAGS_y_flip)
+		{
+			y = -y;
+			itr->y() = y;
+		}
+
+		if (x < minPoint.x())	minPoint.x() = x;
+		if (y < minPoint.y())	minPoint.y() = y;
+		if (z < minPoint.z())	minPoint.z() = z;
+
+		if (x > maxPoint.x())	maxPoint.x() = x;
+		if (y > maxPoint.y())	maxPoint.y() = y;
+		if (z > maxPoint.z())	maxPoint.z() = z;
+	}
 }

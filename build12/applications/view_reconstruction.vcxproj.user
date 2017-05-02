@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>--reconstruction=D:\file\data\3d\2017_03-5\result  --exit_fast=0 --view=1 --color_sky=(128,150,200) --same_color=1 --color_point=(0,255,255)</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--reconstruction=E:\3d\best-0417-40\result  --exit_fast=0 --view=1 --color_sky=(128,150,200) --same_color=0 --color_point=(0,255,255)</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>--reconstruction=result-0c --same_color_point=0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--reconstruction=E:\3d\best-0417-40\result  --exit_fast=0 --view=1 --color_sky=(128,150,200) --same_color=1 --color_point=(0,255,255)</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

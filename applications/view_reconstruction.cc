@@ -430,31 +430,12 @@ void Keyboard(unsigned char key, int x, int y) {
 //DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
 //DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
 
-// OpenGL camera parameters.
-float zoom_default = -400.0;
-float zoom = zoom_default;
-
-// Rotation values for the navigation
-//Eigen::Vector2f navigation_rotation_default(60.0, 0.0);
-//Eigen::Vector2f navigation_rotation(navigation_rotation_default);
-
-int n_fps = 240; // frame per second
-
-Eigen::Vector2i window_position(200, 100);
-
-int		nColorPoint[3];
-extern float point_size;
-
-void getColorFromString(std::string str, int * cColor)
-{
-	std::istringstream in(str);
-	char tmp;
-	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
-}
-
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
+
+  theia::GetDirectoryFromFilepath(FLAGS_reconstruction, &FLAGS_pmvs_working_directory);
+  FLAGS_pmvs_working_directory += "\\pmvs\\";
 
   // Output as a binary file.
   std::unique_ptr<theia::Reconstruction> reconstruction(
@@ -489,7 +470,16 @@ int main(int argc, char* argv[]) {
   }
 
   reconstruction.release();
+#if 1
 
+  calculate(minPoint, maxPoint, world_points);
+
+  FLAGS_view_type = VIEW_PERSPECTIVE;
+
+  setDefaultCameraProperty();
+
+  gl_draw_points(argc, argv);
+#else
   // Set up opengl and glut.
   glutInit(&argc, argv);
   glutInitWindowPosition(window_position[0], window_position[1]);
@@ -526,6 +516,7 @@ int main(int argc, char* argv[]) {
 
   // enter GLUT event processing loop
   glutMainLoop();
+#endif
 
   return 0;
 }
