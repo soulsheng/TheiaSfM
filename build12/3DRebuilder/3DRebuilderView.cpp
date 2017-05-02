@@ -272,7 +272,7 @@ int CMy3DRebuilderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	char path_buffer[_MAX_PATH];
 	GetModuleFileName(hInst, path_buffer, sizeof(path_buffer));//得到exe文件的全路径
 
-	m_strPathExe = path_buffer;
+	m_strPathExe = getPath(std::string(path_buffer) );
 
 	return 0;
 }
@@ -749,6 +749,15 @@ void CMy3DRebuilderView::OnExecuteReconstructionSparse()
 	if (m_imagePath.empty())
 		m_imagePath = FLAGS_image_directory;
 
+	FLAGS_input_images = m_imagePath;
+	FLAGS_images = FLAGS_input_images + "*.jpg";
+	FLAGS_output_matches_file = FLAGS_input_images + "output.matches";
+	FLAGS_output_reconstruction = FLAGS_input_images + "result";
+	FLAGS_matching_working_directory = FLAGS_input_images + "features\\";
+	FLAGS_pmvs_working_directory = FLAGS_input_images + "pmvs\\";
+	FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
+
+	CreateDirectoryIfDoesNotExist(FLAGS_matching_working_directory);
 	outputInfo(m_imagePath.c_str());
 	outputInfo("正在进行稀释重建...");
 
@@ -907,12 +916,11 @@ void CMy3DRebuilderView::lanch_external_bin(String& bin, String& parameter, Stri
 String CMy3DRebuilderView::getPath(String& strFullPath)
 {
 	int indexEnd = strFullPath.find_last_of('\\');
-	return strFullPath.substr(0, indexEnd);
+	return strFullPath.substr(0, indexEnd+1);
 }
 
-void CMy3DRebuilderView::run_pmvs(const char *exeFullPath)
+void CMy3DRebuilderView::run_pmvs(String &exePath)
 {
-	String exePath = getPath(String(exeFullPath));
 	lanch_external_bin(String("cmvs.exe"), FLAGS_pmvs_working_directory, exePath);
 
 	lanch_external_bin(String("genOption.exe"), FLAGS_pmvs_working_directory, exePath);
@@ -952,7 +960,7 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 #endif
 
 #if 1
-	run_pmvs(m_strPathExe.c_str());
+	run_pmvs(m_strPathExe);
 
 	String resultPath = FLAGS_pmvs_working_directory + "option-0000";
 	outputInfo(resultPath.c_str(), "");
@@ -1024,7 +1032,7 @@ void CMy3DRebuilderView::printScreen(std::string filename, int width, int height
 	glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
 	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, buf);
 
-	saveBMPFile(filename, width, height, buf, m_strPathExe);
+	saveBMPFile(filename, width, height, buf);
 
 	delete[] buf;
 }

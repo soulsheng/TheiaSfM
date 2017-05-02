@@ -40,7 +40,7 @@ typedef struct BMP_INFO
 
 #define BMP_Header_Length 54  
 
-void	saveBMPFile(std::string filename, int width, int height, char* buf, std::string path)
+void	saveBMPFile(std::string filename, int width, int height, char* buf)
 {
 	FILE*     pWritingFile = fopen(filename.c_str(), "wb");
 	BMPFILEHEADER header;

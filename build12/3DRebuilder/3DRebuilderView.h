@@ -83,7 +83,7 @@ protected:
 	std::string		m_imagePath;
 
 	void build_reconstruction(std::vector<Reconstruction *>& reconstructions);
-	void run_pmvs(const char *exeFullPath);
+	void run_pmvs(String &exePath);
 	void export_to_pmvs(theia::Reconstruction& reconstruction);
 
 private:
