@@ -38,6 +38,8 @@ DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
 DEFINE_string(output_image_directory, "./output/", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
+DEFINE_string(distance, "(0.2,0.5,0.5)", "set distance of view");
+DEFINE_int32(view_type, 0, "0-perspective, 1-camera, 2-top, 3-free, 4-common");
 
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
@@ -367,6 +369,8 @@ void CMy3DRebuilderView::renderScene()
 	m_camera.look();
 
 	renderPointsCloud();
+	
+	box.DrawBox();
 
 #if 1
 	s += 0.005;
@@ -982,6 +986,54 @@ void CMy3DRebuilderView::OnViewSparseResult()
 
 }
 
+void CMy3DRebuilderView::updateEyePosition()
+{
+	Eigen::Vector3f& minPoint = box.getMinPoint();
+	Eigen::Vector3f& maxPoint = box.getMaxPoint();
+
+	Eigen::Vector3f midPoint = box.getMidPoint();
+	Eigen::Vector3f sizeRect = box.getSizePoint();;
+
+	double lengthMax = sizeRect.x() > sizeRect.z() ? sizeRect.x() : sizeRect.z();
+
+	float fDistance[3];
+	getValueFromString(std::string(FLAGS_distance), fDistance);
+
+	float fEyePosition[3] = { 0, 0, 0 };
+
+	// 场景竖直情况，采用相机视角
+	if (sizeRect.y() > lengthMax)
+		FLAGS_view_type = VIEW_CAMERA;
+
+	switch (FLAGS_view_type)
+	{
+	case VIEW_PERSPECTIVE:
+		fEyePosition[0] += midPoint.x() - sizeRect.x() * fDistance[0];
+		fEyePosition[1] += midPoint.y() - sizeRect.y() * fDistance[1];
+		fEyePosition[2] += midPoint.z() - sizeRect.z() * fDistance[2];
+		break;
+
+	case VIEW_TOP:
+		fEyePosition[0] += midPoint.x();
+		fEyePosition[1] += midPoint.y() + sizeRect.y()*fDistance[1];
+		fEyePosition[2] += midPoint.z();
+		break;
+
+	case VIEW_FREE:
+		fEyePosition[0] += midPoint.x();
+		fEyePosition[1] += midPoint.y();
+		fEyePosition[2] += midPoint.z() + lengthMax*fDistance[2];
+		break;
+
+	default:
+		break;
+	}
+
+	m_camera.setEye(fEyePosition[0], fEyePosition[1], fEyePosition[2]);
+
+	m_camera.setSpeed(lengthMax*0.01);
+}
+
 void CMy3DRebuilderView::loadAndDisplaySparseResult()
 {
 	outputInfo("正在显示稀释重建结果...");
@@ -1015,6 +1067,13 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 		point_colors.emplace_back(track->Color().cast<float>());
 		num_views_for_track.emplace_back(track->NumViews());
 	}
+
+	box.calculate(world_points);
+
+	updateEyePosition();
+
+	min_num_views_for_track = -1;
+
 	outputInfo("稀释重建结果显示完成...");
 }
 

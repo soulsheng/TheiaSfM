@@ -9,6 +9,7 @@
 #include "glCameraNode.h"
 #include "FPSCounter.h"
 #include <theia/theia.h>
+#include "Utility.h"
 
 using namespace theia;
 
@@ -49,6 +50,9 @@ protected:
 	theia::Vector3fVec point_normals;
 	std::vector<int> num_views_for_track;
 
+	BoundingBox box;
+
+	void updateEyePosition();
 	void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size);
 
 protected:
@@ -59,7 +63,7 @@ protected:
 	cameranode	m_camera;
 
 	int		nColorPoint[3];
-	int y_up_direction = -1;// 1-up,  -1-down 
+	int y_up_direction = 1;// 1-up,  -1-down 
 	int min_num_views_for_track = 10;
 	int n_fps = 30; // frame per second
 	FPSCounter fps_mm;

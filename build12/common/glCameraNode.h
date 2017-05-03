@@ -12,6 +12,7 @@ struct cameranode
 	void	setEye(float* p);
 	void	setEye(float x, float y, float z);
 	float*	getEye();
+	void	setSpeed(float s);
 
 	float		g_Angle;		//×óÓÒ×ª
 	float		g_speed;		//ËÙ¶È

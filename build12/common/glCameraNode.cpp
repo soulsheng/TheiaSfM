@@ -20,7 +20,7 @@ cameranode::cameranode()
 
 	//	头顶法向
 	g_up[0] = 0.0f;		
-	g_up[1] = 1.0f;		// 头顶向上，不歪
+	g_up[1] = -1.0f;		// 头顶向上，不歪
 	g_up[2] = 0.0f;		
 
 	g_Angle = -90.0f;
@@ -77,4 +77,9 @@ void cameranode::setEye(float x, float y, float z)
 float* cameranode::getEye()
 {
 	return g_eye;
+}
+
+void cameranode::setSpeed(float s)
+{
+	g_speed = s;
 }
