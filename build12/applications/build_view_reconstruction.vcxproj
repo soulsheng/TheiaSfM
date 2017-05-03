@@ -268,6 +268,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\applications\build_view_reconstruction.cc" />
+    <ClCompile Include="..\common\Utility.cpp" />
     <ClCompile Include="..\common\WriteGIF.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -296,8 +297,9 @@
     <ClInclude Include="..\common\bmp2gif.h" />
     <ClInclude Include="..\common\bmpHeader.h" />
     <ClInclude Include="..\common\simpleBMP.h" />
+    <ClInclude Include="..\common\stdafx.h" />
+    <ClInclude Include="..\common\Utility.h" />
     <ClInclude Include="..\common\WriteGIF.h" />
-    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

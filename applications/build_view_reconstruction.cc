@@ -357,7 +357,7 @@ int main(int argc, char* argv[]) {
 
 	  rand_num_views_for_track(num_views_for_track, world_points.size());
 
-	  calculate(minPoint, maxPoint, world_points);
+	  box.calculate(world_points);
 
 	  setDefaultCameraProperty();
 

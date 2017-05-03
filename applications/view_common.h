@@ -49,6 +49,8 @@
 #include <stlplus3/file_system.hpp>
 #include <fstream>
 
+#include "Utility.h"
+
 #define		PI		3.1415926	
 
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
@@ -89,8 +91,7 @@ theia::Vector3fVec point_colors;
 theia::Vector3fVec point_normals;
 std::vector<int> num_views_for_track;
 
-int nMaxValue = 1 << 30;
-Eigen::Vector3f minPoint(nMaxValue, nMaxValue, nMaxValue), maxPoint(-nMaxValue, -nMaxValue, -nMaxValue);
+BoundingBox box;
 
 // Parameters for OpenGL.
 int width = 1200;
@@ -134,15 +135,6 @@ std::string strPathExe;
 
 int		nImageCountOutput=0;
 
-enum EnumViewType
-{
-	VIEW_PERSPECTIVE,
-	VIEW_CAMERA, 
-	VIEW_TOP,
-	VIEW_FREE,
-	VIEW_COMMON,
-	VIEW_TYPE_COUNT
-};
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
   double focal_length = 800.0;
@@ -356,8 +348,7 @@ void DrawPoints(const float point_scale,
 	// draw box
   if (FLAGS_draw_box && draw_box)
 	{
-		DrawBox(minPoint.x(), minPoint.y(), minPoint.z(),
-		maxPoint.x(), maxPoint.y(), maxPoint.z());
+		box.DrawBox();
 	}
 
 }
@@ -368,7 +359,7 @@ void printScreen(std::string filename, int width = 1024, int height = 768)
 	glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
 	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, buf);
 
-	saveBMPFile(filename, width, height, buf, strPathExe);
+	saveBMPFile(filename, width, height, buf);
 
 	delete[] buf;
 }
@@ -406,8 +397,10 @@ void RenderScene() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  Eigen::Vector3f midPoint = (maxPoint + minPoint) / 2;
-  Eigen::Vector3f sizePoint = maxPoint - minPoint;
+  Eigen::Vector3f& maxPoint = box.getMaxPoint();
+
+  Eigen::Vector3f& midPoint = box.getMidPoint();
+  Eigen::Vector3f& sizePoint = box.getSizePoint();
 
   float g_dir[3];
   float head_dir = 1;
@@ -863,8 +856,8 @@ void setDefaultCameraProperty()
 	float fEyeAngle[3];
 	getValueFromString(std::string(FLAGS_eye_angle), fEyeAngle);
 
-	Eigen::Vector3f midPoint = (maxPoint + minPoint) / 2;
-	Eigen::Vector3f sizeRect = maxPoint - minPoint;
+	Eigen::Vector3f& midPoint = box.getMidPoint();
+	Eigen::Vector3f& sizeRect = box.getSizePoint();
 
 	double lengthMax = sizeRect.x() > sizeRect.z() ? sizeRect.x() : sizeRect.z();
 
@@ -973,38 +966,4 @@ void gl_draw_points(int argc, char** argv)
 
 	// enter GLUT event processing loop
 	glutMainLoop();
-}
-
-void  calculate(Eigen::Vector3f& minPoint, Eigen::Vector3f& maxPoint, theia::Vector3dVec& allPoints)
-{
-	for (theia::Vector3dVec::iterator itr = allPoints.begin(); itr != allPoints.end(); itr++)
-	{
-		double x = itr->x();
-		double y = itr->y();
-		double z = itr->z();
-
-		if (FLAGS_swap_yz)
-		{
-			double tmp = y;
-			y = z;
-			z = tmp;
-
-			itr->y() = y;
-			itr->z() = z;
-		}
-
-		if (FLAGS_y_flip)
-		{
-			y = -y;
-			itr->y() = y;
-		}
-
-		if (x < minPoint.x())	minPoint.x() = x;
-		if (y < minPoint.y())	minPoint.y() = y;
-		if (z < minPoint.z())	minPoint.z() = z;
-
-		if (x > maxPoint.x())	maxPoint.x() = x;
-		if (y > maxPoint.y())	maxPoint.y() = y;
-		if (z > maxPoint.z())	maxPoint.z() = z;
-	}
 }

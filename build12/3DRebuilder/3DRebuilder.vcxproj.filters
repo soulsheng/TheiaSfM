@@ -69,6 +69,9 @@
     <ClInclude Include="SettingRebuildShowMode.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\Utility.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DRebuilder.cpp">
@@ -103,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="SettingRebuildShowMode.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Utility.cpp">
+      <Filter>custom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

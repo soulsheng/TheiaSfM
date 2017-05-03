@@ -114,6 +114,7 @@
     <ClInclude Include="..\common\FPSCounter.h" />
     <ClInclude Include="..\common\glCameraNode.h" />
     <ClInclude Include="..\common\simpleBMP.h" />
+    <ClInclude Include="..\common\Utility.h" />
     <ClInclude Include="..\common\WriteGIF.h" />
     <ClInclude Include="3DRebuilder.h" />
     <ClInclude Include="3DRebuilderDoc.h" />
@@ -129,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="..\common\FPSCounter.cpp" />
     <ClCompile Include="..\common\glCameraNode.cpp" />
+    <ClCompile Include="..\common\Utility.cpp" />
     <ClCompile Include="..\common\WriteGIF.cpp" />
     <ClCompile Include="3DRebuilder.cpp" />
     <ClCompile Include="3DRebuilderDoc.cpp" />

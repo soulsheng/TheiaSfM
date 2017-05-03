@@ -5,6 +5,9 @@
     <ClCompile Include="..\common\WriteGIF.cpp">
       <Filter>custom</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\Utility.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="custom">
@@ -12,7 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h" />
     <ClInclude Include="..\..\applications\view_common.h" />
     <ClInclude Include="..\common\bmp2gif.h">
       <Filter>custom</Filter>
@@ -27,5 +29,11 @@
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\..\applications\build_common.h" />
+    <ClInclude Include="..\common\Utility.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\stdafx.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

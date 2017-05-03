@@ -472,7 +472,7 @@ int main(int argc, char* argv[]) {
   reconstruction.release();
 #if 1
 
-  calculate(minPoint, maxPoint, world_points);
+  box.calculate(world_points);
 
   FLAGS_view_type = VIEW_PERSPECTIVE;
 
