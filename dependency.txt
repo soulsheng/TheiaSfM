@@ -2,7 +2,7 @@
 
 theia
 	|	
-	-- glog v0.3.3-vc10-32, blas+lapack
+	-- glog v0.3.3-vc12-32, blas+lapack
 	|	
 	-- mfc( msvcp120d, msvcr120d )
 	|	
@@ -68,7 +68,7 @@ https://github.com/soulsheng/openexr
 3) openimageio v1.5.24-vc12-32
 https://github.com/soulsheng/oiio   (branch RB-1.5)
 
-4) glog v0.3.3-vc10-32
+4) glog v0.3.3-vc12-32
 https://github.com/soulsheng/glog	(branch master)
 
 5) gflag v2.2.0-vc12-32
