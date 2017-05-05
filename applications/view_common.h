@@ -863,11 +863,11 @@ void setDefaultCameraProperty()
 
 	float fDistance[3];
 	getValueFromString(std::string(FLAGS_distance), fDistance);
-
+#if 0
 	// 场景竖直情况，采用相机视角
 	if (sizeRect.y() > lengthMax)
 		FLAGS_view_type = VIEW_CAMERA;
-
+#endif
 	switch (FLAGS_view_type)
 	{
 	case VIEW_PERSPECTIVE:
