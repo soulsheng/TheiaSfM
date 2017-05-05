@@ -434,5 +434,7 @@ void AddImagesToReconstructionBuilder(
   }
 
   // Extract and match features.
+  LOG(INFO) << "开始提取特征并进行匹配：";
   CHECK(reconstruction_builder->ExtractAndMatchFeatures());
+  LOG(INFO) << "提取特征并匹配完成！";
 }

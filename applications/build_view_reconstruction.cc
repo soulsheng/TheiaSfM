@@ -320,16 +320,20 @@ int main(int argc, char* argv[]) {
 #if 1
 	  std::vector<Reconstruction*> reconstructions;
 
+	  LOG(INFO) << "开始执行稀疏重建：";
 	  build_reconstruction(reconstructions);
+	  LOG(INFO) << "执行稀疏重建完成！";
 
 	  if (reconstructions.size())
 		  reconstruction = reconstructions[0];
 	  else
 		  return -1;
 
+	  LOG(INFO) << "开始为点云配置颜色：";
 	  theia::ColorizeReconstruction(FLAGS_input_images,
 		  FLAGS_num_threads,
 		  reconstruction);
+	  LOG(INFO) << "为点云配置颜色完成！";
 
 	  theia::WriteReconstruction(*reconstruction,
 		  FLAGS_output_reconstruction);
@@ -351,9 +355,11 @@ int main(int argc, char* argv[]) {
 
 	  //prepare_points_to_draw( reconstruction );
 
+	  LOG(INFO) << "开始执行稠密重建：";
 #if 1
 	  run_pmvs(argv[0]);
 #endif
+	  LOG(INFO) << "执行稠密重建完成！";
 
   }// if (FLAGS_build)
 
@@ -371,6 +377,7 @@ int main(int argc, char* argv[]) {
 
 	  setDefaultCameraProperty();
 
+	  LOG(INFO) << "输出稠密重建结果！";
 	  gl_draw_points(argc, argv);
   }
 
