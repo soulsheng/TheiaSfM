@@ -289,6 +289,16 @@ int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
+
+  google::SetLogDestination(google::GLOG_INFO, argv[0]);
+  google::SetLogDestination(google::GLOG_ERROR, "");
+  google::SetLogDestination(google::GLOG_WARNING, "");
+  google::SetLogFilenameExtension(".log");
+
+  std::string logFilename = std::string(argv[0]) + ".log";
+  if (theia::FileExists(logFilename))
+	unlink(logFilename.c_str());
+
   strPathExe = argv[0];
   strPathExe = strPathExe.substr(0, strPathExe.find_last_of("\\") + 1);
 
