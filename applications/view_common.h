@@ -66,7 +66,7 @@ DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
 DEFINE_int32(window_width, 1280, "window width");
 DEFINE_int32(window_height, 1024, "window height");
-DEFINE_string(distance, "(0.2,0.5,0.5)", "set distance of view");
+DEFINE_string(distance, "(0.1,0.6,0.2)", "set distance of view");
 DEFINE_bool(draw_box, false, "draw bounding box");
 DEFINE_bool(exit_fast, true, "exit when output finish");
 DEFINE_bool(swap_yz, false, "swap y and z");
@@ -863,7 +863,7 @@ void setDefaultCameraProperty()
 
 	float fDistance[3];
 	getValueFromString(std::string(FLAGS_distance), fDistance);
-#if 0
+#if 1
 	// 场景竖直情况，采用相机视角
 	if (sizeRect.y() > lengthMax)
 		FLAGS_view_type = VIEW_CAMERA;
