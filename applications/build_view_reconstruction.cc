@@ -52,6 +52,9 @@ typedef std::string	String;
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
 DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
+
+DEFINE_int32(threshold_group, 35, "threshodGroup to filter group of outlier points.");
+
 #define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
 
 #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
@@ -273,8 +276,9 @@ void run_pmvs(char *exeFullPath)
 
 	lanch_external_bin(String("genOption.exe"), FLAGS_pmvs_working_directory, exePath);
 
-	String parameter = FLAGS_pmvs_working_directory + " option-0000";
-	lanch_external_bin(String("pmvs2.exe"), parameter, exePath);
+	std::ostringstream parameter;
+	parameter << FLAGS_pmvs_working_directory << " option-0000" << " thresholdGroup " << FLAGS_threshold_group;
+	lanch_external_bin(String("pmvs2.exe"), parameter.str(), exePath);
 
 }
 
