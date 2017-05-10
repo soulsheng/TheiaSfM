@@ -474,7 +474,7 @@ int main(int argc, char* argv[]) {
 
   box.calculate(world_points);
 
-  FLAGS_view_type = VIEW_PERSPECTIVE;
+  FLAGS_view_type = VIEW_CAMERA;
 
   setDefaultCameraProperty();
 
