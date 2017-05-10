@@ -6,6 +6,8 @@
 
 void  BoundingBox::calculate(theia::Vector3dVec& allPoints, bool swap_yz, bool y_flip)
 {
+	setDefault();
+
 	for (theia::Vector3dVec::iterator itr = allPoints.begin(); itr != allPoints.end(); itr++)
 	{
 		double x = itr->x();
@@ -44,9 +46,7 @@ void  BoundingBox::calculate(theia::Vector3dVec& allPoints, bool swap_yz, bool y
 
 BoundingBox::BoundingBox()
 {
-	int nMaxValue = 1 << 30;
-	minPoint.x() = minPoint.y() = minPoint.z() =  nMaxValue;
-	maxPoint.x() = maxPoint.y() = maxPoint.z() = -nMaxValue;
+	setDefault();
 }
 
 BoundingBox::~BoundingBox()
@@ -54,6 +54,13 @@ BoundingBox::~BoundingBox()
 
 }
 
+
+void BoundingBox::setDefault()
+{
+	int nMaxValue = 1 << 30;
+	minPoint.x() = minPoint.y() = minPoint.z() = nMaxValue;
+	maxPoint.x() = maxPoint.y() = maxPoint.z() = -nMaxValue;
+}
 
 void BoundingBox::DrawBox(float xMin, float yMin, float zMin,
 	float xMax, float yMax, float zMax)

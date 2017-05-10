@@ -135,6 +135,10 @@ std::string strPathExe;
 
 int		nImageCountOutput=0;
 
+bool	bDenseFinish = false;
+
+void	viewDenseResult();
+void	convertSparseToDense();
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
   double focal_length = 800.0;
@@ -488,9 +492,6 @@ void RenderScene() {
     }
   }
 
-  glutSwapBuffers();
-
-
  
 	  static int nPrintScreen = 0;
 	  static int nFrameCount = 0;
@@ -513,6 +514,15 @@ void RenderScene() {
 
 	if (min_num_views_for_track == -1)
 	{
+		if (!bDenseFinish)
+		{
+			convertSparseToDense();
+			min_num_views_for_track = 10;
+			viewDenseResult();
+			bDenseFinish = true;
+			return;
+		}
+
 		convertBMP2JPG();
 		if (FLAGS_exit_fast)
 			exit(0);
@@ -525,6 +535,9 @@ void RenderScene() {
 		  b2g.run(strPathBMP.c_str(), strPathGIF.c_str(), 10);
 	  }
 #endif
+
+	  glutSwapBuffers();
+
 }
 
 void setEyeParameter(float pos[], float angle[])

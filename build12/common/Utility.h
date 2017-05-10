@@ -22,6 +22,9 @@ public:
 	~BoundingBox();
 
 protected:
+	void	setDefault();
+
+protected:
 	Eigen::Vector3f minPoint, maxPoint;
 	Eigen::Vector3f midPoint, sizePoint;
 

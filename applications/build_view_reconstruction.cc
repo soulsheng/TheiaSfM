@@ -66,6 +66,8 @@ DEFINE_string(pmvs_working_directory, "",
 	"A directory to store the necessary pmvs files.");
 DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 #endif
+Reconstruction* current_reconstruction=NULL;
+
 void prepare_points_to_draw(Reconstruction *reconstruction)
 {
 	// Centers the reconstruction based on the absolute deviation of 3D points.
@@ -269,7 +271,7 @@ String getPath(String& strFullPath)
 	return strFullPath.substr(0, indexEnd);
 }
 
-void run_pmvs(char *exeFullPath)
+void run_pmvs(const char *exeFullPath)
 {
 	String exePath = getPath(String(exeFullPath));
 	lanch_external_bin(String("cmvs.exe"), FLAGS_pmvs_working_directory, exePath);
@@ -287,6 +289,47 @@ void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size)
 	num_views_for_track.reserve(size);
 	for (int i = 0; i < size; i++)
 		num_views_for_track.emplace_back(rand() % 10);
+}
+
+void	convertSparseToDense()
+{
+	if (!FLAGS_build)
+		return;
+
+#if 1
+	export_to_pmvs(*current_reconstruction);
+#endif
+
+
+	LOG(INFO) << "开始执行稠密重建：";
+#if 1
+	run_pmvs(strPathExe.c_str());
+#endif
+	LOG(INFO) << "执行稠密重建完成！";
+
+}
+
+void	viewDenseResult()
+{
+	world_points.clear();
+	point_normals.clear();
+	point_colors.clear();
+
+	clock_t tBegin = clock();
+	//std::cout << "ReadPlyFile begin: " << tBegin << std::endl;
+	if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
+		printf("can not open ply file!\n");
+	//std::cout << "ReadPlyFile cost " << (clock() - tBegin) / 1000 << " seconds" << std::endl;
+
+	rand_num_views_for_track(num_views_for_track, world_points.size());
+
+	box.calculate(world_points);
+
+	FLAGS_view_type = VIEW_PERSPECTIVE;
+
+	setDefaultCameraProperty();
+
+	LOG(INFO) << "输出稠密重建结果！";
 }
 
 int main(int argc, char* argv[]) {
@@ -317,11 +360,11 @@ int main(int argc, char* argv[]) {
 
   CreateDirectoryIfDoesNotExist(FLAGS_matching_working_directory);
 
+  Reconstruction* reconstruction = NULL;
   if (FLAGS_build)
   {
-	  Reconstruction* reconstruction = NULL;
 
-#if 1
+
 	  std::vector<Reconstruction*> reconstructions;
 
 	  LOG(INFO) << "开始执行稀疏重建：";
@@ -341,49 +384,30 @@ int main(int argc, char* argv[]) {
 
 	  theia::WriteReconstruction(*reconstruction,
 		  FLAGS_output_reconstruction);
-
-#else
+  }
+  else
+  {
 	  reconstruction = new theia::Reconstruction();
 
 	  CHECK(ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
 		  << "Could not read reconstruction file.";
 
-#endif
+  }
 
-	  // Centers the reconstruction based on the absolute deviation of 3D points.
-	  reconstruction->Normalize();
+  current_reconstruction = reconstruction;
 
-#if 1
-	  export_to_pmvs(*reconstruction);
-#endif
+	  // view sparse 
+	  prepare_points_to_draw( reconstruction );
 
-	  //prepare_points_to_draw( reconstruction );
-
-	  LOG(INFO) << "开始执行稠密重建：";
-#if 1
-	  run_pmvs(argv[0]);
-#endif
-	  LOG(INFO) << "执行稠密重建完成！";
-
-  }// if (FLAGS_build)
-
-  //if (FLAGS_view)
-  {
-	  clock_t tBegin = clock();
-	  //std::cout << "ReadPlyFile begin: " << tBegin << std::endl;
-	  if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
-		  printf("can not open ply file!\n");
-	  //std::cout << "ReadPlyFile cost " << (clock() - tBegin) / 1000 << " seconds" << std::endl;
-
-	  rand_num_views_for_track(num_views_for_track, world_points.size());
+	  min_num_views_for_track = 0;
 
 	  box.calculate(world_points);
 
+	  FLAGS_view_type = VIEW_CAMERA;
+
 	  setDefaultCameraProperty();
 
-	  LOG(INFO) << "输出稠密重建结果！";
 	  gl_draw_points(argc, argv);
-  }
 
   return 0;
 }
