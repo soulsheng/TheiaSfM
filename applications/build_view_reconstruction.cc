@@ -140,6 +140,14 @@ void CreateDirectoryIfDoesNotExist(const std::string& directory) {
 	}
 }
 
+void ReCreateDirectory(const std::string& directory) {
+	if (theia::DirectoryExists(directory))
+		theia::DeleteDirectory(directory);
+
+	CHECK(theia::CreateNewDirectory(directory))
+		<< "Could not create the directory: " << directory;
+}
+
 int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction) {
 	const std::string txt_dir = FLAGS_pmvs_working_directory + "/txt";
 	CreateDirectoryIfDoesNotExist(txt_dir);
@@ -225,9 +233,9 @@ void export_to_pmvs(theia::Reconstruction& reconstruction)
 	// Set up output directories.
 	CreateDirectoryIfDoesNotExist(FLAGS_pmvs_working_directory);
 	const std::string visualize_dir = FLAGS_pmvs_working_directory + "/visualize";
-	CreateDirectoryIfDoesNotExist(visualize_dir);
+	ReCreateDirectory(visualize_dir);
 	const std::string txt_dir = FLAGS_pmvs_working_directory + "/txt";
-	CreateDirectoryIfDoesNotExist(txt_dir);
+	ReCreateDirectory(txt_dir);
 	const std::string models_dir = FLAGS_pmvs_working_directory + "/models";
 	CreateDirectoryIfDoesNotExist(models_dir);
 
@@ -358,7 +366,7 @@ int main(int argc, char* argv[]) {
   FLAGS_pmvs_working_directory = FLAGS_input_images + "pmvs\\";
   FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
 
-  CreateDirectoryIfDoesNotExist(FLAGS_matching_working_directory);
+  ReCreateDirectory(FLAGS_matching_working_directory);
 
   Reconstruction* reconstruction = NULL;
   if (FLAGS_build)
