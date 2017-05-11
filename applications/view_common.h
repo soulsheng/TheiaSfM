@@ -76,6 +76,7 @@ DEFINE_int32(view_type, 0, "0-perspective, 1-camera, 2-top, 3-free, 4-common");
 DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(0,0,0)", "angle of eye.");
 DEFINE_bool(view_sparse, false, "view sparse or not");
+DEFINE_bool(light, false, "turn on/off light");
 
 std::string FLAGS_pmvs_working_directory;
 
@@ -315,7 +316,7 @@ void DrawPoints(const float point_scale,
 
   // Enable anti-aliasing for round points and alpha blending that helps make
   // points look nicer.
-  glDisable(GL_LIGHTING);
+  //glDisable(GL_LIGHTING);
   glEnable(GL_MULTISAMPLE);
   glEnable(GL_BLEND);
   glEnable(GL_POINT_SMOOTH);
@@ -345,7 +346,7 @@ void DrawPoints(const float point_scale,
 		color_scale * color[1],
 		color_scale * color[2]);
              // , alpha_scale * default_alpha_scale);
-
+	glNormal3d(point_normals[i].x(), point_normals[i].y(), point_normals[i].z() );
 	glVertex3d(world_points[i].x(), world_points[i].y(), world_points[i].z());
   }
   glEnd();
@@ -844,6 +845,13 @@ void gl_draw_points(int argc, char** argv)
 	CHECK_EQ(GLEW_OK, glewInit())
 		<< "Failed initializing GLEW.";
 #endif
+
+	// light 
+	if (FLAGS_light)
+		glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);								// Enable Light One
+	glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
 	// Set the camera
 	gluLookAt(0.0f, 0.0f, -6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
