@@ -212,6 +212,8 @@ DEFINE_double(bundle_adjustment_robust_loss_width, 10.0,
               "where the robust loss begins with respect to reprojection error "
               "in pixels.");
 
+DEFINE_double(resize, 1024, "resize image.");
+
 using theia::Reconstruction;
 using theia::ReconstructionBuilder;
 using theia::ReconstructionBuilderOptions;
@@ -360,6 +362,32 @@ void AddMatchesToReconstructionBuilder(
   }
 }
 
+void resizeImageFiles(std::vector<std::string>& image_files)
+{
+	if (image_files.empty())
+		return;
+
+	float scale = 1.0f;
+	if (FLAGS_resize <= 10.0f)
+		scale = FLAGS_resize;
+	else // FLAGS_resize > 10, eg: 1024 
+	{
+		theia::FloatImage imageTemp(image_files[0]);
+		int width_old = imageTemp.Width();
+		scale = FLAGS_resize * 1.0 / width_old;
+	}
+
+	if (1.0 == scale)
+		return;
+
+	for (const std::string& image_file : image_files) 
+	{
+		theia::FloatImage image(image_file);
+		image.Resize(scale);
+		image.Write(image_file);
+	}
+}
+
 void AddImagesToReconstructionBuilder(
     ReconstructionBuilder* reconstruction_builder) {
   std::vector<std::string> image_files;
@@ -368,6 +396,8 @@ void AddImagesToReconstructionBuilder(
       << ". NOTE that the ~ filepath is not supported.";
 
   CHECK_GT(image_files.size(), 0) << "No images found in: " << FLAGS_images;
+
+  resizeImageFiles(image_files);
 
   // Load calibration file if it is provided.
   std::unordered_map<std::string, theia::CameraIntrinsicsPrior>
