@@ -75,6 +75,7 @@ DEFINE_bool(save_camera, true, "save camera property to file");
 DEFINE_int32(view_type, 0, "0-perspective, 1-camera, 2-top, 3-free, 4-common");
 DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(0,0,0)", "angle of eye.");
+DEFINE_bool(view_sparse, false, "view sparse or not");
 
 std::string FLAGS_pmvs_working_directory;
 
@@ -514,7 +515,7 @@ void RenderScene() {
 
 	if (min_num_views_for_track == -1)
 	{
-		if (!bDenseFinish)
+		if (!bDenseFinish && FLAGS_view_sparse)
 		{
 			convertSparseToDense();
 			min_num_views_for_track = 10;

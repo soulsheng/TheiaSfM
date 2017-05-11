@@ -397,7 +397,10 @@ int main(int argc, char* argv[]) {
   current_reconstruction = reconstruction;
 
 	  // view sparse 
-	  prepare_points_to_draw( reconstruction );
+	  prepare_points_to_draw(reconstruction);
+
+  if (FLAGS_view_sparse)
+  {
 
 	  min_num_views_for_track = 0;
 
@@ -406,8 +409,14 @@ int main(int argc, char* argv[]) {
 	  FLAGS_view_type = VIEW_CAMERA;
 
 	  setDefaultCameraProperty();
+  }
+  else
+  {
+	  convertSparseToDense();
+	  viewDenseResult();
+  }
 
-	  gl_draw_points(argc, argv);
+  gl_draw_points(argc, argv);
 
   return 0;
 }
