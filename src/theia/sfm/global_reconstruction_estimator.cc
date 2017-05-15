@@ -251,7 +251,7 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
     timer.Reset();
     if (!BundleAdjustment()) {
       summary.success = false;
-      LOG(WARNING) << "Bundle adjustment failed!";
+	  LOG(INFO) << "Bundle adjustment failed!";
       return summary;
     }
     summary.bundle_adjustment_time += timer.ElapsedTimeInSeconds();

@@ -70,8 +70,11 @@ Reconstruction* current_reconstruction=NULL;
 
 void prepare_points_to_draw(Reconstruction *reconstruction)
 {
-	// Centers the reconstruction based on the absolute deviation of 3D points.
-	reconstruction->Normalize();
+	if (reconstruction->NumViews())
+	{
+		// Centers the reconstruction based on the absolute deviation of 3D points.
+		reconstruction->Normalize();
+	}
 
 	// Set up camera drawing.
 	cameras.reserve(reconstruction->NumViews());
@@ -302,6 +305,9 @@ void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size)
 void	convertSparseToDense()
 {
 	if (!FLAGS_build)
+		return;
+
+	if (0 == current_reconstruction->NumViews())
 		return;
 
 #if 1

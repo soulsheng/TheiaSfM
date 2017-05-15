@@ -345,7 +345,8 @@ void ReconstructionBuilder::InitializeReconstructionAndViewGraph(
 
 bool ReconstructionBuilder::BuildReconstruction(
     std::vector<Reconstruction*>* reconstructions) {
-  CHECK_GE(view_graph_->NumViews(), 2) << "At least 2 images must be provided "
+  if(view_graph_->NumViews() < 2) 
+	  LOG(INFO) << "At least 2 images must be provided "
                                           "in order to create a "
                                           "reconstruction.";
 
