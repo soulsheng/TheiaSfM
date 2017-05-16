@@ -271,7 +271,7 @@ bool ReconstructionBuilder::ExtractAndMatchFeatures() {
   const int num_total_view_pairs =
       image_filepaths_.size() * (image_filepaths_.size() - 1) / 2;
   #if USE_LOG_INFO
-  LOG(INFO)  << num_total_view_pairs << " 中的 "<< matches.size()
+  LOG(INFO)  << num_total_view_pairs << " 对中的 "<< matches.size()
             << " 对图像的特征匹配成功（view pairs were matched and geometrically verified.）";
   #endif
   // Add the EXIF data to each view.
@@ -378,7 +378,7 @@ bool ReconstructionBuilder::BuildReconstruction(
     if (!summary.success) {
       return reconstructions->size() > 0;
     }
-#if USE_LOG_INFO
+#if 0//USE_LOG_INFO
     LOG(INFO)
         << "\nReconstruction estimation statistics: "
         << "\n\tNum estimated views = " << summary.estimated_views.size()

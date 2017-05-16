@@ -57,7 +57,7 @@ void ExtractColorsFromImage(
     const View& view,
     std::unordered_map<TrackId, Eigen::Vector3f>* colors,
     std::mutex* mutex_lock) {
-  LOG(INFO) << "Extracting color for features in image: " << image_file;
+  //LOG(INFO) << "Extracting color for features in image: " << image_file;
   const FloatImage image(image_file);
 
   const auto& track_ids = view.TrackIds();

@@ -179,7 +179,7 @@ int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction) {
 			continue;
 		}
 
-		LOG(INFO) << "Undistorting image " << image_name;
+		//LOG(INFO) << "Undistorting image " << image_name;
 		const theia::Camera& distorted_camera =
 			reconstruction.View(view_id)->Camera();
 		theia::Camera undistorted_camera;
@@ -195,7 +195,7 @@ int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction) {
 		else
 			undistorted_image = distorted_image;
 
-		LOG(INFO) << "Exporting parameters for image: " << image_name;
+		//LOG(INFO) << "Exporting parameters for image: " << image_name;
 
 		// Copy the image into a jpeg format with the filename in the form of
 		// %08d.jpg.
