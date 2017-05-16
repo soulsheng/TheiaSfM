@@ -271,8 +271,8 @@ bool ReconstructionBuilder::ExtractAndMatchFeatures() {
   const int num_total_view_pairs =
       image_filepaths_.size() * (image_filepaths_.size() - 1) / 2;
   #if USE_LOG_INFO
-  LOG(INFO) << matches.size() << " of " << num_total_view_pairs
-            << " view pairs were matched and geometrically verified.";
+  LOG(INFO)  << num_total_view_pairs << " 中的 "<< matches.size()
+            << " 对图像的特征匹配成功（view pairs were matched and geometrically verified.）";
   #endif
   // Add the EXIF data to each view.
   std::vector<std::string> image_filenames(image_filepaths_.size());
@@ -288,7 +288,7 @@ bool ReconstructionBuilder::ExtractAndMatchFeatures() {
 
   // Write the matches to a file if it exists.
   if (options_.output_matches_file.length() > 0) {
-    LOG(INFO) << "Writing matches to file: " << options_.output_matches_file;
+    LOG(INFO) << "把匹配结果保存到文件（Writing matches to file）: " << options_.output_matches_file;
     CHECK(WriteMatchesAndGeometry(options_.output_matches_file,
                                   image_filenames,
                                   camera_intrinsics_priors,
@@ -363,9 +363,9 @@ bool ReconstructionBuilder::BuildReconstruction(
 
   while (reconstruction_->NumViews() > 1) {
 #if USE_LOG_INFO
-    LOG(INFO) << "Attempting to reconstruct " << reconstruction_->NumViews()
-              << " images from " << view_graph_->NumEdges()
-              << " two view matches.";
+    LOG(INFO) << "尝试重建 " << reconstruction_->NumViews()
+              << " 幅图像，通过其中 " << view_graph_->NumEdges()
+              << " 对特征匹配成功的图像（视点）.";
 #endif
     std::unique_ptr<ReconstructionEstimator> reconstruction_estimator(
         ReconstructionEstimator::Create(

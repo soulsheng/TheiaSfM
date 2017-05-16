@@ -203,7 +203,7 @@ void FeatureExtractorAndMatcher::ExtractAndMatchFeatures(
   // After all threads complete feature extraction, perform matching.
 
   // Perform the matching.
-  LOG(INFO) << "Matching images...";
+  LOG(INFO) << "特征匹配（Matching images）...";
   matcher_->MatchImages(matches);
 
   // Add the intrinsics to the output.
@@ -249,12 +249,15 @@ void FeatureExtractorAndMatcher::ProcessImage(
     LOG(INFO) << "Image " << image_filepath
               << " did not contain an EXIF focal length. Skipping this image.";
     return;
-  } else {
+  } 
+#if 0
+  else {
 	  LOG(INFO) << "Image ";
 	  LOG(INFO) << image_filepath;
 	  LOG(INFO) << " is initialized with the focal length: ";
 	  //LOG(INFO) << intrinsics.focal_length.value[0];
   }
+#endif
 
   // Get the image filename without the directory.
   std::string image_filename;
@@ -323,6 +326,8 @@ void FeatureExtractorAndMatcher::ProcessImage(
 #endif
 
   std::cout << "ExtractFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
+
+  LOG(INFO) << i << " - " << image_filepath << " 特征点数目是: " << keypoints.size();
 
   // Add the relevant image and feature data to the feature matcher. This allows
   // the feature matcher to control fine-grained things like multi-threading and

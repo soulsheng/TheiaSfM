@@ -147,23 +147,23 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
 
   // Step 1. Filter the initial view graph and remove any bad two view
   // geometries.
-  LOG(INFO) << "Filtering the intial view graph.";
+  LOG(INFO) << "过滤初始视点图（Filtering the intial view graph）.";
   timer.Reset();
   if (!FilterInitialViewGraph()) {
-    LOG(INFO) << "Insufficient view pairs to perform estimation.";
+    LOG(INFO) << "没有足够的视点对（Insufficient view pairs to perform estimation）.";
     return summary;
   }
   global_estimator_timings.initial_view_graph_filtering_time =
       timer.ElapsedTimeInSeconds();
 
   // Step 2. Calibrate any uncalibrated cameras.
-  LOG(INFO) << "Calibrating any uncalibrated cameras.";
+  LOG(INFO) << "矫正相机参数（Calibrating any uncalibrated cameras）.";
   timer.Reset();
   CalibrateCameras();
   summary.camera_intrinsics_calibration_time = timer.ElapsedTimeInSeconds();
 
   // Step 3. Estimate global rotations.
-  LOG(INFO) << "Estimating the global rotations of all cameras.";
+  LOG(INFO) << "估算相机旋转（Estimating the global rotations of all cameras）.";
   timer.Reset();
   if (!EstimateGlobalRotations()) {
     LOG(WARNING) << "Rotation estimation failed!";
@@ -174,28 +174,28 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
       timer.ElapsedTimeInSeconds();
 
   // Step 4. Filter bad rotations.
-  LOG(INFO) << "Filtering any bad rotation estimations.";
+  LOG(INFO) << "滤除错误的旋转估算（Filtering any bad rotation estimations）.";
   timer.Reset();
   FilterRotations();
   global_estimator_timings.rotation_filtering_time =
       timer.ElapsedTimeInSeconds();
 
   // Step 5. Optimize relative translations.
-  LOG(INFO) << "Optimizing the pairwise translation estimations.";
+  LOG(INFO) << "优化平移估算（Optimizing the pairwise translation estimations）.";
   timer.Reset();
   OptimizePairwiseTranslations();
   global_estimator_timings.relative_translation_optimization_time =
       timer.ElapsedTimeInSeconds();
 
   // Step 6. Filter bad relative translations.
-  LOG(INFO) << "Filtering any bad relative translations.";
+  LOG(INFO) << "滤除错误的相对平移（Filtering any bad relative translations）.";
   timer.Reset();
   FilterRelativeTranslation();
   global_estimator_timings.relative_translation_filtering_time =
       timer.ElapsedTimeInSeconds();
 
   // Step 7. Estimate global positions.
-  LOG(INFO) << "Estimating the positions of all cameras.";
+  LOG(INFO) << "估算所有相机的位置（Estimating the positions of all cameras）.";
   timer.Reset();
   if (!EstimatePosition()) {
     LOG(WARNING) << "Position estimation failed!";
@@ -204,7 +204,7 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
   }
 #if USE_LOG_INFO
   LOG(INFO) << positions_.size()
-            << " camera positions were estimated successfully.";
+            << " 个相机的位置估算成功（camera positions were estimated successfully）.";
 #endif
   global_estimator_timings.position_estimation_time =
       timer.ElapsedTimeInSeconds();
@@ -226,7 +226,7 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
   // on the reconstruciton estimator options.
   for (int i = 0; i < options_.num_retriangulation_iterations + 1; i++) {
     // Step 8. Triangulate features.
-    LOG(INFO) << "Triangulating all features.";
+    LOG(INFO) << "\n第 " << i <<" 轮特征点三角化（Triangulating all features）.";
     timer.Reset();
     EstimateStructure();
     summary.triangulation_time += timer.ElapsedTimeInSeconds();
@@ -238,8 +238,8 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
     // adjustment iteration.
     if (i == 0 &&
         options_.refine_camera_positions_and_points_after_position_estimation) {
-      LOG(INFO) << "Performing partial bundle adjustment to optimize only the "
-                   "camera positions and 3d points.";
+      LOG(INFO) << "执行局部光束法平差算法，优化相机和三维点云的坐标(Performing partial bundle adjustment to optimize only the "
+                   "camera positions and 3d points）.";
       timer.Reset();
       BundleAdjustCameraPositionsAndPoints();
       summary.bundle_adjustment_time += timer.ElapsedTimeInSeconds();
@@ -247,7 +247,7 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
 
 
     // Step 9. Bundle Adjustment.
-    LOG(INFO) << "Performing bundle adjustment.";
+    LOG(INFO) << "执行光束法平差算法（Performing bundle adjustment）.";
     timer.Reset();
     if (!BundleAdjustment()) {
       summary.success = false;
@@ -261,7 +261,7 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
         options_.min_triangulation_angle_degrees,
         reconstruction_);
 #if USE_LOG_INFO
-    LOG(INFO) << num_points_removed << " outlier points were removed.";
+    LOG(INFO) << num_points_removed << " 个异常点被滤除（outlier points were removed）.";
 #endif
   }
 
@@ -390,7 +390,7 @@ void GlobalReconstructionEstimator::FilterRelativeTranslation() {
 
   // Filter potentially bad relative translations.
   if (options_.filter_relative_translations_with_1dsfm) {
-    LOG(INFO) << "Filtering relative translations with 1DSfM filter.";
+    LOG(INFO) << "（采用1DSfm过滤器滤除错误的相对平移）Filtering relative translations with 1DSfM filter.";
     FilterViewPairsFromRelativeTranslation(translation_filter_options_,
                                            orientations_,
                                            view_graph_);

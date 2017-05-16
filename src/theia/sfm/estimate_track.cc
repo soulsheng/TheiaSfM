@@ -193,8 +193,8 @@ TrackEstimator::Summary TrackEstimator::EstimateTracks(
     }
   }
 #if USE_LOG_INFO
-  LOG(INFO) << summary.estimated_tracks.size() << " tracks were estimated of "
-            << summary.num_triangulation_attempts << " possible tracks.";
+  LOG(INFO) << summary.num_triangulation_attempts << " 个潜在的轨迹点中的 " 
+			<< summary.estimated_tracks.size() << " 个通过评估. ";
 #endif
   return summary;
 }
