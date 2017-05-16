@@ -212,7 +212,7 @@ DEFINE_double(bundle_adjustment_robust_loss_width, 10.0,
               "where the robust loss begins with respect to reprojection error "
               "in pixels.");
 
-DEFINE_double(resize, 1024, "resize image.");
+DEFINE_double(resize, 1920, "resize image to it(1080p) if number<=60, else force to 1280(720p)");
 
 using theia::Reconstruction;
 using theia::ReconstructionBuilder;
@@ -366,6 +366,9 @@ void resizeImageFiles(std::vector<std::string>& image_files)
 {
 	if (image_files.empty())
 		return;
+
+	if (image_files.size() > 60)
+		FLAGS_resize = 1280;
 
 	float scale = 1.0f;
 	if (FLAGS_resize <= 10.0f)
