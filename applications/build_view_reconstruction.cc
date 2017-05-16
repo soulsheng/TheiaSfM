@@ -112,7 +112,7 @@ void prepare_points_to_draw(Reconstruction *reconstruction)
 //int n_fps = 240; // frame per second
 
 
-void build_reconstruction(std::vector<Reconstruction *>& reconstructions)
+bool build_reconstruction(std::vector<Reconstruction *>& reconstructions)
 {
 	const ReconstructionBuilderOptions options =
 		SetReconstructionBuilderOptions();
@@ -130,8 +130,13 @@ void build_reconstruction(std::vector<Reconstruction *>& reconstructions)
 			<< "You must specifiy either images to reconstruct or a match file.";
 	}
 
-	CHECK(reconstruction_builder.BuildReconstruction(&reconstructions))
-		<< "Could not create a reconstruction.";
+	if (false == reconstruction_builder.BuildReconstruction(&reconstructions))
+	{
+		LOG(INFO) << "无法创建重建结果（Could not create a reconstruction）.";
+		return false;
+	}
+	else
+		return true;
 }
 
 #include <fstream>  // NOLINT
@@ -385,10 +390,13 @@ int main(int argc, char* argv[]) {
 	  build_reconstruction(reconstructions);
 	  LOG(INFO) << "执行稀疏重建完成！";
 
-	  if (reconstructions.size())
+	  if (reconstructions.size() && reconstructions[0]->NumTracks())
 		  reconstruction = reconstructions[0];
 	  else
+	  {
+		  LOG(INFO) << "稀疏重建三维点的数目为0，重建结束！";
 		  return -1;
+	  }
 
 	  LOG(INFO) << "开始为点云配置颜色：";
 	  theia::ColorizeReconstruction(FLAGS_input_images,
