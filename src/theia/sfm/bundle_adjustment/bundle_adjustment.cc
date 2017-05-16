@@ -390,7 +390,7 @@ BundleAdjustmentSummary BundleAdjustPartialReconstruction(
   ceres::Solver::Summary solver_summary;
   ceres::Solve(solver_options, &problem, &solver_summary);
 #if USE_LOG_INFO
-  LOG_IF(INFO, options.verbose) << solver_summary.FullReport();
+  //LOG_IF(INFO, options.verbose) << solver_summary.FullReport();
 #endif
 
   // Copy the shared intrinsics to all views that share those intrinsics.
