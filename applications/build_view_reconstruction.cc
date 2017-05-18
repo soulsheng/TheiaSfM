@@ -348,6 +348,7 @@ void	viewDenseResult()
 
 	setDefaultCameraProperty();
 
+	LOG(INFO) << "稠密重建三维点的数目为：" << world_points.size();
 	LOG(INFO) << "输出稠密重建结果！";
 }
 
@@ -391,7 +392,10 @@ int main(int argc, char* argv[]) {
 	  LOG(INFO) << "执行稀疏重建完成！";
 
 	  if (reconstructions.size() && reconstructions[0]->NumTracks())
+	  {
+		  LOG(INFO) << "稀疏重建三维点的数目为：" << reconstructions[0]->NumTracks();
 		  reconstruction = reconstructions[0];
+	  }
 	  else
 	  {
 		  LOG(INFO) << "稀疏重建三维点的数目为0，重建结束！";
