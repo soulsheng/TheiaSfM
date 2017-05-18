@@ -44,7 +44,8 @@
 #include <glut.h>
 
 #include "bmpHeader.h"
-//#include "bmp2gif.h"
+#include "WriteGIF.h"
+#include "simpleBMP.h"
 #include <OpenImageIO/imagebuf.h>
 #include <stlplus3/file_system.hpp>
 #include <fstream>
@@ -60,7 +61,7 @@ DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ")
 DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
 
 DEFINE_string(output_images, "./output/", "output image directory");
-DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
+DEFINE_int32(output_type, 1, "0 jpg, 1 gif, 2 mp4 ");
 DEFINE_bool(y_flip, false, "y direction 1-up,  -1-down");
 DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
@@ -77,6 +78,8 @@ DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(0,0,0)", "angle of eye.");
 DEFINE_bool(view_sparse, false, "view sparse or not");
 DEFINE_bool(light, false, "turn on/off light");
+DEFINE_double(gif_delay, 0.5, "n second");
+DEFINE_string(gif_name, "0.gif", "gif file name");
 
 std::string FLAGS_pmvs_working_directory;
 
@@ -138,6 +141,14 @@ std::string strPathExe;
 int		nImageCountOutput=0;
 
 bool	bDenseFinish = false;
+
+enum OutputTypeEnum
+{
+	OutputTypeJPG,
+	OutputTypeGIF,
+	OutputTypeMP4,
+	OutputTypeCount
+};
 
 void	viewDenseResult();
 void	convertSparseToDense();
@@ -372,18 +383,48 @@ void printScreen(std::string filename, int width = 1024, int height = 768)
 
 void convertBMP2JPG()
 {
+	if (OutputTypeJPG == FLAGS_output_type)
+	{
+		for (int i = 0; i < nImageCountOutput; i++)
+		{
+			std::ostringstream osIn;
+			osIn << FLAGS_output_images << i << ".bmp";
+			OpenImageIO::ImageBuf image(osIn.str());
+
+			std::ostringstream osOut;
+			osOut << FLAGS_output_images << i << ".jpg";
+			image.write(osOut.str(), "jpg");
+
+			image.clear();
+		}
+	}
+
+	if (OutputTypeGIF == FLAGS_output_type)
+	{
+		gif::GIF* g = gif::newGIF(FLAGS_gif_delay * 100); // unit: ten millisecond
+		ClImgBMP	bmp;
+		std::string strPathGIF(FLAGS_output_images);
+		strPathGIF += FLAGS_gif_name;
+
+		for (int i = 0; i < nImageCountOutput; i++)
+		{
+			std::ostringstream osIn;
+			osIn << FLAGS_output_images << i << ".bmp";
+			
+			bmp.LoadImage(osIn.str().c_str());
+			gif::addFrame(g, bmp.bmpInfoHeaderData.biWidth, bmp.bmpInfoHeaderData.biHeight, bmp.imgData, 0);
+		}
+
+		gif::write(g, strPathGIF.c_str());
+
+		gif::dispose(g);	g = NULL;
+	}
+
+	// delete bmp
 	for (int i = 0; i < nImageCountOutput; i++)
 	{
 		std::ostringstream osIn;
-		osIn << FLAGS_output_images << i << ".bmp";
-		OpenImageIO::ImageBuf image(osIn.str());
-
-		std::ostringstream osOut;
-		osOut << FLAGS_output_images << i << ".jpg";
-		image.write(osOut.str(), "jpg");
-
-		image.clear();
-
+		osIn << FLAGS_output_images << i << ".bmp"; 
 		bool breturn = stlplus::file_delete(osIn.str());
 		if (!breturn)
 		{
