@@ -217,6 +217,7 @@ DEFINE_double(bundle_adjustment_robust_loss_width, 10.0,
               "in pixels.");
 
 DEFINE_double(resize, 1920, "resize image to it(1080p) if number<=60, else force to 1280(720p)");
+DEFINE_bool(force_resize, false, "force resize even image is small than resize.");
 
 using theia::Reconstruction;
 using theia::ReconstructionBuilder;
@@ -375,20 +376,17 @@ void resizeImageFiles(std::vector<std::string>& image_files)
 		FLAGS_resize = 1280;
 
 	float scale = 1.0f;
-	if (FLAGS_resize <= 10.0f)
-		scale = FLAGS_resize;
-	else // FLAGS_resize > 10, eg: 1024 
-	{
-		OpenImageIO::ImageBuf image_;
-		image_.reset(image_files[0]);
-		image_.read(0, 0, true, OpenImageIO::TypeDesc::UCHAR);
-		int width_old = image_.spec().width;
+	
 
-		scale = FLAGS_resize * 1.0 / width_old;
-	}
+	OpenImageIO::ImageBuf image_;
+	image_.reset(image_files[0]);
+	image_.read(0, 0, true, OpenImageIO::TypeDesc::UCHAR);
+	int width_old = image_.spec().width;
 
-	if (1.0 == scale)
+	if (!FLAGS_force_resize && width_old <= FLAGS_resize)
 		return;
+
+	scale = FLAGS_resize * 1.0 / width_old;
 
 	int i = 0;
 	std::vector<std::string> image_files_new;

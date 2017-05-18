@@ -1,0 +1,48 @@
+time
+
+scene 1: 20170512\5-106-1k(106 720p images)
+					start	end		interval
+feature extract		40:47	41:04	17s
+feature match		41:04	42:05	61s
+sparse reconstruct	42:06	42:33	27s
+dense reconstruct	42:35	43:54	79s
+
+total								184s 
+
+scene 2: 20170511\5-60-2k(60 1080p images)
+					start	end		interval
+feature extract		56:00	56:04	 4s
+feature match		56:04	56:08	 4s
+sparse reconstruct	56:08	56:11	 3s
+dense reconstruct	56:21	59:14	173s
+
+total								184s 
+
+
+scene 3: 20170510\5-40-2k(40 1080p images)
+					start	end		interval
+feature extract		05:49	05:52	 3s
+feature match		05:52	05:58	 6s
+sparse reconstruct	05:58	06:00	 2s
+dense reconstruct	06:08	09:45	217s
+
+total								228s 
+
+
+scene 4: 20170510\5-40-1k(40 576p images)
+					start	end		interval
+feature extract		23:29	23:31	 2s
+feature match		23:31	23:32	 1s
+sparse reconstruct	23:32	23:34	 2s
+dense reconstruct	23:34	24:03	29s
+
+total								34s 
+
+scene 5: 20170510\5-40-1k(40 720p images)
+					start	end		interval
+feature extract		28:43	28:45	 2s
+feature match		28:45	28:46	 1s
+sparse reconstruct	28:46	28:50	 4s
+dense reconstruct	28:50	29:34	44s
+
+total								51s 
