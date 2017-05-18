@@ -2,7 +2,7 @@
 # Input/output files.
 # Set these if a matches file is not present. Images should be a filepath with a
 # wildcard e.g., /home/my_username/my_images/*.jpg
---input_images=D:\file\data\3d\2017_03-new\
+#--input_images=D:\file\data\3d\2017_03-new\
 
 # If a matches file has already been created, set the filepath here. This avoids
 # having to recompute all features and matches.
@@ -50,7 +50,7 @@
 --reconstruction_estimator=GLOBAL
 --min_track_length=2
 --max_track_length=50
---reconstruct_largest_connected_component=false
+--reconstruct_largest_connected_component=true
 
 # Set to true if all views were captured with the same camera. If true, then a
 # single set of camera intrinsic parameters will be used for all views in the
