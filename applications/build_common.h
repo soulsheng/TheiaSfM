@@ -42,6 +42,8 @@
 
 #include "applications/command_line_helpers.h"
 
+#include <opencv2/core/types_c.h>  // include it before #include <OpenImageIO/imagebufalgo.h>
+
 #include <OpenImageIO/imagebuf.h>
 #include <OpenImageIO/imagebufalgo.h>
 #include <stlplus3/file_system.hpp>

@@ -52,6 +52,11 @@
 
 #include "Utility.h"
 
+#include <opencv2/core/core.hpp>  
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core/types_c.h>  // include it before #include <OpenImageIO/imagebufalgo.h>
+#include <opencv2/highgui/highgui_c.h>
+
 #define		PI		3.1415926	
 
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
@@ -78,8 +83,8 @@ DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(0,0,0)", "angle of eye.");
 DEFINE_bool(view_sparse, false, "view sparse or not");
 DEFINE_bool(light, false, "turn on/off light");
-DEFINE_double(gif_delay, 0.5, "n second");
-DEFINE_string(gif_name, "0.gif", "gif file name");
+DEFINE_double(fps, 2, "frame per second");
+DEFINE_string(name, "0", "gif or mp4 file name");
 
 std::string FLAGS_pmvs_working_directory;
 
@@ -401,10 +406,10 @@ void convertBMP2JPG()
 
 	if (OutputTypeGIF == FLAGS_output_type)
 	{
-		gif::GIF* g = gif::newGIF(FLAGS_gif_delay * 100); // unit: ten millisecond
+		gif::GIF* g = gif::newGIF(1.0/FLAGS_fps * 100); // unit: ten millisecond
 		ClImgBMP	bmp;
 		std::string strPathGIF(FLAGS_output_images);
-		strPathGIF += FLAGS_gif_name;
+		strPathGIF += FLAGS_name + ".gif";
 
 		for (int i = 0; i < nImageCountOutput; i++)
 		{
@@ -418,6 +423,28 @@ void convertBMP2JPG()
 		gif::write(g, strPathGIF.c_str());
 
 		gif::dispose(g);	g = NULL;
+	}
+
+	if (OutputTypeMP4 == FLAGS_output_type)
+	{
+		std::string strPathMP4(FLAGS_output_images);
+		strPathMP4 += FLAGS_name + ".avi";
+
+		CvSize size = cvSize(FLAGS_window_width, FLAGS_window_height);
+		CvVideoWriter* writer = cvCreateVideoWriter(
+			strPathMP4.c_str(), CV_FOURCC('D', 'I', 'V', 'X'), FLAGS_fps, size);
+
+		for (int i = 0; i < nImageCountOutput; i++)
+		{
+			std::ostringstream osIn;
+			osIn << FLAGS_output_images << i << ".bmp";
+
+			IplImage* iplImgOut = cvLoadImage(osIn.str().c_str());
+
+			cvWriteToAVI(writer, iplImgOut);
+		}
+
+		cvReleaseVideoWriter(&writer);
 	}
 
 	// delete bmp
