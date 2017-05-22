@@ -11,7 +11,7 @@
 #include <theia/theia.h>
 #include "Utility.h"
 
-using namespace theia;
+//using namespace theia;
 
 class CMy3DRebuilderView : public CView
 {
@@ -81,12 +81,12 @@ protected:
 
 protected:
 	// reconstruction
-	Reconstruction* reconstruction = NULL;
-	std::vector<Reconstruction*> reconstructions;
+	theia::Reconstruction* reconstruction = NULL;
+	std::vector<theia::Reconstruction*> reconstructions;
 
 	std::string		m_imagePath;
 
-	void build_reconstruction(std::vector<Reconstruction *>& reconstructions);
+	void build_reconstruction(std::vector<theia::Reconstruction *>& reconstructions);
 	void run_pmvs(String &exePath);
 	void export_to_pmvs(theia::Reconstruction& reconstruction);
 
@@ -96,7 +96,7 @@ private:
 	void WritePMVSOptions(const std::string& working_dir, const int num_images);
 	void lanch_external_bin(String& bin, String& parameter, String& path, int nShowType = SW_HIDE);
 	String getPath(String& strFullPath);
-	void AddImagesToReconstructionBuilderDIY(ReconstructionBuilder* reconstruction_builder);
+	void AddImagesToReconstructionBuilderDIY(theia::ReconstructionBuilder* reconstruction_builder);
 
 	void loadAndDisplayDenseResult();
 	void loadAndDisplaySparseResult();
