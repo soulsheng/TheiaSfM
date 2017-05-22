@@ -66,12 +66,12 @@ DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ")
 DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
 
 DEFINE_string(output_images, "./output/", "output image directory");
-DEFINE_int32(output_type, 1, "0 jpg, 1 gif, 2 mp4 ");
+DEFINE_string(format, "jpg+gif+avi", "jpg, gif, avi ");
 DEFINE_bool(y_flip, false, "y direction 1-up,  -1-down");
 DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
-DEFINE_int32(window_width, 1280, "window width");
-DEFINE_int32(window_height, 1024, "window height");
+DEFINE_int32(width, 1280, "window width");
+DEFINE_int32(height, 1024, "window height");
 DEFINE_string(distance, "(0.1,0.6,0.2)", "set distance of view");
 DEFINE_bool(draw_box, false, "draw bounding box");
 DEFINE_bool(exit_fast, true, "exit when output finish");
@@ -146,14 +146,6 @@ std::string strPathExe;
 int		nImageCountOutput=0;
 
 bool	bDenseFinish = false;
-
-enum OutputTypeEnum
-{
-	OutputTypeJPG,
-	OutputTypeGIF,
-	OutputTypeMP4,
-	OutputTypeCount
-};
 
 void	viewDenseResult();
 void	convertSparseToDense();
@@ -388,7 +380,7 @@ void printScreen(std::string filename, int width = 1024, int height = 768)
 
 void convertBMP2JPG()
 {
-	if (OutputTypeJPG == FLAGS_output_type)
+	if (std::string::npos != FLAGS_format.find("jpg"))
 	{
 		for (int i = 0; i < nImageCountOutput; i++)
 		{
@@ -404,7 +396,7 @@ void convertBMP2JPG()
 		}
 	}
 
-	if (OutputTypeGIF == FLAGS_output_type)
+	if (std::string::npos != FLAGS_format.find("gif"))
 	{
 		gif::GIF* g = gif::newGIF(1.0/FLAGS_fps * 100); // unit: ten millisecond
 		ClImgBMP	bmp;
@@ -425,12 +417,12 @@ void convertBMP2JPG()
 		gif::dispose(g);	g = NULL;
 	}
 
-	if (OutputTypeMP4 == FLAGS_output_type)
+	if (std::string::npos != FLAGS_format.find("avi"))
 	{
 		std::string strPathMP4(FLAGS_output_images);
 		strPathMP4 += FLAGS_name + ".avi";
 
-		CvSize size = cvSize(FLAGS_window_width, FLAGS_window_height);
+		CvSize size = cvSize(FLAGS_width, FLAGS_height);
 		CvVideoWriter* writer = cvCreateVideoWriter(
 			strPathMP4.c_str(), CV_FOURCC('D', 'I', 'V', 'X'), FLAGS_fps, size);
 
@@ -902,8 +894,8 @@ void gl_draw_points(int argc, char** argv)
 	// Set up opengl and glut.
 	glutInit(&argc, argv);
 	glutInitWindowPosition(window_position[0], window_position[1]);
-	window_size[0] = FLAGS_window_width;
-	window_size[1] = FLAGS_window_height;
+	window_size[0] = FLAGS_width;
+	window_size[1] = FLAGS_height;
 	glutInitWindowSize(window_size[0], window_size[1]);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutCreateWindow("SDIOI Reconstruction Viewer");
