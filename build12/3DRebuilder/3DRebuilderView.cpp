@@ -986,6 +986,15 @@ void CMy3DRebuilderView::OnViewSparseResult()
 
 }
 
+void CMy3DRebuilderView::getEyePositionFromSparseResult(float fEyePosition[])
+{
+	Eigen::Vector3d cameraPosition = cameras[0].GetPosition();
+
+	fEyePosition[0] = cameraPosition.x();
+	fEyePosition[1] = cameraPosition.y();
+	fEyePosition[2] = cameraPosition.z();
+
+}
 void CMy3DRebuilderView::updateEyePosition()
 {
 	Eigen::Vector3f& minPoint = box.getMinPoint();
@@ -1029,13 +1038,25 @@ void CMy3DRebuilderView::updateEyePosition()
 		break;
 	}
 
+	if (VIEW_CAMERA == FLAGS_view_type)
+		getEyePositionFromSparseResult(fEyePosition);
+
 	m_camera.setEye(fEyePosition[0], fEyePosition[1], fEyePosition[2]);
+	m_camera.setTarget(midPoint.x(), midPoint.y(), midPoint.z());
+	m_camera.setDistance(maxPoint.z());
+	m_camera.setViewType(FLAGS_view_type);
 
 	m_camera.setSpeed(lengthMax*0.01);
 }
 
 void CMy3DRebuilderView::loadAndDisplaySparseResult()
 {
+	if (m_imagePath.empty())
+	{
+		outputInfo("图片路径为空，请设置图片路径...");
+		return;
+	}
+
 	outputInfo("正在显示稀释重建结果...");
 
 	if (NULL == reconstruction)
@@ -1043,8 +1064,9 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 		reconstruction = new theia::Reconstruction();
 		reconstructions.push_back(reconstruction);
 
-		std::string strMessage = FLAGS_output_reconstruction;
-		outputInfo(strMessage.c_str());
+		FLAGS_input_images = m_imagePath;
+		FLAGS_output_reconstruction = FLAGS_input_images + "result";
+		outputInfo(FLAGS_output_reconstruction.c_str());
 
 		if (false == ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
 			outputInfo(" 稀疏重建数据无法读取");
@@ -1052,7 +1074,18 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 			outputInfo(" 稀疏重建数据成功读取");
 
 		// Centers the reconstruction based on the absolute deviation of 3D points.
-		reconstruction->Normalize();
+		if (reconstruction->NumViews())
+			reconstruction->Normalize();
+	}
+
+	// Set up camera drawing.
+	cameras.reserve(reconstruction->NumViews());
+	for (const theia::ViewId view_id : reconstruction->ViewIds()) {
+		const auto* view = reconstruction->View(view_id);
+		if (view == nullptr || !view->IsEstimated()) {
+			continue;
+		}
+		cameras.emplace_back(view->Camera());
 	}
 
 	// Set up world points and colors.
@@ -1069,6 +1102,8 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 	}
 
 	box.calculate(world_points);
+
+	FLAGS_view_type = VIEW_CAMERA;
 
 	updateEyePosition();
 

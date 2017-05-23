@@ -2,6 +2,7 @@
 #pragma once
 
 #include "theia/sfm/types.h"
+#include "common_type.h"
 
 class BoundingBox
 {
@@ -29,14 +30,3 @@ protected:
 	Eigen::Vector3f midPoint, sizePoint;
 
 };
-
-enum EnumViewType
-{
-	VIEW_PERSPECTIVE,
-	VIEW_CAMERA,
-	VIEW_TOP,
-	VIEW_FREE,
-	VIEW_COMMON,
-	VIEW_TYPE_COUNT
-};
-

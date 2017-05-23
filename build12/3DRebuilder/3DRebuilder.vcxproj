@@ -111,6 +111,7 @@
   <ItemGroup>
     <ClInclude Include="..\common\bmp2gif.h" />
     <ClInclude Include="..\common\bmpHeader.h" />
+    <ClInclude Include="..\common\common_type.h" />
     <ClInclude Include="..\common\FPSCounter.h" />
     <ClInclude Include="..\common\glCameraNode.h" />
     <ClInclude Include="..\common\simpleBMP.h" />

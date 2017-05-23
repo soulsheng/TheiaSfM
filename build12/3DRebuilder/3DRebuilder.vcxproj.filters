@@ -72,6 +72,9 @@
     <ClInclude Include="..\common\Utility.h">
       <Filter>custom</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\common_type.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DRebuilder.cpp">

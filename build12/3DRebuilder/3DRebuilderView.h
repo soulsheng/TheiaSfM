@@ -49,11 +49,13 @@ protected:
 	theia::Vector3fVec point_colors;
 	theia::Vector3fVec point_normals;
 	std::vector<int> num_views_for_track;
+	std::vector<theia::Camera> cameras;
 
 	BoundingBox box;
 
 	void updateEyePosition();
 	void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size);
+	void getEyePositionFromSparseResult(float fEyePosition[]);
 
 protected:
 	// opengl
