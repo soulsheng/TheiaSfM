@@ -292,13 +292,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\applications\build_common.h" />
-    <ClInclude Include="..\..\applications\view_common.h" />
     <ClInclude Include="..\common\bmp2gif.h" />
     <ClInclude Include="..\common\bmpHeader.h" />
+    <ClInclude Include="..\common\build_common.h" />
     <ClInclude Include="..\common\simpleBMP.h" />
     <ClInclude Include="..\common\stdafx.h" />
     <ClInclude Include="..\common\Utility.h" />
+    <ClInclude Include="..\common\view_common.h" />
     <ClInclude Include="..\common\WriteGIF.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -15,7 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\applications\view_common.h" />
     <ClInclude Include="..\common\bmp2gif.h">
       <Filter>custom</Filter>
     </ClInclude>
@@ -28,12 +27,13 @@
     <ClInclude Include="..\common\WriteGIF.h">
       <Filter>custom</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\applications\build_common.h" />
     <ClInclude Include="..\common\Utility.h">
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\common\stdafx.h">
       <Filter>custom</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\build_common.h" />
+    <ClInclude Include="..\common\view_common.h" />
   </ItemGroup>
 </Project>
