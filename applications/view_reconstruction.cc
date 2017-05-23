@@ -429,6 +429,8 @@ void Keyboard(unsigned char key, int x, int y) {
 
 //DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
 //DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
+void viewDenseResult(void){}
+void convertSparseToDense(void){}
 
 int main(int argc, char* argv[]) {
   THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);

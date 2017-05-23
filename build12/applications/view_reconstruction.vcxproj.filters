@@ -7,6 +7,9 @@
     <ClCompile Include="..\common\Utility.cpp">
       <Filter>custom</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\WriteGIF.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -17,9 +20,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\bmp2gif.h">
-      <Filter>custom</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\bmpHeader.h">
       <Filter>custom</Filter>
     </ClInclude>
@@ -33,5 +33,9 @@
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\common\view_common.h" />
+    <ClInclude Include="..\common\gl_common.h" />
+    <ClInclude Include="..\common\WriteGIF.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
