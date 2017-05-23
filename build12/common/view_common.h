@@ -938,3 +938,39 @@ void gl_draw_points(int argc, char** argv)
 	// enter GLUT event processing loop
 	glutMainLoop();
 }
+
+
+void prepare_points_to_draw(theia::Reconstruction *reconstruction)
+{
+	if (reconstruction->NumViews())
+	{
+		// Centers the reconstruction based on the absolute deviation of 3D points.
+		reconstruction->Normalize();
+	}
+
+	// Set up camera drawing.
+	cameras.reserve(reconstruction->NumViews());
+	for (const theia::ViewId view_id : reconstruction->ViewIds()) {
+		const auto* view = reconstruction->View(view_id);
+		if (view == nullptr || !view->IsEstimated()) {
+			continue;
+		}
+		cameras.emplace_back(view->Camera());
+	}
+
+	// Set up world points and colors.
+	world_points.reserve(reconstruction->NumTracks());
+	point_colors.reserve(reconstruction->NumTracks());
+	for (const theia::TrackId track_id : reconstruction->TrackIds()) {
+		const auto* track = reconstruction->Track(track_id);
+		if (track == nullptr || !track->IsEstimated()) {
+			continue;
+		}
+		world_points.emplace_back(track->Point().hnormalized());
+		point_colors.emplace_back(track->Color().cast<float>());
+		num_views_for_track.emplace_back(track->NumViews());
+		point_normals.emplace_back(Eigen::Vector3f());
+	}
+
+	//reconstruction.release();
+}

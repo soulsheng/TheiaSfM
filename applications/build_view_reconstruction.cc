@@ -68,40 +68,6 @@ DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 #endif
 Reconstruction* current_reconstruction=NULL;
 
-void prepare_points_to_draw(Reconstruction *reconstruction)
-{
-	if (reconstruction->NumViews())
-	{
-		// Centers the reconstruction based on the absolute deviation of 3D points.
-		reconstruction->Normalize();
-	}
-
-	// Set up camera drawing.
-	cameras.reserve(reconstruction->NumViews());
-	for (const theia::ViewId view_id : reconstruction->ViewIds()) {
-		const auto* view = reconstruction->View(view_id);
-		if (view == nullptr || !view->IsEstimated()) {
-			continue;
-		}
-		cameras.emplace_back(view->Camera());
-	}
-
-	// Set up world points and colors.
-	world_points.reserve(reconstruction->NumTracks());
-	point_colors.reserve(reconstruction->NumTracks());
-	for (const theia::TrackId track_id : reconstruction->TrackIds()) {
-		const auto* track = reconstruction->Track(track_id);
-		if (track == nullptr || !track->IsEstimated()) {
-			continue;
-		}
-		world_points.emplace_back(track->Point().hnormalized());
-		point_colors.emplace_back(track->Color().cast<float>());
-		num_views_for_track.emplace_back(track->NumViews());
-	}
-
-	//reconstruction.release();
-}
-
 //Eigen::Vector3f eye_position;
 //Eigen::Vector3f eye_position_default;
 
