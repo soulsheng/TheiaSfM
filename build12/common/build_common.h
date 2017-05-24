@@ -148,13 +148,13 @@ DEFINE_double(max_reprojection_error_pixels, 4.0,
 // Global SfM options.
 DEFINE_string(global_rotation_estimator, "ROBUST_L1L2",
               "Type of global rotation estimation to use for global SfM.");
-DEFINE_string(global_position_estimator, "NONLINEAR",
+DEFINE_string(global_position_estimator, "LEAST_UNSQUARED_DEVIATION",
               "Type of global position estimation to use for global SfM.");
 DEFINE_bool(refine_relative_translations_after_rotation_estimation, true,
             "Refine the relative translation estimation after computing the "
             "absolute rotations. This can help improve the accuracy of the "
             "position estimation.");
-DEFINE_double(post_rotation_filtering_degrees, 5.0,
+DEFINE_double(post_rotation_filtering_degrees, 15.0,
               "Max degrees difference in relative rotation and rotation "
               "estimates for rotation filtering.");
 DEFINE_bool(extract_maximal_rigid_subgraph, false,

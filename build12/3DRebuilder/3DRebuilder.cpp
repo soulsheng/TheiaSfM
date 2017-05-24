@@ -71,6 +71,15 @@ BOOL CMy3DRebuilderApp::InitInstance()
 	//google::ReadFromFlagsFile(FLAG_FILE_NAME, path_buffer, false);
 	google::InitGoogleLogging(path_buffer);
 
+	google::SetLogDestination(google::GLOG_INFO, path_buffer);
+	google::SetLogDestination(google::GLOG_ERROR, "");
+	google::SetLogDestination(google::GLOG_WARNING, "");
+	google::SetLogFilenameExtension(".log");
+
+	std::string logFilename = std::string(path_buffer) + ".log";
+	if (theia::FileExists(logFilename))
+		unlink(logFilename.c_str());
+
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControlsEx()。  否则，将无法创建窗口。
