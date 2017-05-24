@@ -92,6 +92,8 @@ protected:
 	void run_pmvs(String &exePath);
 	void export_to_pmvs(theia::Reconstruction& reconstruction);
 
+	bool updateImagePath();
+
 private:
 	void CreateDirectoryIfDoesNotExist(const std::string& directory);
 	int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction);

@@ -38,8 +38,10 @@ DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
 DEFINE_string(output_image_directory, "./output/", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
-DEFINE_string(distance, "(0.2,0.5,0.5)", "set distance of view");
+DEFINE_string(distance, "(0.1,0.6,0.2)", "set distance of view");
 DEFINE_int32(view_type, 0, "0-perspective, 1-camera, 2-top, 3-free, 4-common");
+DEFINE_bool(swap_yz, false, "swap y and z");
+DEFINE_bool(draw_box, false, "draw bounding box");
 
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
@@ -196,14 +198,27 @@ void CMy3DRebuilderView::OnMenuViewPly()
 
 void CMy3DRebuilderView::loadAndDisplayDenseResult()
 {
+	if (!updateImagePath())
+		return;
+
+	world_points.clear();
+	point_normals.clear();
+	point_colors.clear();
+
 	outputInfo("正在显示稠密重建结果...");
 
 	if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
 		printf("can not open ply file!\n");
 
-	min_num_views_for_track = 10;
+	min_num_views_for_track = -2;
 	
 	rand_num_views_for_track(num_views_for_track, world_points.size());
+
+	box.calculate(world_points, FLAGS_swap_yz);
+
+	FLAGS_view_type = VIEW_PERSPECTIVE;
+
+	updateEyePosition();
 
 	outputInfo(world_points.size(), "points number is: " );
 
@@ -370,7 +385,8 @@ void CMy3DRebuilderView::renderScene()
 
 	renderPointsCloud();
 	
-	box.DrawBox();
+	if (FLAGS_draw_box)
+		box.DrawBox();
 
 #if 1
 	s += 0.005;
@@ -433,7 +449,7 @@ void CMy3DRebuilderView::renderPointsCloud()
 			color = point_colors[i] / 255.0;
 		glColor3f( color[0], color[1], color[2] );
 
-		glVertex3d(world_points[i].x(), world_points[i].y() * y_up_direction, world_points[i].z());
+		glVertex3d(world_points[i].x(), world_points[i].y(), world_points[i].z());
 	}
 	glEnd();
 }
@@ -753,15 +769,9 @@ void CMy3DRebuilderView::OnExecuteReconstructionSparse()
 	if (m_imagePath.empty())
 		m_imagePath = FLAGS_image_directory;
 
-	FLAGS_input_images = m_imagePath;
-	FLAGS_images = FLAGS_input_images + "*.jpg";
-	FLAGS_output_matches_file = FLAGS_input_images + "output.matches";
-	FLAGS_output_reconstruction = FLAGS_input_images + "result";
-	FLAGS_matching_working_directory = FLAGS_input_images + "features\\";
-	FLAGS_pmvs_working_directory = FLAGS_input_images + "pmvs\\";
-	FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
+	if (!updateImagePath())
+		return;
 
-	CreateDirectoryIfDoesNotExist(FLAGS_matching_working_directory);
 	outputInfo(m_imagePath.c_str());
 	outputInfo("正在进行稀释重建...");
 
@@ -894,6 +904,27 @@ void CMy3DRebuilderView::export_to_pmvs(theia::Reconstruction& reconstruction)
 
 }
 
+bool CMy3DRebuilderView::updateImagePath()
+{
+	if (m_imagePath.empty())
+	{
+		outputInfo("图片路径为空，请设置图片路径...");
+		return false;
+	}
+
+	FLAGS_input_images = m_imagePath;
+	FLAGS_images = FLAGS_input_images + "*.jpg";
+	FLAGS_output_matches_file = FLAGS_input_images + "output.matches";
+	FLAGS_output_reconstruction = FLAGS_input_images + "result";
+	FLAGS_matching_working_directory = FLAGS_input_images + "features\\";
+	FLAGS_pmvs_working_directory = FLAGS_input_images + "pmvs\\";
+	FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
+
+	CreateDirectoryIfDoesNotExist(FLAGS_matching_working_directory);
+
+	return true;
+}
+
 void CMy3DRebuilderView::lanch_external_bin(String& bin, String& parameter, String& path, int nShowType)
 {
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
@@ -936,6 +967,9 @@ void CMy3DRebuilderView::run_pmvs(String &exePath)
 
 void CMy3DRebuilderView::OnExecuteReconstructionDense()
 {
+	if( !updateImagePath() )
+		return;
+
 	// TODO:  在此添加命令处理程序代码
 	outputInfo("正在进行稠密重建...");
 
@@ -1043,7 +1077,7 @@ void CMy3DRebuilderView::updateEyePosition()
 
 	m_camera.setEye(fEyePosition[0], fEyePosition[1], fEyePosition[2]);
 	m_camera.setTarget(midPoint.x(), midPoint.y(), midPoint.z());
-	m_camera.setDistance(maxPoint.z());
+	m_camera.setDistance(sizeRect.z());
 	m_camera.setViewType(FLAGS_view_type);
 
 	m_camera.setSpeed(lengthMax*0.01);
@@ -1051,11 +1085,8 @@ void CMy3DRebuilderView::updateEyePosition()
 
 void CMy3DRebuilderView::loadAndDisplaySparseResult()
 {
-	if (m_imagePath.empty())
-	{
-		outputInfo("图片路径为空，请设置图片路径...");
+	if (!updateImagePath())
 		return;
-	}
 
 	outputInfo("正在显示稀释重建结果...");
 
