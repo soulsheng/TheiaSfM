@@ -21,6 +21,10 @@
 
 #include "SettingRebuildShowMode.h"
 
+#include "utility_theia.h"
+
+#include "LaunchPMVS2.h"
+
 DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
 DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
 DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
@@ -42,6 +46,7 @@ DEFINE_string(distance, "(0.1,0.6,0.2)", "set distance of view");
 DEFINE_int32(view_type, 0, "0-perspective, 1-camera, 2-top, 3-free, 4-common");
 DEFINE_bool(swap_yz, false, "swap y and z");
 DEFINE_bool(draw_box, false, "draw bounding box");
+DEFINE_int32(threshold_group, 35, "threshodGroup to filter group of outlier points.");
 
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
@@ -220,7 +225,7 @@ void CMy3DRebuilderView::loadAndDisplayDenseResult()
 
 	updateEyePosition();
 
-	outputInfo(world_points.size(), "points number is: " );
+	outputInfo(world_points.size(), "稠密重建三维点的数目为：: " );
 
 	outputInfo("稠密重建结果显示完成...");
 
@@ -617,7 +622,7 @@ void CMy3DRebuilderView::OnSelectImagePath()
 	}
 }
 
-
+#if 0
 void CMy3DRebuilderView::AddImagesToReconstructionBuilderDIY(
 	ReconstructionBuilder* reconstruction_builder) {
 	std::vector<std::string> image_files;
@@ -720,6 +725,7 @@ void CMy3DRebuilderView::AddImagesToReconstructionBuilderDIY(
 		outputInfo("匹配文件无法保存，特征提取或匹配过程出现异常");
 	}
 }
+#endif
 
 void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& reconstructions)
 {
@@ -732,7 +738,7 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 		AddMatchesToReconstructionBuilder(&reconstruction_builder);
 	}
 	else if (FLAGS_images.size() != 0) {
-		AddImagesToReconstructionBuilderDIY(&reconstruction_builder);
+		AddImagesToReconstructionBuilder(&reconstruction_builder);
 	}
 	else {
 		//LOG(FATAL)
@@ -773,15 +779,26 @@ void CMy3DRebuilderView::OnExecuteReconstructionSparse()
 		return;
 
 	outputInfo(m_imagePath.c_str());
-	outputInfo("正在进行稀释重建...");
+	outputInfo("正在进行稀疏重建...");
 
 	build_reconstruction(reconstructions);
 
 	loadAndDisplaySparseResult();
 
+	LOG(INFO) << "执行稀疏重建完成！";
+
+	if (reconstructions.size() && reconstructions[0]->NumTracks())
+	{
+		LOG(INFO) << "稀疏重建三维点的数目为：" << reconstructions[0]->NumTracks();
+		reconstruction = reconstructions[0];
+	}
+	else
+	{
+		LOG(INFO) << "稀疏重建三维点的数目为0，重建结束！";
+	}
 }
 
-
+#if 0
 void CMy3DRebuilderView::CreateDirectoryIfDoesNotExist(const std::string& directory) {
 	if (!theia::DirectoryExists(directory)) {
 		CHECK(theia::CreateNewDirectory(directory))
@@ -903,6 +920,7 @@ void CMy3DRebuilderView::export_to_pmvs(theia::Reconstruction& reconstruction)
 		outputInfo(" 导出pmvs失败");
 
 }
+#endif
 
 bool CMy3DRebuilderView::updateImagePath()
 {
@@ -921,10 +939,11 @@ bool CMy3DRebuilderView::updateImagePath()
 	FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
 
 	CreateDirectoryIfDoesNotExist(FLAGS_matching_working_directory);
+	ReCreateDirectory(FLAGS_matching_working_directory);
 
 	return true;
 }
-
+#if 0
 void CMy3DRebuilderView::lanch_external_bin(String& bin, String& parameter, String& path, int nShowType)
 {
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
@@ -964,13 +983,14 @@ void CMy3DRebuilderView::run_pmvs(String &exePath)
 	lanch_external_bin(String("pmvs2.exe"), parameter, exePath);
 
 }
-
+#endif
 void CMy3DRebuilderView::OnExecuteReconstructionDense()
 {
 	if( !updateImagePath() )
 		return;
 
 	// TODO:  在此添加命令处理程序代码
+	LOG(INFO) << "正在进行稠密重建...";
 	outputInfo("正在进行稠密重建...");
 
 	if ( NULL == reconstruction )
@@ -994,11 +1014,17 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 		m_imagePath = FLAGS_image_directory;
 
 #if 1
-	export_to_pmvs(*reconstruction);
+	outputInfo("正在预备稠密重建...");
+	if (export_to_pmvs(*reconstruction, FLAGS_pmvs_working_directory, FLAGS_undistort))
+		outputInfo(" 导出pmvs成功，稠密重建已经做好预备");
+	else
+		outputInfo(" 导出pmvs失败");
 #endif
 
 #if 1
-	run_pmvs(m_strPathExe);
+	LOG(INFO) << "开始执行稠密重建：";
+	run_pmvs(m_strPathExe.c_str(), FLAGS_pmvs_working_directory, FLAGS_threshold_group);
+	LOG(INFO) << "执行稠密重建完成！";
 
 	String resultPath = FLAGS_pmvs_working_directory + "option-0000";
 	outputInfo(resultPath.c_str(), "");
@@ -1088,7 +1114,8 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 	if (!updateImagePath())
 		return;
 
-	outputInfo("正在显示稀释重建结果...");
+	outputInfo("正在显示稀疏重建结果...");
+	LOG(INFO) << "正在显示稀疏重建结果...";
 
 	if (NULL == reconstruction)
 	{
@@ -1140,7 +1167,8 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 
 	min_num_views_for_track = -1;
 
-	outputInfo("稀释重建结果显示完成...");
+	outputInfo("稀疏重建结果显示完成！");
+	LOG(INFO) << "稀疏重建结果显示完成！";
 }
 
 
@@ -1175,7 +1203,6 @@ String("--input_images=E:\\3d\\2017_03\\ --output_images=E:\\3d\\output\\ \
 --point_size=3 --eye_position=(2,-10,-3) --eye_angle=(90,30,0) \
 --flagfile=E:\\3d\\exe\\build_reconstruction_flags.txt \
 --view=0 --build=0"),
-String("E:\\3d\\exe\\"),
-dlg.m_showMode);
+String("E:\\3d\\exe\\"));
 
 }

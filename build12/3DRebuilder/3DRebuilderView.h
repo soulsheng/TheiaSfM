@@ -89,19 +89,10 @@ protected:
 	std::string		m_imagePath;
 
 	void build_reconstruction(std::vector<theia::Reconstruction *>& reconstructions);
-	void run_pmvs(String &exePath);
-	void export_to_pmvs(theia::Reconstruction& reconstruction);
 
 	bool updateImagePath();
 
 private:
-	void CreateDirectoryIfDoesNotExist(const std::string& directory);
-	int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction);
-	void WritePMVSOptions(const std::string& working_dir, const int num_images);
-	void lanch_external_bin(String& bin, String& parameter, String& path, int nShowType = SW_HIDE);
-	String getPath(String& strFullPath);
-	void AddImagesToReconstructionBuilderDIY(theia::ReconstructionBuilder* reconstruction_builder);
-
 	void loadAndDisplayDenseResult();
 	void loadAndDisplaySparseResult();
 

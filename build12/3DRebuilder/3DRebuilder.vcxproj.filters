@@ -75,6 +75,12 @@
     <ClInclude Include="..\common\common_type.h">
       <Filter>custom</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\LaunchPMVS2.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\utility_theia.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DRebuilder.cpp">

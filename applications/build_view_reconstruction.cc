@@ -46,6 +46,10 @@
 
 #include "theia/io/read_ply_file.h"
 
+#include "utility_theia.h"
+
+#include "LaunchPMVS2.h"
+
 typedef std::string	String;
 
 
@@ -107,165 +111,6 @@ bool build_reconstruction(std::vector<Reconstruction *>& reconstructions)
 
 #include <fstream>  // NOLINT
 
-void CreateDirectoryIfDoesNotExist(const std::string& directory) {
-	if (!theia::DirectoryExists(directory)) {
-		CHECK(theia::CreateNewDirectory(directory))
-			<< "Could not create the directory: " << directory;
-	}
-}
-
-void ReCreateDirectory(const std::string& directory) {
-	if (theia::DirectoryExists(directory))
-		theia::DeleteDirectory(directory);
-
-	CHECK(theia::CreateNewDirectory(directory))
-		<< "Could not create the directory: " << directory;
-}
-
-int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction) {
-	const std::string txt_dir = FLAGS_pmvs_working_directory + "/txt";
-	CreateDirectoryIfDoesNotExist(txt_dir);
-	const std::string visualize_dir = FLAGS_pmvs_working_directory + "/visualize";
-
-	std::vector<std::string> image_files;
-	CHECK(theia::GetFilepathsFromWildcard(FLAGS_images, &image_files))
-		<< "Could not find images that matched the filepath: " << FLAGS_images
-		<< ". NOTE that the ~ filepath is not supported.";
-	CHECK_GT(image_files.size(), 0) << "No images found in: " << FLAGS_images;
-
-	// Format for printing eigen matrices.
-	const Eigen::IOFormat unaligned(Eigen::StreamPrecision, Eigen::DontAlignCols);
-
-	int current_image_index = 0;
-	for (int i = 0; i < image_files.size(); i++) {
-		std::string image_name;
-		CHECK(theia::GetFilenameFromFilepath(image_files[i], true, &image_name));
-		const theia::ViewId view_id = reconstruction.ViewIdFromName(image_name);
-		if (view_id == theia::kInvalidViewId) {
-			continue;
-		}
-
-		//LOG(INFO) << "Undistorting image " << image_name;
-		const theia::Camera& distorted_camera =
-			reconstruction.View(view_id)->Camera();
-		theia::Camera undistorted_camera;
-		CHECK(theia::UndistortCamera(distorted_camera, &undistorted_camera));
-
-		theia::FloatImage distorted_image(image_files[i]);
-		theia::FloatImage undistorted_image;
-		if (FLAGS_undistort)
-		CHECK(theia::UndistortImage(distorted_camera,
-			distorted_image,
-			undistorted_camera,
-			&undistorted_image));
-		else
-			undistorted_image = distorted_image;
-
-		//LOG(INFO) << "Exporting parameters for image: " << image_name;
-
-		// Copy the image into a jpeg format with the filename in the form of
-		// %08d.jpg.
-		const std::string new_image_file = theia::StringPrintf(
-			"%s/%08d.jpg", visualize_dir.c_str(), current_image_index);
-		undistorted_image.Write(new_image_file);
-
-		// Write the camera projection matrix.
-		const std::string txt_file = theia::StringPrintf(
-			"%s/%08d.txt", txt_dir.c_str(), current_image_index);
-		theia::Matrix3x4d projection_matrix;
-		undistorted_camera.GetProjectionMatrix(&projection_matrix);
-		std::ofstream ofs(txt_file);
-		ofs << "CONTOUR" << std::endl;
-		ofs << projection_matrix.format(unaligned);
-		ofs.close();
-
-		++current_image_index;
-	}
-
-	return current_image_index;
-}
-
-void WritePMVSOptions(const std::string& working_dir,
-	const int num_images) {
-	std::ofstream ofs(working_dir + "/pmvs_options.txt");
-	ofs << "level 1" << std::endl;
-	ofs << "csize 2" << std::endl;
-	ofs << "threshold 0.7" << std::endl;
-	ofs << "wsize 7" << std::endl;
-	ofs << "minImageNum 3" << std::endl;
-	ofs << "CPU " << FLAGS_num_threads << std::endl;
-	ofs << "setEdge 0" << std::endl;
-	ofs << "useBound 0" << std::endl;
-	ofs << "useVisData 0" << std::endl;
-	ofs << "sequence -1" << std::endl;
-	ofs << "timages -1 0 " << num_images << std::endl;
-	ofs << "oimages 0" << std::endl;
-}
-
-void export_to_pmvs(theia::Reconstruction& reconstruction)
-{
-	// Set up output directories.
-	CreateDirectoryIfDoesNotExist(FLAGS_pmvs_working_directory);
-	const std::string visualize_dir = FLAGS_pmvs_working_directory + "/visualize";
-	ReCreateDirectory(visualize_dir);
-	const std::string txt_dir = FLAGS_pmvs_working_directory + "/txt";
-	ReCreateDirectory(txt_dir);
-	const std::string models_dir = FLAGS_pmvs_working_directory + "/models";
-	CreateDirectoryIfDoesNotExist(models_dir);
-
-	const int num_cameras = WriteCamerasToPMVS(reconstruction);
-	WritePMVSOptions(FLAGS_pmvs_working_directory, num_cameras);
-
-	const std::string lists_file = FLAGS_pmvs_working_directory + "/list.txt";
-	const std::string bundle_file =
-		FLAGS_pmvs_working_directory + "/bundle.rd.out";
-	CHECK(theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file));
-}
-
-void lanch_external_bin(String& bin, String& parameter, String& path)
-{
-	String zipParameter = String("a -m0 -inul -idp -sfxDefault.SFX -ibck -iiconVRGIS.ico -zsescript ");
-
-	SHELLEXECUTEINFO ShExecInfo = { 0 };
-	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
-	ShExecInfo.hwnd = NULL;
-	ShExecInfo.lpVerb = NULL;
-	ShExecInfo.lpFile = bin.c_str();
-	ShExecInfo.lpParameters = parameter.c_str();
-	ShExecInfo.lpDirectory = path.c_str();
-	ShExecInfo.nShow = SW_HIDE;
-	ShExecInfo.hInstApp = NULL;
-	ShellExecuteEx(&ShExecInfo);
-
-	long waitStatus = WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
-
-	if (waitStatus)
-		printf("failed \n");
-	else
-		printf("succeed \n");
-
-}
-
-String getPath(String& strFullPath)
-{
-	int indexEnd = strFullPath.find_last_of('\\');
-	return strFullPath.substr(0, indexEnd);
-}
-
-void run_pmvs(const char *exeFullPath)
-{
-	String exePath = getPath(String(exeFullPath));
-	lanch_external_bin(String("cmvs.exe"), FLAGS_pmvs_working_directory, exePath);
-
-	lanch_external_bin(String("genOption.exe"), FLAGS_pmvs_working_directory, exePath);
-
-	std::ostringstream parameter;
-	parameter << FLAGS_pmvs_working_directory << " option-0000" << " thresholdGroup " << FLAGS_threshold_group;
-	lanch_external_bin(String("pmvs2.exe"), parameter.str(), exePath);
-
-}
-
 void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size)
 {
 	num_views_for_track.reserve(size);
@@ -282,13 +127,13 @@ void	convertSparseToDense()
 		return;
 
 #if 1
-	export_to_pmvs(*current_reconstruction);
+	export_to_pmvs(*current_reconstruction, FLAGS_pmvs_working_directory, FLAGS_undistort);
 #endif
 
 
 	LOG(INFO) << "开始执行稠密重建：";
 #if 1
-	run_pmvs(strPathExe.c_str());
+	run_pmvs(strPathExe.c_str(), FLAGS_pmvs_working_directory, FLAGS_threshold_group);
 #endif
 	LOG(INFO) << "执行稠密重建完成！";
 
