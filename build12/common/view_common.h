@@ -146,6 +146,7 @@ std::string strPathExe;
 int		nImageCountOutput=0;
 
 bool	bDenseFinish = false;
+bool	bOutputFinish = false;
 
 void	viewDenseResult();
 void	convertSparseToDense();
@@ -585,7 +586,11 @@ void RenderScene() {
 			return;
 		}
 
-		convertBMP2JPG();
+		if (bOutputFinish)
+		{
+			convertBMP2JPG();
+			bOutputFinish = true;
+		}
 		if (FLAGS_exit_fast)
 			exit(0);
 	}
