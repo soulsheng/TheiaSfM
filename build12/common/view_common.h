@@ -50,7 +50,7 @@
 #include <stlplus3/file_system.hpp>
 #include <fstream>
 
-#include "Utility.h"
+#include "BoundingBox.h"
 
 #include <opencv2/core/core.hpp>  
 #include <opencv2/highgui/highgui.hpp>

@@ -5,7 +5,7 @@
     <ClCompile Include="..\common\WriteGIF.cpp">
       <Filter>custom</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\Utility.cpp">
+    <ClCompile Include="..\common\BoundingBox.cpp">
       <Filter>custom</Filter>
     </ClCompile>
   </ItemGroup>
@@ -27,13 +27,13 @@
     <ClInclude Include="..\common\WriteGIF.h">
       <Filter>custom</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\Utility.h">
-      <Filter>custom</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\stdafx.h">
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\common\build_common.h" />
     <ClInclude Include="..\common\view_common.h" />
+    <ClInclude Include="..\common\BoundingBox.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

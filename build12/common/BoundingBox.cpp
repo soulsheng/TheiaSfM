@@ -1,6 +1,6 @@
 
 #include "stdafx.h"
-#include "Utility.h"
+#include "BoundingBox.h"
 #include <Windows.h>
 #include "gl/GL.H"
 

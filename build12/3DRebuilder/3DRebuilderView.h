@@ -9,7 +9,7 @@
 #include "glCameraNode.h"
 #include "FPSCounter.h"
 #include <theia/theia.h>
-#include "Utility.h"
+#include "BoundingBox.h"
 
 //using namespace theia;
 

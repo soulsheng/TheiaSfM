@@ -69,9 +69,6 @@
     <ClInclude Include="SettingRebuildShowMode.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\Utility.h">
-      <Filter>custom</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\common_type.h">
       <Filter>custom</Filter>
     </ClInclude>
@@ -79,6 +76,9 @@
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\common\utility_theia.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\BoundingBox.h">
       <Filter>custom</Filter>
     </ClInclude>
   </ItemGroup>
@@ -116,7 +116,7 @@
     <ClCompile Include="SettingRebuildShowMode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\Utility.cpp">
+    <ClCompile Include="..\common\BoundingBox.cpp">
       <Filter>custom</Filter>
     </ClCompile>
   </ItemGroup>
