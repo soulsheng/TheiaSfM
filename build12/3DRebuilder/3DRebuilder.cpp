@@ -14,6 +14,8 @@
 #include <gflags/gflags.h>
 #include <theia/theia.h>
 
+#include "utility_common.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -68,7 +70,16 @@ BOOL CMy3DRebuilderApp::InitInstance()
 	HINSTANCE hInst = AfxGetApp()->m_hInstance;
 	char path_buffer[_MAX_PATH];
 	GetModuleFileName(hInst, path_buffer, sizeof(path_buffer));//得到exe文件的全路径
-	//google::ReadFromFlagsFile(FLAG_FILE_NAME, path_buffer, false);
+
+	std::string strPath = getPath(std::string(path_buffer));
+	strPath += FLAG_FILE_NAME;
+	std::ostringstream os; 
+	os << "标记配置文件：" << strPath;
+	if (google::ReadFromFlagsFile(strPath.c_str(), NULL, false))
+		os << "读取成功";
+	else
+		os << "读取失败";
+
 	google::InitGoogleLogging(path_buffer);
 
 	google::SetLogDestination(google::GLOG_INFO, path_buffer);
@@ -79,6 +90,8 @@ BOOL CMy3DRebuilderApp::InitInstance()
 	std::string logFilename = std::string(path_buffer) + ".log";
 	if (theia::FileExists(logFilename))
 		unlink(logFilename.c_str());
+
+	LOG(INFO) << os.str();
 
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，

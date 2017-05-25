@@ -87,6 +87,8 @@ bool build_reconstruction(std::vector<Reconstruction *>& reconstructions)
 	const ReconstructionBuilderOptions options =
 		SetReconstructionBuilderOptions();
 
+	LOG(INFO) << formatStructure(options);
+
 	ReconstructionBuilder reconstruction_builder(options, strPathExe);
 	// If matches are provided, load matches otherwise load images.
 	if (FLAGS_matches_file.size() != 0) {

@@ -226,6 +226,7 @@ void CMy3DRebuilderView::loadAndDisplayDenseResult()
 	updateEyePosition();
 
 	outputInfo(world_points.size(), "稠密重建三维点的数目为：: " );
+	LOG(INFO) << "稠密重建三维点的数目为：" << world_points.size();
 
 	outputInfo("稠密重建结果显示完成...");
 
@@ -734,6 +735,8 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 	const ReconstructionBuilderOptions options =
 		SetReconstructionBuilderOptions();
 
+	LOG(INFO) << formatStructure(options); 
+
 	ReconstructionBuilder reconstruction_builder(options, m_strPathExe);
 	// If matches are provided, load matches otherwise load images.
 	if (FLAGS_matches_file.size() != 0) {
@@ -757,10 +760,13 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 	else
 		return ;
 
+	LOG(INFO) << "开始为点云配置颜色：";
 	theia::ColorizeReconstruction(m_imagePath.c_str(),
 		FLAGS_num_threads,
 		reconstruction);
 	outputInfo("点云匹配颜色");
+	LOG(INFO) << "为点云配置颜色完成！";
+
 
 	theia::WriteReconstruction(*reconstruction,
 		FLAGS_output_reconstruction);
