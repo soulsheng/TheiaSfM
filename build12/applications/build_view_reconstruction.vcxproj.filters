@@ -8,6 +8,9 @@
     <ClCompile Include="..\common\BoundingBox.cpp">
       <Filter>custom</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\utility_common.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="custom">
@@ -33,6 +36,9 @@
     <ClInclude Include="..\common\build_common.h" />
     <ClInclude Include="..\common\view_common.h" />
     <ClInclude Include="..\common\BoundingBox.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\utility_common.h">
       <Filter>custom</Filter>
     </ClInclude>
   </ItemGroup>

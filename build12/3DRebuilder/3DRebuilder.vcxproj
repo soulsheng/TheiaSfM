@@ -117,6 +117,7 @@
     <ClInclude Include="..\common\glCameraNode.h" />
     <ClInclude Include="..\common\LaunchPMVS2.h" />
     <ClInclude Include="..\common\simpleBMP.h" />
+    <ClInclude Include="..\common\utility_common.h" />
     <ClInclude Include="..\common\utility_theia.h" />
     <ClInclude Include="..\common\WriteGIF.h" />
     <ClInclude Include="3DRebuilder.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="..\common\BoundingBox.cpp" />
     <ClCompile Include="..\common\FPSCounter.cpp" />
     <ClCompile Include="..\common\glCameraNode.cpp" />
+    <ClCompile Include="..\common\utility_common.cpp" />
     <ClCompile Include="..\common\WriteGIF.cpp" />
     <ClCompile Include="3DRebuilder.cpp" />
     <ClCompile Include="3DRebuilderDoc.cpp" />

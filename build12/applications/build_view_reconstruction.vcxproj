@@ -269,6 +269,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\applications\build_view_reconstruction.cc" />
     <ClCompile Include="..\common\BoundingBox.cpp" />
+    <ClCompile Include="..\common\utility_common.cpp" />
     <ClCompile Include="..\common\WriteGIF.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +299,7 @@
     <ClInclude Include="..\common\build_common.h" />
     <ClInclude Include="..\common\simpleBMP.h" />
     <ClInclude Include="..\common\stdafx.h" />
+    <ClInclude Include="..\common\utility_common.h" />
     <ClInclude Include="..\common\view_common.h" />
     <ClInclude Include="..\common\WriteGIF.h" />
   </ItemGroup>

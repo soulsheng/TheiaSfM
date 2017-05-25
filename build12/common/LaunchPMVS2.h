@@ -2,14 +2,12 @@
 #define LAUNCH_PMVS2_H
 
 #include <string>
+#include "utility_common.h"
 
-#ifndef String
-typedef std::string String;
-#endif
 
-void lanch_external_bin(String& bin, String& parameter, String& path)
+void lanch_external_bin(std::string& bin, std::string& parameter, std::string& path)
 {
-	String zipParameter = String("a -m0 -inul -idp -sfxDefault.SFX -ibck -iiconVRGIS.ico -zsescript ");
+	std::string zipParameter = std::string("a -m0 -inul -idp -sfxDefault.SFX -ibck -iiconVRGIS.ico -zsescript ");
 
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
@@ -32,22 +30,17 @@ void lanch_external_bin(String& bin, String& parameter, String& path)
 
 }
 
-String getPath(String& strFullPath)
-{
-	int indexEnd = strFullPath.find_last_of('\\');
-	return strFullPath.substr(0, indexEnd + 1);
-}
 
-void run_pmvs(const char *exeFullPath, String& pmvsPath, int threshold_group)
+void run_pmvs(const char *exeFullPath, std::string& pmvsPath, int threshold_group)
 {
-	String exePath = getPath(String(exeFullPath));
-	lanch_external_bin(String("cmvs.exe"), pmvsPath, exePath);
+	std::string exePath = getPath(std::string(exeFullPath));
+	lanch_external_bin(std::string("cmvs.exe"), pmvsPath, exePath);
 
-	lanch_external_bin(String("genOption.exe"), pmvsPath, exePath);
+	lanch_external_bin(std::string("genOption.exe"), pmvsPath, exePath);
 
 	std::ostringstream parameter;
 	parameter << pmvsPath << " option-0000" << " thresholdGroup " << threshold_group;
-	lanch_external_bin(String("pmvs2.exe"), parameter.str(), exePath);
+	lanch_external_bin(std::string("pmvs2.exe"), parameter.str(), exePath);
 
 }
 

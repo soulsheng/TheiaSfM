@@ -598,6 +598,7 @@ void CMy3DRebuilderView::OnSelectImagePath()
 	std::string strMessage = m_imagePath;
 	strMessage = m_imagePath + "正在选择图片路径...";
 	outputInfo(strMessage.c_str());
+	LOG(INFO) << strMessage;
 
 	LPITEMIDLIST pIDList = SHBrowseForFolder(&bi);//调用显示选择对话框
 
@@ -610,6 +611,7 @@ void CMy3DRebuilderView::OnSelectImagePath()
 
 		outputInfo(m_imagePath.c_str());
 		outputInfo("图片路径已选中");
+		LOG(INFO) << m_imagePath << "图片路径已选中";
 	}
 
 	

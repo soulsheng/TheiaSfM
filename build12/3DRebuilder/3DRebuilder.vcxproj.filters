@@ -81,6 +81,9 @@
     <ClInclude Include="..\common\BoundingBox.h">
       <Filter>custom</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\utility_common.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DRebuilder.cpp">
@@ -117,6 +120,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\common\BoundingBox.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\utility_common.cpp">
       <Filter>custom</Filter>
     </ClCompile>
   </ItemGroup>
