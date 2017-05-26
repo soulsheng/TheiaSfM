@@ -84,11 +84,11 @@ protected:
 protected:
 	// reconstruction
 	theia::Reconstruction* reconstruction = NULL;
-	std::vector<theia::Reconstruction*> reconstructions;
+	//std::vector<theia::Reconstruction*> reconstructions;
 
 	std::string		m_imagePath;
 
-	void build_reconstruction(std::vector<theia::Reconstruction *>& reconstructions);
+	//void build_reconstruction(std::vector<theia::Reconstruction *>& reconstructions);
 
 	bool updateImagePath();
 

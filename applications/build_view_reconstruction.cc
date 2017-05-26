@@ -82,34 +82,6 @@ Reconstruction* current_reconstruction=NULL;
 //int n_fps = 240; // frame per second
 
 
-bool build_reconstruction(std::vector<Reconstruction *>& reconstructions)
-{
-	const ReconstructionBuilderOptions options =
-		SetReconstructionBuilderOptions();
-
-	LOG(INFO) << formatStructure(options);
-
-	ReconstructionBuilder reconstruction_builder(options, strPathExe);
-	// If matches are provided, load matches otherwise load images.
-	if (FLAGS_matches_file.size() != 0) {
-		AddMatchesToReconstructionBuilder(&reconstruction_builder);
-	}
-	else if (FLAGS_images.size() != 0) {
-		AddImagesToReconstructionBuilder(&reconstruction_builder);
-	}
-	else {
-		LOG(FATAL)
-			<< "You must specifiy either images to reconstruct or a match file.";
-	}
-
-	if (false == reconstruction_builder.BuildReconstruction(&reconstructions))
-	{
-		LOG(INFO) << "无法创建重建结果（Could not create a reconstruction）.";
-		return false;
-	}
-	else
-		return true;
-}
 
 #include <fstream>  // NOLINT
 
@@ -196,33 +168,7 @@ int main(int argc, char* argv[]) {
   Reconstruction* reconstruction = NULL;
   if (FLAGS_build)
   {
-
-
-	  std::vector<Reconstruction*> reconstructions;
-
-	  LOG(INFO) << "开始执行稀疏重建：";
-	  build_reconstruction(reconstructions);
-	  LOG(INFO) << "执行稀疏重建完成！";
-
-	  if (reconstructions.size() && reconstructions[0]->NumTracks())
-	  {
-		  LOG(INFO) << "稀疏重建三维点的数目为：" << reconstructions[0]->NumTracks();
-		  reconstruction = reconstructions[0];
-	  }
-	  else
-	  {
-		  LOG(INFO) << "稀疏重建三维点的数目为0，重建结束！";
-		  return -1;
-	  }
-
-	  LOG(INFO) << "开始为点云配置颜色：";
-	  theia::ColorizeReconstruction(FLAGS_input_images,
-		  FLAGS_num_threads,
-		  reconstruction);
-	  LOG(INFO) << "为点云配置颜色完成！";
-
-	  theia::WriteReconstruction(*reconstruction,
-		  FLAGS_output_reconstruction);
+	  build_reconstruction(reconstruction, strPathExe);
   }
   else
   {

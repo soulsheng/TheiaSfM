@@ -225,7 +225,7 @@ void CMy3DRebuilderView::loadAndDisplayDenseResult()
 
 	updateEyePosition();
 
-	outputInfo(world_points.size(), "稠密重建三维点的数目为：: " );
+	outputInfo(world_points.size(), "稠密重建三维点的数目为：" );
 	LOG(INFO) << "稠密重建三维点的数目为：" << world_points.size();
 
 	outputInfo("稠密重建结果显示完成...");
@@ -728,7 +728,7 @@ void CMy3DRebuilderView::AddImagesToReconstructionBuilderDIY(
 		outputInfo("匹配文件无法保存，特征提取或匹配过程出现异常");
 	}
 }
-#endif
+
 
 void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& reconstructions)
 {
@@ -775,6 +775,7 @@ void CMy3DRebuilderView::build_reconstruction(std::vector<Reconstruction *>& rec
 	outputInfo(resultPath.c_str());
 	outputInfo("点云文件成功保存，稀疏重建完成！");
 }
+#endif
 
 void CMy3DRebuilderView::OnExecuteReconstructionSparse()
 {
@@ -789,21 +790,12 @@ void CMy3DRebuilderView::OnExecuteReconstructionSparse()
 	outputInfo(m_imagePath.c_str());
 	outputInfo("正在进行稀疏重建...");
 
-	build_reconstruction(reconstructions);
+	build_reconstruction(reconstruction, m_strPathExe);
+
+	outputInfo("执行稀疏重建完成！");
 
 	loadAndDisplaySparseResult();
 
-	LOG(INFO) << "执行稀疏重建完成！";
-
-	if (reconstructions.size() && reconstructions[0]->NumTracks())
-	{
-		LOG(INFO) << "稀疏重建三维点的数目为：" << reconstructions[0]->NumTracks();
-		reconstruction = reconstructions[0];
-	}
-	else
-	{
-		LOG(INFO) << "稀疏重建三维点的数目为0，重建结束！";
-	}
 }
 
 #if 0
@@ -1004,7 +996,6 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 	if ( NULL == reconstruction )
 	{
 		reconstruction = new theia::Reconstruction();
-		reconstructions.push_back(reconstruction);
 
 		std::string strMessage = FLAGS_output_reconstruction;
 		outputInfo(strMessage.c_str());
@@ -1128,7 +1119,6 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 	if (NULL == reconstruction)
 	{
 		reconstruction = new theia::Reconstruction();
-		reconstructions.push_back(reconstruction);
 
 		FLAGS_input_images = m_imagePath;
 		FLAGS_output_reconstruction = FLAGS_input_images + "result";
