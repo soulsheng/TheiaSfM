@@ -586,7 +586,7 @@ void RenderScene() {
 			return;
 		}
 
-		if (bOutputFinish)
+		if (!bOutputFinish)
 		{
 			convertBMP2JPG();
 			bOutputFinish = true;
