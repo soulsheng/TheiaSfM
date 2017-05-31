@@ -427,6 +427,8 @@ void convertBMP2JPG()
 		CvVideoWriter* writer = cvCreateVideoWriter(
 			strPathMP4.c_str(), CV_FOURCC('D', 'I', 'V', 'X'), FLAGS_fps, size);
 
+		if (writer)		{
+
 		for (int i = 0; i < nImageCountOutput; i++)
 		{
 			std::ostringstream osIn;
@@ -438,6 +440,12 @@ void convertBMP2JPG()
 		}
 
 		cvReleaseVideoWriter(&writer);
+
+		LOG(INFO) << strPathMP4 << " 视频文件成功创建！";
+		}
+		else
+			LOG(INFO) << strPathMP4 << " 视频文件无法创建！";
+
 	}
 
 	// delete bmp
