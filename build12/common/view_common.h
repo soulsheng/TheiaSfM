@@ -85,6 +85,7 @@ DEFINE_bool(view_sparse, false, "view sparse or not");
 DEFINE_bool(light, false, "turn on/off light");
 DEFINE_double(fps, 2, "frame per second");
 DEFINE_string(name, "0", "gif or mp4 file name");
+DEFINE_double(length, 5, "length of vedio, unit: seconds");
 
 std::string FLAGS_pmvs_working_directory;
 
@@ -132,7 +133,7 @@ bool draw_axes = false;
 bool draw_box = false;
 float point_size = 1.0;
 float normalized_focal_length = 1.0;
-int min_num_views_for_track = 10;
+int min_num_views_for_track = FLAGS_fps * FLAGS_length;
 double anti_aliasing_blend = 0.3;
 std::ofstream fileCameraOut;
 std::ifstream fileCameraIn;
@@ -386,11 +387,11 @@ void convertBMP2JPG()
 		for (int i = 0; i < nImageCountOutput; i++)
 		{
 			std::ostringstream osIn;
-			osIn << FLAGS_output_images << i << ".bmp";
+			osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
 			OpenImageIO::ImageBuf image(osIn.str());
 
 			std::ostringstream osOut;
-			osOut << FLAGS_output_images << i << ".jpg";
+			osOut << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".jpg";
 			image.write(osOut.str(), "jpg");
 
 			image.clear();
@@ -407,7 +408,7 @@ void convertBMP2JPG()
 		for (int i = 0; i < nImageCountOutput; i++)
 		{
 			std::ostringstream osIn;
-			osIn << FLAGS_output_images << i << ".bmp";
+			osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
 			
 			bmp.LoadImage(osIn.str().c_str());
 			gif::addFrame(g, bmp.bmpInfoHeaderData.biWidth, bmp.bmpInfoHeaderData.biHeight, bmp.imgData, 0);
@@ -432,7 +433,7 @@ void convertBMP2JPG()
 		for (int i = 0; i < nImageCountOutput; i++)
 		{
 			std::ostringstream osIn;
-			osIn << FLAGS_output_images << i << ".bmp";
+			osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
 
 			IplImage* iplImgOut = cvLoadImage(osIn.str().c_str());
 
@@ -452,7 +453,7 @@ void convertBMP2JPG()
 	for (int i = 0; i < nImageCountOutput; i++)
 	{
 		std::ostringstream osIn;
-		osIn << FLAGS_output_images << i << ".bmp"; 
+		osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
 		bool breturn = stlplus::file_delete(osIn.str());
 		if (!breturn)
 		{
@@ -577,7 +578,7 @@ void RenderScene() {
 		  //std::cout << "output: " << min_num_views_for_track  << "at time: " << clock() << std::endl;
 		  min_num_views_for_track--;
 		  std::ostringstream os;
-		  os << strPathBMP << nPrintScreen++ << ".bmp";
+		  os << strPathBMP << std::uppercase << std::setfill('0') << std::setw(2) << nPrintScreen++ << ".bmp";
 		  printScreen(os.str(), window_size[0], window_size[1]);
 		  nImageCountOutput++;
 	  }
@@ -588,7 +589,7 @@ void RenderScene() {
 		if (!bDenseFinish && FLAGS_view_sparse)
 		{
 			convertSparseToDense();
-			min_num_views_for_track = 10;
+			min_num_views_for_track = FLAGS_fps * FLAGS_length;
 			viewDenseResult();
 			bDenseFinish = true;
 			return;
@@ -734,12 +735,12 @@ void Keyboard(unsigned char key, int x, int y) {
       left_mouse_button_active = 0;
       right_mouse_button_active = 0;
 	  point_size = FLAGS_point_size;
-	  min_num_views_for_track = 10;
+	  min_num_views_for_track = FLAGS_fps * FLAGS_length;
 	  navigation_rotation = navigation_rotation_default;
 	  eye_position = eye_position_default;
 	  break;
 	case 'o':	// output jpg or  gif/mp4
-	  min_num_views_for_track = 10;
+	  min_num_views_for_track = FLAGS_fps * FLAGS_length;
 
 	  if (FLAGS_save_camera)
 	  {

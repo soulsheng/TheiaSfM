@@ -89,7 +89,7 @@ void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size)
 {
 	num_views_for_track.reserve(size);
 	for (int i = 0; i < size; i++)
-		num_views_for_track.emplace_back(rand() % 10);
+		num_views_for_track.emplace_back(rand() % min_num_views_for_track);
 }
 
 void	convertSparseToDense()
@@ -162,6 +162,8 @@ int main(int argc, char* argv[]) {
   FLAGS_matching_working_directory = FLAGS_input_images + "features\\";
   FLAGS_pmvs_working_directory = FLAGS_input_images + "pmvs\\";
   FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
+
+  min_num_views_for_track = FLAGS_fps * FLAGS_length;
 
   ReCreateDirectory(FLAGS_matching_working_directory);
 
