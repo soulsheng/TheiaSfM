@@ -41,5 +41,8 @@
     <ClInclude Include="..\common\utility_common.h">
       <Filter>custom</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\LaunchPMVS2.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

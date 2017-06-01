@@ -297,6 +297,7 @@
     <ClInclude Include="..\common\bmpHeader.h" />
     <ClInclude Include="..\common\BoundingBox.h" />
     <ClInclude Include="..\common\build_common.h" />
+    <ClInclude Include="..\common\LaunchPMVS2.h" />
     <ClInclude Include="..\common\simpleBMP.h" />
     <ClInclude Include="..\common\stdafx.h" />
     <ClInclude Include="..\common\utility_common.h" />

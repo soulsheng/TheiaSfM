@@ -57,6 +57,8 @@
 #include <opencv2/core/types_c.h>  // include it before #include <OpenImageIO/imagebufalgo.h>
 #include <opencv2/highgui/highgui_c.h>
 
+#include "LaunchPMVS2.h"
+
 #define		PI		3.1415926	
 
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
@@ -66,7 +68,7 @@ DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ")
 DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
 
 DEFINE_string(output_images, "./output/", "output image directory");
-DEFINE_string(format, "jpg+gif+avi", "jpg, gif, avi ");
+DEFINE_string(format, "jpg+gif+avi+mp4", "jpg, gif, avi, mp4 ");
 DEFINE_bool(y_flip, false, "y direction 1-up,  -1-down");
 DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
@@ -380,7 +382,7 @@ void printScreen(std::string filename, int width = 1024, int height = 768)
 	delete[] buf;
 }
 
-void convertBMP2JPG()
+void compressBMP()
 {
 	if (std::string::npos != FLAGS_format.find("jpg"))
 	{
@@ -419,34 +421,62 @@ void convertBMP2JPG()
 		gif::dispose(g);	g = NULL;
 	}
 
-	if (std::string::npos != FLAGS_format.find("avi"))
+
+	if (std::string::npos != FLAGS_format.find("avi") || std::string::npos != FLAGS_format.find("mp4"))
 	{
-		std::string strPathMP4(FLAGS_output_images);
-		strPathMP4 += FLAGS_name + ".avi";
+		std::string strPathAVI(FLAGS_output_images);
+		strPathAVI += FLAGS_name + ".avi";
 
 		CvSize size = cvSize(FLAGS_width, FLAGS_height);
 		CvVideoWriter* writer = cvCreateVideoWriter(
-			strPathMP4.c_str(), CV_FOURCC('D', 'I', 'V', 'X'), FLAGS_fps, size);
+			strPathAVI.c_str(), CV_FOURCC('D', 'I', 'V', 'X'), FLAGS_fps, size);
 
 		if (writer)		{
 
-		for (int i = 0; i < nImageCountOutput; i++)
-		{
-			std::ostringstream osIn;
-			osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+			for (int i = 0; i < nImageCountOutput; i++)
+			{
+				std::ostringstream osIn;
+				osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
 
-			IplImage* iplImgOut = cvLoadImage(osIn.str().c_str());
+				IplImage* iplImgOut = cvLoadImage(osIn.str().c_str());
 
-			cvWriteToAVI(writer, iplImgOut);
-		}
+				cvWriteToAVI(writer, iplImgOut);
+			}
 
-		cvReleaseVideoWriter(&writer);
+			cvReleaseVideoWriter(&writer);
 
-		LOG(INFO) << strPathMP4 << " 视频文件成功创建！";
+			LOG(INFO) << strPathAVI << " 视频文件成功创建！";
 		}
 		else
-			LOG(INFO) << strPathMP4 << " 视频文件无法创建！";
+			LOG(INFO) << strPathAVI << " 视频文件无法创建！";
 
+	}
+
+	if (std::string::npos != FLAGS_format.find("mp4"))
+	{
+		std::string exePath = getPath(std::string(strPathExe));
+
+		std::string strPathAVI(FLAGS_output_images);
+		strPathAVI += FLAGS_name + ".avi";
+
+		std::string strPathMP4(FLAGS_output_images);
+		strPathMP4 += FLAGS_name + ".mp4";
+
+		std::string parameter("-i ");
+		parameter += strPathAVI;
+		parameter += " ";
+		parameter += strPathMP4;
+
+		lanch_external_bin(std::string("ffmpeg.exe"), parameter, exePath);
+
+		if (std::string::npos == FLAGS_format.find("avi"))
+		{
+			bool breturn = stlplus::file_delete(strPathAVI);
+			if (!breturn)
+			{
+				LOG(INFO) << strPathAVI << "视频文件未找到或无法删除！";
+			}
+		}
 	}
 
 	// delete bmp
@@ -457,7 +487,7 @@ void convertBMP2JPG()
 		bool breturn = stlplus::file_delete(osIn.str());
 		if (!breturn)
 		{
-			std::cout << "failed to delete " << osIn.str();
+			std::cout << osIn.str() << "图片文件未找到或无法删除！";
 		}
 
 	}
@@ -597,7 +627,7 @@ void RenderScene() {
 
 		if (!bOutputFinish)
 		{
-			convertBMP2JPG();
+			compressBMP();
 			bOutputFinish = true;
 		}
 		if (FLAGS_exit_fast)

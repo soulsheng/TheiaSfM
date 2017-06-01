@@ -42,7 +42,6 @@
 #include "build_common.h"
 #include "view_common.h"
 
-#include <Shellapi.h>
 
 #include "theia/io/read_ply_file.h"
 

@@ -3,6 +3,7 @@
 
 #include <string>
 #include "utility_common.h"
+#include <Shellapi.h>
 
 
 void lanch_external_bin(std::string& bin, std::string& parameter, std::string& path)
