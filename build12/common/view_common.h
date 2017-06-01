@@ -445,10 +445,10 @@ void compressBMP()
 
 			cvReleaseVideoWriter(&writer);
 
-			LOG(INFO) << strPathAVI << " 视频文件成功创建！";
+			LOG(INFO) << strPathAVI << " 视频文件输出！";
 		}
 		else
-			LOG(INFO) << strPathAVI << " 视频文件无法创建！";
+			LOG(INFO) << strPathAVI << " 视频文件输出失败！";
 
 	}
 
@@ -467,7 +467,10 @@ void compressBMP()
 		parameter += " ";
 		parameter += strPathMP4;
 
-		lanch_external_bin(std::string("ffmpeg.exe"), parameter, exePath);
+		if (lanch_external_bin(std::string("ffmpeg.exe"), parameter, exePath))
+			LOG(INFO) << strPathMP4 << "视频文件输出成功";
+		else
+			LOG(INFO) << strPathMP4 << "视频文件输出失败";
 
 		if (std::string::npos == FLAGS_format.find("avi"))
 		{
