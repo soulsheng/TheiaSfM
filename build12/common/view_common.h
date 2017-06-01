@@ -422,10 +422,20 @@ void compressBMP()
 	}
 
 
+	std::string strPathAVI(FLAGS_output_images);
+	strPathAVI += FLAGS_name + ".avi";
 	if (std::string::npos != FLAGS_format.find("avi") || std::string::npos != FLAGS_format.find("mp4"))
 	{
-		std::string strPathAVI(FLAGS_output_images);
-		strPathAVI += FLAGS_name + ".avi";
+
+		// delete old avi
+		if (theia::FileExists(strPathAVI))
+		{
+			bool breturn = stlplus::file_delete(strPathAVI);
+			if (!breturn)
+			{
+				LOG(INFO) << strPathAVI << " 临时视频文件无法删除！";
+			}
+		}
 
 		CvSize size = cvSize(FLAGS_width, FLAGS_height);
 		CvVideoWriter* writer = cvCreateVideoWriter(
@@ -445,27 +455,26 @@ void compressBMP()
 
 			cvReleaseVideoWriter(&writer);
 
-			LOG(INFO) << strPathAVI << " 视频文件输出！";
+			LOG(INFO) << strPathAVI << " 视频文件输出成功！";
 		}
 		else
+		{
+			stlplus::file_delete(strPathAVI);
 			LOG(INFO) << strPathAVI << " 视频文件输出失败！";
+
+			std::string exePath = getPath(std::string(strPathExe));
+			std::string ffPath = exePath + "opencv_ffmpeg248.dll";
+			if (!theia::FileExists(ffPath))
+				LOG(INFO) << ffPath << " 文件缺失！";
+		}
 
 	}
 
+
+	std::string strPathMP4(FLAGS_output_images);
+	strPathMP4 += FLAGS_name + ".mp4";
 	if (std::string::npos != FLAGS_format.find("mp4"))
 	{
-		std::string exePath = getPath(std::string(strPathExe));
-
-		std::string strPathAVI(FLAGS_output_images);
-		strPathAVI += FLAGS_name + ".avi";
-
-		std::string strPathMP4(FLAGS_output_images);
-		strPathMP4 += FLAGS_name + ".mp4";
-
-		std::string parameter("-i ");
-		parameter += strPathAVI;
-		parameter += " ";
-		parameter += strPathMP4;
 
 		// delete old mp4
 		if (theia::FileExists(strPathMP4))
@@ -473,14 +482,25 @@ void compressBMP()
 			bool breturn = stlplus::file_delete(strPathMP4);
 			if (!breturn)
 			{
-				LOG(INFO) << strPathMP4 << "视频无法删除！";
+				LOG(INFO) << strPathMP4 << " 临时视频文件无法删除！";
 			}
 		}
 
+	}
+
+	if (std::string::npos != FLAGS_format.find("mp4") && theia::FileExists(strPathAVI))
+	{
+		std::string exePath = getPath(std::string(strPathExe));
+
+		std::string parameter("-i ");
+		parameter += strPathAVI;
+		parameter += " ";
+		parameter += strPathMP4;
+
 		if (lanch_external_bin(std::string("ffmpeg.exe"), parameter, exePath))
-			LOG(INFO) << strPathMP4 << " 视频文件输出成功";
+			LOG(INFO) << strPathMP4 << " 视频文件输出成功！";
 		else
-			LOG(INFO) << strPathMP4 << " 视频文件输出失败";
+			LOG(INFO) << strPathMP4 << " 视频文件输出失败！";
 
 		if (std::string::npos == FLAGS_format.find("avi"))
 		{
@@ -491,6 +511,9 @@ void compressBMP()
 			}
 		}
 	}
+
+	if (std::string::npos != FLAGS_format.find("mp4") && !theia::FileExists(strPathMP4))
+		LOG(INFO) << strPathMP4 << " 视频文件输出失败！";
 
 	// delete bmp
 	for (int i = 0; i < nImageCountOutput; i++)
