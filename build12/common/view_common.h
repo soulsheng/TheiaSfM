@@ -467,10 +467,20 @@ void compressBMP()
 		parameter += " ";
 		parameter += strPathMP4;
 
+		// delete old mp4
+		if (theia::FileExists(strPathMP4))
+		{
+			bool breturn = stlplus::file_delete(strPathMP4);
+			if (!breturn)
+			{
+				LOG(INFO) << strPathMP4 << "视频无法删除！";
+			}
+		}
+
 		if (lanch_external_bin(std::string("ffmpeg.exe"), parameter, exePath))
-			LOG(INFO) << strPathMP4 << "视频文件输出成功";
+			LOG(INFO) << strPathMP4 << " 视频文件输出成功";
 		else
-			LOG(INFO) << strPathMP4 << "视频文件输出失败";
+			LOG(INFO) << strPathMP4 << " 视频文件输出失败";
 
 		if (std::string::npos == FLAGS_format.find("avi"))
 		{
