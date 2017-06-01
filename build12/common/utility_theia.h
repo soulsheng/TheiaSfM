@@ -193,7 +193,7 @@ bool build_reconstruction(Reconstruction* &reconstruction, std::string& strPathE
 
 	LOG(INFO) << formatStructure(options);
 
-	ReconstructionBuilder reconstruction_builder(options, strPathExe);
+	ReconstructionBuilder reconstruction_builder(options, strPathExe, FLAGS_use_gpu);
 	// If matches are provided, load matches otherwise load images.
 	if (FLAGS_matches_file.size() != 0) {
 		AddMatchesToReconstructionBuilder(&reconstruction_builder);

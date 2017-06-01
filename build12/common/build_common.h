@@ -220,6 +220,8 @@ DEFINE_double(bundle_adjustment_robust_loss_width, 10.0,
 
 DEFINE_double(resize, 1920, "resize image to it(1080p) if number<=60, else force to 1280(720p)");
 DEFINE_bool(force_resize, false, "force resize even image is small than resize.");
+DEFINE_bool(use_gpu, true, "use gpu of sift and other modual.");
+
 
 using theia::Reconstruction;
 using theia::ReconstructionBuilder;
