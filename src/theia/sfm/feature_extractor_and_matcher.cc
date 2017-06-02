@@ -59,7 +59,7 @@
 #include "theia/util/threadpool.h"
 #include "theia/util/timer.h"
 
-#define USE_GPU			1
+//#define USE_GPU			1
 
 namespace theia {
 namespace {
@@ -149,6 +149,21 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
   exif_reader_.LoadSensorWidthDatabase(exePath_);
 
   this->use_gpu = use_gpu;
+
+  if (this->use_gpu)
+  {
+	  LOG(INFO) << "尝试调用GPU运行SIFT...";
+	  if (sift.VerifyContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED)
+	  {
+		  this->use_gpu = false;
+		  LOG(INFO) << "GPU不支持，改用CPU";
+	  }
+	  else
+		  LOG(INFO) << "GPU支持，采用GPU";
+  }
+  else
+	  LOG(INFO) << "采用CPU运行SIFT...";
+
 }
 
 bool FeatureExtractorAndMatcher::AddImage(const std::string& image_filepath) {
