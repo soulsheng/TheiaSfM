@@ -340,6 +340,13 @@ void DrawPoints(const float point_scale,
   point_size_coords[0] = 1.0f;
   point_size_coords[1] = 0.055f;
   point_size_coords[2] = 0.0f;
+
+  if (NULL == glPointParameterfv)
+  {
+	  LOG(INFO) << "OpenGL扩展glPointParameterfv不支持，请更新显卡驱动！";
+	  return;
+  }
+
   glPointParameterfv(GL_POINT_DISTANCE_ATTENUATION, point_size_coords);
 
 
@@ -982,8 +989,11 @@ void gl_draw_points(int argc, char** argv)
 
 #ifdef _WIN32
 	// Set up glew.
-	CHECK_EQ(GLEW_OK, glewInit())
-		<< "Failed initializing GLEW.";
+	if (GLEW_OK != glewInit())
+	{
+		LOG(INFO) << "GLEW初始化失败，无法调用三维显示.";
+		return;
+	}
 #endif
 
 	// light 

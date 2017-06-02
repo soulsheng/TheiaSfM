@@ -153,7 +153,7 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
   if (this->use_gpu)
   {
 	  LOG(INFO) << "尝试调用GPU运行SIFT...";
-	  if (sift.VerifyContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED)
+	  if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED)
 	  {
 		  this->use_gpu = false;
 		  LOG(INFO) << "GPU不支持，改用CPU";
@@ -314,9 +314,6 @@ void FeatureExtractorAndMatcher::ProcessImage(
 
 	  std::vector<float> descriptors_h(1);
 	  std::vector<SiftGPU::SiftKeypoint> keys_h(1);
-
-	  if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED)
-		  std::cout << "siftgpu failed to CreateContextGL" << std::endl;
 
 	  sift.RunSIFT(image_filepath.c_str());
 
