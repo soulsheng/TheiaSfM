@@ -301,6 +301,7 @@
     <ClInclude Include="..\common\simpleBMP.h" />
     <ClInclude Include="..\common\stdafx.h" />
     <ClInclude Include="..\common\utility_common.h" />
+    <ClInclude Include="..\common\utility_theia.h" />
     <ClInclude Include="..\common\view_common.h" />
     <ClInclude Include="..\common\WriteGIF.h" />
   </ItemGroup>
