@@ -56,6 +56,8 @@ DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
 DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
 
+DEFINE_bool(build_sparse, true, "bool on/off to build. eg:0 ");
+
 DEFINE_int32(threshold_group, 35, "threshodGroup to filter group of outlier points.");
 
 #define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
@@ -167,7 +169,7 @@ int main(int argc, char* argv[]) {
   ReCreateDirectory(FLAGS_matching_working_directory);
 
   Reconstruction* reconstruction = NULL;
-  if (FLAGS_build)
+  if (FLAGS_build_sparse)
   {
 	  build_reconstruction(reconstruction, strPathExe);
   }
