@@ -387,7 +387,8 @@ void resizeImageFiles(std::vector<std::string>& image_files)
 	image_.read(0, 0, true, OpenImageIO::TypeDesc::UCHAR);
 	int width_old = image_.spec().width;
 
-	if (!FLAGS_force_resize && width_old <= FLAGS_resize)
+	if (!FLAGS_force_resize && width_old < FLAGS_resize
+		|| width_old == FLAGS_resize)
 		return;
 
 	scale = FLAGS_resize * 1.0 / width_old;
