@@ -164,6 +164,26 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
   else
 	  LOG(INFO) << "采用CPU运行SIFT...";
 
+  // custom sift parameter
+  float dog_threshold = 0.02 / sift._dog_level_num; // default gpu sift get too few features
+  dog_threshold /= 1.5f;	// to get more features
+
+  switch (options_.feature_density)
+  {
+  case FeatureDensity::SPARSE:
+	  dog_threshold *= 1.5f;
+	  break;
+
+  case FeatureDensity::DENSE:
+	  dog_threshold /= 1.5f;
+	  break;
+
+  default:
+	  break;
+  }
+
+  sift._dog_threshold = dog_threshold;
+
 }
 
 bool FeatureExtractorAndMatcher::AddImage(const std::string& image_filepath) {
