@@ -42,6 +42,8 @@ void  BoundingBox::calculate(theia::Vector3dVec& allPoints, bool swap_yz, bool y
 	midPoint = (maxPoint + minPoint) / 2;
 	sizePoint = maxPoint - minPoint;
 
+	if (sizePoint.y() > sizePoint.z())
+		calculate(allPoints, true);// FLAGS_view_type = VIEW_CAMERA;
 }
 
 BoundingBox::BoundingBox()
