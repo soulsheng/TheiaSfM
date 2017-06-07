@@ -169,7 +169,7 @@ int main(int argc, char* argv[]) {
   ReCreateDirectory(FLAGS_matching_working_directory);
 
   Reconstruction* reconstruction = NULL;
-  if (FLAGS_build_sparse)
+  if (FLAGS_build_sparse && FLAGS_build)
   {
 	  build_reconstruction(reconstruction, strPathExe);
   }
