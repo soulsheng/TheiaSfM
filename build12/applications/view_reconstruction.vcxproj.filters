@@ -4,10 +4,13 @@
     <ClCompile Include="..\..\applications\view_reconstruction.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\Utility.cpp">
+    <ClCompile Include="..\common\WriteGIF.cpp">
       <Filter>custom</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\WriteGIF.cpp">
+    <ClCompile Include="..\common\BoundingBox.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\utility_common.cpp">
       <Filter>custom</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,15 +29,21 @@
     <ClInclude Include="..\common\simpleBMP.h">
       <Filter>custom</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\Utility.h">
-      <Filter>custom</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\stdafx.h">
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\common\view_common.h" />
     <ClInclude Include="..\common\gl_common.h" />
     <ClInclude Include="..\common\WriteGIF.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\BoundingBox.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\LaunchPMVS2.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\utility_common.h">
       <Filter>custom</Filter>
     </ClInclude>
   </ItemGroup>

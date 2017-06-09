@@ -49,7 +49,10 @@
 #include <OpenImageIO/imagebuf.h>
 #include <stlplus3/file_system.hpp>
 #include <fstream>
-
+#include <string>
+#include <sstream>
+#include <iostream> 
+#include <iomanip>
 #include "BoundingBox.h"
 
 #include <opencv2/core/core.hpp>  
