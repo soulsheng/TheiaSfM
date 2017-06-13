@@ -45,18 +45,18 @@ int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction, std::string&
 		//LOG(INFO) << "Undistorting image " << image_name;
 		const theia::Camera& distorted_camera =
 			reconstruction.View(view_id)->Camera();
-		theia::Camera undistorted_camera;
-		CHECK(theia::UndistortCamera(distorted_camera, &undistorted_camera));
+		theia::Camera undistorted_camera(distorted_camera);
 
 		theia::FloatImage distorted_image(image_files[i]);
-		theia::FloatImage undistorted_image;
+		theia::FloatImage undistorted_image(distorted_image);
 		if (undistort)
+		{
+			CHECK(theia::UndistortCamera(distorted_camera, &undistorted_camera));
 			CHECK(theia::UndistortImage(distorted_camera,
 			distorted_image,
 			undistorted_camera,
 			&undistorted_image));
-		else
-			undistorted_image = distorted_image;
+		}
 
 		//LOG(INFO) << "Exporting parameters for image: " << image_name;
 
@@ -103,19 +103,19 @@ bool export_to_pmvs(theia::Reconstruction& reconstruction, std::string& pmvsPath
 {
 	// Set up output directories.
 	CreateDirectoryIfDoesNotExist(pmvsPath);
-	const std::string visualize_dir = pmvsPath + "/visualize";
+	const std::string visualize_dir = pmvsPath + "\\visualize";
 	ReCreateDirectory(visualize_dir);
-	const std::string txt_dir = pmvsPath + "/txt";
+	const std::string txt_dir = pmvsPath + "\\txt";
 	ReCreateDirectory(txt_dir);
-	const std::string models_dir = pmvsPath + "/models";
+	const std::string models_dir = pmvsPath + "\\models";
 	CreateDirectoryIfDoesNotExist(models_dir);
 
 	const int num_cameras = WriteCamerasToPMVS(reconstruction, pmvsPath, undistort);
 	WritePMVSOptions(pmvsPath, num_cameras);
 
-	const std::string lists_file = pmvsPath + "/list.txt";
+	const std::string lists_file = pmvsPath + "\\list.txt";
 	const std::string bundle_file =
-		pmvsPath + "/bundle.rd.out";
+		pmvsPath + "\\bundle.rd.out";
 
 	return	theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file);		
 }
