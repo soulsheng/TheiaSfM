@@ -88,6 +88,7 @@ IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 IDR_MAINFRAME_256       BITMAP                  "res\\Toolbar256.bmp"
 IDR_PROPERTIES          BITMAP                  "res\\properties.bmp"
 IDB_PROPERTIES_HC       BITMAP                  "res\\properties_hc.bmp"
+IDR_TOOLBAR1            BITMAP                  "res\\toolbar1.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -130,6 +131,12 @@ BEGIN
     BUTTON      ID_PROPERTIES2
 END
 
+IDR_TOOLBAR1 TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_SELECT_IMAGE_PATH
+    BUTTON      ID_EXECUTE_RECONSTRUCTION_SPARSE
+    BUTTON      ID_EXECUTE_RECONSTRUCTION_DENSE
+END
 
 /////////////////////////////////////////////////////////////////////////////
 //

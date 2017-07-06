@@ -49,6 +49,7 @@
 #define IDS_FIND_TAB                    302
 #define IDS_EDIT_MENU                   306
 #define IDD_DLG_SHOW_MODE_REBUILD       310
+#define IDR_TOOLBAR1                    311
 #define IDC_COMBO1                      1002
 #define ID_Menu                         32771
 #define ID_Menu_View_PLY                32772
@@ -65,7 +66,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        311
+#define _APS_NEXT_RESOURCE_VALUE        313
 #define _APS_NEXT_COMMAND_VALUE         32781
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           310
