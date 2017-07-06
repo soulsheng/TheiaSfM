@@ -3,6 +3,12 @@
 #define UTILITY_THEIA_H
 
 #include <theia/theia.h>
+#include <opencv2/core/core.hpp>  
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core/types_c.h>  // include it before #include <OpenImageIO/imagebufalgo.h>
+#include <opencv2/highgui/highgui_c.h>
+
+#include "LaunchPMVS2.h"
 
 void CreateDirectoryIfDoesNotExist(const std::string& directory) {
 	if (!theia::DirectoryExists(directory)) {
@@ -240,5 +246,156 @@ bool build_reconstruction(Reconstruction* &reconstruction, std::string& strPathE
 		return true;
 	}
 }
+
+
+void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& strOutput,
+	std::string& strPathExe, std::string& outputName, int fps, int width, int height )
+{
+	if (std::string::npos != strFormat.find("jpg"))
+	{
+		for (int i = 0; i < nImageCountOutput; i++)
+		{
+			std::ostringstream osIn;
+			osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+			OpenImageIO::ImageBuf image(osIn.str());
+
+			std::ostringstream osOut;
+			osOut << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".jpg";
+			image.write(osOut.str(), "jpg");
+
+			image.clear();
+		}
+	}
+
+	if (std::string::npos != strFormat.find("gif"))
+	{
+		gif::GIF* g = gif::newGIF(1.0 / fps * 100); // unit: ten millisecond
+		ClImgBMP	bmp;
+		std::string strPathGIF(strOutput);
+		strPathGIF += outputName + ".gif";
+
+		for (int i = 0; i < nImageCountOutput; i++)
+		{
+			std::ostringstream osIn;
+			osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+
+			bmp.LoadImage(osIn.str().c_str());
+			gif::addFrame(g, bmp.bmpInfoHeaderData.biWidth, bmp.bmpInfoHeaderData.biHeight, bmp.imgData, 0);
+		}
+
+		gif::write(g, strPathGIF.c_str());
+
+		gif::dispose(g);	g = NULL;
+	}
+
+
+	std::string strPathAVI(strOutput);
+	strPathAVI += outputName + ".avi";
+	if (std::string::npos != strFormat.find("avi") || std::string::npos != strFormat.find("mp4"))
+	{
+
+		// delete old avi
+		if (theia::FileExists(strPathAVI))
+		{
+			bool breturn = stlplus::file_delete(strPathAVI);
+			if (!breturn)
+			{
+				LOG(INFO) << strPathAVI << " 临时视频文件无法删除！";
+			}
+		}
+
+		CvSize size = cvSize( width, height);
+		CvVideoWriter* writer = cvCreateVideoWriter(
+			strPathAVI.c_str(), CV_FOURCC('D', 'I', 'V', 'X'), fps, size);
+
+		if (writer)		{
+
+			for (int i = 0; i < nImageCountOutput; i++)
+			{
+				std::ostringstream osIn;
+				osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+
+				IplImage* iplImgOut = cvLoadImage(osIn.str().c_str());
+
+				cvWriteToAVI(writer, iplImgOut);
+			}
+
+			cvReleaseVideoWriter(&writer);
+
+			LOG(INFO) << strPathAVI << " 视频文件输出成功！";
+		}
+		else
+		{
+			stlplus::file_delete(strPathAVI);
+			LOG(INFO) << strPathAVI << " 视频文件输出失败！";
+
+			std::string exePath = getPath(std::string(strPathExe));
+			std::string ffPath = exePath + "opencv_ffmpeg248.dll";
+			if (!theia::FileExists(ffPath))
+				LOG(INFO) << ffPath << " 文件缺失！";
+		}
+
+	}
+
+
+	std::string strPathMP4(strOutput);
+	strPathMP4 += outputName + ".mp4";
+	if (std::string::npos != strFormat.find("mp4"))
+	{
+
+		// delete old mp4
+		if (theia::FileExists(strPathMP4))
+		{
+			bool breturn = stlplus::file_delete(strPathMP4);
+			if (!breturn)
+			{
+				LOG(INFO) << strPathMP4 << " 临时视频文件无法删除！";
+			}
+		}
+
+	}
+
+	if (std::string::npos != strFormat.find("mp4") && theia::FileExists(strPathAVI))
+	{
+		std::string exePath = getPath(std::string(strPathExe));
+
+		std::string parameter("-i ");
+		parameter += strPathAVI;
+		parameter += " ";
+		parameter += strPathMP4;
+
+		if (lanch_external_bin(std::string("ffmpeg.exe"), parameter, exePath))
+			LOG(INFO) << strPathMP4 << " 视频文件输出成功！";
+		else
+			LOG(INFO) << strPathMP4 << " 视频文件输出失败！";
+
+		if (std::string::npos == strFormat.find("avi"))
+		{
+			bool breturn = stlplus::file_delete(strPathAVI);
+			if (!breturn)
+			{
+				LOG(INFO) << strPathAVI << "视频文件未找到或无法删除！";
+			}
+		}
+	}
+
+	if (std::string::npos != strFormat.find("mp4") && !theia::FileExists(strPathMP4))
+		LOG(INFO) << strPathMP4 << " 视频文件输出失败！";
+
+	// delete bmp
+	for (int i = 0; i < nImageCountOutput; i++)
+	{
+		std::ostringstream osIn;
+		osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+		bool breturn = stlplus::file_delete(osIn.str());
+		if (!breturn)
+		{
+			std::cout << osIn.str() << "图片文件未找到或无法删除！";
+		}
+
+	}
+
+}
+
 
 #endif // UTILITY_THEIA_H

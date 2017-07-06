@@ -102,6 +102,7 @@ protected:
 	bool	m_bDenseFinish;
 	std::string m_strPathExe;
 	int		m_nShowMode = SW_HIDE;
+	bool	bOutputEnable = true;
 
 // 生成的消息映射函数
 protected:

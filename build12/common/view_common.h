@@ -61,6 +61,7 @@
 #include <opencv2/highgui/highgui_c.h>
 
 #include "LaunchPMVS2.h"
+#include "utility_theia.h"
 
 #define		PI		3.1415926	
 
@@ -392,154 +393,6 @@ void printScreen(std::string filename, int width = 1024, int height = 768)
 	delete[] buf;
 }
 
-void compressBMP()
-{
-	if (std::string::npos != FLAGS_format.find("jpg"))
-	{
-		for (int i = 0; i < nImageCountOutput; i++)
-		{
-			std::ostringstream osIn;
-			osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
-			OpenImageIO::ImageBuf image(osIn.str());
-
-			std::ostringstream osOut;
-			osOut << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".jpg";
-			image.write(osOut.str(), "jpg");
-
-			image.clear();
-		}
-	}
-
-	if (std::string::npos != FLAGS_format.find("gif"))
-	{
-		gif::GIF* g = gif::newGIF(1.0/FLAGS_fps * 100); // unit: ten millisecond
-		ClImgBMP	bmp;
-		std::string strPathGIF(FLAGS_output_images);
-		strPathGIF += FLAGS_name + ".gif";
-
-		for (int i = 0; i < nImageCountOutput; i++)
-		{
-			std::ostringstream osIn;
-			osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
-			
-			bmp.LoadImage(osIn.str().c_str());
-			gif::addFrame(g, bmp.bmpInfoHeaderData.biWidth, bmp.bmpInfoHeaderData.biHeight, bmp.imgData, 0);
-		}
-
-		gif::write(g, strPathGIF.c_str());
-
-		gif::dispose(g);	g = NULL;
-	}
-
-
-	std::string strPathAVI(FLAGS_output_images);
-	strPathAVI += FLAGS_name + ".avi";
-	if (std::string::npos != FLAGS_format.find("avi") || std::string::npos != FLAGS_format.find("mp4"))
-	{
-
-		// delete old avi
-		if (theia::FileExists(strPathAVI))
-		{
-			bool breturn = stlplus::file_delete(strPathAVI);
-			if (!breturn)
-			{
-				LOG(INFO) << strPathAVI << " 临时视频文件无法删除！";
-			}
-		}
-
-		CvSize size = cvSize(FLAGS_width, FLAGS_height);
-		CvVideoWriter* writer = cvCreateVideoWriter(
-			strPathAVI.c_str(), CV_FOURCC('D', 'I', 'V', 'X'), FLAGS_fps, size);
-
-		if (writer)		{
-
-			for (int i = 0; i < nImageCountOutput; i++)
-			{
-				std::ostringstream osIn;
-				osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
-
-				IplImage* iplImgOut = cvLoadImage(osIn.str().c_str());
-
-				cvWriteToAVI(writer, iplImgOut);
-			}
-
-			cvReleaseVideoWriter(&writer);
-
-			LOG(INFO) << strPathAVI << " 视频文件输出成功！";
-		}
-		else
-		{
-			stlplus::file_delete(strPathAVI);
-			LOG(INFO) << strPathAVI << " 视频文件输出失败！";
-
-			std::string exePath = getPath(std::string(strPathExe));
-			std::string ffPath = exePath + "opencv_ffmpeg248.dll";
-			if (!theia::FileExists(ffPath))
-				LOG(INFO) << ffPath << " 文件缺失！";
-		}
-
-	}
-
-
-	std::string strPathMP4(FLAGS_output_images);
-	strPathMP4 += FLAGS_name + ".mp4";
-	if (std::string::npos != FLAGS_format.find("mp4"))
-	{
-
-		// delete old mp4
-		if (theia::FileExists(strPathMP4))
-		{
-			bool breturn = stlplus::file_delete(strPathMP4);
-			if (!breturn)
-			{
-				LOG(INFO) << strPathMP4 << " 临时视频文件无法删除！";
-			}
-		}
-
-	}
-
-	if (std::string::npos != FLAGS_format.find("mp4") && theia::FileExists(strPathAVI))
-	{
-		std::string exePath = getPath(std::string(strPathExe));
-
-		std::string parameter("-i ");
-		parameter += strPathAVI;
-		parameter += " ";
-		parameter += strPathMP4;
-
-		if (lanch_external_bin(std::string("ffmpeg.exe"), parameter, exePath))
-			LOG(INFO) << strPathMP4 << " 视频文件输出成功！";
-		else
-			LOG(INFO) << strPathMP4 << " 视频文件输出失败！";
-
-		if (std::string::npos == FLAGS_format.find("avi"))
-		{
-			bool breturn = stlplus::file_delete(strPathAVI);
-			if (!breturn)
-			{
-				LOG(INFO) << strPathAVI << "视频文件未找到或无法删除！";
-			}
-		}
-	}
-
-	if (std::string::npos != FLAGS_format.find("mp4") && !theia::FileExists(strPathMP4))
-		LOG(INFO) << strPathMP4 << " 视频文件输出失败！";
-
-	// delete bmp
-	for (int i = 0; i < nImageCountOutput; i++)
-	{
-		std::ostringstream osIn;
-		osIn << FLAGS_output_images << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
-		bool breturn = stlplus::file_delete(osIn.str());
-		if (!breturn)
-		{
-			std::cout << osIn.str() << "图片文件未找到或无法删除！";
-		}
-
-	}
-
-}
-
 void RenderScene() {
 
 	if (!FLAGS_view) // 第一帧
@@ -673,7 +526,8 @@ void RenderScene() {
 
 		if (!bOutputFinish)
 		{
-			compressBMP();
+			compressBMP(FLAGS_format, nImageCountOutput, FLAGS_output_images,
+				strPathExe, FLAGS_name, FLAGS_fps, FLAGS_width, FLAGS_height);
 			bOutputFinish = true;
 		}
 		if (FLAGS_exit_fast)

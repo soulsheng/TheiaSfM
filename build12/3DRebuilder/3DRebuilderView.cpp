@@ -40,13 +40,20 @@ DEFINE_string(pmvs_working_directory, "",
 DEFINE_string(eye_position, "(-50,180,550)", "position of eye.");
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
-DEFINE_string(output_image_directory, "./output/", "output image directory");
+DEFINE_string(output_image_directory, "E:\\3d\\output\\", "output image directory");
 DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
 DEFINE_string(distance, "(0.1,0.6,0.2)", "set distance of view");
 DEFINE_int32(view_type, 0, "0-perspective, 1-camera, 2-top, 3-free, 4-common");
 DEFINE_bool(swap_yz, false, "swap y and z");
 DEFINE_bool(draw_box, false, "draw bounding box");
 DEFINE_int32(threshold_group, 35, "threshodGroup to filter group of outlier points.");
+
+DEFINE_string(format, "jpg+gif+avi+mp4", "jpg, gif, avi, mp4 ");
+DEFINE_int32(width, 1280, "window width");
+DEFINE_int32(height, 1024, "window height");
+DEFINE_double(fps, 2, "frame per second");
+DEFINE_string(name, "0", "gif or mp4 file name");
+DEFINE_double(length, 5, "length of vedio, unit: seconds");
 
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
@@ -216,8 +223,8 @@ void CMy3DRebuilderView::loadAndDisplayDenseResult()
 	if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
 		printf("can not open ply file!\n");
 
-	min_num_views_for_track = -2;
-	
+	min_num_views_for_track = FLAGS_fps * FLAGS_length;
+		
 	rand_num_views_for_track(num_views_for_track, world_points.size());
 
 	box.calculate(world_points, FLAGS_swap_yz);
@@ -230,6 +237,8 @@ void CMy3DRebuilderView::loadAndDisplayDenseResult()
 	LOG(INFO) << "稠密重建三维点的数目为：" << world_points.size();
 
 	outputInfo("稠密重建结果显示完成...");
+
+	m_bDenseFinish = true;
 
 }
 
@@ -426,16 +435,19 @@ void CMy3DRebuilderView::renderScene()
 		{
 			min_num_views_for_track--;
 			std::ostringstream os;
-			os << strPathBMP << nPrintScreen++ << ".bmp";
-			printScreen(os.str());
+			os << strPathBMP << std::uppercase << std::setfill('0') << std::setw(2) << nPrintScreen++ << ".bmp";
+			printScreen(os.str(), FLAGS_width, FLAGS_height);
 		}
 
-		if (min_num_views_for_track == -1 && FLAGS_output_image_type == 1)
+		if (min_num_views_for_track == -1 )
 		{
-			bmp2gif	b2g(100);
-			std::string strPathGIF = strPathBMP + "1.GIF";
-			b2g.run(strPathBMP.c_str(), strPathGIF.c_str(), 10);
-			m_bDenseFinish = false;
+			if (bOutputEnable)
+			{
+				compressBMP(FLAGS_format, nPrintScreen, FLAGS_output_image_directory,
+					m_strPathExe, FLAGS_name, FLAGS_fps, FLAGS_width, FLAGS_height);
+				bOutputEnable = false;
+				nPrintScreen = 0;
+			}
 		}
 	}
 }
@@ -474,6 +486,8 @@ void CMy3DRebuilderView::OnSize(UINT nType, int cx, int cy)
 	glMatrixMode(GL_MODELVIEW);										// Select The Modelview Matrix
 	glLoadIdentity();
 
+	FLAGS_width = cx;
+	FLAGS_height = cy;
 }
 
 void CMy3DRebuilderView::DrawColorBox(void)
@@ -1033,7 +1047,6 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 #endif
 	loadAndDisplayDenseResult();
 
-	m_bDenseFinish = true;
 }
 
 
