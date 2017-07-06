@@ -140,26 +140,8 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "文件(&F)"
     BEGIN
-        MENUITEM "新建(&N)\tCtrl+N",              ID_FILE_NEW
-        MENUITEM "打开(&O)...\tCtrl+O",           ID_FILE_OPEN
-        MENUITEM "保存(&S)\tCtrl+S",              ID_FILE_SAVE
-        MENUITEM "另存为(&A)...",                  ID_FILE_SAVE_AS
-        MENUITEM SEPARATOR
-        MENUITEM "打印(&P)...\tCtrl+P",           ID_FILE_PRINT
-        MENUITEM "打印预览(&V)",                    ID_FILE_PRINT_PREVIEW
-        MENUITEM "打印设置(&R)...",                 ID_FILE_PRINT_SETUP
-        MENUITEM SEPARATOR
-        MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1, GRAYED
-        MENUITEM SEPARATOR
+        MENUITEM "打开图片路径(&I)",                  ID_SELECT_IMAGE_PATH
         MENUITEM "退出(&X)",                      ID_APP_EXIT
-    END
-    POPUP "编辑(&E)"
-    BEGIN
-        MENUITEM "撤消(&U)\tCtrl+Z",              ID_EDIT_UNDO
-        MENUITEM SEPARATOR
-        MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT
-        MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY
-        MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE
     END
     POPUP "视图(&V)"
     BEGIN
@@ -169,35 +151,19 @@ BEGIN
             MENUITEM "<占位符>",                       ID_VIEW_TOOLBAR
         END
         MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
-        POPUP "应用程序外观(&A)"
-        BEGIN
-            MENUITEM "Windows 2000(&2)",            ID_VIEW_APPLOOK_WIN_2000
-            MENUITEM "Office XP(&X)",               ID_VIEW_APPLOOK_OFF_XP
-            MENUITEM "Windows XP(&W)",              ID_VIEW_APPLOOK_WIN_XP
-            MENUITEM "Office 2003(&3)",             ID_VIEW_APPLOOK_OFF_2003
-            MENUITEM "Visual Studio 200&5",         ID_VIEW_APPLOOK_VS_2005
-            MENUITEM "Visual Studio 200&8",         ID_VIEW_APPLOOK_VS_2008
-            POPUP "Office 2007(&7)"
-            BEGIN
-                MENUITEM "蓝色样式(&B)",                    ID_VIEW_APPLOOK_OFF_2007_BLUE
-                MENUITEM "黑色样式(&L)",                    ID_VIEW_APPLOOK_OFF_2007_BLACK
-                MENUITEM "银色样式(&S)",                    ID_VIEW_APPLOOK_OFF_2007_SILVER
-                MENUITEM "水绿色样式(&A)",                   ID_VIEW_APPLOOK_OFF_2007_AQUA
-            END
-        END
-    END
-    POPUP "帮助(&H)"
-    BEGIN
-        MENUITEM "关于 3DRebuilder(&A)...",       ID_APP_ABOUT
     END
     POPUP "重建(&R)"
     BEGIN
-        MENUITEM "打开图片路径(&I)",                  ID_SELECT_IMAGE_PATH
         MENUITEM "稀疏重建(&S)",                    ID_EXECUTE_RECONSTRUCTION_SPARSE
         MENUITEM "稀疏重建可视化(&R)",                 ID_VIEW_SPARSE_RESULT
         MENUITEM "稠密重建(&D)",                    ID_EXECUTE_RECONSTRUCTION_DENSE
         MENUITEM "稠密重建可视化(&V)",                 ID_Menu_View_PLY
-		MENUITEM "一键重建",						ID_REBUILD_ONE_KEY
+        MENUITEM "一键重建",                        ID_REBUILD_ONE_KEY
+    END
+    POPUP "帮助(&H)"
+    BEGIN
+        MENUITEM "使用手册(&M)",                    ID_MENU_OPEN_MANUAL
+        MENUITEM "关于 3DRebuilder(&A)...",       ID_APP_ABOUT
     END
 END
 

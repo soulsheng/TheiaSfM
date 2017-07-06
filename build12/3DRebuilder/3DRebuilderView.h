@@ -130,6 +130,7 @@ public:
 	void printScreen(std::string filename, int width = 1024, int height = 768);
 
 	afx_msg void OnRebuildOneKey();
+	afx_msg void OnOpenUserManual();
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本

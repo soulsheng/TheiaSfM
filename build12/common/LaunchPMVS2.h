@@ -6,7 +6,7 @@
 #include <Shellapi.h>
 
 
-bool lanch_external_bin(std::string& bin, std::string& parameter, std::string& path)
+bool lanch_external_bin(std::string& bin, std::string& parameter, std::string& path, int nShowType = SW_HIDE)
 {
 	std::string zipParameter = std::string("a -m0 -inul -idp -sfxDefault.SFX -ibck -iiconVRGIS.ico -zsescript ");
 
@@ -18,7 +18,7 @@ bool lanch_external_bin(std::string& bin, std::string& parameter, std::string& p
 	ShExecInfo.lpFile = bin.c_str();
 	ShExecInfo.lpParameters = parameter.c_str();
 	ShExecInfo.lpDirectory = path.c_str();
-	ShExecInfo.nShow = SW_HIDE;
+	ShExecInfo.nShow = nShowType;
 	ShExecInfo.hInstApp = NULL;
 	
 	if (FALSE == ShellExecuteEx(&ShExecInfo))

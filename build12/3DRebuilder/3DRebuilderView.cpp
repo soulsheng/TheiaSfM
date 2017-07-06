@@ -81,6 +81,7 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_COMMAND(ID_VIEW_SPARSE_RESULT, &CMy3DRebuilderView::OnViewSparseResult)
 	ON_COMMAND(ID_PRINT_SCREEN, &CMy3DRebuilderView::OnPrintScreen)
 	ON_COMMAND(ID_REBUILD_ONE_KEY, &CMy3DRebuilderView::OnRebuildOneKey)
+	ON_COMMAND(ID_MENU_OPEN_MANUAL, &CMy3DRebuilderView::OnOpenUserManual)
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView 构造/析构
@@ -1179,6 +1180,9 @@ void CMy3DRebuilderView::OnPrintScreen()
 	// TODO:  在此添加命令处理程序代码
 	printScreen("1.bmp");
 
+	std::string msg = m_strPathExe + "1.bmp已保存，截屏完成！";
+	outputInfo( msg.c_str() );
+
 }
 
 void CMy3DRebuilderView::printScreen(std::string filename, int width, int height)
@@ -1207,4 +1211,13 @@ String("--input_images=E:\\3d\\2017_03\\ --output_images=E:\\3d\\output\\ \
 --view=0 --build=0"),
 String("E:\\3d\\exe\\"));
 
+}
+
+
+void CMy3DRebuilderView::OnOpenUserManual()
+{
+	// TODO:  在此添加命令处理程序代码
+
+	std::string filename = m_strPathExe + "@参数说明.txt";
+	lanch_external_bin(String("notepad.exe"), filename, String(""), SW_SHOW);
 }
