@@ -9,6 +9,10 @@
 #include <opencv2/highgui/highgui_c.h>
 
 #include "LaunchPMVS2.h"
+#include <iostream> 
+#include <iomanip>
+#include <stlplus3/file_system.hpp>
+#include "theia/util/filesystem.h"
 
 void CreateDirectoryIfDoesNotExist(const std::string& directory) {
 	if (!theia::DirectoryExists(directory)) {
