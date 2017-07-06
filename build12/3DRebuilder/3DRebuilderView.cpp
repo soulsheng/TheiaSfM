@@ -1113,6 +1113,10 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 	if (!updateImagePath())
 		return;
 
+	world_points.clear();
+	point_normals.clear();
+	point_colors.clear();
+
 	outputInfo("正在显示稀疏重建结果...");
 	LOG(INFO) << "正在显示稀疏重建结果...";
 
