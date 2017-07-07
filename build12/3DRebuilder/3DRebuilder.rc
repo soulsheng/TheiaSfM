@@ -516,6 +516,13 @@ BEGIN
     IDS_EDIT_MENU           "编辑"
 END
 
+STRINGTABLE
+BEGIN
+    ID_SELECT_IMAGE_PATH    "打开图片路径\n打开图片路径"
+    ID_EXECUTE_RECONSTRUCTION_SPARSE "稀疏重建\n稀疏重建"
+    ID_EXECUTE_RECONSTRUCTION_DENSE "稠密重建\n稠密重建"
+END
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
