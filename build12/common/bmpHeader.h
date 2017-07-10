@@ -46,16 +46,18 @@ void	saveBMPFile(std::string filename, int width, int height, char* buf)
 	BMPFILEHEADER header;
 	BMPINF	info;
 
-	header.bSize = width * height * 3 + 54;
+	int nLineByte = (width * 3 + 3) / 4 * 4;	// 一行字节数必须被4整除
+
+	header.bSize = nLineByte * height + 54;
 	info.bWidth = width;
 	info.bHeight = height;
-	info.bmpImageSize = width * height * 3;
+	info.bmpImageSize = nLineByte * height;
 
 	fwrite(&header, sizeof(BMPFILEHEADER), 1, pWritingFile);
 	fwrite(&info, sizeof(BMPINF), 1, pWritingFile);
 
 	// 写入像素数据  
-	fwrite(buf, 3 * width * height, 1, pWritingFile);
+	fwrite(buf, nLineByte * height, 1, pWritingFile);
 
 	// 释放内存和关闭文件  
 	fclose(pWritingFile);

@@ -1200,7 +1200,8 @@ void CMy3DRebuilderView::OnPrintScreen()
 
 void CMy3DRebuilderView::printScreen(std::string filename, int width, int height)
 {
-	char* buf = new char[3 * width * height];
+	int nLineByte = (width*3 + 3) / 4 * 4;	// 一行字节数必须被4整除
+	char* buf = new char[nLineByte * height];
 	glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
 	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, buf);
 
