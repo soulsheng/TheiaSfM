@@ -1191,7 +1191,7 @@ void CMy3DRebuilderView::loadAndDisplaySparseResult()
 void CMy3DRebuilderView::OnPrintScreen()
 {
 	// TODO:  在此添加命令处理程序代码
-	printScreen("1.bmp");
+	printScreen("1.bmp", FLAGS_width, FLAGS_height);
 
 	std::string msg = m_strPathExe + "1.bmp已保存，截屏完成！";
 	outputInfo( msg.c_str() );
