@@ -30,7 +30,7 @@ public:
 
 protected:
 	CFont m_fntPropList;
-	CComboBox m_wndObjectCombo;
+	//CComboBox m_wndObjectCombo;
 	CPropertiesToolBar m_wndToolBar;
 	CMFCPropertyGridCtrl m_wndPropList;
 
@@ -57,6 +57,6 @@ protected:
 	void InitPropList();
 	void SetPropListFont();
 
-	int m_nComboHeight;
+	//int m_nComboHeight;
 };
 

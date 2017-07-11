@@ -17,7 +17,7 @@ static char THIS_FILE[]=__FILE__;
 
 CPropertiesWnd::CPropertiesWnd()
 {
-	m_nComboHeight = 0;
+	//m_nComboHeight = 0;
 }
 
 CPropertiesWnd::~CPropertiesWnd()
@@ -54,9 +54,9 @@ void CPropertiesWnd::AdjustLayout()
 
 	int cyTlb = m_wndToolBar.CalcFixedLayout(FALSE, TRUE).cy;
 
-	m_wndObjectCombo.SetWindowPos(NULL, rectClient.left, rectClient.top, rectClient.Width(), m_nComboHeight, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_wndToolBar.SetWindowPos(NULL, rectClient.left, rectClient.top + m_nComboHeight, rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_wndPropList.SetWindowPos(NULL, rectClient.left, rectClient.top + m_nComboHeight + cyTlb, rectClient.Width(), rectClient.Height() -(m_nComboHeight+cyTlb), SWP_NOACTIVATE | SWP_NOZORDER);
+	//m_wndObjectCombo.SetWindowPos(NULL, rectClient.left, rectClient.top, rectClient.Width(), m_nComboHeight, SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndToolBar.SetWindowPos(NULL, rectClient.left, rectClient.top , rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndPropList.SetWindowPos(NULL, rectClient.left, rectClient.top + cyTlb, rectClient.Width(), rectClient.Height() -cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
 int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -66,7 +66,7 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
-
+#if 0
 	// 创建组合: 
 	const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_BORDER | CBS_SORT | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 
@@ -84,7 +84,7 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndObjectCombo.GetClientRect (&rectCombo);
 
 	m_nComboHeight = rectCombo.Height();
-
+#endif
 	if (!m_wndPropList.Create(WS_VISIBLE | WS_CHILD, rectDummy, this, 2))
 	{
 		TRACE0("未能创建属性网格\n");
@@ -163,6 +163,7 @@ void CPropertiesWnd::InitPropList()
 	m_wndPropList.SetVSDotNetLook();
 	m_wndPropList.MarkModifiedProperties();
 
+#if 0 // 外观
 	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("外观"));
 
 	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("三维外观"), (_variant_t) false, _T("指定窗口的字体不使用粗体，并且控件将使用三维边框")));
@@ -178,6 +179,9 @@ void CPropertiesWnd::InitPropList()
 	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("标题"), (_variant_t) _T("关于"), _T("指定窗口标题栏中显示的文本")));
 
 	m_wndPropList.AddProperty(pGroup1);
+#endif
+
+#if 0 // 窗口大小
 
 	CMFCPropertyGridProperty* pSize = new CMFCPropertyGridProperty(_T("窗口大小"), 0, TRUE);
 
@@ -190,7 +194,9 @@ void CPropertiesWnd::InitPropList()
 	pSize->AddSubItem(pProp);
 
 	m_wndPropList.AddProperty(pSize);
+#endif
 
+#if 0 // 字体
 	CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("字体"));
 
 	LOGFONT lf;
@@ -203,7 +209,9 @@ void CPropertiesWnd::InitPropList()
 	pGroup2->AddSubItem(new CMFCPropertyGridProperty(_T("使用系统字体"), (_variant_t) true, _T("指定窗口使用“MS Shell Dlg”字体")));
 
 	m_wndPropList.AddProperty(pGroup2);
+#endif
 
+#if 0 // 杂项
 	CMFCPropertyGridProperty* pGroup3 = new CMFCPropertyGridProperty(_T("杂项"));
 	pProp = new CMFCPropertyGridProperty(_T("(名称)"), _T("应用程序"));
 	pProp->Enable(FALSE);
@@ -220,7 +228,9 @@ void CPropertiesWnd::InitPropList()
 	pGroup3->AddSubItem(new CMFCPropertyGridFileProperty(_T("文件夹"), _T("c:\\")));
 
 	m_wndPropList.AddProperty(pGroup3);
+#endif
 
+#if 0 // 层次结构
 	CMFCPropertyGridProperty* pGroup4 = new CMFCPropertyGridProperty(_T("层次结构"));
 
 	CMFCPropertyGridProperty* pGroup41 = new CMFCPropertyGridProperty(_T("第一个子级"));
@@ -235,6 +245,25 @@ void CPropertiesWnd::InitPropList()
 
 	pGroup4->Expand(FALSE);
 	m_wndPropList.AddProperty(pGroup4);
+#endif
+
+	CMFCPropertyGridProperty* pProp = NULL;
+
+	// 窗口大小
+
+	//CMFCPropertyGridProperty* pSize = new CMFCPropertyGridProperty(_T("窗口大小"), ID_PROPERTIES1, TRUE);
+
+	pProp = new CMFCPropertyGridProperty(_T("高度"), (_variant_t)960, _T("指定窗口的高度"), ID_PROPERTIES1);
+	pProp->EnableSpinControl(TRUE, 50, 2048);
+	//pSize->AddSubItem(pProp);
+	m_wndPropList.AddProperty(pProp);
+
+	pProp = new CMFCPropertyGridProperty(_T("宽度"), (_variant_t)1280, _T("指定窗口的宽度"), ID_PROPERTIES2);
+	pProp->EnableSpinControl(TRUE, 50, 2048);
+	//pSize->AddSubItem(pProp);
+
+	m_wndPropList.AddProperty(pProp);
+
 }
 
 void CPropertiesWnd::OnSetFocus(CWnd* pOldWnd)
@@ -268,5 +297,5 @@ void CPropertiesWnd::SetPropListFont()
 	m_fntPropList.CreateFontIndirect(&lf);
 
 	m_wndPropList.SetFont(&m_fntPropList);
-	m_wndObjectCombo.SetFont(&m_fntPropList);
+	//m_wndObjectCombo.SetFont(&m_fntPropList);
 }
