@@ -199,7 +199,7 @@ void CMy3DRebuilderView::rand_num_views_for_track(std::vector<int>& num_views_fo
 {
 	num_views_for_track.reserve(size);
 	for (int i = 0; i < size; i++)
-		num_views_for_track.emplace_back(rand() % 10);
+		num_views_for_track.emplace_back(rand() % min_num_views_for_track);
 }
 
 void CMy3DRebuilderView::OnMenuViewPly()
