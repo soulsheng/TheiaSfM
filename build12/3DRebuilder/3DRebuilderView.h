@@ -132,6 +132,9 @@ public:
 
 	afx_msg void OnRebuildOneKey();
 	afx_msg void OnOpenUserManual();
+
+	void setColorBG(float r, float g, float b);
+	void setColorPoint(float r, float g, float b);
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本

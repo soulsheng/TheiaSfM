@@ -6,6 +6,9 @@
 #include "MainFrm.h"
 #include "3DRebuilder.h"
 
+#include "3DRebuilderDoc.h"
+#include "3DRebuilderView.h"
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -35,6 +38,7 @@ BEGIN_MESSAGE_MAP(CPropertiesWnd, CDockablePane)
 	ON_UPDATE_COMMAND_UI(ID_PROPERTIES1, OnUpdateProperties1)
 	ON_COMMAND(ID_PROPERTIES2, OnProperties2)
 	ON_UPDATE_COMMAND_UI(ID_PROPERTIES2, OnUpdateProperties2)
+	ON_REGISTERED_MESSAGE(AFX_WM_PROPERTY_CHANGED, OnPropertyChanged)
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
 END_MESSAGE_MAP()
@@ -247,6 +251,7 @@ void CPropertiesWnd::InitPropList()
 	m_wndPropList.AddProperty(pGroup4);
 #endif
 
+#if 0
 	CMFCPropertyGridProperty* pProp = NULL;
 
 	// 窗口大小
@@ -263,6 +268,25 @@ void CPropertiesWnd::InitPropList()
 	//pSize->AddSubItem(pProp);
 
 	m_wndPropList.AddProperty(pProp);
+#endif
+
+	CMFCPropertyGridProperty* pProp = NULL;
+
+	// 背景颜色
+	CMFCPropertyGridColorProperty* pColorPropBG = new CMFCPropertyGridColorProperty(_T("背景颜色"), RGB(128, 150, 200), NULL, _T("指定默认的窗口颜色"));
+	pColorPropBG->EnableOtherButton(_T("其他..."));
+	pColorPropBG->EnableAutomaticButton(_T("默认"), ::GetSysColor(COLOR_3DFACE));
+	//pGroup3->AddSubItem(pColorProp);
+	m_wndPropList.AddProperty(pColorPropBG);
+
+
+	// 点云颜色
+	CMFCPropertyGridColorProperty* pColorPropPoint = new CMFCPropertyGridColorProperty(_T("点云颜色"), RGB(0, 250, 0), NULL, _T("指定默认的窗口颜色"));
+	pColorPropPoint->EnableOtherButton(_T("其他..."));
+	pColorPropPoint->EnableAutomaticButton(_T("默认"), ::GetSysColor(COLOR_3DFACE));
+	//pGroup3->AddSubItem(pColorProp);
+	m_wndPropList.AddProperty(pColorPropPoint);
+
 
 }
 
@@ -298,4 +322,44 @@ void CPropertiesWnd::SetPropListFont()
 
 	m_wndPropList.SetFont(&m_fntPropList);
 	//m_wndObjectCombo.SetFont(&m_fntPropList);
+}
+
+
+LRESULT CPropertiesWnd::OnPropertyChanged(
+	__in WPARAM wparam,
+	__in LPARAM lparam)
+{
+	CMFCPropertyGridProperty* pProp = reinterpret_cast<CMFCPropertyGridProperty*>(lparam);
+
+	if (NULL == pProp)
+		return 0;
+
+	int nID = pProp->GetData();
+	CString name = pProp->GetName();
+	CString value = pProp->GetValue();
+
+	CMainFrame* pFrame = (CMainFrame *)AfxGetMainWnd();
+	CMy3DRebuilderView* pView = (CMy3DRebuilderView *)pFrame->GetActiveView();
+
+	CRect rect;	// 存储当前窗口
+
+	if (name == "背景颜色")
+	{
+		COLORREF color = ((CMFCPropertyGridColorProperty*)pProp)->GetColor();
+		float r = GetRValue(color);
+		float g = GetGValue(color);
+		float b = GetBValue(color);
+		pView->setColorBG(r, g, b);
+	}
+
+	if (name == "点云颜色")
+	{
+		COLORREF color = ((CMFCPropertyGridColorProperty*)pProp)->GetColor();
+		float r = GetRValue(color);
+		float g = GetGValue(color);
+		float b = GetBValue(color);
+		pView->setColorPoint(r, g, b);
+	}
+
+	return(0);
 }

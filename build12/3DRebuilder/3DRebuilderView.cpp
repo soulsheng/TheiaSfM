@@ -25,10 +25,10 @@
 
 #include "LaunchPMVS2.h"
 
-DEFINE_bool(same_color_point, false, "bool on/off to use same color for point. eg:0 ");
+DEFINE_bool(same_color_point, true, "bool on/off to use same color for point. eg:0 ");
 DEFINE_int32(draw_point_size, 1, "bool on/off to use same color for point. eg:0 ");
 DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
-DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
+DEFINE_string(color_point, "(0,255,0)", "color of point. eg:(255,255,255)white ");
 DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 DEFINE_string(image_directory, "",
 	"Full path to the directory containing the images used to create "
@@ -1234,4 +1234,16 @@ void CMy3DRebuilderView::OnOpenUserManual()
 
 	std::string filename = m_strPathExe + "@参数说明.txt";
 	lanch_external_bin(String("notepad.exe"), filename, String(""), SW_SHOW);
+}
+
+void CMy3DRebuilderView::setColorBG(float r, float g, float b)
+{
+	glClearColor(r, g, b, 1.0);
+}
+
+void CMy3DRebuilderView::setColorPoint(float r, float g, float b)
+{
+	nColorPoint[0] = r * 255;
+	nColorPoint[1] = g * 255; 
+	nColorPoint[2] = b * 255;
 }
