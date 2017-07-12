@@ -318,8 +318,22 @@ void CPropertiesWnd::InitPropList()
 	// 分组3 - 输出 
 	pGroup = new CMFCPropertyGridProperty(_T("输出"));
 
-	// 点云统一颜色
+	// 格式
 	pProp = new CMFCPropertyGridProperty(_T("格式"), (_variant_t)"jpg+gif+avi ", _T("输出格式，例如：jpg+gif+avi"), 0);
+	pGroup->AddSubItem(pProp);
+
+	// fps 帧速
+	pProp = new CMFCPropertyGridProperty(_T("帧速fps"), (_variant_t)2, _T("设置输出动画的帧速，默认：每秒2帧"), 0);
+	pProp->EnableSpinControl(TRUE, 1, 100);
+	pGroup->AddSubItem(pProp);
+
+	// 文件名
+	pProp = new CMFCPropertyGridProperty(_T("文件名"), (_variant_t)"0abc", _T("设置动画的文件名，默认：0.gif 0.avi"), 0);
+	pGroup->AddSubItem(pProp);
+
+	// 时长
+	pProp = new CMFCPropertyGridProperty(_T("时长"), (_variant_t)5, _T("设置输出动画的时间长度，默认：5秒"), 0);
+	pProp->EnableSpinControl(TRUE, 1, 100);
 	pGroup->AddSubItem(pProp);
 
 	m_wndPropList.AddProperty(pGroup);
@@ -420,6 +434,22 @@ LRESULT CPropertiesWnd::OnPropertyChanged(
 		pView->setOutputFormat(value.GetBuffer());
 	}
 
+	if (name == "帧速fps")
+	{
+		int nSize = _ttoi(value);
+		pView->setOutputFPS(nSize);
+	}
+
+	if (name == "文件名")
+	{
+		pView->setOutputName(value.GetBuffer());
+	}
+
+	if (name == "时长")
+	{
+		int nSize = _ttoi(value);
+		pView->setOutputLength(nSize);
+	}
 
 	return(0);
 }

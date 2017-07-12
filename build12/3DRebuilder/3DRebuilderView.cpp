@@ -52,7 +52,7 @@ DEFINE_string(format, "jpg+gif+avi+mp4", "jpg, gif, avi, mp4 ");
 DEFINE_int32(width, 1280, "window width");
 DEFINE_int32(height, 1024, "window height");
 DEFINE_double(fps, 2, "frame per second");
-DEFINE_string(name, "0", "gif or mp4 file name");
+DEFINE_string(name, "0abc", "gif or mp4 file name");
 DEFINE_double(length, 5, "length of vedio, unit: seconds");
 
 DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
@@ -1274,4 +1274,19 @@ void CMy3DRebuilderView::setBuildFlag(bool bFlag)
 void CMy3DRebuilderView::setOutputFormat(std::string format)
 {
 	FLAGS_format = format;
+}
+
+void CMy3DRebuilderView::setOutputFPS(int nSize)
+{
+	FLAGS_fps = nSize;
+}
+
+void CMy3DRebuilderView::setOutputName(std::string name)
+{
+	FLAGS_name = name;
+}
+
+void CMy3DRebuilderView::setOutputLength(int nSize)
+{
+	FLAGS_length = nSize;
 }

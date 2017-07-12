@@ -140,6 +140,10 @@ public:
 	void setBuildFlag(bool bFlag);
 	void setOutputFormat(std::string format);
 
+	void setOutputFPS(int nSize);
+	void setOutputName(std::string name);
+	void setOutputLength(int nSize);
+
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本
