@@ -135,6 +135,11 @@ public:
 
 	void setColorBG(float r, float g, float b);
 	void setColorPoint(float r, float g, float b);
+	void setColorPointFlag(bool bFlag);
+	void setSizePoint(int nSize);
+	void setBuildFlag(bool bFlag);
+	void setOutputFormat(std::string format);
+
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本

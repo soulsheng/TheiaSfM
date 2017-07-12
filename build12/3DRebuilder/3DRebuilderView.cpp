@@ -55,6 +55,8 @@ DEFINE_double(fps, 2, "frame per second");
 DEFINE_string(name, "0", "gif or mp4 file name");
 DEFINE_double(length, 5, "length of vedio, unit: seconds");
 
+DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
+
 //#define	FLAGS_ply_file	"option-0000.ply"
 #define CLIP_FAR_DISTANCE	100000	// 10000
 
@@ -1004,6 +1006,12 @@ void CMy3DRebuilderView::OnExecuteReconstructionDense()
 	if( !updateImagePath() )
 		return;
 
+	if (!FLAGS_build)
+	{
+		loadAndDisplayDenseResult();
+		return;
+	}
+
 	// TODO:  在此添加命令处理程序代码
 	LOG(INFO) << "正在进行稠密重建...";
 	outputInfo("正在进行稠密重建...");
@@ -1246,4 +1254,24 @@ void CMy3DRebuilderView::setColorPoint(float r, float g, float b)
 	nColorPoint[0] = r * 255;
 	nColorPoint[1] = g * 255; 
 	nColorPoint[2] = b * 255;
+}
+
+void CMy3DRebuilderView::setColorPointFlag(bool bFlag)
+{
+	FLAGS_same_color_point = bFlag;
+}
+
+void CMy3DRebuilderView::setSizePoint(int nSize)
+{
+	FLAGS_draw_point_size = nSize;
+}
+
+void CMy3DRebuilderView::setBuildFlag(bool bFlag)
+{
+	FLAGS_build = bFlag;
+}
+
+void CMy3DRebuilderView::setOutputFormat(std::string format)
+{
+	FLAGS_format = format;
 }

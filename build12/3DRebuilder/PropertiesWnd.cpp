@@ -272,12 +272,27 @@ void CPropertiesWnd::InitPropList()
 
 	CMFCPropertyGridProperty* pProp = NULL;
 
+	CMFCPropertyGridProperty* pGroup = NULL;
+
+	// 分组1 - 重建 
+	pGroup = new CMFCPropertyGridProperty(_T("重建"));
+
+	// 点云统一颜色
+	pProp = new CMFCPropertyGridProperty(_T("是否重建"), (_variant_t)1, _T("是否重新重建"), 0);
+	pProp->EnableSpinControl(TRUE, 0, 1);
+	pGroup->AddSubItem(pProp);
+
+	m_wndPropList.AddProperty(pGroup);
+
+	// 分组2 - 显示 
+	pGroup = new CMFCPropertyGridProperty(_T("显示"));
+
 	// 背景颜色
 	CMFCPropertyGridColorProperty* pColorPropBG = new CMFCPropertyGridColorProperty(_T("背景颜色"), RGB(128, 150, 200), NULL, _T("指定默认的窗口颜色"));
 	pColorPropBG->EnableOtherButton(_T("其他..."));
 	pColorPropBG->EnableAutomaticButton(_T("默认"), ::GetSysColor(COLOR_3DFACE));
 	//pGroup3->AddSubItem(pColorProp);
-	m_wndPropList.AddProperty(pColorPropBG);
+	pGroup->AddSubItem(pColorPropBG);
 
 
 	// 点云颜色
@@ -285,8 +300,29 @@ void CPropertiesWnd::InitPropList()
 	pColorPropPoint->EnableOtherButton(_T("其他..."));
 	pColorPropPoint->EnableAutomaticButton(_T("默认"), ::GetSysColor(COLOR_3DFACE));
 	//pGroup3->AddSubItem(pColorProp);
-	m_wndPropList.AddProperty(pColorPropPoint);
+	pGroup->AddSubItem(pColorPropPoint);
 
+	// 点云统一颜色
+	pProp = new CMFCPropertyGridProperty(_T("统一颜色"), (_variant_t)1, _T("点云采用统一颜色"), 0);
+	pProp->EnableSpinControl(TRUE, 0, 1);
+	pGroup->AddSubItem(pProp);
+
+	// 点的大小
+	pProp = new CMFCPropertyGridProperty(_T("点的大小"), (_variant_t)3, _T("绘制点的大小"), 0);
+	pProp->EnableSpinControl(TRUE, 1, 10);
+	pGroup->AddSubItem(pProp);
+
+	m_wndPropList.AddProperty(pGroup);
+
+
+	// 分组3 - 输出 
+	pGroup = new CMFCPropertyGridProperty(_T("输出"));
+
+	// 点云统一颜色
+	pProp = new CMFCPropertyGridProperty(_T("格式"), (_variant_t)"jpg+gif+avi ", _T("输出格式，例如：jpg+gif+avi"), 0);
+	pGroup->AddSubItem(pProp);
+
+	m_wndPropList.AddProperty(pGroup);
 
 }
 
@@ -360,6 +396,30 @@ LRESULT CPropertiesWnd::OnPropertyChanged(
 		float b = GetBValue(color);
 		pView->setColorPoint(r, g, b);
 	}
+
+	if (name == "统一颜色")
+	{
+		int bFlag = _ttoi(value);
+		pView->setColorPointFlag(bFlag);
+	}
+
+	if (name == "点的大小")
+	{
+		int nSize = _ttoi(value);
+		pView->setSizePoint(nSize);
+	}
+
+	if (name == "是否重建")
+	{
+		int bFlag = _ttoi(value);
+		pView->setBuildFlag(bFlag);
+	}
+
+	if (name == "格式")
+	{
+		pView->setOutputFormat(value.GetBuffer());
+	}
+
 
 	return(0);
 }
