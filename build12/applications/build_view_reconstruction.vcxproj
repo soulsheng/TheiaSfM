@@ -269,6 +269,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\applications\build_view_reconstruction.cc" />
     <ClCompile Include="..\common\BoundingBox.cpp" />
+    <ClCompile Include="..\common\gif.c" />
     <ClCompile Include="..\common\utility_common.cpp" />
     <ClCompile Include="..\common\WriteGIF.cpp" />
   </ItemGroup>
@@ -297,6 +298,7 @@
     <ClInclude Include="..\common\bmpHeader.h" />
     <ClInclude Include="..\common\BoundingBox.h" />
     <ClInclude Include="..\common\build_common.h" />
+    <ClInclude Include="..\common\gif.h" />
     <ClInclude Include="..\common\LaunchPMVS2.h" />
     <ClInclude Include="..\common\simpleBMP.h" />
     <ClInclude Include="..\common\stdafx.h" />

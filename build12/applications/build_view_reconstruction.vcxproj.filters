@@ -11,6 +11,9 @@
     <ClCompile Include="..\common\utility_common.cpp">
       <Filter>custom</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\gif.c">
+      <Filter>custom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="custom">
@@ -45,6 +48,9 @@
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\common\utility_theia.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\gif.h">
       <Filter>custom</Filter>
     </ClInclude>
   </ItemGroup>
