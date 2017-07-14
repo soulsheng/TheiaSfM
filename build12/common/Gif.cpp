@@ -6,7 +6,13 @@
  */
 
 #include "Gif.h"
-#include "KitsuneMath.h"
+//#include "KitsuneMath.h"
+#include "math.h"
+#include "stdlib.h"
+#include "string.h"
+
+#define max(a, b)    (((a) > (b)) ? (a) : (b))
+#define min(a, b)    (((a) < (b)) ? (a) : (b))
 
 #define GIF_TRANS_INDEX 0
 
@@ -50,7 +56,7 @@ void Gif_GetClosestPaletteColor(gif_palette_t *pPal, int r, int g, int b, int *b
         r_err = r - ((int32_t)pPal->r[ind]);
         g_err = g - ((int32_t)pPal->g[ind]);
         b_err = b - ((int32_t)pPal->b[ind]);
-        diff = ABS(r_err) + ABS(g_err) + ABS(b_err);
+		diff = abs(r_err) + abs(g_err) + abs(b_err);
         
         if (diff < *bestDiff)
         {
@@ -188,9 +194,9 @@ void Gif_SplitPalette(gif_palette_t *pal, uint8_t *image, int numPixels, int fir
                 uint32_t r=255, g=255, b=255;
                 for (ii=0; ii<numPixels; ++ii)
                 {
-                    r = MIN(r, image[ii*4+0]);
-                    g = MIN(g, image[ii*4+1]);
-                    b = MIN(b, image[ii*4+2]);
+                    r = min(r, image[ii*4+0]);
+					g = min(g, image[ii * 4 + 1]);
+					b = min(b, image[ii * 4 + 2]);
                 }
                 
                 pal->r[firstElt] = r;
@@ -206,9 +212,9 @@ void Gif_SplitPalette(gif_palette_t *pal, uint8_t *image, int numPixels, int fir
                 uint32_t r=0, g=0, b=0;
                 for (ii=0; ii<numPixels; ++ii)
                 {
-                    r = MAX(r, image[ii*4+0]);
-                    g = MAX(g, image[ii*4+1]);
-                    b = MAX(b, image[ii*4+2]);
+                    r = max(r, image[ii*4+0]);
+                    g = max(g, image[ii*4+1]);
+                    b = max(b, image[ii*4+2]);
                 }
                 
                 pal->r[firstElt] = r;
@@ -425,33 +431,33 @@ void Gif_DitherImage(gif_palette_t *pPal, const uint8_t *lastFrame, const uint8_
             if(quantloc_7 < numPixels)
             {
                 int32_t *pix7 = quantPixels+4*quantloc_7;
-                pix7[0] += MAX( -pix7[0], r_err * 7 / 16 );
-                pix7[1] += MAX( -pix7[1], g_err * 7 / 16 );
-                pix7[2] += MAX( -pix7[2], b_err * 7 / 16 );
+                pix7[0] += max( -pix7[0], r_err * 7 / 16 );
+                pix7[1] += max( -pix7[1], g_err * 7 / 16 );
+                pix7[2] += max( -pix7[2], b_err * 7 / 16 );
             }
             
             if(quantloc_3 < numPixels)
             {
                 int32_t *pix3 = quantPixels+4*quantloc_3;
-                pix3[0] += MAX( -pix3[0], r_err * 3 / 16 );
-                pix3[1] += MAX( -pix3[1], g_err * 3 / 16 );
-                pix3[2] += MAX( -pix3[2], b_err * 3 / 16 );
+                pix3[0] += max( -pix3[0], r_err * 3 / 16 );
+                pix3[1] += max( -pix3[1], g_err * 3 / 16 );
+                pix3[2] += max( -pix3[2], b_err * 3 / 16 );
             }
             
             if(quantloc_5 < numPixels)
             {
                 int32_t *pix5 = quantPixels+4*quantloc_5;
-                pix5[0] += MAX( -pix5[0], r_err * 5 / 16 );
-                pix5[1] += MAX( -pix5[1], g_err * 5 / 16 );
-                pix5[2] += MAX( -pix5[2], b_err * 5 / 16 );
+                pix5[0] += max( -pix5[0], r_err * 5 / 16 );
+                pix5[1] += max( -pix5[1], g_err * 5 / 16 );
+                pix5[2] += max( -pix5[2], b_err * 5 / 16 );
             }
             
             if(quantloc_1 < numPixels)
             {
                 int32_t *pix1 = quantPixels+4*quantloc_1;
-                pix1[0] += MAX( -pix1[0], r_err / 16 );
-                pix1[1] += MAX( -pix1[1], g_err / 16 );
-                pix1[2] += MAX( -pix1[2], b_err / 16 );
+                pix1[0] += max( -pix1[0], r_err / 16 );
+                pix1[1] += max( -pix1[1], g_err / 16 );
+                pix1[2] += max( -pix1[2], b_err / 16 );
             }
         }
     }

@@ -269,7 +269,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\applications\build_view_reconstruction.cc" />
     <ClCompile Include="..\common\BoundingBox.cpp" />
-    <ClCompile Include="..\common\gif.c" />
+    <ClCompile Include="..\common\Gif.cpp" />
     <ClCompile Include="..\common\utility_common.cpp" />
     <ClCompile Include="..\common\WriteGIF.cpp" />
   </ItemGroup>

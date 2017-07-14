@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <stlplus3/file_system.hpp>
 #include "theia/util/filesystem.h"
+#include "gif.h"
 
 void CreateDirectoryIfDoesNotExist(const std::string& directory) {
 	if (!theia::DirectoryExists(directory)) {
@@ -273,6 +274,45 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 
 	if (std::string::npos != strFormat.find("gif"))
 	{
+#if 0
+		std::ostringstream osIn;
+		osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << 0 << ".bmp";
+		ClImgBMP	bmp;
+		bmp.LoadImage(osIn.str().c_str());
+		std::string strPathGIF(strOutput);
+		strPathGIF += outputName + ".gif";
+
+		int gDelay = 1.0 / fps * 100;
+		int gWidth = bmp.bmpInfoHeaderData.biWidth;
+		int gHeight = bmp.bmpInfoHeaderData.biHeight;
+		gif_writer_t   gw;
+		Gif_Begin(&gw, strPathGIF.c_str(), gWidth,
+			gHeight, gDelay, 8, false);
+
+		uint8_t *imgFrame = new uint8_t[4 * gWidth*gHeight];
+		for (int n = 0; n < nImageCountOutput; ++n)
+		{
+			std::ostringstream os;
+			os << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << n << ".bmp";
+			bmp.LoadImage(os.str().c_str());
+
+			// 写入gw的图片数据为rgba8888格式
+
+			int nScanLine = (gWidth * 3 + 3) / 4 * 4;
+			for (int i = 0; i < gHeight; i++)
+				for (int k = 0; k < gWidth; k++)
+				{
+					*(imgFrame + i*gWidth * 4 + k * 4 + 0) = *(bmp.imgData + i*nScanLine + k * 3 + 0);
+					*(imgFrame + i*gWidth * 4 + k * 4 + 1) = *(bmp.imgData + i*nScanLine + k * 3 + 1);
+					*(imgFrame + i*gWidth * 4 + k * 4 + 2) = *(bmp.imgData + i*nScanLine + k * 3 + 2);
+					//*(imgFrame + k * 4 + 3) = 0xff;
+					// rgba中的a不起作用，赋不赋值不影响
+				}
+			Gif_WriteFrame(&gw, imgFrame, gWidth, gHeight, gDelay, 8, false);
+		}
+		delete imgFrame;
+		Gif_End(&gw);
+#else
 		gif::GIF* g = gif::newGIF(1.0 / fps * 100); // unit: ten millisecond
 		ClImgBMP	bmp;
 		std::string strPathGIF(strOutput);
@@ -290,6 +330,7 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 		gif::write(g, strPathGIF.c_str());
 
 		gif::dispose(g);	g = NULL;
+#endif
 	}
 
 

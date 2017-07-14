@@ -11,7 +11,7 @@
     <ClCompile Include="..\common\utility_common.cpp">
       <Filter>custom</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\gif.c">
+    <ClCompile Include="..\common\Gif.cpp">
       <Filter>custom</Filter>
     </ClCompile>
   </ItemGroup>
