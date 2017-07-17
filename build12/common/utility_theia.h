@@ -274,7 +274,7 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 
 	if (std::string::npos != strFormat.find("gif"))
 	{
-#if 0
+#if 1
 		std::ostringstream osIn;
 		osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << 0 << ".bmp";
 		ClImgBMP	bmp;
@@ -302,9 +302,9 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 			for (int i = 0; i < gHeight; i++)
 				for (int k = 0; k < gWidth; k++)
 				{
-					*(imgFrame + i*gWidth * 4 + k * 4 + 0) = *(bmp.imgData + i*nScanLine + k * 3 + 0);
+					*(imgFrame + i*gWidth * 4 + k * 4 + 0) = *(bmp.imgData + i*nScanLine + k * 3 + 2);
 					*(imgFrame + i*gWidth * 4 + k * 4 + 1) = *(bmp.imgData + i*nScanLine + k * 3 + 1);
-					*(imgFrame + i*gWidth * 4 + k * 4 + 2) = *(bmp.imgData + i*nScanLine + k * 3 + 2);
+					*(imgFrame + i*gWidth * 4 + k * 4 + 2) = *(bmp.imgData + i*nScanLine + k * 3 + 0);
 					//*(imgFrame + k * 4 + 3) = 0xff;
 					// rgba中的a不起作用，赋不赋值不影响
 				}
