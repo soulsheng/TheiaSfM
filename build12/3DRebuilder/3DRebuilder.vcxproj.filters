@@ -84,6 +84,9 @@
     <ClInclude Include="..\common\utility_common.h">
       <Filter>custom</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\gif.h">
+      <Filter>custom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DRebuilder.cpp">
@@ -123,6 +126,9 @@
       <Filter>custom</Filter>
     </ClCompile>
     <ClCompile Include="..\common\utility_common.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Gif.cpp">
       <Filter>custom</Filter>
     </ClCompile>
   </ItemGroup>

@@ -114,6 +114,7 @@
     <ClInclude Include="..\common\BoundingBox.h" />
     <ClInclude Include="..\common\common_type.h" />
     <ClInclude Include="..\common\FPSCounter.h" />
+    <ClInclude Include="..\common\gif.h" />
     <ClInclude Include="..\common\glCameraNode.h" />
     <ClInclude Include="..\common\LaunchPMVS2.h" />
     <ClInclude Include="..\common\simpleBMP.h" />
@@ -134,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="..\common\BoundingBox.cpp" />
     <ClCompile Include="..\common\FPSCounter.cpp" />
+    <ClCompile Include="..\common\Gif.cpp" />
     <ClCompile Include="..\common\glCameraNode.cpp" />
     <ClCompile Include="..\common\utility_common.cpp" />
     <ClCompile Include="..\common\WriteGIF.cpp" />

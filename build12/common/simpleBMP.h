@@ -86,7 +86,7 @@ bool ClImgBMP::LoadImage(const char* path)
 		}
 		// Get offset of every scanline,length(scanline)=length(pixel)+offset
 		int offset = 0;
-		int linelength = bmpInfoHeaderData.biWidth * channels;
+		int linelength = (bmpInfoHeaderData.biWidth * channels + 3) / 4 * 4;
 		offset = linelength % 4;
 		if (offset > 0)
 		{

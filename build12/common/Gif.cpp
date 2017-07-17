@@ -5,6 +5,7 @@
  * Email me : ctangora -at- gmail -dot- com
  */
 
+#include "stdafx.h"
 #include "Gif.h"
 //#include "KitsuneMath.h"
 #include "math.h"
@@ -725,7 +726,7 @@ void Gif_WriteLzwImage(gif_palette_t *pPal, FILE *f, uint8_t *image, uint32_t le
 
 int Gif_Begin(gif_writer_t *writer, const char *filename, uint32_t width, uint32_t height, uint32_t delay, int32_t bitDepth, int dither)
 {
-    writer->f = fopen(filename, "wb");
+	fopen_s(&writer->f, filename, "wb");
 
     if(!writer->f)
     	return 0;
