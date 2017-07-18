@@ -152,6 +152,7 @@ BEGIN
     END
     POPUP "视图(&V)"
     BEGIN
+        MENUITEM "输出(&O)",                      ID_OUTPUT_RESULT
         MENUITEM "截屏(&P)",                      ID_PRINT_SCREEN
         POPUP "工具栏和停靠窗口(&T)"
         BEGIN

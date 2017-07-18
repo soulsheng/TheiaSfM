@@ -91,6 +91,7 @@ BEGIN_MESSAGE_MAP(CMy3DRebuilderView, CView)
 	ON_COMMAND(ID_PRINT_SCREEN, &CMy3DRebuilderView::OnPrintScreen)
 	ON_COMMAND(ID_REBUILD_ONE_KEY, &CMy3DRebuilderView::OnRebuildOneKey)
 	ON_COMMAND(ID_MENU_OPEN_MANUAL, &CMy3DRebuilderView::OnOpenUserManual)
+	ON_COMMAND(ID_OUTPUT_RESULT, &CMy3DRebuilderView::OnOutputResult)
 END_MESSAGE_MAP()
 
 // CMy3DRebuilderView 构造/析构
@@ -1290,4 +1291,14 @@ void CMy3DRebuilderView::setOutputName(std::string name)
 void CMy3DRebuilderView::setOutputLength(int nSize)
 {
 	FLAGS_length = nSize;
+}
+
+
+void CMy3DRebuilderView::OnOutputResult()
+{
+	// TODO:  在此添加命令处理程序代码
+	m_bDenseFinish = true;
+	min_num_views_for_track = FLAGS_fps * FLAGS_length;
+	
+	bOutputEnable = true;
 }

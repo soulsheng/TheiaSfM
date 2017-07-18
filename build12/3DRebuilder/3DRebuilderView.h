@@ -144,6 +144,7 @@ public:
 	void setOutputName(std::string name);
 	void setOutputLength(int nSize);
 
+	afx_msg void OnOutputResult();
 };
 
 #ifndef _DEBUG  // 3DRebuilderView.cpp 中的调试版本

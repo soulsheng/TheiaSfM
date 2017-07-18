@@ -61,13 +61,14 @@
 #define ID_PRINT_SCREEN                 32778
 #define ID_REBUILD_ONE_KEY              32779
 #define ID_MENU_OPEN_MANUAL             32780
+#define ID_OUTPUT_RESULT                32781
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        313
-#define _APS_NEXT_COMMAND_VALUE         32781
+#define _APS_NEXT_COMMAND_VALUE         32782
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
