@@ -288,7 +288,7 @@ void CPropertiesWnd::InitPropList()
 	pGroup = new CMFCPropertyGridProperty(_T("显示"));
 
 	// 背景颜色
-	CMFCPropertyGridColorProperty* pColorPropBG = new CMFCPropertyGridColorProperty(_T("背景颜色"), RGB(128, 150, 200), NULL, _T("指定默认的窗口颜色"));
+	CMFCPropertyGridColorProperty* pColorPropBG = new CMFCPropertyGridColorProperty(_T("背景颜色"), RGB(128, 150, 200), NULL, _T("指定背景颜色，默认天蓝色"));
 	pColorPropBG->EnableOtherButton(_T("其他..."));
 	pColorPropBG->EnableAutomaticButton(_T("默认"), ::GetSysColor(COLOR_3DFACE));
 	//pGroup3->AddSubItem(pColorProp);
@@ -296,7 +296,7 @@ void CPropertiesWnd::InitPropList()
 
 
 	// 点云颜色
-	CMFCPropertyGridColorProperty* pColorPropPoint = new CMFCPropertyGridColorProperty(_T("点云颜色"), RGB(0, 250, 0), NULL, _T("指定默认的窗口颜色"));
+	CMFCPropertyGridColorProperty* pColorPropPoint = new CMFCPropertyGridColorProperty(_T("点云颜色"), RGB(0, 250, 0), NULL, _T("点云颜色，默认绿色"));
 	pColorPropPoint->EnableOtherButton(_T("其他..."));
 	pColorPropPoint->EnableAutomaticButton(_T("默认"), ::GetSysColor(COLOR_3DFACE));
 	//pGroup3->AddSubItem(pColorProp);
