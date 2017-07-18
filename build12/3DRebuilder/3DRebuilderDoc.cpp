@@ -45,6 +45,11 @@ BOOL CMy3DRebuilderDoc::OnNewDocument()
 	// TODO:  在此添加重新初始化代码
 	// (SDI 文档将重用该文档)
 
+	if (!CDocument::OnNewDocument())
+		return FALSE;
+
+	SetTitle("sdioi");
+
 	return TRUE;
 }
 
