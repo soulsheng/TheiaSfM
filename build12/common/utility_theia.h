@@ -275,16 +275,14 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 	if (std::string::npos != strFormat.find("gif"))
 	{
 #if 1
-		std::ostringstream osIn;
-		osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << 0 << ".bmp";
 		ClImgBMP	bmp;
-		bmp.LoadImage(osIn.str().c_str());
+
 		std::string strPathGIF(strOutput);
 		strPathGIF += outputName + ".gif";
 
 		int gDelay = 1.0 / fps * 100;
-		int gWidth = bmp.bmpInfoHeaderData.biWidth;
-		int gHeight = bmp.bmpInfoHeaderData.biHeight;
+		int gWidth = width;
+		int gHeight = height;
 		gif_writer_t   gw;
 		Gif_Begin(&gw, strPathGIF.c_str(), gWidth,
 			gHeight, gDelay, 8, false);
@@ -436,6 +434,7 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 		if (!breturn)
 		{
 			std::cout << osIn.str() << "图片文件未找到或无法删除！";
+			LOG(INFO) << osIn.str() << "图片文件未找到或无法删除！";
 		}
 
 	}

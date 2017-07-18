@@ -450,6 +450,7 @@ void CMy3DRebuilderView::renderScene()
 				bOutputEnable = false;
 				nPrintScreen = 0;
 			}
+			m_bDenseFinish = false;
 		}
 	}
 }
