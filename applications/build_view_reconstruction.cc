@@ -164,6 +164,12 @@ int main(int argc, char* argv[]) {
   FLAGS_pmvs_working_directory = FLAGS_input_images + "pmvs\\";
   FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
 
+  //############### Logging Options ###############
+  //  # Logging verbosity.
+  FLAGS_logtostderr = false;
+  // # Increase this number to get more verbose logging.
+  FLAGS_v = 1;
+
   min_num_views_for_track = FLAGS_fps * FLAGS_length;
 
   ReCreateDirectory(FLAGS_matching_working_directory);
