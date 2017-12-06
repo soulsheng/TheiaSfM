@@ -78,7 +78,7 @@ DEFINE_string(input_images, "",
 	"the reconstructions. Must contain a trailing slash.");
 
 // Multithreading.
-DEFINE_int32(num_threads, 1,
+DEFINE_int32(num_threads, 4,
              "Number of threads to use for feature extraction and matching.");
 
 // Feature and matching options.
