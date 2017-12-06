@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>--input_images=E:\3d\best-0417-40\ --output_images=E:\3d\output\ --same_color=0 --color_point=(0,255,0) --color_sky=(0,0,0) --point_size=3 --eye_position=(0,0,0) --eye_angle=(0,0,0) --flagfile=E:\3d\exe\build_reconstruction_flags.txt --view=1 --build=0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--input_images=E:\3d\2017_03-5\ --output_images=E:\3d\output\ --flagfile=E:\3d\exe\build_reconstruction_flags.txt</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>-input_images=E:\3d\best-2017_03-tri-30\ --output_images=E:\3d\output\ --same_color=0 --color_point=(0,255,0) --color_sky=(0,0,0) --point_size=3 --eye_position=(0,0,0) --eye_angle=(0,0,0) --flagfile=E:\3d\exe\build_reconstruction_flags.txt --view=1 --build=0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-input_images=E:\3d\best-2017_03-tri-30\ --output_images=E:\3d\output\ -flagfile=E:\3d\exe\build_reconstruction_flags.txt</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

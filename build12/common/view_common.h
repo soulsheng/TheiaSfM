@@ -533,14 +533,6 @@ void RenderScene() {
 		if (FLAGS_exit_fast)
 			exit(0);
 	}
-#if 0
-	  if (min_num_views_for_track == -1 && FLAGS_output_image_type == 1)
-	  {
-		  bmp2gif	b2g(100);
-		  std::string strPathGIF = strPathBMP + "1.GIF";
-		  b2g.run(strPathBMP.c_str(), strPathGIF.c_str(), 10);
-	  }
-#endif
 
 	  glutSwapBuffers();
 

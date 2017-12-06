@@ -41,7 +41,7 @@ DEFINE_string(eye_position, "(-50,180,550)", "position of eye.");
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
 DEFINE_string(output_image_directory, "E:\\3d\\output\\", "output image directory");
-DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
+//DEFINE_int32(output_image_type, 1, "0 bmp, 1 gif, 2 mp4 ");
 DEFINE_string(distance, "(0.1,0.6,0.2)", "set distance of view");
 DEFINE_int32(view_type, 0, "0-perspective, 1-camera, 2-top, 3-free, 4-common");
 DEFINE_bool(swap_yz, false, "swap y and z");

@@ -101,8 +101,8 @@ DEFINE_int32(matching_max_num_images_in_cache, 128,
              "Maximum number of images to store in the LRU cache during "
              "feature matching. The higher this number is the more memory is "
              "consumed during matching.");
-DEFINE_double(lowes_ratio, 0.8, "Lowes ratio used for feature matching.");
-DEFINE_double(max_sampson_error_for_verified_match, 4.0,
+DEFINE_double(lowes_ratio, 0.75, "Lowes ratio used for feature matching.");
+DEFINE_double(max_sampson_error_for_verified_match, 6.0,
               "Maximum sampson error for a match to be considered "
               "geometrically valid. This threshold is relative to an image "
               "with a width of 1024 pixels and will be appropriately scaled "
@@ -119,7 +119,7 @@ DEFINE_bool(keep_only_symmetric_matches, true,
 // Reconstruction building options.
 DEFINE_string(reconstruction_estimator, "GLOBAL",
               "Type of SfM reconstruction estimation to use.");
-DEFINE_bool(reconstruct_largest_connected_component, false,
+DEFINE_bool(reconstruct_largest_connected_component, true,
             "If set to true, only the single largest connected component is "
             "reconstructed. Otherwise, as many models as possible are "
             "estimated.");
@@ -204,7 +204,7 @@ DEFINE_bool(bundle_adjust_tracks, true,
             "Set to true to optimize tracks immediately upon estimation.");
 
 // Bundle adjustment parameters.
-DEFINE_string(bundle_adjustment_robust_loss_function, "NONE",
+DEFINE_string(bundle_adjustment_robust_loss_function, "HUBER",
               "By setting this to an option other than NONE, a robust loss "
               "function will be used during bundle adjustment which can "
               "improve robustness to outliers. Options are NONE, HUBER, "
