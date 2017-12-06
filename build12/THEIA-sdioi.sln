@@ -32,6 +32,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flann_cpp_s", "libraries\fl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "view_reconstruction", "applications\view_reconstruction.vcxproj", "{6854136B-20CD-4CEA-BBA5-0FD67954A8E7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dll_reconstruction", "dll_reconstruction\dll_reconstruction.vcxproj", "{2EF7A187-DD20-47FF-A7F1-FD8693C45258}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -120,6 +122,14 @@ Global
 		{6854136B-20CD-4CEA-BBA5-0FD67954A8E7}.Release|Win32.Build.0 = Release|Win32
 		{6854136B-20CD-4CEA-BBA5-0FD67954A8E7}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
 		{6854136B-20CD-4CEA-BBA5-0FD67954A8E7}.RelWithDebInfo|Win32.Build.0 = RelWithDebInfo|Win32
+		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.Debug|Win32.Build.0 = Debug|Win32
+		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.Release|Win32.ActiveCfg = Release|Win32
+		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.Release|Win32.Build.0 = Release|Win32
+		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

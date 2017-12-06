@@ -66,10 +66,10 @@
 #define		PI		3.1415926	
 
 DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
-DEFINE_bool(same_color, false, "bool on/off to use same color for point. eg:0 ");
-DEFINE_int32(point_size, 1, "bool on/off to use same color for point. eg:0 ");
-DEFINE_string(color_sky, "(128,150,200)", "color of sky. eg:(128,150,200)blue ");
-DEFINE_string(color_point, "(255,255,255)", "color of point. eg:(255,255,255)white ");
+DEFINE_bool(same_color, true, "bool on/off to use same color for point. eg:0 ");
+DEFINE_int32(point_size, 3, "bool on/off to use same color for point. eg:0 ");
+DEFINE_string(color_sky, "(0,0,0)", "color of sky. eg:(128,150,200)blue ");
+DEFINE_string(color_point, "(0,255,0)", "color of point. eg:(255,255,255)white ");
 
 DEFINE_string(output_images, "./output/", "output image directory");
 DEFINE_string(format, "jpg+gif+avi+mp4", "jpg, gif, avi, mp4 ");
