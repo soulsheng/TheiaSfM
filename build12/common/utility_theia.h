@@ -110,8 +110,22 @@ void WritePMVSOptions(const std::string& working_dir,
 	ofs << "oimages 0" << std::endl;
 }
 
-bool export_to_pmvs(theia::Reconstruction& reconstruction, std::string& pmvsPath, bool undistort)
+bool export_to_pmvs(std::string& pmvsPath, bool undistort)
 {
+	Reconstruction reconstruction;
+
+	CHECK(ReadReconstruction(FLAGS_output_reconstruction, &reconstruction))
+		<< "Could not read reconstruction file.";
+
+	if (0 == reconstruction.NumViews())
+		return false;
+
+	if (reconstruction.NumViews())
+	{
+		// Centers the reconstruction based on the absolute deviation of 3D points.
+		reconstruction.Normalize();
+	}
+
 	// Set up output directories.
 	CreateDirectoryIfDoesNotExist(pmvsPath);
 	const std::string visualize_dir = pmvsPath + "\\visualize";
@@ -194,9 +208,10 @@ std::string formatStructure(theia::ReconstructionBuilderOptions options)
 	return std::string(os.str());
 }
 
-
-bool build_reconstruction(Reconstruction* &reconstruction, std::string& strPathExe, std::string& inputImageDir)
+bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir)
 {
+	Reconstruction reconstruction;
+
 	LOG(INFO) << "开始执行稀疏重建：";
 	
 	const ReconstructionBuilderOptions options =
@@ -231,7 +246,7 @@ bool build_reconstruction(Reconstruction* &reconstruction, std::string& strPathE
 		if (reconstructions.size() && reconstructions[0]->NumTracks())
 		{
 			LOG(INFO) << "稀疏重建三维点的数目为：" << reconstructions[0]->NumTracks();
-			reconstruction = reconstructions[0];
+			reconstruction = *reconstructions[0];
 		}
 		else
 		{
@@ -242,10 +257,10 @@ bool build_reconstruction(Reconstruction* &reconstruction, std::string& strPathE
 		LOG(INFO) << "开始为点云配置颜色：";
 		theia::ColorizeReconstruction(inputImageDir,
 			FLAGS_num_threads,
-			reconstruction);
+			&reconstruction);
 		LOG(INFO) << "为点云配置颜色完成！";
 
-		theia::WriteReconstruction(*reconstruction,
+		theia::WriteReconstruction(reconstruction,
 			FLAGS_output_reconstruction);
 
 		return true;

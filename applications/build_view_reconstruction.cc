@@ -71,7 +71,7 @@ DEFINE_string(pmvs_working_directory, "",
 	"A directory to store the necessary pmvs files.");
 DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 #endif
-Reconstruction* current_reconstruction=NULL;
+//Reconstruction* current_reconstruction=NULL;
 
 //Eigen::Vector3f eye_position;
 //Eigen::Vector3f eye_position_default;
@@ -98,11 +98,9 @@ void	convertSparseToDense()
 	if (!FLAGS_build)
 		return;
 
-	if (0 == current_reconstruction->NumViews())
-		return;
-
 #if 1
-	export_to_pmvs(*current_reconstruction, FLAGS_pmvs_working_directory, FLAGS_undistort);
+	if ( !export_to_pmvs(FLAGS_pmvs_working_directory, FLAGS_undistort) )
+		return;
 #endif
 
 
@@ -138,7 +136,15 @@ void	viewDenseResult()
 	LOG(INFO) << "输出稠密重建结果！";
 }
 
-void kernelReBuild(std::string &exePath, std::string inputImageDir)
+void kernelReBuildDense()
+{
+
+	
+
+	convertSparseToDense();
+}
+
+void kernelReBuildSparse(std::string &exePath, std::string inputImageDir)
 {
 	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 	google::InitGoogleLogging(exePath.c_str());
@@ -175,41 +181,17 @@ void kernelReBuild(std::string &exePath, std::string inputImageDir)
 
   ReCreateDirectory(FLAGS_matching_working_directory);
 
-  Reconstruction* reconstruction = NULL;
-  if (FLAGS_build_sparse && FLAGS_build)
-  {
-	  build_reconstruction(reconstruction, strPathExe, inputImageDir);
-  }
-  else
-  {
-	  reconstruction = new theia::Reconstruction();
 
-	  CHECK(ReadReconstruction(FLAGS_output_reconstruction, reconstruction))
-		  << "Could not read reconstruction file.";
+  build_reconstruction(strPathExe, inputImageDir);
 
-  }
 
-  current_reconstruction = reconstruction;
+}
 
-	  // view sparse 
-	  prepare_points_to_draw(reconstruction);
+void render3DResult(std::string &exePath, std::string outputImageDir)
+{
+	viewDenseResult();
 
-  if (FLAGS_view_sparse)
-  {
-
-	  min_num_views_for_track = 0;
-
-	  box.calculate(world_points);
-
-	  FLAGS_view_type = VIEW_CAMERA;
-
-	  setDefaultCameraProperty();
-  }
-  else
-  {
-	  convertSparseToDense();
-	  viewDenseResult();
-  }
+	gl_draw_points(1, (char*)exePath.c_str(), outputImageDir);
 }
 
 int main(int argc, char* argv[]) {
@@ -221,9 +203,11 @@ int main(int argc, char* argv[]) {
 	std::string inputImageDir = argv[1];
 	std::string outputImageDir = argv[2];
 	
-	kernelReBuild(exePath, inputImageDir);
+	kernelReBuildSparse(exePath, inputImageDir);
 
-  gl_draw_points(1, (char*)exePath.c_str(), outputImageDir);
+	kernelReBuildDense();
+
+	render3DResult(exePath, outputImageDir);
 
   return 0;
 }
