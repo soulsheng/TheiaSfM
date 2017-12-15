@@ -827,12 +827,12 @@ void getInt3FromString(std::string str, int * cColor)
 	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
 }
 
-void gl_draw_points(int argc, char** argv, std::string& output_images)
+void gl_draw_points(int argc, char* argv, std::string& output_images)
 {
 	FLAGS_output_images = output_images;
 
 	// Set up opengl and glut.
-	glutInit(&argc, argv);
+	glutInit(&argc, &argv);
 	glutInitWindowPosition(window_position[0], window_position[1]);
 	window_size[0] = FLAGS_width;
 	window_size[1] = FLAGS_height;

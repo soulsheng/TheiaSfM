@@ -138,16 +138,9 @@ void	viewDenseResult()
 	LOG(INFO) << "输出稠密重建结果！";
 }
 
-int main(int argc, char* argv[]) {
-
-	if (argc < 3)
-		return -1;
-
-	std::string exePath = argv[0];
-	std::string inputImageDir = argv[1];
-	std::string outputImageDir = argv[2];
-	
-  //THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+void kernelReBuild(std::string &exePath, std::string inputImageDir)
+{
+	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 	google::InitGoogleLogging(exePath.c_str());
 
 
@@ -217,8 +210,20 @@ int main(int argc, char* argv[]) {
 	  convertSparseToDense();
 	  viewDenseResult();
   }
+}
 
-  gl_draw_points(argc, argv, outputImageDir);
+int main(int argc, char* argv[]) {
+
+	if (argc < 3)
+		return -1;
+
+	std::string exePath = argv[0];
+	std::string inputImageDir = argv[1];
+	std::string outputImageDir = argv[2];
+	
+	kernelReBuild(exePath, inputImageDir);
+
+  gl_draw_points(1, (char*)exePath.c_str(), outputImageDir);
 
   return 0;
 }
