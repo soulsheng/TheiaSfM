@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>-input_images=E:\3d\2017_03-5\ --output_images=E:\3d\output\</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>E:\3d\2017_03-5\ E:\3d\output\</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

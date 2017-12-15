@@ -195,7 +195,7 @@ std::string formatStructure(theia::ReconstructionBuilderOptions options)
 }
 
 
-bool build_reconstruction(Reconstruction* &reconstruction, std::string& strPathExe)
+bool build_reconstruction(Reconstruction* &reconstruction, std::string& strPathExe, std::string& inputImageDir)
 {
 	LOG(INFO) << "开始执行稀疏重建：";
 	
@@ -240,7 +240,7 @@ bool build_reconstruction(Reconstruction* &reconstruction, std::string& strPathE
 		}
 
 		LOG(INFO) << "开始为点云配置颜色：";
-		theia::ColorizeReconstruction(FLAGS_input_images,
+		theia::ColorizeReconstruction(inputImageDir,
 			FLAGS_num_threads,
 			reconstruction);
 		LOG(INFO) << "为点云配置颜色完成！";

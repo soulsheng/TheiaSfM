@@ -71,7 +71,7 @@ DEFINE_int32(point_size, 3, "bool on/off to use same color for point. eg:0 ");
 DEFINE_string(color_sky, "(0,0,0)", "color of sky. eg:(128,150,200)blue ");
 DEFINE_string(color_point, "(0,255,0)", "color of point. eg:(255,255,255)white ");
 
-DEFINE_string(output_images, "./output/", "output image directory");
+//DEFINE_string(output_images, "./output/", "output image directory");
 DEFINE_string(format, "jpg+gif+avi+mp4", "jpg, gif, avi, mp4 ");
 DEFINE_bool(y_flip, false, "y direction 1-up,  -1-down");
 DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
@@ -94,6 +94,7 @@ DEFINE_string(name, "0", "gif or mp4 file name");
 DEFINE_double(length, 5, "length of vedio, unit: seconds");
 
 std::string FLAGS_pmvs_working_directory;
+std::string FLAGS_output_images;
 
 Eigen::Vector2i window_position(200, 100);
 
@@ -663,7 +664,7 @@ void Keyboard(unsigned char key, int x, int y) {
 	  break;
 	case 'o':	// output jpg or  gif/mp4
 	  min_num_views_for_track = FLAGS_fps * FLAGS_length;
-
+#if 0
 	  if (FLAGS_save_camera)
 	  {
 		  std::string filename = FLAGS_input_images + "camera.txt";
@@ -672,6 +673,7 @@ void Keyboard(unsigned char key, int x, int y) {
 			   << navigation_rotation;
 		  fileCameraOut.close();
 	  }
+#endif
 	  break;
 	case 'w':	// z
 		eye_position.z() += speed;
@@ -791,7 +793,7 @@ void setDefaultCameraProperty()
 	default:
 		break;
 	}
-
+#if 0
 	if (FLAGS_save_camera)
 	{
 		std::string filename = FLAGS_input_images + "camera.txt";
@@ -803,7 +805,7 @@ void setDefaultCameraProperty()
 		}
 		fileCameraIn.close();
 	}
-
+#endif
 	if (VIEW_CAMERA == FLAGS_view_type)
 		getEyePositionFromSparseResult(fEyePosition);
 
@@ -825,8 +827,10 @@ void getInt3FromString(std::string str, int * cColor)
 	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
 }
 
-void gl_draw_points(int argc, char** argv)
+void gl_draw_points(int argc, char** argv, std::string& output_images)
 {
+	FLAGS_output_images = output_images;
+
 	// Set up opengl and glut.
 	glutInit(&argc, argv);
 	glutInitWindowPosition(window_position[0], window_position[1]);

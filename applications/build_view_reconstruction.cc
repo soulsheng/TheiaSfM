@@ -34,7 +34,7 @@
 
 #include <Eigen/Core>
 #include <glog/logging.h>
-#include <gflags/gflags.h>
+//#include <gflags/gflags.h>
 #include <theia/theia.h>
 #include <string>
 #include <vector>
@@ -139,29 +139,37 @@ void	viewDenseResult()
 }
 
 int main(int argc, char* argv[]) {
-  THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-  google::InitGoogleLogging(argv[0]);
+
+	if (argc < 3)
+		return -1;
+
+	std::string exePath = argv[0];
+	std::string inputImageDir = argv[1];
+	std::string outputImageDir = argv[2];
+	
+  //THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+	google::InitGoogleLogging(exePath.c_str());
 
 
-  google::SetLogDestination(google::GLOG_INFO, argv[0]);
+	google::SetLogDestination(google::GLOG_INFO, exePath.c_str());
   google::SetLogDestination(google::GLOG_ERROR, "");
   google::SetLogDestination(google::GLOG_WARNING, "");
   google::SetLogFilenameExtension(".log");
 
-  std::string logFilename = std::string(argv[0]) + ".log";
+  std::string logFilename = std::string(exePath.c_str()) + ".log";
   if (theia::FileExists(logFilename))
 	unlink(logFilename.c_str());
 
-  strPathExe = argv[0];
+  strPathExe = exePath.c_str();
   strPathExe = strPathExe.substr(0, strPathExe.find_last_of("\\") + 1);
 
   //google::ReadFromFlagsFile(FLAG_FILE_NAME, strPathExe.c_str(), false);
   //std::cout << "exe path..." << strPathExe << std::endl;
-  FLAGS_images = FLAGS_input_images + "*.jpg";
-  FLAGS_output_matches_file = FLAGS_input_images + "output.matches";
-  FLAGS_output_reconstruction = FLAGS_input_images + "result";
-  FLAGS_matching_working_directory = FLAGS_input_images + "features\\";
-  FLAGS_pmvs_working_directory = FLAGS_input_images + "pmvs\\";
+  FLAGS_images = inputImageDir + "*.jpg";
+  FLAGS_output_matches_file = inputImageDir + "output.matches";
+  FLAGS_output_reconstruction = inputImageDir + "result";
+  FLAGS_matching_working_directory = inputImageDir + "features\\";
+  FLAGS_pmvs_working_directory = inputImageDir + "pmvs\\";
   FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
 
   //############### Logging Options ###############
@@ -177,7 +185,7 @@ int main(int argc, char* argv[]) {
   Reconstruction* reconstruction = NULL;
   if (FLAGS_build_sparse && FLAGS_build)
   {
-	  build_reconstruction(reconstruction, strPathExe);
+	  build_reconstruction(reconstruction, strPathExe, inputImageDir);
   }
   else
   {
@@ -210,7 +218,7 @@ int main(int argc, char* argv[]) {
 	  viewDenseResult();
   }
 
-  gl_draw_points(argc, argv);
+  gl_draw_points(argc, argv, outputImageDir);
 
   return 0;
 }

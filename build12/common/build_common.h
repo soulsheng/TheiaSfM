@@ -72,11 +72,11 @@ DEFINE_string(matching_working_directory, "",
 	"Directory used during matching to store features for "
 	"out-of-core matching.");
 #endif
-
+/*
 DEFINE_string(input_images, "",
 	"Full path to the directory containing the images used to create "
 	"the reconstructions. Must contain a trailing slash.");
-
+*/
 // Multithreading.
 DEFINE_int32(num_threads, 4,
              "Number of threads to use for feature extraction and matching.");
