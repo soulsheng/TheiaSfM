@@ -32,167 +32,9 @@
 // Please contact the author of this library if you have any questions.
 // Author: Chris Sweeney (cmsweeney@cs.ucsb.edu)
 
-#include <Eigen/Core>
-#include <glog/logging.h>
-//#include <gflags/gflags.h>
-#include <theia/theia.h>
+#include "RebuildAPI.h"
+
 #include <string>
-#include <vector>
-
-#include "build_common.h"
-#include "view_common.h"
-
-
-#include "theia/io/read_ply_file.h"
-
-#include "utility_theia.h"
-
-#include "LaunchPMVS2.h"
-
-typedef std::string	String;
-
-
-DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
-
-DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
-
-DEFINE_bool(build_sparse, true, "bool on/off to build. eg:0 ");
-
-DEFINE_int32(threshold_group, 35, "threshodGroup to filter group of outlier points.");
-
-#define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
-
-#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
-
-#if 1
-String FLAGS_ply_file;
-#else
-DEFINE_string(pmvs_working_directory, "",
-	"A directory to store the necessary pmvs files.");
-DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
-#endif
-//Reconstruction* current_reconstruction=NULL;
-
-//Eigen::Vector3f eye_position;
-//Eigen::Vector3f eye_position_default;
-
-// Rotation values for the navigation
-//Eigen::Vector2f navigation_rotation_default(60.0, 0.0);
-//Eigen::Vector2f navigation_rotation(navigation_rotation_default);
-
-//int n_fps = 240; // frame per second
-
-
-
-#include <fstream>  // NOLINT
-
-void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size)
-{
-	num_views_for_track.reserve(size);
-	for (int i = 0; i < size; i++)
-		num_views_for_track.emplace_back(rand() % min_num_views_for_track);
-}
-
-void	convertSparseToDense()
-{
-	if (!FLAGS_build)
-		return;
-
-#if 1
-	if ( !export_to_pmvs(FLAGS_pmvs_working_directory, FLAGS_undistort) )
-		return;
-#endif
-
-
-	LOG(INFO) << "开始执行稠密重建：";
-#if 1
-	run_pmvs(strPathExe.c_str(), FLAGS_pmvs_working_directory, FLAGS_threshold_group);
-#endif
-	LOG(INFO) << "执行稠密重建完成！";
-
-}
-
-void	viewDenseResult()
-{
-	world_points.clear();
-	point_normals.clear();
-	point_colors.clear();
-
-	clock_t tBegin = clock();
-	//std::cout << "ReadPlyFile begin: " << tBegin << std::endl;
-	if (!theia::ReadPlyFile(FLAGS_ply_file, world_points, point_normals, point_colors))
-		printf("can not open ply file!\n");
-	//std::cout << "ReadPlyFile cost " << (clock() - tBegin) / 1000 << " seconds" << std::endl;
-
-	rand_num_views_for_track(num_views_for_track, world_points.size());
-
-	box.calculate(world_points, FLAGS_swap_yz);
-
-	FLAGS_view_type = VIEW_PERSPECTIVE;
-
-	setDefaultCameraProperty();
-
-	LOG(INFO) << "稠密重建三维点的数目为：" << world_points.size();
-	LOG(INFO) << "输出稠密重建结果！";
-}
-
-void kernelReBuildDense()
-{
-
-	
-
-	convertSparseToDense();
-}
-
-void kernelReBuildSparse(std::string &exePath, std::string inputImageDir)
-{
-	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-	google::InitGoogleLogging(exePath.c_str());
-
-
-	google::SetLogDestination(google::GLOG_INFO, exePath.c_str());
-  google::SetLogDestination(google::GLOG_ERROR, "");
-  google::SetLogDestination(google::GLOG_WARNING, "");
-  google::SetLogFilenameExtension(".log");
-
-  std::string logFilename = std::string(exePath.c_str()) + ".log";
-  if (theia::FileExists(logFilename))
-	unlink(logFilename.c_str());
-
-  strPathExe = exePath.c_str();
-  strPathExe = strPathExe.substr(0, strPathExe.find_last_of("\\") + 1);
-
-  //google::ReadFromFlagsFile(FLAG_FILE_NAME, strPathExe.c_str(), false);
-  //std::cout << "exe path..." << strPathExe << std::endl;
-  FLAGS_images = inputImageDir + "*.jpg";
-  FLAGS_output_matches_file = inputImageDir + "output.matches";
-  FLAGS_output_reconstruction = inputImageDir + "result";
-  FLAGS_matching_working_directory = inputImageDir + "features\\";
-  FLAGS_pmvs_working_directory = inputImageDir + "pmvs\\";
-  FLAGS_ply_file = FLAGS_pmvs_working_directory + "models\\option-0000.ply";
-
-  //############### Logging Options ###############
-  //  # Logging verbosity.
-  FLAGS_logtostderr = false;
-  // # Increase this number to get more verbose logging.
-  FLAGS_v = 1;
-
-  min_num_views_for_track = FLAGS_fps * FLAGS_length;
-
-  ReCreateDirectory(FLAGS_matching_working_directory);
-
-
-  build_reconstruction(strPathExe, inputImageDir);
-
-
-}
-
-void render3DResult(std::string &exePath, std::string outputImageDir)
-{
-	viewDenseResult();
-
-	gl_draw_points(1, (char*)exePath.c_str(), outputImageDir);
-}
 
 int main(int argc, char* argv[]) {
 
@@ -203,11 +45,14 @@ int main(int argc, char* argv[]) {
 	std::string inputImageDir = argv[1];
 	std::string outputImageDir = argv[2];
 	
+	std::string str_pmvs_working_directory = inputImageDir + "pmvs\\";
+	std::string str_ply_file = str_pmvs_working_directory + "models\\option-0000.ply";
+
 	kernelReBuildSparse(exePath, inputImageDir);
 
-	kernelReBuildDense();
+	kernelReBuildDense(str_pmvs_working_directory, str_ply_file);
 
-	render3DResult(exePath, outputImageDir);
+	render3DResult(exePath, str_ply_file, outputImageDir, str_pmvs_working_directory);
 
   return 0;
 }

@@ -93,7 +93,7 @@ DEFINE_double(fps, 2, "frame per second");
 DEFINE_string(name, "0", "gif or mp4 file name");
 DEFINE_double(length, 5, "length of vedio, unit: seconds");
 
-std::string FLAGS_pmvs_working_directory;
+//std::string FLAGS_pmvs_working_directory;
 std::string FLAGS_output_images;
 
 Eigen::Vector2i window_position(200, 100);
@@ -156,8 +156,11 @@ int		nImageCountOutput=0;
 bool	bDenseFinish = false;
 bool	bOutputFinish = false;
 
-void	viewDenseResult();
-void	convertSparseToDense();
+std::string g_ply_file;
+std::string g_pmvsPath;
+
+void	viewDenseResult(std::string& ply_file);
+void	kernelReBuildDense(std::string& pmvsPath, std::string& ply_file);
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
   double focal_length = 800.0;
@@ -518,9 +521,9 @@ void RenderScene() {
 	{
 		if (!bDenseFinish && FLAGS_view_sparse)
 		{
-			convertSparseToDense();
+			kernelReBuildDense(g_pmvsPath, g_ply_file);
 			min_num_views_for_track = FLAGS_fps * FLAGS_length;
-			viewDenseResult();
+			viewDenseResult(g_ply_file);
 			bDenseFinish = true;
 			return;
 		}
@@ -827,8 +830,12 @@ void getInt3FromString(std::string str, int * cColor)
 	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
 }
 
-void gl_draw_points(int argc, char* argv, std::string& output_images)
+void gl_draw_points(int argc, char* argv, std::string& output_images, 
+	std::string& pmvsPath, std::string& ply_file )
 {
+	g_ply_file = ply_file;
+	g_pmvsPath = pmvsPath;
+
 	FLAGS_output_images = output_images;
 
 	// Set up opengl and glut.

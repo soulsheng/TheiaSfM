@@ -32,6 +32,8 @@
 // Please contact the author of this library if you have any questions.
 // Author: Chris Sweeney (cmsweeney@cs.ucsb.edu)
 
+#pragma once 
+
 #include <glog/logging.h>
 #include <gflags/gflags.h>
 #include <time.h>

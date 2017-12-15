@@ -270,6 +270,7 @@
     <ClCompile Include="..\..\applications\build_view_reconstruction.cc" />
     <ClCompile Include="..\common\BoundingBox.cpp" />
     <ClCompile Include="..\common\Gif.cpp" />
+    <ClCompile Include="..\common\RebuildAPI.cpp" />
     <ClCompile Include="..\common\utility_common.cpp" />
     <ClCompile Include="..\common\WriteGIF.cpp" />
   </ItemGroup>
@@ -300,6 +301,7 @@
     <ClInclude Include="..\common\build_common.h" />
     <ClInclude Include="..\common\gif.h" />
     <ClInclude Include="..\common\LaunchPMVS2.h" />
+    <ClInclude Include="..\common\RebuildAPI.h" />
     <ClInclude Include="..\common\simpleBMP.h" />
     <ClInclude Include="..\common\stdafx.h" />
     <ClInclude Include="..\common\utility_common.h" />

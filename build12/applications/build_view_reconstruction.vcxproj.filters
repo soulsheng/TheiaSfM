@@ -14,6 +14,7 @@
     <ClCompile Include="..\common\Gif.cpp">
       <Filter>custom</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\RebuildAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="custom">
@@ -53,5 +54,6 @@
     <ClInclude Include="..\common\gif.h">
       <Filter>custom</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\RebuildAPI.h" />
   </ItemGroup>
 </Project>
