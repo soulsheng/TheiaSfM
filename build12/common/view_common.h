@@ -94,7 +94,8 @@ DEFINE_string(name, "0", "gif or mp4 file name");
 DEFINE_double(length, 5, "length of vedio, unit: seconds");
 
 //std::string FLAGS_pmvs_working_directory;
-std::string FLAGS_output_images;
+std::string g_output_images;
+std::string g_input_images;
 
 Eigen::Vector2i window_position(200, 100);
 
@@ -500,7 +501,7 @@ void RenderScene() {
  
 	  static int nPrintScreen = 0;
 	  static int nFrameCount = 0;
-	  std::string strPathBMP = FLAGS_output_images;
+	  std::string strPathBMP = g_output_images;
 
 	  if (!theia::DirectoryExists(strPathBMP))
 		  theia::CreateNewDirectory(strPathBMP);
@@ -521,7 +522,7 @@ void RenderScene() {
 	{
 		if (!bDenseFinish && FLAGS_view_sparse)
 		{
-			kernelReBuildDense(g_pmvsPath, g_ply_file);
+			kernelReBuildDense(g_pmvsPath, g_ply_file, g_input_images);
 			min_num_views_for_track = FLAGS_fps * FLAGS_length;
 			viewDenseResult(g_ply_file);
 			bDenseFinish = true;
@@ -530,7 +531,7 @@ void RenderScene() {
 
 		if (!bOutputFinish)
 		{
-			compressBMP(FLAGS_format, nImageCountOutput, FLAGS_output_images,
+			compressBMP(FLAGS_format, nImageCountOutput, g_output_images,
 				strPathExe, FLAGS_name, FLAGS_fps, FLAGS_width, FLAGS_height);
 			bOutputFinish = true;
 		}
@@ -831,12 +832,13 @@ void getInt3FromString(std::string str, int * cColor)
 }
 
 void gl_draw_points(int argc, char* argv, std::string& output_images, 
-	std::string& pmvsPath, std::string& ply_file )
+	std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir)
 {
 	g_ply_file = ply_file;
 	g_pmvsPath = pmvsPath;
 
-	FLAGS_output_images = output_images;
+	g_output_images = output_images;
+	g_input_images = inputImageDir;
 
 	// Set up opengl and glut.
 	glutInit(&argc, &argv);

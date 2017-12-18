@@ -50,9 +50,9 @@ int main(int argc, char* argv[]) {
 
 	kernelReBuildSparse(exePath, inputImageDir);
 
-	kernelReBuildDense(str_pmvs_working_directory, str_ply_file);
+	kernelReBuildDense(str_pmvs_working_directory, str_ply_file, inputImageDir);
 
-	render3DResult(exePath, str_ply_file, outputImageDir, str_pmvs_working_directory);
+	render3DResult(exePath, str_ply_file, outputImageDir, str_pmvs_working_directory, inputImageDir);
 
   return 0;
 }

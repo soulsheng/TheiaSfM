@@ -29,6 +29,12 @@ DEFINE_bool(build_sparse, true, "bool on/off to build. eg:0 ");
 
 DEFINE_int32(threshold_group, 35, "threshodGroup to filter group of outlier points.");
 
+DEFINE_bool(use_gpu, true, "use gpu of sift and other modual.");
+
+// Multithreading.
+DEFINE_int32(num_threads, 4,
+	"Number of threads to use for feature extraction and matching.");
+
 #define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
 
 #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
@@ -52,13 +58,13 @@ void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size)
 		num_views_for_track.emplace_back(rand() % min_num_views_for_track);
 }
 
-void	kernelReBuildDense(std::string& pmvsPath, std::string& ply_file)
+void	kernelReBuildDense(std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir)
 {
 	if (!FLAGS_build)
 		return;
 
 #if 1
-	if (!export_to_pmvs(pmvsPath, FLAGS_undistort))
+	if (!export_to_pmvs(pmvsPath, FLAGS_undistort, inputImageDir, FLAGS_num_threads))
 		return;
 #endif
 
@@ -92,10 +98,8 @@ void kernelReBuildSparse(std::string &exePath, std::string& inputImageDir)
 
 	//google::ReadFromFlagsFile(FLAG_FILE_NAME, strPathExe.c_str(), false);
 	//std::cout << "exe path..." << strPathExe << std::endl;
-	FLAGS_images = inputImageDir + "*.jpg";
-	FLAGS_output_matches_file = inputImageDir + "output.matches";
-	FLAGS_output_reconstruction = inputImageDir + "result";
-	FLAGS_matching_working_directory = inputImageDir + "features\\";
+	std::string FLAGS_output_matches_file = inputImageDir + "output.matches";
+	std::string FLAGS_matching_working_directory = inputImageDir + "features\\";
 	
 
 	//############### Logging Options ###############
@@ -109,7 +113,7 @@ void kernelReBuildSparse(std::string &exePath, std::string& inputImageDir)
 	ReCreateDirectory(FLAGS_matching_working_directory);
 
 
-	build_reconstruction(strPathExe, inputImageDir);
+	build_reconstruction(strPathExe, inputImageDir, FLAGS_use_gpu, FLAGS_num_threads);
 
 
 }
@@ -139,9 +143,9 @@ void	viewDenseResult(std::string& ply_file)
 }
 
 void render3DResult(std::string &exePath, std::string& ply_file, std::string outputImageDir,
-	std::string& pmvsPath)
+	std::string& pmvsPath, std::string& inputImageDir)
 {
 	viewDenseResult(ply_file);
 
-	gl_draw_points(1, (char*)exePath.c_str(), outputImageDir, pmvsPath, ply_file);
+	gl_draw_points(1, (char*)exePath.c_str(), outputImageDir, pmvsPath, ply_file, inputImageDir);
 }
