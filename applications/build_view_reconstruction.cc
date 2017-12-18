@@ -33,6 +33,7 @@
 // Author: Chris Sweeney (cmsweeney@cs.ucsb.edu)
 
 #include "RebuildAPI.h"
+#include "view_common.h"
 
 #include <string>
 
@@ -48,9 +49,11 @@ int main(int argc, char* argv[]) {
 	std::string str_pmvs_working_directory = inputImageDir + "pmvs\\";
 	std::string str_ply_file = str_pmvs_working_directory + "models\\option-0000.ply";
 
+	reset_view();
+
 	kernelReBuildSparse(exePath, inputImageDir);
 
-	kernelReBuildDense(str_pmvs_working_directory, str_ply_file, inputImageDir);
+	kernelReBuildDense(exePath, str_pmvs_working_directory, str_ply_file, inputImageDir);
 
 	render3DResult(exePath, str_ply_file, outputImageDir, str_pmvs_working_directory, inputImageDir);
 
