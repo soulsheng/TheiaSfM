@@ -21,7 +21,5 @@ bool export_to_pmvs(std::string& pmvsPath, bool undistort, std::string& inputIma
 bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, 
 	bool use_gpu, const int FLAGS_num_threads);
 
-void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& strOutput,
-	std::string& strPathExe, std::string& outputName, int fps, int width, int height);
 
 #endif // UTILITY_THEIA_H

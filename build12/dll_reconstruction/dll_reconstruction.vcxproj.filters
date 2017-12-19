@@ -13,17 +13,56 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="custom">
+      <UniqueIdentifier>{fa1fbe57-b984-4602-bc41-bfa9fe714492}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dll_reconstruction.h">
+    <ClInclude Include="..\common\bmp2gif.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\bmpHeader.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\LaunchPMVS2.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\simpleBMP.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\stdafx.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\utility_common.h">
+      <Filter>custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\build_common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\RebuildAPI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\utility_theia.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dll_reconstruction.cpp">
+    <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="dllmain.cpp">
+    <ClCompile Include="..\common\LaunchPMVS2.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\utility_common.cpp">
+      <Filter>custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\build_common.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\RebuildAPI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\utility_theia.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

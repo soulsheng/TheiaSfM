@@ -2,62 +2,15 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\applications\build_view_reconstruction.cc" />
-    <ClCompile Include="..\common\WriteGIF.cpp">
-      <Filter>custom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\BoundingBox.cpp">
-      <Filter>custom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\utility_common.cpp">
-      <Filter>custom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\Gif.cpp">
-      <Filter>custom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\RebuildAPI.cpp" />
-    <ClCompile Include="..\common\build_common.cpp" />
     <ClCompile Include="..\common\view_common.cpp" />
-    <ClCompile Include="..\common\utility_theia.cpp" />
-    <ClCompile Include="..\common\LaunchPMVS2.cpp">
-      <Filter>custom</Filter>
-    </ClCompile>
+    <ClCompile Include="..\common\BoundingBox.cpp" />
+    <ClCompile Include="..\common\Gif.cpp" />
+    <ClCompile Include="..\common\WriteGIF.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="custom">
-      <UniqueIdentifier>{77eeab37-ea42-4521-a3a3-7430e4231522}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\common\bmp2gif.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\bmpHeader.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\simpleBMP.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\WriteGIF.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\stdafx.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\build_common.h" />
     <ClInclude Include="..\common\view_common.h" />
-    <ClInclude Include="..\common\BoundingBox.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\utility_common.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\LaunchPMVS2.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\gif.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\RebuildAPI.h" />
-    <ClInclude Include="..\common\utility_theia.h" />
+    <ClInclude Include="..\common\BoundingBox.h" />
+    <ClInclude Include="..\common\gif.h" />
+    <ClInclude Include="..\common\WriteGIF.h" />
   </ItemGroup>
 </Project>

@@ -66,6 +66,8 @@
 #include "utility_theia.h"
 
 #include "theia/io/read_ply_file.h"
+#include "gif.h"
+#include "bmp2gif.h"
 
 #define		PI		3.1415926	
 
@@ -979,4 +981,192 @@ void render3DResult(std::string &exePath, std::string& ply_file, std::string out
 	viewDenseResult(ply_file);
 
 	gl_draw_points(1, (char*)exePath.c_str(), outputImageDir, pmvsPath, ply_file, inputImageDir, exePath);
+}
+
+void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& strOutput,
+	std::string& strPathExe, std::string& outputName, int fps, int width, int height)
+{
+	if (std::string::npos != strFormat.find("jpg"))
+	{
+		for (int i = 0; i < nImageCountOutput; i++)
+		{
+			std::ostringstream osIn;
+			osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+			OpenImageIO::ImageBuf image(osIn.str());
+
+			std::ostringstream osOut;
+			osOut << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".jpg";
+			image.write(osOut.str(), "jpg");
+
+			image.clear();
+		}
+	}
+
+	if (std::string::npos != strFormat.find("gif"))
+	{
+#if 1
+		ClImgBMP	bmp;
+
+		std::string strPathGIF(strOutput);
+		strPathGIF += outputName + ".gif";
+
+		int gDelay = 1.0 / fps * 100;
+		int gWidth = width;
+		int gHeight = height;
+		gif_writer_t   gw;
+		Gif_Begin(&gw, strPathGIF.c_str(), gWidth,
+			gHeight, gDelay, 8, false);
+
+		uint8_t *imgFrame = new uint8_t[4 * gWidth*gHeight];
+		for (int n = 0; n < nImageCountOutput; ++n)
+		{
+			std::ostringstream os;
+			os << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << n << ".bmp";
+			bmp.LoadImage(os.str().c_str());
+
+			// 写入gw的图片数据为rgba8888格式
+
+			int nScanLine = (gWidth * 3 + 3) / 4 * 4;
+			for (int i = 0; i < gHeight; i++)
+				for (int k = 0; k < gWidth; k++)
+				{
+					*(imgFrame + i*gWidth * 4 + k * 4 + 0) = *(bmp.imgData + i*nScanLine + k * 3 + 2);
+					*(imgFrame + i*gWidth * 4 + k * 4 + 1) = *(bmp.imgData + i*nScanLine + k * 3 + 1);
+					*(imgFrame + i*gWidth * 4 + k * 4 + 2) = *(bmp.imgData + i*nScanLine + k * 3 + 0);
+					//*(imgFrame + k * 4 + 3) = 0xff;
+					// rgba中的a不起作用，赋不赋值不影响
+				}
+			Gif_WriteFrame(&gw, imgFrame, gWidth, gHeight, gDelay, 8, false);
+		}
+		delete imgFrame;
+		Gif_End(&gw);
+#else
+		gif::GIF* g = gif::newGIF(1.0 / fps * 100); // unit: ten millisecond
+		ClImgBMP	bmp;
+		std::string strPathGIF(strOutput);
+		strPathGIF += outputName + ".gif";
+
+		for (int i = 0; i < nImageCountOutput; i++)
+		{
+			std::ostringstream osIn;
+			osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+
+			bmp.LoadImage(osIn.str().c_str());
+			gif::addFrame(g, bmp.bmpInfoHeaderData.biWidth, bmp.bmpInfoHeaderData.biHeight, bmp.imgData, 0);
+		}
+
+		gif::write(g, strPathGIF.c_str());
+
+		gif::dispose(g);	g = NULL;
+#endif
+	}
+
+
+	std::string strPathAVI(strOutput);
+	strPathAVI += outputName + ".avi";
+	if (std::string::npos != strFormat.find("avi") || std::string::npos != strFormat.find("mp4"))
+	{
+
+		// delete old avi
+		if (theia::FileExists(strPathAVI))
+		{
+			bool breturn = stlplus::file_delete(strPathAVI);
+			if (!breturn)
+			{
+				LOG(INFO) << strPathAVI << " 临时视频文件无法删除！";
+			}
+		}
+
+		CvSize size = cvSize(width, height);
+		CvVideoWriter* writer = cvCreateVideoWriter(
+			strPathAVI.c_str(), CV_FOURCC('D', 'I', 'V', 'X'), fps, size);
+
+		if (writer)		{
+
+			for (int i = 0; i < nImageCountOutput; i++)
+			{
+				std::ostringstream osIn;
+				osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+
+				IplImage* iplImgOut = cvLoadImage(osIn.str().c_str());
+
+				cvWriteToAVI(writer, iplImgOut);
+			}
+
+			cvReleaseVideoWriter(&writer);
+
+			LOG(INFO) << strPathAVI << " 视频文件输出成功！";
+		}
+		else
+		{
+			stlplus::file_delete(strPathAVI);
+			LOG(INFO) << strPathAVI << " 视频文件输出失败！";
+
+			std::string exePath = get_Path(std::string(strPathExe));
+			std::string ffPath = exePath + "opencv_ffmpeg248.dll";
+			if (!theia::FileExists(ffPath))
+				LOG(INFO) << ffPath << " 文件缺失！";
+		}
+
+	}
+
+
+	std::string strPathMP4(strOutput);
+	strPathMP4 += outputName + ".mp4";
+	if (std::string::npos != strFormat.find("mp4"))
+	{
+
+		// delete old mp4
+		if (theia::FileExists(strPathMP4))
+		{
+			bool breturn = stlplus::file_delete(strPathMP4);
+			if (!breturn)
+			{
+				LOG(INFO) << strPathMP4 << " 临时视频文件无法删除！";
+			}
+		}
+
+	}
+
+	if (std::string::npos != strFormat.find("mp4") && theia::FileExists(strPathAVI))
+	{
+		std::string exePath = get_Path(std::string(strPathExe));
+
+		std::string parameter("-i ");
+		parameter += strPathAVI;
+		parameter += " ";
+		parameter += strPathMP4;
+
+		if (lanch_external(std::string("ffmpeg.exe"), parameter, exePath))
+			LOG(INFO) << strPathMP4 << " 视频文件输出成功！";
+		else
+			LOG(INFO) << strPathMP4 << " 视频文件输出失败！";
+
+		if (std::string::npos == strFormat.find("avi"))
+		{
+			bool breturn = stlplus::file_delete(strPathAVI);
+			if (!breturn)
+			{
+				LOG(INFO) << strPathAVI << "视频文件未找到或无法删除！";
+			}
+		}
+	}
+
+	if (std::string::npos != strFormat.find("mp4") && !theia::FileExists(strPathMP4))
+		LOG(INFO) << strPathMP4 << " 视频文件输出失败！";
+
+	// delete bmp
+	for (int i = 0; i < nImageCountOutput; i++)
+	{
+		std::ostringstream osIn;
+		osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+		bool breturn = stlplus::file_delete(osIn.str());
+		if (!breturn)
+		{
+			std::cout << osIn.str() << "图片文件未找到或无法删除！";
+			LOG(INFO) << osIn.str() << "图片文件未找到或无法删除！";
+		}
+
+	}
+
 }

@@ -35,7 +35,7 @@ DEFINE_int32(num_threads, 4,
 
 #define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
 
-#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
+//#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
 #if 1
 String FLAGS_ply_file;
@@ -47,7 +47,7 @@ DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 
 #include <fstream>  // NOLINT
 
-void	kernelReBuildDense(std::string &exePath, std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir)
+DLL_RECONSTRUCTION_API void	kernelReBuildDense(std::string &exePath, std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir)
 {
 	if (!FLAGS_build)
 		return;
@@ -67,7 +67,7 @@ void	kernelReBuildDense(std::string &exePath, std::string& pmvsPath, std::string
 }
 
 
-void kernelReBuildSparse(std::string &exePath, std::string& inputImageDir)
+DLL_RECONSTRUCTION_API void kernelReBuildSparse(std::string &exePath, std::string& inputImageDir)
 {
 	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 	google::InitGoogleLogging(exePath.c_str());
@@ -104,4 +104,14 @@ void kernelReBuildSparse(std::string &exePath, std::string& inputImageDir)
 	build_reconstruction(strPathExe, inputImageDir, FLAGS_use_gpu, FLAGS_num_threads);
 
 
+}
+
+DLL_RECONSTRUCTION_API std::string get_Path(std::string& strFullPath)
+{
+	return getPath(strFullPath);
+}
+
+DLL_RECONSTRUCTION_API bool lanch_external(std::string& bin, std::string& parameter, std::string& path, int nShowType)
+{
+	return lanch_external_bin(bin, parameter, path, nShowType);
 }

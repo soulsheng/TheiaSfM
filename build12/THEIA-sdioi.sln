@@ -22,6 +22,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vlfeat", "libraries\vlfeat\vlfeat.vcxproj", "{E01309CE-F729-4EDA-BE4C-534169522975}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "build_view_reconstruction", "applications\build_view_reconstruction.vcxproj", "{116C8BED-D3C5-4907-85BA-6B69184F1ED3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2EF7A187-DD20-47FF-A7F1-FD8693C45258} = {2EF7A187-DD20-47FF-A7F1-FD8693C45258}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DRebuilder", "3DRebuilder\3DRebuilder.vcxproj", "{6D60945B-B82A-4E26-B2CC-FF161A6E343F}"
 	ProjectSection(ProjectDependencies) = postProject

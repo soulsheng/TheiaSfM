@@ -17,3 +17,6 @@ void render3DResult(std::string &exePath, std::string& ply_file, std::string out
 void	viewDenseResult(std::string& ply_file);
 
 void rand_num_views_for_track(std::vector<int>& num_views_for_track, int size);
+
+void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& strOutput,
+	std::string& strPathExe, std::string& outputName, int fps, int width, int height);
