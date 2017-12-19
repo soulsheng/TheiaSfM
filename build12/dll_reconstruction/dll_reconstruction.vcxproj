@@ -78,7 +78,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\bmp2gif.h" />
     <ClInclude Include="..\common\bmpHeader.h" />
     <ClInclude Include="..\common\build_common.h" />
     <ClInclude Include="..\common\LaunchPMVS2.h" />

@@ -5,12 +5,10 @@
     <ClCompile Include="..\common\view_common.cpp" />
     <ClCompile Include="..\common\BoundingBox.cpp" />
     <ClCompile Include="..\common\Gif.cpp" />
-    <ClCompile Include="..\common\WriteGIF.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\view_common.h" />
     <ClInclude Include="..\common\BoundingBox.h" />
     <ClInclude Include="..\common\gif.h" />
-    <ClInclude Include="..\common\WriteGIF.h" />
   </ItemGroup>
 </Project>

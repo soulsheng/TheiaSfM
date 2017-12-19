@@ -271,7 +271,6 @@
     <ClCompile Include="..\common\BoundingBox.cpp" />
     <ClCompile Include="..\common\Gif.cpp" />
     <ClCompile Include="..\common\view_common.cpp" />
-    <ClCompile Include="..\common\WriteGIF.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build12/libraries/akaze/akaze.vcxproj">
@@ -297,7 +296,6 @@
     <ClInclude Include="..\common\BoundingBox.h" />
     <ClInclude Include="..\common\gif.h" />
     <ClInclude Include="..\common\view_common.h" />
-    <ClInclude Include="..\common\WriteGIF.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

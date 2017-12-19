@@ -46,7 +46,7 @@
 #include "RebuildAPI.h"
 
 #include "bmpHeader.h"
-#include "WriteGIF.h"
+//#include "WriteGIF.h"
 #include "simpleBMP.h"
 #include <OpenImageIO/imagebuf.h>
 #include <stlplus3/file_system.hpp>
@@ -67,7 +67,7 @@
 
 #include "theia/io/read_ply_file.h"
 #include "gif.h"
-#include "bmp2gif.h"
+//#include "bmp2gif.h"
 
 #define		PI		3.1415926	
 
@@ -166,6 +166,11 @@ bool	bOutputFinish = false;
 
 std::string g_ply_file;
 std::string g_pmvsPath;
+
+void	viewDenseResult(std::string& ply_file);
+
+void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& strOutput,
+	std::string& strPathExe, std::string& outputName, int fps, int width, int height);
 
 void GetPerspectiveParams(double* aspect_ratio, double* fovy) {
 	double focal_length = 800.0;
