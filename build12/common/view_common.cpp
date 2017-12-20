@@ -33,9 +33,10 @@
 // Author: Chris Sweeney (cmsweeney@cs.ucsb.edu)
 
 #include "view_common.h"
+#include <glog/logging.h>
+#include <theia/theia.h>
 #include <Eigen/Core>
 #include <gflags/gflags.h>
-#include <theia/theia.h>
 #include <string>
 #include <vector>
 

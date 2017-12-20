@@ -14,9 +14,7 @@
 #define DLL_RECONSTRUCTION_API
 #endif
 
-#include <glog/logging.h>
 #include <string>
-#include <theia/theia.h>
 
 DLL_RECONSTRUCTION_API void reset_view();
 
