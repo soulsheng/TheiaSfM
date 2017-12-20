@@ -18,13 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\bmpHeader.h">
-      <Filter>custom</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\LaunchPMVS2.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\simpleBMP.h">
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\common\stdafx.h">

@@ -21,16 +21,10 @@
     <ClInclude Include="..\common\bmpHeader.h">
       <Filter>custom</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\LaunchPMVS2.h">
-      <Filter>custom</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\simpleBMP.h">
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\common\stdafx.h">
-      <Filter>custom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\utility_common.h">
       <Filter>custom</Filter>
     </ClInclude>
     <ClInclude Include="..\common\BoundingBox.h">
@@ -44,12 +38,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\common\LaunchPMVS2.cpp">
-      <Filter>custom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\utility_common.cpp">
-      <Filter>custom</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\BoundingBox.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
