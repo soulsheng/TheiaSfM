@@ -30,12 +30,10 @@
     <ClInclude Include="..\common\build_common.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\RebuildAPI.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\utility_theia.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\RebuildAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -50,11 +48,9 @@
     <ClCompile Include="..\common\build_common.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\RebuildAPI.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\utility_theia.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\RebuildAPI.cpp" />
   </ItemGroup>
 </Project>

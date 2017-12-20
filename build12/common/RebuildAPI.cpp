@@ -47,7 +47,7 @@ DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 
 #include <fstream>  // NOLINT
 
-DLL_RECONSTRUCTION_API void	kernelReBuildDense(std::string &exePath, std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir)
+extern "C" DLL_RECONSTRUCTION_API void	kernelReBuildDense(std::string &exePath, std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir)
 {
 	if (!FLAGS_build)
 		return;
@@ -67,7 +67,7 @@ DLL_RECONSTRUCTION_API void	kernelReBuildDense(std::string &exePath, std::string
 }
 
 
-DLL_RECONSTRUCTION_API void kernelReBuildSparse(std::string &exePath, std::string& inputImageDir)
+extern "C" DLL_RECONSTRUCTION_API void kernelReBuildSparse(std::string &exePath, std::string& inputImageDir)
 {
 	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 	google::InitGoogleLogging(exePath.c_str());
@@ -106,12 +106,12 @@ DLL_RECONSTRUCTION_API void kernelReBuildSparse(std::string &exePath, std::strin
 
 }
 
-DLL_RECONSTRUCTION_API std::string get_Path(std::string& strFullPath)
+extern "C" DLL_RECONSTRUCTION_API std::string get_Path(std::string& strFullPath)
 {
 	return getPath(strFullPath);
 }
 
-DLL_RECONSTRUCTION_API bool lanch_external(std::string& bin, std::string& parameter, std::string& path, int nShowType)
+extern "C" DLL_RECONSTRUCTION_API bool lanch_external(std::string& bin, std::string& parameter, std::string& path, int nShowType)
 {
 	return lanch_external_bin(bin, parameter, path, nShowType);
 }
