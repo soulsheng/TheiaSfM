@@ -20,7 +20,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -41,21 +41,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\build12\bin\$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\build12\bin\Release\</OutDir>
+    <OutDir>..\..\build12\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;DLL_RECONSTRUCTION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;DLL_RECONSTRUCTION;DLL_RECONSTRUCTION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..;..\..\include;..\..\src;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\COLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;..\..\libraries;..\..\libraries\spectra;..\..\libraries\akaze;..\..\libraries\cereal;..\..\libraries\cereal\include;..\..\libraries\flann;..\..\libraries\flann\src\cpp;\include;..\..\libraries\optimo;..\..\libraries\statx;..\..\libraries\stlplus3;..\..\libraries\vlfeat;..\..\libraries\visual_sfm;$(THEIA_3RD)\eigen-3.3.3;$(THEIA_3RD)\ceres-solver-1.12.0\include;$(THEIA_3RD)\glog-0.3.3\include;$(THEIA_3RD)\boost_1_60_0-vc12;$(THEIA_3RD)\gflags-2.2.0\include;$(THEIA_3RD)\oiio-1.5.24\include;..\common;.\;$(THEIA_3RD)\siftgpu\include;$(THEIA_3RD)\IlmBase-2.2.0\include;$(THEIA_3RD)\opencv-2.4.8\include\opencv;$(THEIA_3RD)\opencv-2.4.8\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(THEIA_3RD)\boost_1_60_0-vc12\lib32-msvc-12.0;$(THEIA_3RD)\gflags-2.2.0\lib12\$(Configuration);$(THEIA_3RD)\glog-0.3.3\lib12\$(Configuration);$(THEIA_3RD)\oiio-1.5.24\lib\$(Configuration);$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\build\lib\$(Configuration);$(THEIA_3RD)\ceres-solver-1.12.0\build12\lib\$(Configuration);$(THEIA_3RD)\lapack_windows-3.4.1\x32;$(THEIA_3RD)\siftgpu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>..\lib\Debug\theia-debug.lib;shlwapi.lib;..\libraries\akaze\lib\Debug\akaze-debug.lib;..\lib\Debug\flann_cpp_s-debug.lib;..\lib\Debug\statx-debug.lib;..\lib\Debug\stlplus3-debug.lib;..\lib\Debug\vlfeat-debug.lib;..\lib\Debug\visual_sfm-debug.lib;libamdd.lib;libbtfd.lib;libcamdd.lib;libccolamdd.lib;libcholmodd.lib;libcolamdd.lib;libcxsparsed.lib;libklud.lib;libldld.lib;libspqrd.lib;libumfpackd.lib;metisd.lib;suitesparseconfigd.lib;libglog.lib;gflags_static.lib;OpenImageIO.lib;ceres-debug.lib;libblas.lib;liblapack.lib;siftgpu_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

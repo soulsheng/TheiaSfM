@@ -86,7 +86,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>..\..;..\..\include;..\..\src;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\COLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;..\..\libraries;..\..\libraries\spectra;..\..\libraries\akaze;..\..\libraries\cereal;..\..\libraries\cereal\include;..\..\libraries\flann;..\..\libraries\flann\src\cpp;\include;..\..\libraries\optimo;..\..\libraries\statx;..\..\libraries\stlplus3;..\..\libraries\vlfeat;..\..\libraries\visual_sfm;$(THEIA_3RD)\eigen-3.3.3;$(THEIA_3RD)\ceres-solver-1.12.0\include;$(THEIA_3RD)\glog-0.3.3\include;$(THEIA_3RD)\boost_1_60_0-vc12;$(THEIA_3RD)\gflags-2.2.0\include;$(THEIA_3RD)\oiio-1.5.24\include;$(THEIA_3RD)\glew-1.5.1\include;$(THEIA_3RD)\glut-3.7\include;..\common;.\;$(THEIA_3RD)\siftgpu\include;$(THEIA_3RD)\IlmBase-2.2.0\include;$(THEIA_3RD)\opencv-2.4.8\include\opencv;$(THEIA_3RD)\opencv-2.4.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\common</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -116,8 +116,8 @@
     </Midl>
     <Link>
       <AdditionalOptions> /machine:X86 /ignore:4049 /debug /SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\lib\Debug\theia-debug.lib;shlwapi.lib;glu32.lib;opengl32.lib;glut32.lib;glew.lib;..\libraries\akaze\lib\Debug\akaze-debug.lib;..\lib\Debug\flann_cpp_s-debug.lib;..\lib\Debug\statx-debug.lib;..\lib\Debug\stlplus3-debug.lib;..\lib\Debug\vlfeat-debug.lib;..\lib\Debug\visual_sfm-debug.lib;libamdd.lib;libbtfd.lib;libcamdd.lib;libccolamdd.lib;libcholmodd.lib;libcolamdd.lib;libcxsparsed.lib;libklud.lib;libldld.lib;libspqrd.lib;libumfpackd.lib;metisd.lib;suitesparseconfigd.lib;libglog.lib;gflags_static.lib;OpenImageIO.lib;ceres-debug.lib;libblas.lib;liblapack.lib;siftgpu_d.lib;opencv_core248d.lib;opencv_highgui248d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(THEIA_3RD)\boost_1_60_0-vc12\lib32-msvc-12.0;$(THEIA_3RD)\gflags-2.2.0\lib12\$(Configuration);$(THEIA_3RD)\glog-0.3.3\lib12\$(Configuration);$(THEIA_3RD)\oiio-1.5.24\lib\$(Configuration);$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\build\lib\$(Configuration);$(THEIA_3RD)\ceres-solver-1.12.0\build12\lib\$(Configuration);$(THEIA_3RD)\lapack_windows-3.4.1\x32;$(THEIA_3RD)\glut-3.7\lib;$(THEIA_3RD)\glew-1.5.1\lib;$(THEIA_3RD)\siftgpu\lib;$(THEIA_3RD)\opencv-2.4.8\lib\x86\vc10\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dll_reconstructiond.lib;dll_view3dd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\build12\bin\$(Configuration)\</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>..\..\build12\bin\$(Configuration)/build_view_reconstruction.lib</ImportLibrary>
       <ProgramDataBaseFile>..\..\build12\bin\$(Configuration)/build_view_reconstruction.pdb</ProgramDataBaseFile>
@@ -163,7 +163,7 @@
     <Link>
       <AdditionalOptions> /machine:X86 /ignore:4049 /SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>dll_reconstruction.lib;dll_view3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\build12\bin\Release\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\build12\bin\$(Configuration)\</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ImportLibrary>..\..\build12\bin\Release\/build_view_reconstruction.lib</ImportLibrary>
       <ProgramDataBaseFile>..\..\build12\bin\Release/build_view_reconstruction.pdb</ProgramDataBaseFile>
