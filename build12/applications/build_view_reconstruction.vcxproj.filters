@@ -2,13 +2,5 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\applications\build_view_reconstruction.cc" />
-    <ClCompile Include="..\common\view_common.cpp" />
-    <ClCompile Include="..\common\BoundingBox.cpp" />
-    <ClCompile Include="..\common\Gif.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\common\view_common.h" />
-    <ClInclude Include="..\common\BoundingBox.h" />
-    <ClInclude Include="..\common\gif.h" />
   </ItemGroup>
 </Project>

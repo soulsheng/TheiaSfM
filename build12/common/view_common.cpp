@@ -68,6 +68,7 @@
 #include "theia/io/read_ply_file.h"
 #include "gif.h"
 //#include "bmp2gif.h"
+#include "RebuildAPI.h"
 
 #define		PI		3.1415926	
 
@@ -845,7 +846,7 @@ void getInt3FromString(std::string str, int * cColor)
 	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
 }
 
-void reset_view()
+DLL_RECONSTRUCTION_API void reset_view()
 {
 	min_num_views_for_track = FLAGS_fps * FLAGS_length;
 
@@ -980,7 +981,7 @@ void	viewDenseResult(std::string& ply_file)
 	LOG(INFO) << "输出稠密重建结果！";
 }
 
-void render3DResult(std::string &exePath, std::string& ply_file, std::string outputImageDir,
+DLL_RECONSTRUCTION_API void render3DResult(std::string &exePath, std::string& ply_file, std::string outputImageDir,
 	std::string& pmvsPath, std::string& inputImageDir)
 {
 	viewDenseResult(ply_file);

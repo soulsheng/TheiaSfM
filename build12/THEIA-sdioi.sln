@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "view_reconstruction", "appl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dll_reconstruction", "dll_reconstruction\dll_reconstruction.vcxproj", "{2EF7A187-DD20-47FF-A7F1-FD8693C45258}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dll_view3d", "dll_view3d\dll_view3d.vcxproj", "{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -133,6 +135,14 @@ Global
 		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.Release|Win32.Build.0 = Release|Win32
 		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
 		{2EF7A187-DD20-47FF-A7F1-FD8693C45258}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}.Debug|Win32.Build.0 = Debug|Win32
+		{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}.Release|Win32.ActiveCfg = Release|Win32
+		{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}.Release|Win32.Build.0 = Release|Win32
+		{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
