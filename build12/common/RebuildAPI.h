@@ -16,7 +16,7 @@
 #define DLL_RECONSTRUCTION_API
 #endif
 
-extern "C" DLL_RECONSTRUCTION_API void kernelReBuildSparse(std::string &exePath, std::string& inputImageDir);
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* pResultString);
 
 extern "C" DLL_RECONSTRUCTION_API void kernelReBuildDense(std::string &exePath, std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir);
 

@@ -67,8 +67,12 @@ extern "C" DLL_RECONSTRUCTION_API void	kernelReBuildDense(std::string &exePath, 
 }
 
 
-extern "C" DLL_RECONSTRUCTION_API void kernelReBuildSparse(std::string &exePath, std::string& inputImageDir)
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* pResultString)
 {
+	std::string exePath = getEXEDLLFullPath();
+	std::string inputImageDir(pInputImageDir);
+
+
 	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 	google::InitGoogleLogging(exePath.c_str());
 
@@ -99,11 +103,18 @@ extern "C" DLL_RECONSTRUCTION_API void kernelReBuildSparse(std::string &exePath,
 
 
 	ReCreateDirectory(FLAGS_matching_working_directory);
+#if 0
+	LOG(INFO) << "create log";
+	std::ostringstream os;
+	os << exePath << std::endl << inputImageDir << std::endl;
+	strcpy(pResultString, os.str().c_str());
+	return -10;
+#endif
 
 
 	build_reconstruction(strPathExe, inputImageDir, FLAGS_use_gpu, FLAGS_num_threads);
 
-
+	return 0;
 }
 
 extern "C" DLL_RECONSTRUCTION_API std::string get_Path(std::string& strFullPath)

@@ -11,4 +11,7 @@ void getPath(const char* strFullPath, char* strPath);
 
 void resizeImageFiles(std::vector<std::string>& image_files, int nResize, bool bForceResize );
 
+std::string getEXEDLLPath();
+std::string getEXEDLLFullPath();
+
 #endif // UTILITY_COMMON_H

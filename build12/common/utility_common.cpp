@@ -86,3 +86,17 @@ void resizeImageFiles(std::vector<std::string>& image_files, int nResize, bool b
 
 	image_files = image_files_new;
 }
+
+std::string getEXEDLLPath()
+{
+	std::string path_data = getEXEDLLFullPath();
+	return path_data.substr(0, path_data.find_last_of("\\") + 1);
+}
+
+std::string getEXEDLLFullPath()
+{
+	char szPath[MAX_PATH];
+	GetModuleFileNameA(NULL, szPath, MAX_PATH);
+
+	return std::string(szPath);
+}
