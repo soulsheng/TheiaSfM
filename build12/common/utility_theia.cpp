@@ -116,13 +116,12 @@ void WritePMVSOptions(const std::string& working_dir,
 	ofs << "oimages 0" << std::endl;
 }
 
-bool export_to_pmvs(std::string& pmvsPath, bool undistort, std::string& inputImageDir, 
-	const int FLAGS_num_threads)
+bool export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::string& filenameSparse,
+	const int FLAGS_num_threads, bool undistort)
 {
 	theia::Reconstruction reconstruction;
 
-	std::string FLAGS_output_reconstruction = inputImageDir + "result";
-	CHECK(ReadReconstruction(FLAGS_output_reconstruction, &reconstruction))
+	CHECK(ReadReconstruction(filenameSparse, &reconstruction))
 		<< "Could not read reconstruction file.";
 
 	if (0 == reconstruction.NumViews())
@@ -155,11 +154,10 @@ bool export_to_pmvs(std::string& pmvsPath, bool undistort, std::string& inputIma
 }
 
 
-bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, bool use_gpu, 
-	const int FLAGS_num_threads)
+bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, std::string& resultString, 
+	bool use_gpu, const int FLAGS_num_threads)
 {
 	std::string FLAGS_images = inputImageDir + "*.jpg";
-	std::string FLAGS_output_reconstruction = inputImageDir + "result";
 	std::string FLAGS_matching_working_directory = inputImageDir + "features\\";
 	std::string FLAGS_output_matches_file = inputImageDir + "output.matches";
 
@@ -211,7 +209,7 @@ bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, b
 		LOG(INFO) << "为点云配置颜色完成！";
 
 		theia::WriteReconstruction(reconstruction,
-			FLAGS_output_reconstruction);
+			resultString);
 
 		return true;
 	}

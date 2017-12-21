@@ -16,10 +16,12 @@
 #define DLL_RECONSTRUCTION_API
 #endif
 
-extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* pResultString);
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* filename_sparse);
 
-extern "C" DLL_RECONSTRUCTION_API void kernelReBuildDense(std::string &exePath, std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir);
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildDense(char* pInputImageDir, char* filename_sparse, char* filename_dense, bool isLogInitialized);
 
 extern "C" DLL_RECONSTRUCTION_API std::string get_Path(std::string& strFullPath);
 
 extern "C" DLL_RECONSTRUCTION_API bool lanch_external(std::string& bin, std::string& parameter, std::string& path, int nShowType = 0/*SW_HIDE*/);
+
+void SetLog(std::string &exePath);

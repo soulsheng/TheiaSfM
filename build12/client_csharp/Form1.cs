@@ -15,20 +15,38 @@ namespace client_csharp
 
     public partial class Form1 : Form
     {
+
+        string imagePath = "E:\\3d\\2017_03-5\\";
+        StringBuilder filenameSparse = new StringBuilder();
+        StringBuilder filenameDense = new StringBuilder();
+        bool isLogInitialized = false;
+        
         public Form1()
         {
             InitializeComponent();
+            textBox1.Text = imagePath;
         }
 
-        [DllImport(@"dll_reconstructiond.dll", EntryPoint = "kernelReBuildSparse", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildSparse", CallingConvention = CallingConvention.Cdecl)]
         public static extern int kernelReBuildSparse(string inputImageDir, StringBuilder resultString);
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string imagePath = "E:\\3d\\2017_03-5\\";
-            StringBuilder retString = new StringBuilder();
-            int ret = kernelReBuildSparse(imagePath, retString);
-            label1.Text = ret.ToString() + retString;
+            imagePath = textBox1.Text;
+            int ret = kernelReBuildSparse(imagePath, filenameSparse);
+            isLogInitialized = true;
+            label1.Text = "return code:" + ret.ToString() + ", file:" + filenameSparse;
+        }
+
+        [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildDense", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int kernelReBuildDense(string inputImageDir, string filenameSparse, StringBuilder resultString, bool isLogInitialized);
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(filenameSparse.Length == 0)
+                filenameSparse.Append("E:\\3d\\2017_03-5\\result");
+            int ret = kernelReBuildDense(imagePath, filenameSparse.ToString(), filenameDense, isLogInitialized);
+            label2.Text = "return code:" + ret.ToString() + ", file:" + filenameDense;
         }
     }
 }

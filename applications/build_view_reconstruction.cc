@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 
 	reset_view();
 
-	kernelReBuildSparse(exePath, inputImageDir);
+	kernelReBuildSparse(inputImageDir.c_str());
 
 	kernelReBuildDense(exePath, str_pmvs_working_directory, str_ply_file, inputImageDir);
 

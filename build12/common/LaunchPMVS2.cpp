@@ -1,6 +1,6 @@
 
 #include "LaunchPMVS2.h"
-
+#include "utility_common.h"
 
 bool lanch_external_bin(std::string& bin, std::string& parameter, std::string& path, int nShowType)
 {
@@ -34,9 +34,10 @@ bool lanch_external_bin(std::string& bin, std::string& parameter, std::string& p
 }
 
 
-void run_pmvs(const char *exeFullPath, std::string& pmvsPath, int threshold_group)
+void run_pmvs(std::string& pmvsPath, int threshold_group)
 {
-	std::string exePath = getPath(std::string(exeFullPath));
+	std::string exePath = getEXEDLLPath();
+
 	if (false == lanch_external_bin(std::string("cmvs.exe"), pmvsPath, exePath))
 		return;
 

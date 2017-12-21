@@ -15,10 +15,10 @@ int WriteCamerasToPMVS(const theia::Reconstruction& reconstruction, std::string&
 void WritePMVSOptions(const std::string& working_dir,
 	const int num_images);
 
-bool export_to_pmvs(std::string& pmvsPath, bool undistort, std::string& inputImageDir, 
-	const int FLAGS_num_threads);
+bool export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::string& filenameSparse,
+	const int FLAGS_num_threads, bool undistort);
 
-bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, 
+bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, std::string& resultString,
 	bool use_gpu, const int FLAGS_num_threads);
 
 

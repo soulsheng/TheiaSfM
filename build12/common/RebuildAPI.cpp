@@ -47,33 +47,40 @@ DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 
 #include <fstream>  // NOLINT
 
-extern "C" DLL_RECONSTRUCTION_API void	kernelReBuildDense(std::string &exePath, std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir)
+extern "C" DLL_RECONSTRUCTION_API int	kernelReBuildDense(char* pInputImageDir, char* filename_sparse, char* filename_dense, bool isLogInitialized)
 {
 	if (!FLAGS_build)
-		return;
+		return -1;
+
+	std::string inputImageDir(pInputImageDir);
+	std::string pmvsPath = inputImageDir + "pmvs\\";
+
+	std::string exePath = getEXEDLLFullPath();
+
+	if (!isLogInitialized)
+		SetLog(exePath);
 
 #if 1
-	if (!export_to_pmvs(pmvsPath, FLAGS_undistort, inputImageDir, FLAGS_num_threads))
-		return;
+	if (!export_to_pmvs(pmvsPath, inputImageDir, std::string(filename_sparse), FLAGS_num_threads, FLAGS_undistort))
+		return -2;
 #endif
 
 
 	LOG(INFO) << "开始执行稠密重建：";
 #if 1
-	run_pmvs(exePath.c_str(), pmvsPath, FLAGS_threshold_group);
+	run_pmvs(pmvsPath, FLAGS_threshold_group);
 #endif
 	LOG(INFO) << "执行稠密重建完成！";
 
+	std::string str_ply_file = pmvsPath + "models\\option-0000.ply";
+	strcpy(filename_dense, str_ply_file.c_str());
+
+	return 0;
 }
 
 
-extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* pResultString)
+void SetLog(std::string &exePath)
 {
-	std::string exePath = getEXEDLLFullPath();
-	std::string inputImageDir(pInputImageDir);
-
-
-	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 	google::InitGoogleLogging(exePath.c_str());
 
 
@@ -81,6 +88,27 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 	google::SetLogDestination(google::GLOG_ERROR, "");
 	google::SetLogDestination(google::GLOG_WARNING, "");
 	google::SetLogFilenameExtension(".log");
+}
+
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename)
+{
+	std::string exePath = getEXEDLLFullPath();
+	std::string inputImageDir(pInputImageDir);
+	std::string FLAGS_output_reconstruction;
+	
+	std::string resultString(result_filename);
+	if ( !resultString.empty() )
+		FLAGS_output_reconstruction = inputImageDir + resultString;
+	else
+	{
+		FLAGS_output_reconstruction = inputImageDir + "result";
+		strcpy(result_filename, FLAGS_output_reconstruction.c_str());
+	}
+
+
+
+	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+	SetLog(exePath);
 
 	std::string logFilename = std::string(exePath.c_str()) + ".log";
 	if (theia::FileExists(logFilename))
@@ -112,7 +140,7 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 #endif
 
 
-	build_reconstruction(strPathExe, inputImageDir, FLAGS_use_gpu, FLAGS_num_threads);
+	build_reconstruction(strPathExe, inputImageDir, FLAGS_output_reconstruction, FLAGS_use_gpu, FLAGS_num_threads);
 
 	return 0;
 }
