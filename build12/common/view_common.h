@@ -18,5 +18,5 @@
 
 DLL_RECONSTRUCTION_API void reset_view();
 
-DLL_RECONSTRUCTION_API void render3DResult(std::string &exePath, std::string& ply_file, std::string outputImageDir,
-	std::string& pmvsPath, std::string& inputImageDir, std::string& filenameSparse, std::string& filenameDense, bool bLogInitialized);
+DLL_RECONSTRUCTION_API void render3DResult(char* pInputImageDir, char* pOutputImageDir,
+	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized);

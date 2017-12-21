@@ -24,4 +24,6 @@ extern "C" DLL_RECONSTRUCTION_API std::string get_Path(std::string& strFullPath)
 
 extern "C" DLL_RECONSTRUCTION_API bool lanch_external(std::string& bin, std::string& parameter, std::string& path, int nShowType = 0/*SW_HIDE*/);
 
+extern "C" DLL_RECONSTRUCTION_API std::string get_EXEDLLPath();
+
 void SetLog(std::string &exePath);

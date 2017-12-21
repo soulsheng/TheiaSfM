@@ -977,12 +977,17 @@ void	viewDenseResult(std::string& ply_file)
 	LOG(INFO) << "输出稠密重建结果！";
 }
 
-DLL_RECONSTRUCTION_API void render3DResult(std::string &exePath, std::string& ply_file, std::string outputImageDir,
-	std::string& pmvsPath, std::string& inputImageDir, std::string& filenameSparse, std::string& filenameDense, bool bLogInitialized)
+DLL_RECONSTRUCTION_API void render3DResult(char* pInputImageDir, char* pOutputImageDir,
+	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized)
 {
-	g_ply_file = ply_file;
-	g_pmvsPath = pmvsPath;
-	g_exePath = exePath;
+	std::string inputImageDir(pInputImageDir);
+	std::string outputImageDir(pOutputImageDir);
+	std::string filenameSparse(pFilenameSparse);
+	std::string filenameDense(pFilenameDense);
+
+	g_pmvsPath = inputImageDir + "pmvs\\";;
+	g_ply_file = g_pmvsPath + "models\\option-0000.ply";;
+	g_exePath = get_EXEDLLPath();
 
 	g_output_images = outputImageDir;
 	g_input_images = inputImageDir;
@@ -992,9 +997,9 @@ DLL_RECONSTRUCTION_API void render3DResult(std::string &exePath, std::string& pl
 
 	g_bLogInitialized = bLogInitialized;
 
-	viewDenseResult(ply_file);
+	viewDenseResult(g_ply_file);
 
-	gl_draw_points(1, (char*)exePath.c_str());
+	gl_draw_points(1, (char*)g_exePath.c_str());
 }
 
 void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& strOutput,

@@ -154,3 +154,8 @@ extern "C" DLL_RECONSTRUCTION_API bool lanch_external(std::string& bin, std::str
 {
 	return lanch_external_bin(bin, parameter, path, nShowType);
 }
+
+extern "C" DLL_RECONSTRUCTION_API std::string get_EXEDLLPath()
+{
+	return getEXEDLLFullPath();
+}

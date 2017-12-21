@@ -60,8 +60,8 @@ int main(int argc, char* argv[]) {
 	char filenameDense[256] = { '\0' };
 	kernelReBuildDense((char*)inputImageDir.c_str(), filenameSparse, filenameDense, isLogInitialized);
 
-	render3DResult(exePath, str_ply_file, outputImageDir, str_pmvs_working_directory, inputImageDir, 
-		std::string(filenameSparse), std::string(filenameDense), isLogInitialized);
+	render3DResult((char*)inputImageDir.c_str(), (char*)outputImageDir.c_str(),
+		filenameSparse, filenameDense, isLogInitialized);
 
   return 0;
 }
