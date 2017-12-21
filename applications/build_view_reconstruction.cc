@@ -51,11 +51,17 @@ int main(int argc, char* argv[]) {
 
 	reset_view();
 
-	kernelReBuildSparse(inputImageDir.c_str());
+	bool isLogInitialized = false;
 
-	kernelReBuildDense(exePath, str_pmvs_working_directory, str_ply_file, inputImageDir);
+	char filenameSparse[256] = {'\0'};
+	kernelReBuildSparse((char*)inputImageDir.c_str(), filenameSparse);
+	isLogInitialized = true;
 
-	render3DResult(exePath, str_ply_file, outputImageDir, str_pmvs_working_directory, inputImageDir);
+	char filenameDense[256] = { '\0' };
+	kernelReBuildDense((char*)inputImageDir.c_str(), filenameSparse, filenameDense, isLogInitialized);
+
+	render3DResult(exePath, str_ply_file, outputImageDir, str_pmvs_working_directory, inputImageDir, 
+		std::string(filenameSparse), std::string(filenameDense), isLogInitialized);
 
   return 0;
 }

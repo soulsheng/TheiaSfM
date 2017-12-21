@@ -105,6 +105,9 @@ DEFINE_double(length, 5, "length of vedio, unit: seconds");
 std::string g_output_images;
 std::string g_input_images;
 std::string g_exePath;
+std::string g_filenameSparse;
+std::string g_filenameDense;
+bool	g_bLogInitialized;
 
 Eigen::Vector2i window_position(200, 100);
 
@@ -533,7 +536,7 @@ void RenderScene() {
 	{
 		if (!bDenseFinish && FLAGS_view_sparse)
 		{
-			kernelReBuildDense(g_exePath, g_pmvsPath, g_ply_file, g_input_images);
+			kernelReBuildDense((char*)g_input_images.c_str(), (char*)g_filenameSparse.c_str(), (char*)g_filenameDense.c_str(), g_bLogInitialized);
 			min_num_views_for_track = FLAGS_fps * FLAGS_length;
 			viewDenseResult(g_ply_file);
 			bDenseFinish = true;
@@ -853,16 +856,8 @@ DLL_RECONSTRUCTION_API void reset_view()
 
 }
 
-void gl_draw_points(int argc, char* argv, std::string& output_images,
-	std::string& pmvsPath, std::string& ply_file, std::string& inputImageDir,
-	std::string &exePath)
+void gl_draw_points(int argc, char* argv)
 {
-	g_ply_file = ply_file;
-	g_pmvsPath = pmvsPath;
-	g_exePath = exePath;
-
-	g_output_images = output_images;
-	g_input_images = inputImageDir;
 
 	// Set up opengl and glut.
 	glutInit(&argc, &argv);
@@ -983,11 +978,23 @@ void	viewDenseResult(std::string& ply_file)
 }
 
 DLL_RECONSTRUCTION_API void render3DResult(std::string &exePath, std::string& ply_file, std::string outputImageDir,
-	std::string& pmvsPath, std::string& inputImageDir)
+	std::string& pmvsPath, std::string& inputImageDir, std::string& filenameSparse, std::string& filenameDense, bool bLogInitialized)
 {
+	g_ply_file = ply_file;
+	g_pmvsPath = pmvsPath;
+	g_exePath = exePath;
+
+	g_output_images = outputImageDir;
+	g_input_images = inputImageDir;
+	
+	g_filenameSparse = filenameSparse;
+	g_filenameDense = filenameDense;
+
+	g_bLogInitialized = bLogInitialized;
+
 	viewDenseResult(ply_file);
 
-	gl_draw_points(1, (char*)exePath.c_str(), outputImageDir, pmvsPath, ply_file, inputImageDir, exePath);
+	gl_draw_points(1, (char*)exePath.c_str());
 }
 
 void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& strOutput,
