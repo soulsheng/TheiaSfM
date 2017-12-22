@@ -57,6 +57,8 @@ namespace client_csharp
         private void button3_Click(object sender, EventArgs e)
         {
             render3DResult(imagePath, imagePathOutput, filenameSparse.ToString(), filenameDense.ToString(), isLogInitialized);
+            string imageOutput = imagePathOutput + "\\10.jpg";
+            pictureBox1.Image = Image.FromFile(imageOutput);
         }
     }
 }
