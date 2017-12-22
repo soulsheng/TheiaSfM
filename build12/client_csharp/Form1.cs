@@ -17,6 +17,7 @@ namespace client_csharp
     {
 
         string imagePath = "E:\\3d\\2017_03-5\\";
+        string imagePathOutput = "E:\\3d\\output\\";
         StringBuilder filenameSparse = new StringBuilder();
         StringBuilder filenameDense = new StringBuilder();
         bool isLogInitialized = false;
@@ -47,6 +48,15 @@ namespace client_csharp
                 filenameSparse.Append("E:\\3d\\2017_03-5\\result");
             int ret = kernelReBuildDense(imagePath, filenameSparse.ToString(), filenameDense, isLogInitialized);
             label2.Text = "return code:" + ret.ToString() + ", file:" + filenameDense;
+        }
+
+        [DllImport(@"dll_view3d.dll", EntryPoint = "render3DResult", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int render3DResult(string inputImageDir, string outputImageDir,
+            string filenameSparse, string filenameDense, bool isLogInitialized);
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            render3DResult(imagePath, imagePathOutput, filenameSparse.ToString(), filenameDense.ToString(), isLogInitialized);
         }
     }
 }

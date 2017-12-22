@@ -16,7 +16,7 @@
 
 #include <string>
 
-DLL_RECONSTRUCTION_API void reset_view();
+extern "C" DLL_RECONSTRUCTION_API void reset_view();
 
-DLL_RECONSTRUCTION_API void render3DResult(char* pInputImageDir, char* pOutputImageDir,
+extern "C" DLL_RECONSTRUCTION_API void render3DResult(char* pInputImageDir, char* pOutputImageDir,
 	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized);

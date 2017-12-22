@@ -43,6 +43,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client_csharp", "client_csharp\client_csharp.csproj", "{75DEADB2-9CFB-461E-88E1-EEEC430B8E15}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2EF7A187-DD20-47FF-A7F1-FD8693C45258} = {2EF7A187-DD20-47FF-A7F1-FD8693C45258}
+		{FF3EC3D5-8FE6-4752-892D-B1526502EB3B} = {FF3EC3D5-8FE6-4752-892D-B1526502EB3B}
 	EndProjectSection
 EndProject
 Global

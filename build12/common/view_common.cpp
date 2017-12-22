@@ -850,7 +850,7 @@ void getInt3FromString(std::string str, int * cColor)
 	in >> tmp >> cColor[0] >> tmp >> cColor[1] >> tmp >> cColor[2];
 }
 
-DLL_RECONSTRUCTION_API void reset_view()
+extern "C" DLL_RECONSTRUCTION_API void reset_view()
 {
 	min_num_views_for_track = FLAGS_fps * FLAGS_length;
 
@@ -977,7 +977,7 @@ void	viewDenseResult(std::string& ply_file)
 	LOG(INFO) << "输出稠密重建结果！";
 }
 
-DLL_RECONSTRUCTION_API void render3DResult(char* pInputImageDir, char* pOutputImageDir,
+extern "C" DLL_RECONSTRUCTION_API void render3DResult(char* pInputImageDir, char* pOutputImageDir,
 	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized)
 {
 	std::string inputImageDir(pInputImageDir);
@@ -996,6 +996,8 @@ DLL_RECONSTRUCTION_API void render3DResult(char* pInputImageDir, char* pOutputIm
 	g_filenameDense = filenameDense;
 
 	g_bLogInitialized = bLogInitialized;
+
+	min_num_views_for_track = FLAGS_fps * FLAGS_length;
 
 	viewDenseResult(g_ply_file);
 
