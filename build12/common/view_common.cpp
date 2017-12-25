@@ -42,7 +42,7 @@
 
 #include <windows.h>
 #include <glew.h>
-#include <glut.h>
+#include <gl/freeglut.h>
 
 #include "RebuildAPI.h"
 
@@ -550,7 +550,7 @@ void RenderScene() {
 			bOutputFinish = true;
 		}
 		if (FLAGS_exit_fast)
-			exit(0);
+			PostQuitMessage(0); //exit(0);
 	}
 
 	glutSwapBuffers();
@@ -861,6 +861,7 @@ void gl_draw_points(int argc, char* argv)
 
 	// Set up opengl and glut.
 	glutInit(&argc, &argv);
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 	glutInitWindowPosition(window_position[0], window_position[1]);
 	window_size[0] = FLAGS_width;
 	window_size[1] = FLAGS_height;
@@ -977,7 +978,7 @@ void	viewDenseResult(std::string& ply_file)
 	LOG(INFO) << "输出稠密重建结果！";
 }
 
-extern "C" DLL_RECONSTRUCTION_API void render3DResult(char* pInputImageDir, char* pOutputImageDir,
+extern "C" DLL_RECONSTRUCTION_API int render3DResult(char* pInputImageDir, char* pOutputImageDir,
 	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized)
 {
 	std::string inputImageDir(pInputImageDir);
@@ -1002,6 +1003,8 @@ extern "C" DLL_RECONSTRUCTION_API void render3DResult(char* pInputImageDir, char
 	viewDenseResult(g_ply_file);
 
 	gl_draw_points(1, (char*)g_exePath.c_str());
+
+	return 0;
 }
 
 void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& strOutput,

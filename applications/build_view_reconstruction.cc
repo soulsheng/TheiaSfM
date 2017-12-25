@@ -60,8 +60,8 @@ int main(int argc, char* argv[]) {
 	char filenameDense[256] = { '\0' };
 	kernelReBuildDense((char*)inputImageDir.c_str(), filenameSparse, filenameDense, isLogInitialized);
 
-	render3DResult((char*)inputImageDir.c_str(), (char*)outputImageDir.c_str(),
+	int ret = render3DResult((char*)inputImageDir.c_str(), (char*)outputImageDir.c_str(),
 		filenameSparse, filenameDense, isLogInitialized);
 
-  return 0;
+	return ret;
 }
