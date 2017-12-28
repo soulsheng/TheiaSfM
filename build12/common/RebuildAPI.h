@@ -16,7 +16,7 @@
 #define DLL_RECONSTRUCTION_API
 #endif
 
-extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* filename_sparse);
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* filename_sparse, bool use_gpu);
 
 extern "C" DLL_RECONSTRUCTION_API int kernelReBuildDense(char* pInputImageDir, char* filename_sparse, char* filename_dense, bool isLogInitialized);
 

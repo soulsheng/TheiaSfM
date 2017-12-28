@@ -29,12 +29,12 @@ namespace client_csharp
         }
 
         [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildSparse", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int kernelReBuildSparse(string inputImageDir, StringBuilder resultString);
+        public static extern int kernelReBuildSparse(string inputImageDir, StringBuilder resultString, bool useGPU);
 
         private void button1_Click(object sender, EventArgs e)
         {
             imagePath = textBox1.Text;
-            int ret = kernelReBuildSparse(imagePath, filenameSparse);
+            int ret = kernelReBuildSparse(imagePath, filenameSparse, true);
             isLogInitialized = true;
             label1.Text = "return code:" + ret.ToString() + ", file:" + filenameSparse;
         }

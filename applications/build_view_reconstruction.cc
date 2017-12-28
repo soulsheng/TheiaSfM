@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 	bool isLogInitialized = false;
 
 	char filenameSparse[256] = {'\0'};
-	kernelReBuildSparse((char*)inputImageDir.c_str(), filenameSparse);
+	kernelReBuildSparse((char*)inputImageDir.c_str(), filenameSparse, true);
 	isLogInitialized = true;
 
 	char filenameDense[256] = { '\0' };

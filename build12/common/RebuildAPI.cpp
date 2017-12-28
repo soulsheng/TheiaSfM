@@ -27,7 +27,7 @@ DEFINE_bool(build_sparse, true, "bool on/off to build. eg:0 ");
 
 DEFINE_int32(threshold_group, 35, "threshodGroup to filter group of outlier points.");
 
-DEFINE_bool(use_gpu, true, "use gpu of sift and other modual.");
+//DEFINE_bool(use_gpu, true, "use gpu of sift and other modual.");
 
 // Multithreading.
 DEFINE_int32(num_threads, 4,
@@ -90,7 +90,7 @@ void SetLog(std::string &exePath)
 	google::SetLogFilenameExtension(".log");
 }
 
-extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename)
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename, bool use_gpu)
 {
 	std::string exePath = getEXEDLLFullPath();
 	std::string inputImageDir(pInputImageDir);
@@ -140,7 +140,7 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 #endif
 
 
-	build_reconstruction(strPathExe, inputImageDir, FLAGS_output_reconstruction, FLAGS_use_gpu, FLAGS_num_threads);
+	build_reconstruction(strPathExe, inputImageDir, FLAGS_output_reconstruction, use_gpu, FLAGS_num_threads);
 
 	return 0;
 }
