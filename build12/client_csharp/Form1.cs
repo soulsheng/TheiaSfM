@@ -26,6 +26,11 @@ namespace client_csharp
         {
             InitializeComponent();
             textBox1.Text = imagePath;
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                checkedListBox1.SetItemChecked(i, true);
+            comboBox1.Text = "2";
+            comboBox2.Text = "5";
+            textBox2.Text = "abc";
         }
 
         [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildSparse", CallingConvention = CallingConvention.Cdecl)]
@@ -60,9 +65,9 @@ namespace client_csharp
         private void button3_Click(object sender, EventArgs e)
         {
             string fileFormat = "jpg+gif+avi";
-            string fileName = "abc";
-            int fps = 2;
-            int length = 5; // 动画长度，单位：秒
+            string fileName = textBox2.Text;// "abc";
+            int fps = comboBox1.SelectedIndex + 1;// 2;
+            int length = comboBox2.SelectedIndex + 1;// 5; // 动画长度，单位：秒
             int frameTotal = fps * length;
             int ret = render3DResult(imagePath, imagePathOutput, filenameSparse.ToString(), filenameDense.ToString(), isLogInitialized,
             "(0,255,0)", "(0,0,0)", 3,
