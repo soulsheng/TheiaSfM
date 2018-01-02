@@ -19,4 +19,7 @@
 extern "C" DLL_RECONSTRUCTION_API void reset_view();
 
 extern "C" DLL_RECONSTRUCTION_API int render3DResult(char* pInputImageDir, char* pOutputImageDir,
-	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized);
+	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized, 
+	char* pColorPoint, char* pColorSky, int nSizePoint, 
+	char* pOutputFormat, int nFPS, int nTimeLength,
+	int nWindowWidth, int nWindowHeight);

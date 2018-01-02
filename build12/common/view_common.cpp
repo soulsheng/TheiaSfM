@@ -979,12 +979,25 @@ void	viewDenseResult(std::string& ply_file)
 }
 
 extern "C" DLL_RECONSTRUCTION_API int render3DResult(char* pInputImageDir, char* pOutputImageDir,
-	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized)
+	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized,
+	char* pColorPoint, char* pColorSky, int nSizePoint,
+	char* pOutputFormat, int nFPS, int nTimeLength,
+	int nWindowWidth, int nWindowHeight)
 {
 	std::string inputImageDir(pInputImageDir);
 	std::string outputImageDir(pOutputImageDir);
 	std::string filenameSparse(pFilenameSparse);
 	std::string filenameDense(pFilenameDense);
+
+	FLAGS_color_point	= std::string(pColorPoint);
+	FLAGS_color_sky		= std::string(pColorSky);
+	FLAGS_point_size	= nSizePoint;
+
+	FLAGS_format = std::string(pOutputFormat);
+	FLAGS_fps		= nFPS;
+	FLAGS_length	= nTimeLength;
+	FLAGS_width		= nWindowWidth;
+	FLAGS_height	= nWindowHeight;
 
 	g_pmvsPath = inputImageDir + "pmvs\\";;
 	g_ply_file = g_pmvsPath + "models\\option-0000.ply";;

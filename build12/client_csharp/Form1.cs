@@ -52,12 +52,18 @@ namespace client_csharp
 
         [DllImport(@"dll_view3d.dll", EntryPoint = "render3DResult", CallingConvention = CallingConvention.Cdecl)]
         public static extern int render3DResult(string inputImageDir, string outputImageDir,
-            string filenameSparse, string filenameDense, bool isLogInitialized);
+            string filenameSparse, string filenameDense, bool isLogInitialized,
+            string pColorPoint, string pColorSky, int nSizePoint,
+            string pOutputFormat, int nFPS, int nTimeLength,
+            int nWindowWidth, int nWindowHeight);
 
         private void button3_Click(object sender, EventArgs e)
         {
-            int ret = render3DResult(imagePath, imagePathOutput, filenameSparse.ToString(), filenameDense.ToString(), isLogInitialized);
-            string imageOutput = imagePathOutput + "\\10.jpg";
+            int ret = render3DResult(imagePath, imagePathOutput, filenameSparse.ToString(), filenameDense.ToString(), isLogInitialized,
+            "(0,255,0)", "(0,0,0)", 3,
+            "gif", 2, 5,
+            1280, 1080);
+            string imageOutput = imagePathOutput + "\\0.gif";
             pictureBox1.Image = Image.FromFile(imageOutput);
         }
     }
