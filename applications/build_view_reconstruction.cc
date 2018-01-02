@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 	int ret = render3DResult((char*)inputImageDir.c_str(), (char*)outputImageDir.c_str(),
 		filenameSparse, filenameDense, isLogInitialized,
 		"(0,255,0)", "(0,0,0)", 3,
-		"gif", 2, 5,
+		"jpg+gif+avi", "abc", 2, 5,
 		1280, 1080);
 
 	return ret;

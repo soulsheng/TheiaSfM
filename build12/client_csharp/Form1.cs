@@ -54,17 +54,32 @@ namespace client_csharp
         public static extern int render3DResult(string inputImageDir, string outputImageDir,
             string filenameSparse, string filenameDense, bool isLogInitialized,
             string pColorPoint, string pColorSky, int nSizePoint,
-            string pOutputFormat, int nFPS, int nTimeLength,
+            string pOutputFormat, string pOutputName, int nFPS, int nTimeLength,
             int nWindowWidth, int nWindowHeight);
 
         private void button3_Click(object sender, EventArgs e)
         {
+            string fileFormat = "jpg+gif+avi";
+            string fileName = "abc";
+            int fps = 2;
+            int length = 5; // 动画长度，单位：秒
+            int frameTotal = fps * length;
             int ret = render3DResult(imagePath, imagePathOutput, filenameSparse.ToString(), filenameDense.ToString(), isLogInitialized,
             "(0,255,0)", "(0,0,0)", 3,
-            "gif", 2, 5,
+            fileFormat, fileName, fps, length,
             1280, 1080);
-            string imageOutput = imagePathOutput + "\\0.gif";
-            pictureBox1.Image = Image.FromFile(imageOutput);
+
+            // 显示图片 gif或jpg，avi/mp4视频需要EmguCV库暂时没引用
+            if ( fileFormat.Contains("gif") )
+            {
+                string imageOutput = imagePathOutput + fileName + ".gif";
+                pictureBox1.Image = Image.FromFile(imageOutput);
+            }
+            else if (fileFormat.Contains("jpg") )
+            {
+                string imageOutput = imagePathOutput + fileName + frameTotal.ToString() + ".jpg";
+                pictureBox1.Image = Image.FromFile(imageOutput);
+            }
         }
     }
 }

@@ -172,6 +172,8 @@ bool	bOutputFinish = false;
 std::string g_ply_file;
 std::string g_pmvsPath;
 
+std::ostringstream osFileName;
+
 void	viewDenseResult(std::string& ply_file);
 
 void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& strOutput,
@@ -526,7 +528,7 @@ void RenderScene() {
 		//std::cout << "output: " << min_num_views_for_track  << "at time: " << clock() << std::endl;
 		min_num_views_for_track--;
 		std::ostringstream os;
-		os << strPathBMP << std::uppercase << std::setfill('0') << std::setw(2) << nPrintScreen++ << ".bmp";
+		os << osFileName.str() << std::setfill('0') << std::setw(2) << nPrintScreen++ << ".bmp";
 		printScreen(os.str(), window_size[0], window_size[1]);
 		nImageCountOutput++;
 	}
@@ -981,7 +983,7 @@ void	viewDenseResult(std::string& ply_file)
 extern "C" DLL_RECONSTRUCTION_API int render3DResult(char* pInputImageDir, char* pOutputImageDir,
 	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized,
 	char* pColorPoint, char* pColorSky, int nSizePoint,
-	char* pOutputFormat, int nFPS, int nTimeLength,
+	char* pOutputFormat, char* pOutputName, int nFPS, int nTimeLength,
 	int nWindowWidth, int nWindowHeight)
 {
 	std::string inputImageDir(pInputImageDir);
@@ -993,6 +995,7 @@ extern "C" DLL_RECONSTRUCTION_API int render3DResult(char* pInputImageDir, char*
 	FLAGS_color_sky		= std::string(pColorSky);
 	FLAGS_point_size	= nSizePoint;
 
+	FLAGS_name = std::string(pOutputName);
 	FLAGS_format = std::string(pOutputFormat);
 	FLAGS_fps		= nFPS;
 	FLAGS_length	= nTimeLength;
@@ -1013,6 +1016,9 @@ extern "C" DLL_RECONSTRUCTION_API int render3DResult(char* pInputImageDir, char*
 
 	min_num_views_for_track = FLAGS_fps * FLAGS_length;
 
+	osFileName.str("");
+	osFileName << g_output_images << FLAGS_name ;
+
 	viewDenseResult(g_ply_file);
 
 	gl_draw_points(1, (char*)g_exePath.c_str());
@@ -1027,13 +1033,12 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 	{
 		for (int i = 0; i < nImageCountOutput; i++)
 		{
-			std::ostringstream osIn;
-			osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
-			OpenImageIO::ImageBuf image(osIn.str());
+			std::ostringstream os;
+			os << osFileName.str() << std::setfill('0') << std::setw(2) << i;
 
-			std::ostringstream osOut;
-			osOut << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".jpg";
-			image.write(osOut.str(), "jpg");
+			OpenImageIO::ImageBuf image(os.str() + ".bmp");
+
+			image.write(os.str() + ".jpg", "jpg");
 
 			image.clear();
 		}
@@ -1058,7 +1063,8 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 		for (int n = 0; n < nImageCountOutput; ++n)
 		{
 			std::ostringstream os;
-			os << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << n << ".bmp";
+			os << osFileName.str() << std::setfill('0') << std::setw(2) << n << ".bmp";
+
 			bmp.LoadImage(os.str().c_str());
 
 			// 写入gw的图片数据为rgba8888格式
@@ -1123,7 +1129,7 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 			for (int i = 0; i < nImageCountOutput; i++)
 			{
 				std::ostringstream osIn;
-				osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+				osIn << osFileName.str() << std::setfill('0') << std::setw(2) << i << ".bmp";
 
 				IplImage* iplImgOut = cvLoadImage(osIn.str().c_str());
 
@@ -1196,7 +1202,7 @@ void compressBMP(std::string& strFormat, int nImageCountOutput, std::string& str
 	for (int i = 0; i < nImageCountOutput; i++)
 	{
 		std::ostringstream osIn;
-		osIn << strOutput << std::uppercase << std::setfill('0') << std::setw(2) << i << ".bmp";
+		osIn << osFileName.str() << std::setfill('0') << std::setw(2) << i << ".bmp";
 		bool breturn = stlplus::file_delete(osIn.str());
 		if (!breturn)
 		{
