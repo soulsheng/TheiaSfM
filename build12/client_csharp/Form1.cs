@@ -16,8 +16,8 @@ namespace client_csharp
     public partial class Form1 : Form
     {
 
-        string imagePath = "E:\\3d\\2017_03-5\\";
-        string imagePathOutput = "E:\\3d\\output\\";
+        string imagePath;// = "E:\\3d\\2017_03-5\\";
+        string imagePathOutput;// = "E:\\3d\\output\\";
         StringBuilder filenameSparse = new StringBuilder();
         StringBuilder filenameDense = new StringBuilder();
         bool isLogInitialized = false;
@@ -25,12 +25,13 @@ namespace client_csharp
         public Form1()
         {
             InitializeComponent();
-            textBox1.Text = imagePath;
+            textBox1.Text = "E:\\3d\\2017_03-5\\";
             for (int i = 0; i < checkedListBox1.Items.Count; i++)
                 checkedListBox1.SetItemChecked(i, true);
             comboBox1.Text = "2";
             comboBox2.Text = "5";
             textBox2.Text = "abc";
+            textBox3.Text = "E:\\3d\\output\\";
         }
 
         [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildSparse", CallingConvention = CallingConvention.Cdecl)]
@@ -50,9 +51,12 @@ namespace client_csharp
         private void button2_Click(object sender, EventArgs e)
         {
             if(filenameSparse.Length == 0)
-                filenameSparse.Append("E:\\3d\\2017_03-5\\result");
+            {
+                MessageBox.Show("请先执行稀疏重建！");
+                return;
+            }
             int ret = kernelReBuildDense(imagePath, filenameSparse.ToString(), filenameDense, isLogInitialized);
-            label2.Text = "return code:" + ret.ToString() + ", file:" + filenameDense;
+            label1.Text = "return code:" + ret.ToString() + ", file:" + filenameDense;
         }
 
         [DllImport(@"dll_view3d.dll", EntryPoint = "render3DResult", CallingConvention = CallingConvention.Cdecl)]
@@ -64,11 +68,24 @@ namespace client_csharp
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string fileFormat = "jpg+gif+avi";
+            if (filenameDense.Length == 0)
+            {
+                MessageBox.Show("请先执行稀疏/稠密重建！");
+                return;
+            }
+
+            string fileFormat = "";// = "jpg+gif+avi";
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                if (checkedListBox1.GetItemChecked(i))
+                    fileFormat += checkedListBox1.GetItemText( checkedListBox1.Items[i] );
+            }
+
             string fileName = textBox2.Text;// "abc";
             int fps = comboBox1.SelectedIndex + 1;// 2;
             int length = comboBox2.SelectedIndex + 1;// 5; // 动画长度，单位：秒
             int frameTotal = fps * length;
+            imagePathOutput = textBox3.Text;
             int ret = render3DResult(imagePath, imagePathOutput, filenameSparse.ToString(), filenameDense.ToString(), isLogInitialized,
             "(0,255,0)", "(0,0,0)", 3,
             fileFormat, fileName, fps, length,
