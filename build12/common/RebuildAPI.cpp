@@ -18,13 +18,14 @@
 
 typedef std::string	String;
 
-
+// 内部参数
 DEFINE_bool(undistort, false, "bool on/off to undistort image. eg:0 ");
 
 DEFINE_bool(build, true, "bool on/off to build. eg:0 ");
 
 DEFINE_bool(build_sparse, true, "bool on/off to build. eg:0 ");
 
+// 外部参数，dll 提供参数设置接口
 DEFINE_int32(threshold_group, 35, "threshodGroup to filter group of outlier points.");
 
 //DEFINE_bool(use_gpu, true, "use gpu of sift and other modual.");
@@ -90,7 +91,7 @@ void SetLog(std::string &exePath)
 	google::SetLogFilenameExtension(".log");
 }
 
-extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename, bool use_gpu)
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename, bool use_gpu, int num_threads, int noise_removal)
 {
 	std::string exePath = getEXEDLLFullPath();
 	std::string inputImageDir(pInputImageDir);
@@ -105,7 +106,8 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 		strcpy(result_filename, FLAGS_output_reconstruction.c_str());
 	}
 
-
+	FLAGS_num_threads = num_threads;
+	FLAGS_threshold_group = noise_removal;
 
 	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 	SetLog(exePath);

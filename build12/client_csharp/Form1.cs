@@ -41,17 +41,28 @@ namespace client_csharp
 
             textBox4.Text = "1280";             // 分辨率长，单位：像素
             textBox5.Text = "1080";             // 分辨率宽，单位：像素
+            textBox6.Text = "4";                // 线程数目
+            textBox7.Text = "35";               // 噪声滤除参数，值越高滤除越多 
         }
 
         [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildSparse", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int kernelReBuildSparse(string inputImageDir, StringBuilder resultString, bool useGPU);
+        public static extern int kernelReBuildSparse(string inputImageDir, StringBuilder resultString, bool useGPU,
+            int num_threads, int noise_removal);
 
         private void button1_Click(object sender, EventArgs e)
         {
             imagePath = textBox1.Text;
-            int ret = kernelReBuildSparse(imagePath, filenameSparse, true);
+            bool bUseGPU = radioButton1.Checked;
+            int nThreads, nNoise;
+            int.TryParse(textBox6.Text, out nThreads);
+            int.TryParse(textBox7.Text, out nNoise);
+
+            int ret = kernelReBuildSparse(imagePath, filenameSparse, bUseGPU, nThreads, nNoise);
+
             isLogInitialized = true;
-            label1.Text = "return code:" + ret.ToString() + ", file:" + filenameSparse;
+            string retString = "return code:" + ret.ToString() + ", file:" + filenameSparse;
+            MessageBox.Show(retString);
+
         }
 
         [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildDense", CallingConvention = CallingConvention.Cdecl)]
@@ -65,7 +76,8 @@ namespace client_csharp
                 return;
             }
             int ret = kernelReBuildDense(imagePath, filenameSparse.ToString(), filenameDense, isLogInitialized);
-            label1.Text = "return code:" + ret.ToString() + ", file:" + filenameDense;
+            string retString = "return code:" + ret.ToString() + ", file:" + filenameDense;
+            MessageBox.Show(retString);
         }
 
         private string color2string(Color rgb)
