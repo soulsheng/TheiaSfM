@@ -73,7 +73,8 @@
 
 #define		PI		3.1415926	
 
-DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
+// 外部参数10个，dll api支持设置
+//DEFINE_string(reconstruction, "", "Reconstruction file to be viewed.");
 DEFINE_bool(same_color, true, "bool on/off to use same color for point. eg:0 ");
 DEFINE_int32(point_size, 3, "bool on/off to use same color for point. eg:0 ");
 DEFINE_string(color_sky, "(0,0,0)", "color of sky. eg:(128,150,200)blue ");
@@ -81,11 +82,17 @@ DEFINE_string(color_point, "(0,255,0)", "color of point. eg:(255,255,255)white "
 
 //DEFINE_string(output_images, "./output/", "output image directory");
 DEFINE_string(format, "jpg+gif+avi+mp4", "jpg, gif, avi, mp4 ");
+DEFINE_double(fps, 2, "frame per second");
+DEFINE_string(name, "0", "gif or mp4 file name");
+DEFINE_double(length, 5, "length of vedio, unit: seconds");
+
+DEFINE_int32(width, 1280, "window width");
+DEFINE_int32(height, 1024, "window height");
+
+// 内部参数 
 DEFINE_bool(y_flip, false, "y direction 1-up,  -1-down");
 DEFINE_bool(view, false, "bool on/off to view. eg:0 ");
 DEFINE_int32(output_speed, 1000, "output speed 1-1000");
-DEFINE_int32(width, 1280, "window width");
-DEFINE_int32(height, 1024, "window height");
 DEFINE_string(distance, "(0.1,0.6,0.2)", "set distance of view");
 DEFINE_bool(draw_box, false, "draw bounding box");
 DEFINE_bool(exit_fast, true, "exit when output finish");
@@ -97,9 +104,6 @@ DEFINE_string(eye_position, "(0,0,0)", "position of eye.");
 DEFINE_string(eye_angle, "(0,0,0)", "angle of eye.");
 DEFINE_bool(view_sparse, false, "view sparse or not");
 DEFINE_bool(light, false, "turn on/off light");
-DEFINE_double(fps, 2, "frame per second");
-DEFINE_string(name, "0", "gif or mp4 file name");
-DEFINE_double(length, 5, "length of vedio, unit: seconds");
 
 //std::string FLAGS_pmvs_working_directory;
 std::string g_output_images;
@@ -982,7 +986,7 @@ void	viewDenseResult(std::string& ply_file)
 
 extern "C" DLL_RECONSTRUCTION_API int render3DResult(char* pInputImageDir, char* pOutputImageDir,
 	char* pFilenameSparse, char* pFilenameDense, bool bLogInitialized,
-	char* pColorPoint, char* pColorSky, int nSizePoint,
+	char* pColorSky, char* pColorPoint, bool bSameColor, int nSizePoint,
 	char* pOutputFormat, char* pOutputName, int nFPS, int nTimeLength,
 	int nWindowWidth, int nWindowHeight)
 {
@@ -991,8 +995,9 @@ extern "C" DLL_RECONSTRUCTION_API int render3DResult(char* pInputImageDir, char*
 	std::string filenameSparse(pFilenameSparse);
 	std::string filenameDense(pFilenameDense);
 
-	FLAGS_color_point	= std::string(pColorPoint);
 	FLAGS_color_sky		= std::string(pColorSky);
+	FLAGS_color_point	= std::string(pColorPoint);
+	FLAGS_same_color	= bSameColor;
 	FLAGS_point_size	= nSizePoint;
 
 	FLAGS_name = std::string(pOutputName);

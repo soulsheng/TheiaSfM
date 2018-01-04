@@ -32,6 +32,15 @@ namespace client_csharp
             comboBox2.Text = "5";
             textBox2.Text = "abc";
             textBox3.Text = "E:\\3d\\output\\";
+
+            button4.BackColor = Color.Black;    // 背景色
+            button5.BackColor = Color.Lime;     // 点云色
+
+            comboBox3.Text = "3";               // 点大小
+            comboBox4.SelectedIndex = 1;        // 是否统一色
+
+            textBox4.Text = "1280";             // 分辨率长，单位：像素
+            textBox5.Text = "1080";             // 分辨率宽，单位：像素
         }
 
         [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildSparse", CallingConvention = CallingConvention.Cdecl)]
@@ -59,10 +68,19 @@ namespace client_csharp
             label1.Text = "return code:" + ret.ToString() + ", file:" + filenameDense;
         }
 
+        private string color2string(Color rgb)
+        {
+            string strColorSky = "(";
+            strColorSky += rgb.R + ",";
+            strColorSky += rgb.G + ",";
+            strColorSky += rgb.B + ")";
+            return strColorSky;
+        }
+
         [DllImport(@"dll_view3d.dll", EntryPoint = "render3DResult", CallingConvention = CallingConvention.Cdecl)]
         public static extern int render3DResult(string inputImageDir, string outputImageDir,
             string filenameSparse, string filenameDense, bool isLogInitialized,
-            string pColorPoint, string pColorSky, int nSizePoint,
+            string pColorSky, string pColorPoint, bool bSameColor, int nSizePoint,
             string pOutputFormat, string pOutputName, int nFPS, int nTimeLength,
             int nWindowWidth, int nWindowHeight);
 
@@ -86,10 +104,19 @@ namespace client_csharp
             int length = comboBox2.SelectedIndex + 1;// 5; // 动画长度，单位：秒
             int frameTotal = fps * length;
             imagePathOutput = textBox3.Text;
+            int nPointSize = comboBox3.SelectedIndex + 1;// 3;  // 点大小
+            bool bSameColor = comboBox4.SelectedIndex == 1;          // 是否统一色
+            string strColorSky = color2string(button4.BackColor);
+            string strColorPoint = color2string(button5.BackColor);
+
+            int nWidth, nHeight;
+            int.TryParse(textBox4.Text, out nWidth);
+            int.TryParse(textBox5.Text, out nHeight);
+ 
             int ret = render3DResult(imagePath, imagePathOutput, filenameSparse.ToString(), filenameDense.ToString(), isLogInitialized,
-            "(0,255,0)", "(0,0,0)", 3,
+            strColorSky, strColorPoint, bSameColor, nPointSize,
             fileFormat, fileName, fps, length,
-            1280, 1080);
+            nWidth, nHeight);
 
             // 显示图片 gif或jpg，avi/mp4视频需要EmguCV库暂时没引用
             if ( fileFormat.Contains("gif") )
@@ -101,6 +128,28 @@ namespace client_csharp
             {
                 string imageOutput = imagePathOutput + fileName + frameTotal.ToString() + ".jpg";
                 pictureBox1.Image = Image.FromFile(imageOutput);
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ColorDialog ColorForm = new ColorDialog();
+            if (ColorForm.ShowDialog() == DialogResult.OK)
+            {
+                Color GetColor = ColorForm.Color;
+                //GetColor就是用户选择的颜色，接下来就可以使用该颜色了
+                button4.BackColor = GetColor;
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ColorDialog ColorForm = new ColorDialog();
+            if (ColorForm.ShowDialog() == DialogResult.OK)
+            {
+                Color GetColor = ColorForm.Color;
+                //GetColor就是用户选择的颜色，接下来就可以使用该颜色了
+                button5.BackColor = GetColor;
             }
         }
     }
