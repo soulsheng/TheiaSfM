@@ -43,21 +43,24 @@ namespace client_csharp
             textBox5.Text = "1080";             // 分辨率宽，单位：像素
             textBox6.Text = "4";                // 线程数目
             textBox7.Text = "35";               // 噪声滤除参数，值越高滤除越多 
+
+            comboBox5.SelectedIndex = 1;        // 特征密度，0减小，1普通，2增大
         }
 
         [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildSparse", CallingConvention = CallingConvention.Cdecl)]
         public static extern int kernelReBuildSparse(string inputImageDir, StringBuilder resultString, bool useGPU,
-            int num_threads, int noise_removal);
+            int num_threads, int feature_density, bool match_out_of_core);
 
         private void button1_Click(object sender, EventArgs e)
         {
             imagePath = textBox1.Text;
-            bool bUseGPU = radioButton1.Checked;
-            int nThreads, nNoise;
+            bool bUseGPU = checkBox1.Checked;
+            int nThreads;
             int.TryParse(textBox6.Text, out nThreads);
-            int.TryParse(textBox7.Text, out nNoise);
+            int nFeatureDensity = comboBox5.SelectedIndex;
+            bool bMatchOutOfCore = checkBox2.Checked;
 
-            int ret = kernelReBuildSparse(imagePath, filenameSparse, bUseGPU, nThreads, nNoise);
+            int ret = kernelReBuildSparse(imagePath, filenameSparse, bUseGPU, nThreads, nFeatureDensity, bMatchOutOfCore);
 
             isLogInitialized = true;
             string retString = "return code:" + ret.ToString() + ", file:" + filenameSparse;
@@ -66,7 +69,8 @@ namespace client_csharp
         }
 
         [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildDense", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int kernelReBuildDense(string inputImageDir, string filenameSparse, StringBuilder resultString, bool isLogInitialized);
+        public static extern int kernelReBuildDense(string inputImageDir, string filenameSparse, StringBuilder resultString, bool isLogInitialized,
+            bool bUndistort, int noise_removal );
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -75,7 +79,13 @@ namespace client_csharp
                 MessageBox.Show("请先执行稀疏重建！");
                 return;
             }
-            int ret = kernelReBuildDense(imagePath, filenameSparse.ToString(), filenameDense, isLogInitialized);
+
+            int nNoise;
+            int.TryParse(textBox7.Text, out nNoise);
+            bool bUndistort = checkBox3.Checked;
+
+            int ret = kernelReBuildDense(imagePath, filenameSparse.ToString(), filenameDense, isLogInitialized,
+                bUndistort, nNoise);
             string retString = "return code:" + ret.ToString() + ", file:" + filenameDense;
             MessageBox.Show(retString);
         }

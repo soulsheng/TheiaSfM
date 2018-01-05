@@ -34,6 +34,12 @@ DEFINE_int32(threshold_group, 35, "threshodGroup to filter group of outlier poin
 DEFINE_int32(num_threads, 4,
 	"Number of threads to use for feature extraction and matching.");
 
+#if 0
+DEFINE_string(feature_density, "NORMAL",
+	"Set to SPARSE, NORMAL, or DENSE to extract fewer or more "
+	"features from each image.");
+#endif
+
 #define FLAG_FILE_NAME	"build_reconstruction_flags.txt"
 
 //#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
@@ -48,7 +54,8 @@ DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 
 #include <fstream>  // NOLINT
 
-extern "C" DLL_RECONSTRUCTION_API int	kernelReBuildDense(char* pInputImageDir, char* filename_sparse, char* filename_dense, bool isLogInitialized)
+extern "C" DLL_RECONSTRUCTION_API int	kernelReBuildDense(char* pInputImageDir, char* filename_sparse, char* filename_dense, bool isLogInitialized,
+	bool bUndistort, int noise_removal)
 {
 	if (!FLAGS_build)
 		return -1;
@@ -61,11 +68,13 @@ extern "C" DLL_RECONSTRUCTION_API int	kernelReBuildDense(char* pInputImageDir, c
 	if (!isLogInitialized)
 		SetLog(exePath);
 
+	FLAGS_threshold_group = noise_removal;
+	FLAGS_undistort = bUndistort;
+
 #if 1
 	if (!export_to_pmvs(pmvsPath, inputImageDir, std::string(filename_sparse), FLAGS_num_threads, FLAGS_undistort))
 		return -2;
 #endif
-
 
 	LOG(INFO) << "开始执行稠密重建：";
 #if 1
@@ -91,7 +100,8 @@ void SetLog(std::string &exePath)
 	google::SetLogFilenameExtension(".log");
 }
 
-extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename, bool use_gpu, int num_threads, int noise_removal)
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename, 
+	bool use_gpu, int num_threads, int feature_density, bool match_out_of_core)
 {
 	std::string exePath = getEXEDLLFullPath();
 	std::string inputImageDir(pInputImageDir);
@@ -107,7 +117,6 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 	}
 
 	FLAGS_num_threads = num_threads;
-	FLAGS_threshold_group = noise_removal;
 
 	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 	SetLog(exePath);
@@ -142,7 +151,8 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 #endif
 
 
-	build_reconstruction(strPathExe, inputImageDir, FLAGS_output_reconstruction, use_gpu, FLAGS_num_threads);
+	build_reconstruction(strPathExe, inputImageDir, FLAGS_output_reconstruction, use_gpu, FLAGS_num_threads, 
+		feature_density, match_out_of_core);
 
 	return 0;
 }

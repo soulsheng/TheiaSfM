@@ -48,16 +48,17 @@ DEFINE_string(
 	descriptor, "SIFT",
 	"Type of feature descriptor to use. Must be one of the following: "
 	"SIFT");
-DEFINE_string(feature_density, "NORMAL",
-	"Set to SPARSE, NORMAL, or DENSE to extract fewer or more "
-	"features from each image.");
+
 DEFINE_string(matching_strategy, "CASCADE_HASHING",
 	"Strategy used to match features. Must be BRUTE_FORCE "
 	" or CASCADE_HASHING");
+
+#if 0
 DEFINE_bool(match_out_of_core, true,
 	"Perform matching out of core by saving features to disk and "
 	"reading them as needed. Set to false to perform matching all in "
 	"memory.");
+#endif
 
 DEFINE_int32(matching_max_num_images_in_cache, 128,
 	"Maximum number of images to store in the LRU cache during "
@@ -184,14 +185,14 @@ DEFINE_bool(force_resize, false, "force resize even image is small than resize."
 // the command line flags. There are many more options beside just these located
 // in //theia/vision/sfm/reconstruction_builder.h
 ReconstructionBuilderOptions SetReconstructionBuilderOptions(std::string& FLAGS_output_matches_file, 
-	std::string& FLAGS_matching_working_directory, const int& FLAGS_num_threads) {
+	std::string& FLAGS_matching_working_directory, const int& FLAGS_num_threads, int feature_density, bool match_out_of_core) {
 	ReconstructionBuilderOptions options;
 	options.num_threads = FLAGS_num_threads;
 	options.output_matches_file = FLAGS_output_matches_file;
 
 	options.descriptor_type = StringToDescriptorExtractorType(FLAGS_descriptor);
-	options.feature_density = StringToFeatureDensity(FLAGS_feature_density);
-	options.matching_options.match_out_of_core = FLAGS_match_out_of_core;
+	options.feature_density = (FeatureDensity)feature_density;// StringToFeatureDensity(FLAGS_feature_density);
+	options.matching_options.match_out_of_core = match_out_of_core;
 	options.matching_options.keypoints_and_descriptors_output_dir =
 		FLAGS_matching_working_directory;
 	options.matching_options.cache_capacity =
@@ -417,7 +418,7 @@ std::string formatStructure(theia::ReconstructionBuilderOptions options)
 
 	os << "descriptor_type = " << FLAGS_descriptor << std::endl;
 
-	os << "feature_density = " << FLAGS_feature_density << std::endl;
+	os << "feature_density = " << FeatureDensityToString(options.feature_density) << std::endl;
 	os << "match_out_of_core = " << options.matching_options.match_out_of_core << std::endl;
 	os << "keypoints_and_descriptors_output_dir = " << options.matching_options.keypoints_and_descriptors_output_dir << std::endl;
 	os << "cache_capacity = " << options.matching_options.cache_capacity << std::endl;

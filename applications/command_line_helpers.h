@@ -78,6 +78,34 @@ inline FeatureDensity StringToFeatureDensity(
   }
 }
 
+inline std::string FeatureDensityToString(
+	const FeatureDensity& feature_density) {
+
+	std::string ret;
+	switch (feature_density)
+	{
+	case FeatureDensity::SPARSE:
+		ret = std::string("SPARSE");
+		break;
+
+	case FeatureDensity::NORMAL:
+		ret = std::string("NORMAL");
+		break;
+
+	case FeatureDensity::DENSE:
+		ret = std::string("DENSE");
+		break;
+
+	default:
+		LOG(FATAL) << "Invalid feature density requested. Please use SPARSE, "
+			"NORMAL, or DENSE.";
+		ret = std::string("NORMAL");
+		break;
+	}
+
+	return ret;
+}
+
 inline MatchingStrategy StringToMatchingStrategyType(
     const std::string& matching_strategy) {
   if (matching_strategy == "BRUTE_FORCE") {

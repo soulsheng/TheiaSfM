@@ -155,7 +155,7 @@ bool export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::stri
 
 
 bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, std::string& resultString, 
-	bool use_gpu, const int FLAGS_num_threads)
+	bool use_gpu, const int FLAGS_num_threads, int feature_density, bool match_out_of_core)
 {
 	std::string FLAGS_images = inputImageDir + "*.jpg";
 	std::string FLAGS_matching_working_directory = inputImageDir + "features\\";
@@ -166,7 +166,7 @@ bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, s
 	LOG(INFO) << "开始执行稀疏重建：";
 
 	const ReconstructionBuilderOptions options =
-		SetReconstructionBuilderOptions(FLAGS_output_matches_file, FLAGS_matching_working_directory, FLAGS_num_threads);
+		SetReconstructionBuilderOptions(FLAGS_output_matches_file, FLAGS_matching_working_directory, FLAGS_num_threads, feature_density, match_out_of_core);
 
 	LOG(INFO) << formatStructure(options);
 

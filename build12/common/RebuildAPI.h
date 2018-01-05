@@ -17,9 +17,10 @@
 #endif
 
 extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* filename_sparse, bool use_gpu,
-	int num_threads, int noise_removal);
+	int num_threads, int feature_density, bool match_out_of_core);
 
-extern "C" DLL_RECONSTRUCTION_API int kernelReBuildDense(char* pInputImageDir, char* filename_sparse, char* filename_dense, bool isLogInitialized);
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildDense(char* pInputImageDir, char* filename_sparse, char* filename_dense, bool isLogInitialized,
+	bool bUndistort, int noise_removal);
 
 extern "C" DLL_RECONSTRUCTION_API std::string get_Path(std::string& strFullPath);
 

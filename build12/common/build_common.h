@@ -51,7 +51,7 @@ using theia::ReconstructionBuilderOptions;
 // the command line flags. There are many more options beside just these located
 // in //theia/vision/sfm/reconstruction_builder.h
 ReconstructionBuilderOptions SetReconstructionBuilderOptions(std::string& FLAGS_output_matches_file,
-	std::string& FLAGS_matching_working_directory, const int& FLAGS_num_threads);
+	std::string& FLAGS_matching_working_directory, const int& FLAGS_num_threads, int feature_density, bool match_out_of_core);
 
 void AddMatchesToReconstructionBuilder(
 	ReconstructionBuilder* reconstruction_builder);
