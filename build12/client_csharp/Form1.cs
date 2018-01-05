@@ -59,11 +59,13 @@ namespace client_csharp
             int.TryParse(textBox6.Text, out nThreads);
             int nFeatureDensity = comboBox5.SelectedIndex;
             bool bMatchOutOfCore = checkBox2.Checked;
+            DateTime dt = DateTime.Now;
 
             int ret = kernelReBuildSparse(imagePath, filenameSparse, bUseGPU, nThreads, nFeatureDensity, bMatchOutOfCore);
 
+            string timeString = DateTime.Now.Subtract(dt).TotalSeconds.ToString();
             isLogInitialized = true;
-            string retString = "return code:" + ret.ToString() + ", file:" + filenameSparse;
+            string retString = "return code:" + ret.ToString() + ", file:" + filenameSparse + ", time(s):" + timeString;
             MessageBox.Show(retString);
 
         }
@@ -83,10 +85,13 @@ namespace client_csharp
             int nNoise;
             int.TryParse(textBox7.Text, out nNoise);
             bool bUndistort = checkBox3.Checked;
+            DateTime dt = DateTime.Now;
 
             int ret = kernelReBuildDense(imagePath, filenameSparse.ToString(), filenameDense, isLogInitialized,
                 bUndistort, nNoise);
-            string retString = "return code:" + ret.ToString() + ", file:" + filenameDense;
+
+            string timeString = DateTime.Now.Subtract(dt).TotalSeconds.ToString();
+            string retString = "return code:" + ret.ToString() + ", file:" + filenameDense + ", time(s):" + timeString;
             MessageBox.Show(retString);
         }
 
@@ -134,6 +139,7 @@ namespace client_csharp
             int nWidth, nHeight;
             int.TryParse(textBox4.Text, out nWidth);
             int.TryParse(textBox5.Text, out nHeight);
+            DateTime dt = DateTime.Now;
  
             int ret = render3DResult(imagePath, imagePathOutput, filenameSparse.ToString(), filenameDense.ToString(), isLogInitialized,
             strColorSky, strColorPoint, bSameColor, nPointSize,
@@ -151,6 +157,10 @@ namespace client_csharp
                 string imageOutput = imagePathOutput + fileName + frameTotal.ToString() + ".jpg";
                 pictureBox1.Image = Image.FromFile(imageOutput);
             }
+
+            string timeString = DateTime.Now.Subtract(dt).TotalSeconds.ToString();
+            string retString = "return code:" + ret.ToString() + ", file:" + imagePathOutput + fileName + ", time(s):" + timeString;
+            MessageBox.Show(retString);
         }
 
         private void button4_Click(object sender, EventArgs e)
