@@ -104,7 +104,7 @@ class FeatureExtractorAndMatcher {
   // to the options passed in. Only matches that have passed geometric
   // verification are kept. EXIF data is parsed to determine the camera
   // intrinsics if available.
-  void ExtractAndMatchFeatures(
+  int ExtractAndMatchFeatures(
       std::vector<CameraIntrinsicsPrior>* intrinsics,
       std::vector<ImagePairMatch>* matches);
 

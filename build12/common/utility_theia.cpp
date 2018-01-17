@@ -154,9 +154,11 @@ bool export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::stri
 }
 
 
-bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, std::string& resultString, 
+int build_reconstruction(std::string& strPathExe, std::string& inputImageDir, std::string& resultString, 
 	bool use_gpu, const int FLAGS_num_threads, int feature_density, bool match_out_of_core)
 {
+	int nRetCode = 0;
+
 	std::string FLAGS_images = inputImageDir + "*.jpg";
 	std::string FLAGS_matching_working_directory = inputImageDir + "features\\";
 	std::string FLAGS_output_matches_file = inputImageDir + "output.matches";
@@ -173,45 +175,49 @@ bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, s
 	ReconstructionBuilder reconstruction_builder(options, strPathExe, use_gpu);
 	// If matches are provided, load matches otherwise load images.
 	if (FLAGS_images.size() != 0) {
-		AddImagesToReconstructionBuilder(&reconstruction_builder, FLAGS_images);
+		nRetCode = AddImagesToReconstructionBuilder(&reconstruction_builder, FLAGS_images);
 	}
 	else {
 		LOG(FATAL)
 			<< "You must specifiy either images to reconstruct or a match file.";
 	}
 
+	if (nRetCode!=0)
+		return nRetCode;
+
 	std::vector<theia::Reconstruction*> reconstructions;
 
-	if (false == reconstruction_builder.BuildReconstruction(&reconstructions))
+	nRetCode = reconstruction_builder.BuildReconstruction(&reconstructions);
+	if (nRetCode != 0)
 	{
-		LOG(INFO) << "无法创建重建结果（Could not create a reconstruction）.";
-		return false;
+		LOG(INFO) << "无法创建重建结果（Could not create a reconstruction）."
+			<< " 错误码：" << nRetCode;
+		return nRetCode;
+	}
+
+	LOG(INFO) << "执行稀疏重建完成！";
+
+	if (reconstructions.size() && reconstructions[0]->NumTracks())
+	{
+		LOG(INFO) << "稀疏重建三维点的数目为：" << reconstructions[0]->NumTracks();
+		reconstruction = *reconstructions[0];
 	}
 	else
 	{
-		LOG(INFO) << "执行稀疏重建完成！";
-
-		if (reconstructions.size() && reconstructions[0]->NumTracks())
-		{
-			LOG(INFO) << "稀疏重建三维点的数目为：" << reconstructions[0]->NumTracks();
-			reconstruction = *reconstructions[0];
-		}
-		else
-		{
-			LOG(INFO) << "稀疏重建三维点的数目为0，重建结束！";
-			return -1;
-		}
-
-		LOG(INFO) << "开始为点云配置颜色：";
-		theia::ColorizeReconstruction(inputImageDir,
-			FLAGS_num_threads,
-			&reconstruction);
-		LOG(INFO) << "为点云配置颜色完成！";
-
-		theia::WriteReconstruction(reconstruction,
-			resultString);
-
-		return true;
+		LOG(INFO) << "稀疏重建三维点的数目为0，重建结束！";
+		return -1;
 	}
+
+	LOG(INFO) << "开始为点云配置颜色：";
+	theia::ColorizeReconstruction(inputImageDir,
+		FLAGS_num_threads,
+		&reconstruction);
+	LOG(INFO) << "为点云配置颜色完成！";
+
+	theia::WriteReconstruction(reconstruction,
+		resultString);
+
+	return nRetCode;
+
 }
 

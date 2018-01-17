@@ -243,7 +243,7 @@ bool ReconstructionBuilder::AddMaskForFeaturesExtraction(
   return true;
 }
 
-bool ReconstructionBuilder::ExtractAndMatchFeatures() {
+int ReconstructionBuilder::ExtractAndMatchFeatures() {
   CHECK_EQ(view_graph_->NumViews(), 0) << "Cannot call ExtractAndMatchFeatures "
                                           "after TwoViewMatches has been "
                                           "called.";
@@ -251,8 +251,12 @@ bool ReconstructionBuilder::ExtractAndMatchFeatures() {
   // Extract features and obtain the feature matches.
   std::vector<ImagePairMatch> matches;
   std::vector<CameraIntrinsicsPrior> camera_intrinsics_priors;
-  feature_extractor_and_matcher_->ExtractAndMatchFeatures(
+  
+  int nRetCode = feature_extractor_and_matcher_->ExtractAndMatchFeatures(
       &camera_intrinsics_priors, &matches);
+
+  if (nRetCode != 0)
+	  return nRetCode;
 
   // If we only want calibrated views remove them from the reconstruction so
   // that they no features are detected and matched between them.
@@ -274,6 +278,18 @@ bool ReconstructionBuilder::ExtractAndMatchFeatures() {
   LOG(INFO)  << num_total_view_pairs << " 对中的 "<< matches.size()
             << " 对图像的特征匹配成功（view pairs were matched and geometrically verified.）";
   #endif
+
+  if (matches.empty())
+  {
+	  nRetCode = -26;
+
+	  LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+		  << "异常描述：特征点匹配失败，可能原因：图片重叠比率不足，"
+		  << "建议措施：减小拍摄相邻图片的距离间隔或旋转角度";
+
+	  return nRetCode;
+  }
+
   // Add the EXIF data to each view.
   std::vector<std::string> image_filenames(image_filepaths_.size());
   for (int i = 0; i < image_filepaths_.size(); i++) {
@@ -301,7 +317,7 @@ bool ReconstructionBuilder::ExtractAndMatchFeatures() {
     AddTwoViewMatch(match.image1, match.image2, match);
   }
 
-  return true;
+  return nRetCode;
 }
 
 bool ReconstructionBuilder::AddTwoViewMatch(const std::string& image1,
@@ -343,12 +359,18 @@ void ReconstructionBuilder::InitializeReconstructionAndViewGraph(
   view_graph_.reset(std::move(view_graph));
 }
 
-bool ReconstructionBuilder::BuildReconstruction(
+int ReconstructionBuilder::BuildReconstruction(
     std::vector<Reconstruction*>* reconstructions) {
-  if(view_graph_->NumViews() < 2) 
-	  LOG(INFO) << "At least 2 images must be provided "
-                                          "in order to create a "
-                                          "reconstruction.";
+	
+	int nRetCode = 0;
+
+	if (view_graph_->NumViews() < 2) {
+		LOG(INFO) << "At least 2 images must be provided "
+			"in order to create a "
+			"reconstruction.";
+		nRetCode = -37;
+		return nRetCode;
+	}
 
   // Build tracks if they were not explicitly specified.
   if (reconstruction_->NumTracks() == 0) {
@@ -376,8 +398,15 @@ bool ReconstructionBuilder::BuildReconstruction(
 
     // If a reconstruction can no longer be estimated, return.
     if (!summary.success) {
-      return reconstructions->size() > 0;
+
+		if ( reconstructions->empty() )
+			nRetCode = -38;
+
+		LOG(INFO) << "无法完成重建";
+
+		return nRetCode;
     }
+
 #if 0//USE_LOG_INFO
     LOG(INFO)
         << "\nReconstruction estimation statistics: "
@@ -400,15 +429,15 @@ bool ReconstructionBuilder::BuildReconstruction(
     // Exit after the first reconstruction estimation if only the single largest
     // reconstruction is desired.
     if (options_.reconstruct_largest_connected_component) {
-      return reconstructions->size() > 0;
+      return 0;
     }
 
     if (reconstruction_->NumViews() < 3) {
       LOG(INFO) << "No more reconstructions can be estimated.";
-      return reconstructions->size() > 0;
+      return 0;
     }
   }
-  return true;
+  return 0;
 }
 
 void ReconstructionBuilder::AddMatchToViewGraph(

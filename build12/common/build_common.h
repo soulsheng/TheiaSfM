@@ -56,7 +56,7 @@ ReconstructionBuilderOptions SetReconstructionBuilderOptions(std::string& FLAGS_
 void AddMatchesToReconstructionBuilder(
 	ReconstructionBuilder* reconstruction_builder);
 
-void AddImagesToReconstructionBuilder(
+int AddImagesToReconstructionBuilder(
 	ReconstructionBuilder* reconstruction_builder, std::string& FLAGS_images);
 
 std::string formatStructure(theia::ReconstructionBuilderOptions options);

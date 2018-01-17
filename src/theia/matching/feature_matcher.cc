@@ -188,6 +188,19 @@ void FeatureMatcher::SetImagePairsToMatch(
   pairs_to_match_ = pairs_to_match;
 }
 
+bool FeatureMatcher::NullFeatures()
+{
+	if ( image_names_.empty() )
+		return true;
+	
+	std::shared_ptr<KeypointsAndDescriptors> features = keypoints_and_descriptors_cache_->Fetch(
+		FeatureFilenameFromImage(image_names_[0]) );
+	if (features->keypoints.empty())
+		return true;
+	else
+		return false;
+}
+
 void FeatureMatcher::MatchImages(std::vector<ImagePairMatch>* matches) {
   // If SetImagePairsToMatch has not been called, match all image-to-image
   // pairs.

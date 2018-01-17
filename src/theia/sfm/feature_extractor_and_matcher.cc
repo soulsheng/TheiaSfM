@@ -215,7 +215,7 @@ bool FeatureExtractorAndMatcher::AddMaskForFeaturesExtraction(
 // the options passed in. Only matches that have passed geometric verification
 // are kept. EXIF data is parsed to determine the camera intrinsics if
 // available.
-void FeatureExtractorAndMatcher::ExtractAndMatchFeatures(
+int FeatureExtractorAndMatcher::ExtractAndMatchFeatures(
     std::vector<CameraIntrinsicsPrior>* intrinsics,
     std::vector<ImagePairMatch>* matches) {
   CHECK_NOTNULL(intrinsics)->resize(image_filepaths_.size());
@@ -237,6 +237,18 @@ void FeatureExtractorAndMatcher::ExtractAndMatchFeatures(
   // This forces all tasks to complete before proceeding.
   thread_pool.reset(nullptr);
 
+  int nRetCode = 0;
+
+  if ( matcher_->NullFeatures() )
+  {
+	  nRetCode = -23;
+
+	  LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+		  << "异常描述：特征点检测失败，可能原因：GPU不支持，建议措施：不勾选GPU";
+
+	  return nRetCode;
+  }
+
   // After all threads complete feature extraction, perform matching.
 
   // Perform the matching.
@@ -247,6 +259,8 @@ void FeatureExtractorAndMatcher::ExtractAndMatchFeatures(
   for (int i = 0; i < image_filepaths_.size(); i++) {
     (*intrinsics)[i] = FindOrDie(intrinsics_, image_filepaths_[i]);
   }
+
+  return nRetCode;
 }
 
 void FeatureExtractorAndMatcher::ProcessImage(

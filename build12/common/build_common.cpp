@@ -326,14 +326,27 @@ void AddMatchesToReconstructionBuilder(
 	}
 }
 
-void AddImagesToReconstructionBuilder(
+int AddImagesToReconstructionBuilder(
 	ReconstructionBuilder* reconstruction_builder, std::string& FLAGS_images) {
+
+	int nRetCode = 0;
+
 	std::vector<std::string> image_files;
 	CHECK(theia::GetFilepathsFromWildcard(FLAGS_images, &image_files))
 		<< "Could not find images that matched the filepath: " << FLAGS_images
 		<< ". NOTE that the ~ filepath is not supported.";
 
 	CHECK_GT(image_files.size(), 0) << "No images found in: " << FLAGS_images;
+
+	if (image_files.size() < 3)
+	{
+		nRetCode = -15;
+
+		LOG(INFO) << "图片数小于3！异常代码：" << nRetCode << std::endl
+			<< "异常描述：收集图片失败，可能原因：路径不对，建议措施：检查输入路径下是否包含待重建的图片";
+
+		return nRetCode;
+	}
 
 	resizeImageFiles(image_files, FLAGS_resize, FLAGS_force_resize);
 
@@ -405,8 +418,12 @@ void AddImagesToReconstructionBuilder(
 
 	// Extract and match features.
 	LOG(INFO) << "开始提取特征并进行匹配：";
-	CHECK(reconstruction_builder->ExtractAndMatchFeatures());
+
+	nRetCode = reconstruction_builder->ExtractAndMatchFeatures();
+
 	LOG(INFO) << "提取特征并匹配完成！";
+
+	return nRetCode;
 }
 
 std::string formatStructure(theia::ReconstructionBuilderOptions options)

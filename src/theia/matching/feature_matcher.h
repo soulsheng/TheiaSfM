@@ -126,6 +126,9 @@ class FeatureMatcher {
   virtual void SetImagePairsToMatch(
       const std::vector<std::pair<std::string, std::string> >& pairs_to_match);
 
+  // test if features number is 0
+  virtual bool NullFeatures();
+
  protected:
   // NOTE: This method should be overridden in the subclass implementations!
   // Returns true if the image pair is a valid match.

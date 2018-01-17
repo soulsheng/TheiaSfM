@@ -37,6 +37,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "view_reconstruction", "applications\view_reconstruction.vcxproj", "{6854136B-20CD-4CEA-BBA5-0FD67954A8E7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dll_reconstruction", "dll_reconstruction\dll_reconstruction.vcxproj", "{2EF7A187-DD20-47FF-A7F1-FD8693C45258}"
+	ProjectSection(ProjectDependencies) = postProject
+		{443CDC57-4AE9-46C5-B9F7-681263BB6ABC} = {443CDC57-4AE9-46C5-B9F7-681263BB6ABC}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dll_view3d", "dll_view3d\dll_view3d.vcxproj", "{FF3EC3D5-8FE6-4752-892D-B1526502EB3B}"
 EndProject

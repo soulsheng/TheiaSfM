@@ -152,7 +152,7 @@ class ReconstructionBuilder {
                                     const std::string& mask_filepath);
 
   // Extracts features and performs matching with geometric verification.
-  bool ExtractAndMatchFeatures();
+  int ExtractAndMatchFeatures();
 
   // Initializes the reconstruction and view graph explicitly. This method
   // should be used as an alternative to the Add* methods.
@@ -169,7 +169,7 @@ class ReconstructionBuilder {
   // to the output vector and we estimate a reconstruction from the remaining
   // unestimated views. We repeat this process until no more views can be
   // successfully estimated.
-  bool BuildReconstruction(std::vector<Reconstruction*>* reconstructions);
+  int BuildReconstruction(std::vector<Reconstruction*>* reconstructions);
 
  private:
   // Adds the given matches as edges in the view graph.

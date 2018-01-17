@@ -18,7 +18,7 @@ void WritePMVSOptions(const std::string& working_dir,
 bool export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::string& filenameSparse,
 	const int FLAGS_num_threads, bool undistort);
 
-bool build_reconstruction(std::string& strPathExe, std::string& inputImageDir, std::string& resultString,
+int build_reconstruction(std::string& strPathExe, std::string& inputImageDir, std::string& resultString,
 	bool use_gpu, const int FLAGS_num_threads, int feature_density, bool match_out_of_core);
 
 
