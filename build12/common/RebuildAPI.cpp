@@ -189,3 +189,8 @@ extern "C" DLL_RECONSTRUCTION_API std::string get_EXEDLLPath()
 {
 	return getEXEDLLFullPath();
 }
+
+extern "C" DLL_RECONSTRUCTION_API bool file_Exist(std::string& filename)
+{
+	return fileExist(filename);
+}

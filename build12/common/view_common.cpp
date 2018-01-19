@@ -993,6 +993,18 @@ extern "C" DLL_RECONSTRUCTION_API int render3DResult(char* pInputImageDir, char*
 	osFileName.str("");
 	osFileName << g_output_images << FLAGS_name ;
 
+	int nRetCode = 0;
+
+	if (!file_Exist(g_ply_file))
+	{
+		nRetCode = -53;
+
+		LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+			<< "异常描述：三维显示失败-缺少稠密文件，可能原因：稠密文件不存在，建议措施：检查是否稠密重建是否成功";
+
+		return nRetCode;
+	}
+
 	viewDenseResult(g_ply_file);
 
 	gl_draw_points(1, (char*)g_exePath.c_str());

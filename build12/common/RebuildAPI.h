@@ -28,4 +28,6 @@ extern "C" DLL_RECONSTRUCTION_API bool lanch_external(std::string& bin, std::str
 
 extern "C" DLL_RECONSTRUCTION_API std::string get_EXEDLLPath();
 
+extern "C" DLL_RECONSTRUCTION_API bool file_Exist(std::string& filename);
+
 void SetLog(std::string &exePath);
