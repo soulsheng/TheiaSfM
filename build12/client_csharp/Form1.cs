@@ -39,8 +39,8 @@ namespace client_csharp
             comboBox3.Text = "3";               // 点大小
             comboBox4.SelectedIndex = 1;        // 是否统一色
 
-            textBox4.Text = "1280";             // 分辨率长，单位：像素
-            textBox5.Text = "1080";             // 分辨率宽，单位：像素
+            textBox4.Text = "1280";             // 分辨率宽，单位：像素
+            textBox5.Text = "1080";             // 分辨率高，单位：像素
             textBox6.Text = "4";                // 线程数目
             textBox7.Text = "35";               // 噪声滤除参数，值越高滤除越多 
 
