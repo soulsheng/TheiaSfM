@@ -214,7 +214,7 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
 	  nRetCode = -36;
 
 	  LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
-		  << "异常描述：0个相机位置被重建，可能原因：未知，建议措施：未知";
+		  << "异常描述：0个视点位置被重建，可能原因：视点全部被滤除，建议措施：未知";
   }
 
   global_estimator_timings.position_estimation_time =

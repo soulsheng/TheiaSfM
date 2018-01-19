@@ -116,16 +116,25 @@ void WritePMVSOptions(const std::string& working_dir,
 	ofs << "oimages 0" << std::endl;
 }
 
-bool export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::string& filenameSparse,
+int export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::string& filenameSparse,
 	const int FLAGS_num_threads, bool undistort)
 {
+	int nRetCode = 0;
+
 	theia::Reconstruction reconstruction;
 
 	CHECK(ReadReconstruction(filenameSparse, &reconstruction))
 		<< "Could not read reconstruction file.";
 
 	if (0 == reconstruction.NumViews())
-		return false;
+	{
+		nRetCode = -43;
+
+		LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+			<< "异常描述：稠密重建失败-缺少稀疏文件，可能原因：稀疏文件不存在，建议措施：检查是否稀疏重建是否成功";
+
+		return nRetCode;
+	}
 
 	if (reconstruction.NumViews())
 	{
@@ -150,7 +159,9 @@ bool export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::stri
 	const std::string bundle_file =
 		pmvsPath + "\\bundle.rd.out";
 
-	return	theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file);
+	theia::WriteBundlerFiles(reconstruction, lists_file, bundle_file);
+
+	return nRetCode;
 }
 
 

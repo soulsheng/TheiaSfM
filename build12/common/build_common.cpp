@@ -342,8 +342,8 @@ int AddImagesToReconstructionBuilder(
 	{
 		nRetCode = -15;
 
-		LOG(INFO) << "图片数小于3！异常代码：" << nRetCode << std::endl
-			<< "异常描述：收集图片失败，可能原因：路径不对，建议措施：检查输入路径下是否包含待重建的图片";
+		LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+			<< "异常描述：收集图片失败，图片少于3，可能原因：图片数目少于3，建议措施：待重建的图片数目必须大于3";
 
 		return nRetCode;
 	}
@@ -421,7 +421,8 @@ int AddImagesToReconstructionBuilder(
 
 	nRetCode = reconstruction_builder->ExtractAndMatchFeatures();
 
-	LOG(INFO) << "提取特征并匹配完成！";
+	if (nRetCode!=0)
+		LOG(INFO) << "提取特征并匹配成功！";
 
 	return nRetCode;
 }

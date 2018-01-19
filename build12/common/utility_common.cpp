@@ -100,3 +100,8 @@ std::string getEXEDLLFullPath()
 
 	return std::string(szPath);
 }
+
+bool fileExist(std::string& filename)
+{
+	return theia::FileExists(filename);
+}

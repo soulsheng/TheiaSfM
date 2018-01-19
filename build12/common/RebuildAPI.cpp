@@ -6,6 +6,7 @@
 #include <glog/logging.h>
 #include <gflags/gflags.h>
 #include <theia/theia.h>
+#include <stlplus3/file_system.hpp>
 #include <vector>
 
 #include "build_common.h"
@@ -57,6 +58,9 @@ DEFINE_string(ply_file, "option-0000.ply", "Output PLY file.");
 extern "C" DLL_RECONSTRUCTION_API int	kernelReBuildDense(char* pInputImageDir, char* filename_sparse, char* filename_dense, bool isLogInitialized,
 	bool bUndistort, int noise_removal)
 {
+
+	int nRetCode = 0;
+
 	if (!FLAGS_build)
 		return -1;
 
@@ -72,20 +76,23 @@ extern "C" DLL_RECONSTRUCTION_API int	kernelReBuildDense(char* pInputImageDir, c
 	FLAGS_undistort = bUndistort;
 
 #if 1
-	if (!export_to_pmvs(pmvsPath, inputImageDir, std::string(filename_sparse), FLAGS_num_threads, FLAGS_undistort))
-		return -2;
+	nRetCode = export_to_pmvs(pmvsPath, inputImageDir, std::string(filename_sparse), FLAGS_num_threads, FLAGS_undistort);
+	if (nRetCode != 0)
+		return nRetCode;
 #endif
 
 	LOG(INFO) << "开始执行稠密重建：";
 #if 1
-	run_pmvs(pmvsPath, FLAGS_threshold_group);
+	nRetCode = run_pmvs(pmvsPath, FLAGS_threshold_group);
+	if (nRetCode != 0)
+		return nRetCode;
 #endif
 	LOG(INFO) << "执行稠密重建完成！";
 
 	std::string str_ply_file = pmvsPath + "models\\option-0000.ply";
 	strcpy(filename_dense, str_ply_file.c_str());
 
-	return 0;
+	return nRetCode;
 }
 
 
@@ -103,6 +110,8 @@ void SetLog(std::string &exePath)
 extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename, 
 	bool use_gpu, int num_threads, int feature_density, bool match_out_of_core)
 {
+	int nRetCode = 0;
+
 	std::string exePath = getEXEDLLFullPath();
 	std::string inputImageDir(pInputImageDir);
 	std::string FLAGS_output_reconstruction;
@@ -141,6 +150,16 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 	FLAGS_v = 1;
 
 
+	if (!stlplus::folder_exists(pInputImageDir)) {
+
+		nRetCode = -14;
+
+		LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+			<< "异常描述：收集图片失败-路径不对，可能原因：路径不存在，建议措施：检查输入路径是否正确";
+
+		return nRetCode;
+	}
+
 	ReCreateDirectory(FLAGS_matching_working_directory);
 #if 0
 	LOG(INFO) << "create log";
@@ -151,10 +170,9 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 #endif
 
 
-	build_reconstruction(strPathExe, inputImageDir, FLAGS_output_reconstruction, use_gpu, FLAGS_num_threads, 
+	return build_reconstruction(strPathExe, inputImageDir, FLAGS_output_reconstruction, use_gpu, FLAGS_num_threads, 
 		feature_density, match_out_of_core);
 
-	return 0;
 }
 
 extern "C" DLL_RECONSTRUCTION_API std::string get_Path(std::string& strFullPath)

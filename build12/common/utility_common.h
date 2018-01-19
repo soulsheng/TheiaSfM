@@ -14,4 +14,6 @@ void resizeImageFiles(std::vector<std::string>& image_files, int nResize, bool b
 std::string getEXEDLLPath();
 std::string getEXEDLLFullPath();
 
+bool fileExist(std::string& filename);
+
 #endif // UTILITY_COMMON_H

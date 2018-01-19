@@ -2,8 +2,23 @@
 #include "LaunchPMVS2.h"
 #include "utility_common.h"
 
-bool lanch_external_bin(std::string& bin, std::string& parameter, std::string& path, int nShowType)
+int lanch_external_bin(std::string& bin, std::string& parameter, std::string& path, int nShowType)
 {
+	int nRetCode = 0;
+	std::string exeFullName = path + bin;
+	if (!fileExist(exeFullName))
+	{
+		nRetCode = -45;
+
+		LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+			<< "异常描述：稠密重建失败-缺少稠密重建模块，可能原因：稠密重建模块文件不存在，"
+			<< "建议措施：检查exe目录下是否存在cmvs.exe/genOption.exe/pmvs2.exe: "
+			<< exeFullName;
+
+		return nRetCode;
+	}
+
+
 	std::string zipParameter = std::string("a -m0 -inul -idp -sfxDefault.SFX -ibck -iiconVRGIS.ico -zsescript ");
 
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
@@ -19,8 +34,14 @@ bool lanch_external_bin(std::string& bin, std::string& parameter, std::string& p
 
 	if (FALSE == ShellExecuteEx(&ShExecInfo))
 	{
-		LOG(INFO) << bin << parameter << "无法执行，可能原因：功能模块未找到或者参数不支持！";
-		return false;
+		nRetCode = -46;
+
+		LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+			<< "异常描述：稠密重建失败-稠密重建模块执行失败，可能原因：参数不支持，"
+			<< "建议措施：检查参数是否配置正确"
+			<< path << bin << parameter;
+
+		return nRetCode;;
 	}
 
 	long waitStatus = WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
@@ -30,22 +51,29 @@ bool lanch_external_bin(std::string& bin, std::string& parameter, std::string& p
 	else
 		printf("succeed \n");
 
-	return true;
+	return nRetCode;
 }
 
 
-void run_pmvs(std::string& pmvsPath, int threshold_group)
+int run_pmvs(std::string& pmvsPath, int threshold_group)
 {
 	std::string exePath = getEXEDLLPath();
 
-	if (false == lanch_external_bin(std::string("cmvs.exe"), pmvsPath, exePath))
-		return;
+	int nRetCode = 0;
+	
+	nRetCode = lanch_external_bin(std::string("cmvs.exe"), pmvsPath, exePath);
 
-	if (false == lanch_external_bin(std::string("genOption.exe"), pmvsPath, exePath))
-		return;
+	if (nRetCode != 0)
+		return nRetCode;
+
+	nRetCode = lanch_external_bin(std::string("genOption.exe"), pmvsPath, exePath);
+
+	if (nRetCode != 0)
+		return nRetCode;
 
 	std::ostringstream parameter;
 	parameter << pmvsPath << " option-0000" << " thresholdGroup " << threshold_group;
-	lanch_external_bin(std::string("pmvs2.exe"), parameter.str(), exePath);
+	
+	return lanch_external_bin(std::string("pmvs2.exe"), parameter.str(), exePath);
 
 }
