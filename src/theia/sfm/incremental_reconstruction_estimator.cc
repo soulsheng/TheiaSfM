@@ -154,7 +154,7 @@ IncrementalReconstructionEstimator::IncrementalReconstructionEstimator(
 // methods; however, it requires many more instances of bundle adjustment (which
 // is very costly) and so incremental SfM is not as efficient or scalable.
 ReconstructionEstimatorSummary IncrementalReconstructionEstimator::Estimate(
-    ViewGraph* view_graph, Reconstruction* reconstruction) {
+	ViewGraph* view_graph, Reconstruction* reconstruction, int& nRetCode) {
   reconstruction_ = reconstruction;
   view_graph_ = view_graph;
 

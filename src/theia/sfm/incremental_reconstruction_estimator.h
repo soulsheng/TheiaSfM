@@ -87,7 +87,7 @@ class IncrementalReconstructionEstimator : public ReconstructionEstimator {
   // tracks. The reconstruction may or may not contain estimated views and
   // tracks upon input.
   ReconstructionEstimatorSummary Estimate(ViewGraph* view_graph,
-                                          Reconstruction* reconstruction);
+	  Reconstruction* reconstruction, int& nRetCode);
 
  private:
   // Choose two cameras to use as the seed for incremental reconstruction. These

@@ -74,7 +74,7 @@ class GlobalReconstructionEstimator : public ReconstructionEstimator {
       const ReconstructionEstimatorOptions& options);
 
   ReconstructionEstimatorSummary Estimate(ViewGraph* view_graph,
-                                          Reconstruction* reconstruction);
+	  Reconstruction* reconstruction, int& nRetCode);
 
  private:
   bool FilterInitialViewGraph();

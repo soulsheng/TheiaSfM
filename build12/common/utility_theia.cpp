@@ -204,8 +204,14 @@ int build_reconstruction(std::string& strPathExe, std::string& inputImageDir, st
 	}
 	else
 	{
-		LOG(INFO) << "稀疏重建三维点的数目为0，重建结束！";
-		return -1;
+		//LOG(INFO) << "稀疏重建三维点的数目为0，重建结束！";
+		//return -1;
+		nRetCode = -37;
+
+		LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+			<< "异常描述：剩余0个轨迹点，可能原因：轨迹点全部被滤除，建议措施：增加图片或重新拍摄";
+
+		return nRetCode;
 	}
 
 	LOG(INFO) << "开始为点云配置颜色：";

@@ -284,7 +284,7 @@ int ReconstructionBuilder::ExtractAndMatchFeatures() {
 	  nRetCode = -26;
 
 	  LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
-		  << "异常描述：特征点匹配失败，可能原因：图片重叠比率不足，"
+		  << "异常描述：特征点匹配失败，0对图片特征可以匹配，可能原因：图片重叠比率不足，"
 		  << "建议措施：减小拍摄相邻图片的距离间隔或旋转角度";
 
 	  return nRetCode;
@@ -368,7 +368,12 @@ int ReconstructionBuilder::BuildReconstruction(
 		LOG(INFO) << "At least 2 images must be provided "
 			"in order to create a "
 			"reconstruction.";
-		nRetCode = -37;
+
+		nRetCode = -33;
+
+		LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+			<< "异常描述：有效视点少于2个，可能原因：图片重叠比率不足，建议措施：增加照片的重叠度";
+
 		return nRetCode;
 	}
 
@@ -394,17 +399,11 @@ int ReconstructionBuilder::BuildReconstruction(
             options_.reconstruction_estimator_options));
 
     const auto& summary = reconstruction_estimator->Estimate(
-        view_graph_.get(), reconstruction_.get());
+		view_graph_.get(), reconstruction_.get(), nRetCode);
 
     // If a reconstruction can no longer be estimated, return.
-    if (!summary.success) {
-
-		if ( reconstructions->empty() )
-			nRetCode = -38;
-
-		LOG(INFO) << "无法完成重建";
-
-		return nRetCode;
+	if (!summary.success || nRetCode) {
+			return nRetCode;
     }
 
 #if 0//USE_LOG_INFO

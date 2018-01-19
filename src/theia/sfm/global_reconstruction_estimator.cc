@@ -133,12 +133,14 @@ GlobalReconstructionEstimator::GlobalReconstructionEstimator(
 // After each filtering step we remove any views which are no longer connected
 // to the largest connected component in the view graph.
 ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
-    ViewGraph* view_graph, Reconstruction* reconstruction) {
+	ViewGraph* view_graph, Reconstruction* reconstruction, int& nRetCode) {
   CHECK_NOTNULL(reconstruction);
   reconstruction_ = reconstruction;
   view_graph_ = view_graph;
   orientations_.clear();
   positions_.clear();
+
+  nRetCode = 0;
 
   ReconstructionEstimatorSummary summary;
   GlobalReconstructionEstimatorTimings global_estimator_timings;
@@ -206,6 +208,15 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
   LOG(INFO) << positions_.size()
             << " 个相机的位置估算成功（camera positions were estimated successfully）.";
 #endif
+
+  if (positions_.empty)
+  {
+	  nRetCode = -36;
+
+	  LOG(INFO) << "异常返回！异常代码：" << nRetCode << std::endl
+		  << "异常描述：0个相机位置被重建，可能原因：未知，建议措施：未知";
+  }
+
   global_estimator_timings.position_estimation_time =
       timer.ElapsedTimeInSeconds();
 
