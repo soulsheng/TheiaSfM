@@ -264,3 +264,4 @@
 /build12/client_csharp/obj
 /build12/dll_reconstruction/Debug
 /build12/dll_view3d/Debug
+/build12/client_csharp/*.suo
