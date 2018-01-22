@@ -21,7 +21,9 @@ namespace client_csharp
         StringBuilder filenameSparse = new StringBuilder();
         StringBuilder filenameDense = new StringBuilder();
         bool isLogInitialized = false;
-        
+
+        [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildReady", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool kernelReBuildReady( );
         public Form1()
         {
             InitializeComponent();
@@ -45,6 +47,7 @@ namespace client_csharp
             textBox7.Text = "35";               // 噪声滤除参数，值越高滤除越多 
 
             comboBox5.SelectedIndex = 1;        // 特征密度，0减小，1普通，2增大
+            isLogInitialized = kernelReBuildReady();
         }
 
         [DllImport(@"dll_reconstruction.dll", EntryPoint = "kernelReBuildSparse", CallingConvention = CallingConvention.Cdecl)]
@@ -53,6 +56,9 @@ namespace client_csharp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if ( !isLogInitialized )
+                isLogInitialized = kernelReBuildReady();
+
             imagePath = textBox1.Text;
             bool bUseGPU = checkBox1.Checked;
             int nThreads;
@@ -64,7 +70,7 @@ namespace client_csharp
             int ret = kernelReBuildSparse(imagePath, filenameSparse, bUseGPU, nThreads, nFeatureDensity, bMatchOutOfCore);
 
             string timeString = DateTime.Now.Subtract(dt).TotalSeconds.ToString();
-            isLogInitialized = true;
+
             string retString = "return code:" + ret.ToString() + ", file:" + filenameSparse + ", time(s):" + timeString;
             MessageBox.Show(retString);
 

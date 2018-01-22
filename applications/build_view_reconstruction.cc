@@ -53,6 +53,8 @@ int main(int argc, char* argv[]) {
 
 	bool isLogInitialized = false;
 
+	isLogInitialized = kernelReBuildReady();
+
 	char filenameSparse[256] = {'\0'};
 	int nRetCode = kernelReBuildSparse((char*)inputImageDir.c_str(), filenameSparse, false, 1, 1, true);
 	isLogInitialized = true;
@@ -61,7 +63,7 @@ int main(int argc, char* argv[]) {
 		return nRetCode;
 
 	char filenameDense[256] = { '\0' };
-	nRetCode = kernelReBuildDense((char*)inputImageDir.c_str(), filenameSparse, filenameDense, isLogInitialized, false, 35);
+	nRetCode = kernelReBuildDense((char*)inputImageDir.c_str(), filenameSparse, filenameDense, isLogInitialized, false, 0);
 
 	if (nRetCode != 0)
 		return nRetCode;

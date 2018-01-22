@@ -16,6 +16,8 @@
 #define DLL_RECONSTRUCTION_API
 #endif
 
+extern "C" DLL_RECONSTRUCTION_API bool kernelReBuildReady( );
+
 extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* filename_sparse, bool use_gpu,
 	int num_threads, int feature_density, bool match_out_of_core);
 

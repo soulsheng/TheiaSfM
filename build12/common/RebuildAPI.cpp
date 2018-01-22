@@ -107,7 +107,19 @@ void SetLog(std::string &exePath)
 	google::SetLogFilenameExtension(".log");
 }
 
-extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename, 
+extern "C" DLL_RECONSTRUCTION_API bool kernelReBuildReady( )
+{
+	std::string exePath = getEXEDLLFullPath();
+	SetLog(exePath);
+
+	std::string logFilename = std::string(exePath.c_str()) + ".log";
+	if (theia::FileExists(logFilename))
+		unlink(logFilename.c_str());
+	
+	return true;
+}
+
+extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename,
 	bool use_gpu, int num_threads, int feature_density, bool match_out_of_core)
 {
 	int nRetCode = 0;
@@ -128,11 +140,6 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 	FLAGS_num_threads = num_threads;
 
 	//THEIA_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-	SetLog(exePath);
-
-	std::string logFilename = std::string(exePath.c_str()) + ".log";
-	if (theia::FileExists(logFilename))
-		unlink(logFilename.c_str());
 
 	std::string strPathExe = exePath.c_str();
 	strPathExe = strPathExe.substr(0, strPathExe.find_last_of("\\") + 1);

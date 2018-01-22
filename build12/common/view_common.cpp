@@ -949,7 +949,6 @@ void	viewDenseResult(std::string& ply_file)
 
 	setDefaultCameraProperty();
 
-	LOG(INFO) << "稠密重建三维点的数目为：" << world_points.size();
 	LOG(INFO) << "输出稠密重建结果！";
 }
 
