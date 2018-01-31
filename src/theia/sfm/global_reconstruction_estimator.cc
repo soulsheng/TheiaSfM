@@ -209,7 +209,7 @@ ReconstructionEstimatorSummary GlobalReconstructionEstimator::Estimate(
             << " 个相机的位置估算成功（camera positions were estimated successfully）.";
 #endif
 
-  if (positions_.empty)
+  if (positions_.empty() )
   {
 	  nRetCode = -36;
 
