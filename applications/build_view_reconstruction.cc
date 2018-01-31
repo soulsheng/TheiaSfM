@@ -52,24 +52,24 @@ int main(int argc, char* argv[]) {
 	reset_view();
 
 	bool isLogInitialized = false;
-
+	int nRetCode = 0;
 	isLogInitialized = kernelReBuildReady();
 
 	char filenameSparse[256] = {'\0'};
-	int nRetCode = kernelReBuildSparse((char*)inputImageDir.c_str(), filenameSparse, false, 1, 1, true);
+	nRetCode = kernelReBuildSparse((char*)inputImageDir.c_str(), filenameSparse, false, 4, 1, false);
 	isLogInitialized = true;
 
 	if (nRetCode != 0)
 		return nRetCode;
 
 	char filenameDense[256] = { '\0' };
-	nRetCode = kernelReBuildDense((char*)inputImageDir.c_str(), filenameSparse, filenameDense, isLogInitialized, false, 0);
+	nRetCode = kernelReBuildDense((char*)inputImageDir.c_str(), filenameSparse, filenameDense, isLogInitialized, false, 35);
 
 	if (nRetCode != 0)
 		return nRetCode;
 
 	nRetCode = render3DResult((char*)inputImageDir.c_str(), (char*)outputImageDir.c_str(),
-		filenameSparse, filenameDense, isLogInitialized,
+		"", "", isLogInitialized,
 		"(0,0,0)", "(0,255,0)", true, 3,
 		"gif", "abc", 2, 5,
 		1280, 1080);
