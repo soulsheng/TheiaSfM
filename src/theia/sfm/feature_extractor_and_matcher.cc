@@ -60,6 +60,7 @@
 #include "theia/util/timer.h"
 
 //#define USE_GPU			1
+#define		TEST_IMAGE		"640-2.jpg"	// in root path 
 
 namespace theia {
 namespace {
@@ -152,14 +153,20 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
 
   if (this->use_gpu)
   {
-	  LOG(INFO) << "尝试调用GPU运行SIFT...";
-	  if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED)
+	  // 输出信息简化 
+	  char * argv[] = { "-v", "0" };
+	  int argc = sizeof(argv) / sizeof(char*);
+	  sift.ParseParam(argc, argv);
+
+	  if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED ||
+		  false == sift.RunSIFT(TEST_IMAGE) ||
+		  0 == sift.GetFeatureNum())
 	  {
 		  this->use_gpu = false;
-		  LOG(INFO) << "GPU不支持，改用CPU";
+		  LOG(INFO) << "GPU不支持，改用CPU运行SIFT...";
 	  }
 	  else
-		  LOG(INFO) << "GPU支持，采用GPU";
+		  LOG(INFO) << "GPU支持，采用GPU运行SIFT...";
   }
   else
 	  LOG(INFO) << "采用CPU运行SIFT...";
@@ -391,7 +398,7 @@ void FeatureExtractorAndMatcher::ProcessImage(
   }
 
   std::cout << "ExtractFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
-
+  std::cout << i << " - " << image_filepath << " 特征点数目是: " << keypoints.size() << std::endl;
   LOG(INFO) << i << " - " << image_filepath << " 特征点数目是: " << keypoints.size();
 
   // Add the relevant image and feature data to the feature matcher. This allows
