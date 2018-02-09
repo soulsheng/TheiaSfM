@@ -120,7 +120,7 @@ struct ReconstructionBuilderOptions {
 // entire reconstruction estimation process.
 class ReconstructionBuilder {
  public:
-	 explicit ReconstructionBuilder(const ReconstructionBuilderOptions& options, std::string exePath, bool use_gpu);
+	 explicit ReconstructionBuilder(const ReconstructionBuilderOptions& options, std::string exePath, bool use_gpu, bool bSilence);
   ~ReconstructionBuilder();
 
   // Add an image to the reconstruction.

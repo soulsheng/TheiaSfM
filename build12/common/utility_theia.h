@@ -19,7 +19,7 @@ int export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::strin
 	const int FLAGS_num_threads, bool undistort);
 
 int build_reconstruction(std::string& strPathExe, std::string& inputImageDir, std::string& resultString,
-	bool use_gpu, const int FLAGS_num_threads, int feature_density, bool match_out_of_core);
+	bool use_gpu, const int FLAGS_num_threads, int feature_density, bool match_out_of_core, bool bSilence);
 
 
 #endif // UTILITY_THEIA_H

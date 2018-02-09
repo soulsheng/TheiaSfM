@@ -78,7 +78,7 @@ struct KeypointsAndDescriptors;
 // matching.
 class FeatureMatcher {
  public:
-  explicit FeatureMatcher(const FeatureMatcherOptions& matcher_options);
+	 explicit FeatureMatcher(const FeatureMatcherOptions& matcher_options, bool bSilence);
   virtual ~FeatureMatcher() {}
 
   // Adds an image to the matcher with no known intrinsics for this image. The
@@ -159,6 +159,7 @@ class FeatureMatcher {
   const int kMaxThreadingStepSize_ = 20;
 
   FeatureMatcherOptions options_;
+  bool bSilence;
 
   // A container for the image names.
   std::vector<std::string> image_names_;

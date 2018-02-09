@@ -120,7 +120,7 @@ extern "C" DLL_RECONSTRUCTION_API bool kernelReBuildReady( )
 }
 
 extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, char* result_filename,
-	bool use_gpu, int num_threads, int feature_density, bool match_out_of_core)
+	bool use_gpu, int num_threads, int feature_density, bool match_out_of_core, bool bSilence)
 {
 	int nRetCode = 0;
 
@@ -154,7 +154,7 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 	//  # Logging verbosity.
 	FLAGS_logtostderr = false;
 	// # Increase this number to get more verbose logging.
-	FLAGS_v = 1;
+	FLAGS_v = (int)!bSilence;
 
 
 	if (!stlplus::folder_exists(pInputImageDir)) {
@@ -178,7 +178,7 @@ extern "C" DLL_RECONSTRUCTION_API int kernelReBuildSparse(char* pInputImageDir, 
 
 
 	return build_reconstruction(strPathExe, inputImageDir, FLAGS_output_reconstruction, use_gpu, FLAGS_num_threads, 
-		feature_density, match_out_of_core);
+		feature_density, match_out_of_core, bSilence);
 
 }
 

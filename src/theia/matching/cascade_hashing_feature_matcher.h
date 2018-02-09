@@ -55,8 +55,8 @@ struct KeypointsAndDescriptors;
 // efficient but can only be used with float features like SIFT.
 class CascadeHashingFeatureMatcher : public FeatureMatcher {
  public:
-  explicit CascadeHashingFeatureMatcher(const FeatureMatcherOptions& options)
-      : FeatureMatcher(options) {}
+	 explicit CascadeHashingFeatureMatcher(const FeatureMatcherOptions& options, bool bSilence)
+      : FeatureMatcher(options,bSilence) {}
   ~CascadeHashingFeatureMatcher() {}
 
   // These methods are the same as the base class except that the HashedImage is

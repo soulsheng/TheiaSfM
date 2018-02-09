@@ -84,7 +84,7 @@ class FeatureExtractorAndMatcher {
     FeatureMatcherOptions feature_matcher_options;
   };
 
-  explicit FeatureExtractorAndMatcher(const Options& options, std::string exePath, bool use_gpu);
+  explicit FeatureExtractorAndMatcher(const Options& options, std::string exePath, bool use_gpu, bool bSilence);
 
   // Add an image to the image matcher queue.
   bool AddImage(const std::string& image_filepath);
@@ -132,6 +132,7 @@ class FeatureExtractorAndMatcher {
 
   SiftGPU sift;
   bool use_gpu;
+  bool bSilence;
 };
 
 }  // namespace theia

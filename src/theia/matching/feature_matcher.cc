@@ -63,8 +63,11 @@
 
 namespace theia {
 
-FeatureMatcher::FeatureMatcher(const FeatureMatcherOptions& options)
+	FeatureMatcher::FeatureMatcher(const FeatureMatcherOptions& options, bool bSilence)
     : options_(options) {
+
+  this->bSilence = bSilence;
+
   if (options_.match_out_of_core) {
     CHECK_GT(options_.cache_capacity, 2)
         << "The cache capacity must be greater than 2 in order to perform out "
@@ -283,7 +286,7 @@ void FeatureMatcher::MatchAndVerifyImagePairs(
           << image1_name << " and " << image2_name;
       continue;
     }
-
+	if (bSilence)
 	std::cout << "MatchFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
 
 	timer.Reset();
@@ -322,6 +325,7 @@ void FeatureMatcher::MatchAndVerifyImagePairs(
       }
     }
 
+	if (bSilence)
 	std::cout << "MatchVerify time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
 
     // Log information about the matching results.

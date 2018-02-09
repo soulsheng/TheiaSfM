@@ -148,7 +148,7 @@ void RemoveEstimatedViewsAndTracks(Reconstruction* reconstruction,
 }  // namespace
 
 ReconstructionBuilder::ReconstructionBuilder(
-	const ReconstructionBuilderOptions& options, std::string exePath, bool use_gpu)
+	const ReconstructionBuilderOptions& options, std::string exePath, bool use_gpu, bool bSilence)
     : options_(options) {
   CHECK_GT(options.num_threads, 0);
 
@@ -175,7 +175,7 @@ ReconstructionBuilder::ReconstructionBuilder(
   feam_options.feature_matcher_options.geometric_verification_options
       .estimate_twoview_info_options.rng = options_.rng;
 
-  feature_extractor_and_matcher_ = new FeatureExtractorAndMatcher(feam_options, exePath, use_gpu);
+  feature_extractor_and_matcher_ = new FeatureExtractorAndMatcher(feam_options, exePath, use_gpu, bSilence);
 }
 
 ReconstructionBuilder::~ReconstructionBuilder() {

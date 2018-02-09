@@ -51,7 +51,7 @@ enum class MatchingStrategy {
 // descriptors).
 std::unique_ptr<FeatureMatcher> CreateFeatureMatcher(
     const MatchingStrategy& matching_strategy,
-    const FeatureMatcherOptions& options);
+	const FeatureMatcherOptions& options, bool bSilence);
 
 }  // namespace theia
 

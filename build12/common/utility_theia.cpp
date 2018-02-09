@@ -166,7 +166,7 @@ int export_to_pmvs(std::string& pmvsPath, std::string& inputImageDir, std::strin
 
 
 int build_reconstruction(std::string& strPathExe, std::string& inputImageDir, std::string& resultString, 
-	bool use_gpu, const int FLAGS_num_threads, int feature_density, bool match_out_of_core)
+	bool use_gpu, const int FLAGS_num_threads, int feature_density, bool match_out_of_core, bool bSilence)
 {
 	int nRetCode = 0;
 
@@ -183,7 +183,7 @@ int build_reconstruction(std::string& strPathExe, std::string& inputImageDir, st
 
 	LOG(INFO) << formatStructure(options);
 
-	ReconstructionBuilder reconstruction_builder(options, strPathExe, use_gpu);
+	ReconstructionBuilder reconstruction_builder(options, strPathExe, use_gpu, bSilence);
 	// If matches are provided, load matches otherwise load images.
 	if (FLAGS_images.size() != 0) {
 		nRetCode = AddImagesToReconstructionBuilder(&reconstruction_builder, FLAGS_images);

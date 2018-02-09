@@ -50,8 +50,8 @@ struct KeypointsAndDescriptors;
 // matching method.
 class BruteForceFeatureMatcher : public FeatureMatcher{
  public:
-  explicit BruteForceFeatureMatcher(const FeatureMatcherOptions& options)
-      : FeatureMatcher(options) {}
+	 explicit BruteForceFeatureMatcher(const FeatureMatcherOptions& options, bool bSilence)
+      : FeatureMatcher(options,bSilence) {}
   ~BruteForceFeatureMatcher() {}
 
  private:

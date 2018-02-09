@@ -135,7 +135,7 @@ void ExtractFeatures(
 }  // namespace
 
 FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
-	const FeatureExtractorAndMatcher::Options& options, std::string exePath, bool use_gpu)
+	const FeatureExtractorAndMatcher::Options& options, std::string exePath, bool use_gpu, bool bSilence)
     : options_(options)
 	, exePath_(exePath) {
   // Create the feature matcher.
@@ -146,11 +146,12 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
   matcher_options.geometric_verification_options.min_num_inlier_matches =
       options_.min_num_inlier_matches;
 
-  matcher_ = CreateFeatureMatcher(options_.matching_strategy, matcher_options);
+  matcher_ = CreateFeatureMatcher(options_.matching_strategy, matcher_options, bSilence);
   exif_reader_.LoadSensorWidthDatabase(exePath_);
 
+  this->bSilence = bSilence;
   this->use_gpu = use_gpu;
-
+  
   if (this->use_gpu)
   {
 	  // 输出信息简化 
@@ -397,8 +398,12 @@ void FeatureExtractorAndMatcher::ProcessImage(
 
   }
 
-  std::cout << "ExtractFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
-  std::cout << i << " - " << image_filepath << " 特征点数目是: " << keypoints.size() << std::endl;
+  if (bSilence)
+  {
+	  std::cout << "ExtractFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
+	  std::cout << i << " - " << image_filepath << " 特征点数目是: " << keypoints.size() << std::endl;
+  }
+
   LOG(INFO) << i << " - " << image_filepath << " 特征点数目是: " << keypoints.size();
 
   // Add the relevant image and feature data to the feature matcher. This allows
