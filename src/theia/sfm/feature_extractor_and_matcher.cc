@@ -153,7 +153,7 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
   if (this->use_gpu)
   {
 	  LOG(INFO) << "尝试调用GPU运行SIFT...";
-	  if (sift.VerifyContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED)
+	  if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED)
 	  {
 		  this->use_gpu = false;
 		  LOG(INFO) << "GPU不支持，改用CPU";
@@ -221,7 +221,8 @@ int FeatureExtractorAndMatcher::ExtractAndMatchFeatures(
   CHECK_NOTNULL(intrinsics)->resize(image_filepaths_.size());
   CHECK_NOTNULL(matches);
   CHECK_NOTNULL(matcher_.get());
-
+  if (!use_gpu)// cpu 多线程
+  { 
   // For each image, process the features and add it to the matcher.
   const int num_threads =
       std::min(options_.num_threads, static_cast<int>(image_filepaths_.size()));
@@ -236,7 +237,14 @@ int FeatureExtractorAndMatcher::ExtractAndMatchFeatures(
   }
   // This forces all tasks to complete before proceeding.
   thread_pool.reset(nullptr);
-
+  }
+  else// gpu 单线程
+  {
+	  for (int i = 0; i < image_filepaths_.size(); i++)
+	  {
+		  ProcessImage(i);
+	  }
+  }
   int nRetCode = 0;
 
   if ( matcher_->NullFeatures() )
@@ -288,10 +296,14 @@ void FeatureExtractorAndMatcher::ProcessImage(
           1.2 * static_cast<double>(
                     std::max(intrinsics.image_width, intrinsics.image_height));
     }
-
-    std::lock_guard<std::mutex> lock(intrinsics_mutex_);
+	if (!use_gpu)
+	{
+		std::lock_guard<std::mutex> lock(intrinsics_mutex_);
+		intrinsics_[image_filepath] = intrinsics;
+	}
     // Insert or update the value of the intrinsics.
-    intrinsics_[image_filepath] =  intrinsics;
+	else
+		intrinsics_[image_filepath] = intrinsics;
   }
 
   // Early exit if no EXIF calibration exists and we are only processing
@@ -324,8 +336,13 @@ void FeatureExtractorAndMatcher::ProcessImage(
   // If the feature file already exists, skip the feature extraction.
   if (options_.feature_matcher_options.match_out_of_core &&
       FileExists(feature_filepath)) {
-    std::lock_guard<std::mutex> lock(matcher_mutex_);
-    matcher_->AddImage(image_filename, intrinsics);
+	  if (!use_gpu)
+	  {
+		  std::lock_guard<std::mutex> lock(matcher_mutex_);
+		  matcher_->AddImage(image_filename, intrinsics);
+	  }
+	  else
+		  matcher_->AddImage(image_filename, intrinsics);
     return;
   }
 
@@ -348,9 +365,6 @@ void FeatureExtractorAndMatcher::ProcessImage(
 
 	  std::vector<float> descriptors_h(1);
 	  std::vector<SiftGPU::SiftKeypoint> keys_h(1);
-
-	  if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED)
-		  std::cout << "siftgpu failed to CreateContextGL" << std::endl;
 
 	  sift.RunSIFT(image_filepath.c_str());
 
@@ -384,8 +398,13 @@ void FeatureExtractorAndMatcher::ProcessImage(
   // the feature matcher to control fine-grained things like multi-threading and
   // caching. For instance, the matcher may choose to write the descriptors to
   // disk and read them back as needed.
-  std::lock_guard<std::mutex> lock(matcher_mutex_);
-  matcher_->AddImage(image_filename, keypoints, descriptors, intrinsics);
+  if (!use_gpu)
+  {
+	  std::lock_guard<std::mutex> lock(matcher_mutex_);
+	  matcher_->AddImage(image_filename, keypoints, descriptors, intrinsics);
+  }
+  else
+      matcher_->AddImage(image_filename, keypoints, descriptors, intrinsics);
 }
 
 }  // namespace theia

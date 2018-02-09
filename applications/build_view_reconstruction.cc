@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 	isLogInitialized = kernelReBuildReady();
 
 	char filenameSparse[256] = {'\0'};
-	nRetCode = kernelReBuildSparse((char*)inputImageDir.c_str(), filenameSparse, false, 4, 1, false);
+	nRetCode = kernelReBuildSparse((char*)inputImageDir.c_str(), filenameSparse, true, 4, 1, false);
 	isLogInitialized = true;
 
 	if (nRetCode != 0)
