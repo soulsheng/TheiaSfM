@@ -43,10 +43,13 @@ namespace client_csharp
 
             textBox4.Text = "1280";             // 分辨率宽，单位：像素
             textBox5.Text = "1080";             // 分辨率高，单位：像素
-            textBox6.Text = "4";                // 线程数目
+            textBox6.Text = "2";                // 线程数目
             textBox7.Text = "35";               // 噪声滤除参数，值越高滤除越多 
 
             comboBox5.SelectedIndex = 1;        // 特征密度，0减小，1普通，2增大
+
+            checkBox1.Checked = true;           // 开启GPU
+
             isLogInitialized = kernelReBuildReady();
         }
 
@@ -63,6 +66,8 @@ namespace client_csharp
             bool bUseGPU = checkBox1.Checked;
             int nThreads;
             int.TryParse(textBox6.Text, out nThreads);
+            if (nThreads > 2)
+                nThreads = 2;// 线程数>=3，内存接近1g，有时程序会崩溃
             int nFeatureDensity = comboBox5.SelectedIndex;
             bool bMatchOutOfCore = checkBox2.Checked;
             DateTime dt = DateTime.Now;
