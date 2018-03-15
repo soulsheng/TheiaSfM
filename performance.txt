@@ -1,5 +1,12 @@
 time
 
+scene 7: 0508dalian(96 720p images) 
+					start	end		interval	sparse_half
+feature extract		41:17	41:25	 8s			7
+feature match		41:25	42:34	69s			17
+sparse reconstruct	42:34	42:51	17s			7 
+dense reconstruct	43:41	47:10	210s		187
+
 scene 1: 20170512\5-106-1k(106 720p images)
 					start	end		interval
 feature extract		40:47	41:04	17s
