@@ -155,7 +155,7 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
   if (this->use_gpu)
   {
 	  // 输出信息简化 
-	  char * argv[] = { "-v", "0", "-fo", "-1", "-t", "0.004444" };
+	  char * argv[] = { "-v", "0", "-fo", "-1", "-t", "0.004444", "-e", "10" };
 	  int argc = sizeof(argv) / sizeof(char*);
 	  char **ppChar = new char*[argc];
 	  for (int i = 0; i < argc; i++)
@@ -168,14 +168,18 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
 	  float dog_threshold = 0.02 / sift._dog_level_num; // default gpu sift get too few features
 	  dog_threshold /= 1.5f;	// to get more features
 
+	  float edge_threshold = 10.0f;
+
 	  switch (options_.feature_density)
 	  {
 	  case FeatureDensity::SPARSE:
-		  dog_threshold *= 1.5f;
+		  edge_threshold /= 2.0;
+		  dog_threshold *= 3.0;
 		  break;
 
 	  case FeatureDensity::DENSE:
-		  dog_threshold /= 1.5f;
+		  edge_threshold *= 2.0;
+		  dog_threshold /= 3.0;
 		  break;
 
 	  default:
@@ -183,6 +187,7 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
 	  }
 
 	  sprintf(ppChar[5], "%f", dog_threshold); 
+	  sprintf(ppChar[7], "%f", edge_threshold);
 	  sift.ParseParam(argc, ppChar);
 
 	  if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED ||
