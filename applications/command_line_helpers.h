@@ -71,6 +71,10 @@ inline FeatureDensity StringToFeatureDensity(
     return FeatureDensity::NORMAL;
   } else if (feature_density == "DENSE") {
     return FeatureDensity::DENSE;
+  } else if (feature_density == "SPARSE_HALF") {
+    return FeatureDensity::SPARSE_HALF;
+  } else if (feature_density == "DENSE_HALF") {
+    return FeatureDensity::DENSE_HALF;
   } else {
     LOG(FATAL) << "Invalid feature density requested. Please use SPARSE, "
                   "NORMAL, or DENSE.";
@@ -94,6 +98,14 @@ inline std::string FeatureDensityToString(
 
 	case FeatureDensity::DENSE:
 		ret = std::string("DENSE");
+		break;
+
+	case FeatureDensity::SPARSE_HALF:
+		ret = std::string("SPARSE_HALF");
+		break;
+
+	case FeatureDensity::DENSE_HALF:
+		ret = std::string("DENSE_HALF");
 		break;
 
 	default:

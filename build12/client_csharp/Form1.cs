@@ -46,7 +46,7 @@ namespace client_csharp
             textBox6.Text = "2";                // 线程数目
             textBox7.Text = "35";               // 噪声滤除参数，值越高滤除越多 
 
-            comboBox5.SelectedIndex = 1;        // 特征密度，0减小，1普通，2增大
+            comboBox5.SelectedIndex = 2;        // 特征密度，0小，1略小，2中，3略大，4大
 
             checkBox1.Checked = true;           // 开启GPU
 

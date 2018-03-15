@@ -286,7 +286,7 @@ void FeatureMatcher::MatchAndVerifyImagePairs(
           << image1_name << " and " << image2_name;
       continue;
     }
-	if (bSilence)
+	if (!bSilence)
 	std::cout << "MatchFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
 
 	timer.Reset();
@@ -325,7 +325,7 @@ void FeatureMatcher::MatchAndVerifyImagePairs(
       }
     }
 
-	if (bSilence)
+	if (!bSilence)
 	std::cout << "MatchVerify time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
 
     // Log information about the matching results.

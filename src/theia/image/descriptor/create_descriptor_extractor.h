@@ -56,8 +56,10 @@ enum class DescriptorExtractorType {
 // reconstructions and so will want to extract many features (DENSE).
 enum class FeatureDensity {
   SPARSE = 0,
-  NORMAL = 1,
-  DENSE = 2
+  SPARSE_HALF = 1,
+  NORMAL = 2,
+  DENSE_HALF = 3,
+  DENSE = 4
 };
 
 // Factory method to create the keypoint detector and descriptor extractor.

@@ -53,6 +53,10 @@ inline SiftParameters FeatureDensityToSiftParameters(
   } else if (density == FeatureDensity::SPARSE) {
     sift_params.edge_threshold /= 2.0;
     sift_params.peak_threshold *= 3.0;
+  } else if (density == FeatureDensity::DENSE_HALF) {
+    sift_params.peak_threshold /= 1.5;
+  } else if (density == FeatureDensity::SPARSE_HALF) {
+    sift_params.peak_threshold *= 1.5;  
   } else if (density != FeatureDensity::NORMAL) {
     // If the setting is to normal, then just use the default
     // parameters. Otherwise, this statement will be reached, indicating that an

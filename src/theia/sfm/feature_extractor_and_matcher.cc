@@ -182,6 +182,14 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
 		  dog_threshold /= 3.0;
 		  break;
 
+	  case FeatureDensity::SPARSE_HALF:
+		  dog_threshold *= 1.5;
+		  break;
+
+	  case FeatureDensity::DENSE_HALF:
+		  dog_threshold /= 1.5;
+		  break;
+
 	  default:
 		  break;
 	  }
@@ -409,7 +417,7 @@ void FeatureExtractorAndMatcher::ProcessImage(
 
   }
 
-  if (bSilence)
+  if (!bSilence)
   {
 	  std::cout << "ExtractFeatures time " << timer.ElapsedTimeInSeconds() << " Seconds" << std::endl;
 	  std::cout << i << " - " << image_filepath << " 特征点数目是: " << keypoints.size() << std::endl;
