@@ -155,9 +155,35 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
   if (this->use_gpu)
   {
 	  // 输出信息简化 
-	  char * argv[] = { "-v", "0" };
+	  char * argv[] = { "-v", "0", "-fo", "-1", "-t", "0.004444" };
 	  int argc = sizeof(argv) / sizeof(char*);
-	  sift.ParseParam(argc, argv);
+	  char **ppChar = new char*[argc];
+	  for (int i = 0; i < argc; i++)
+	  {
+		  ppChar[i] = new char[16];
+		  strcpy(ppChar[i], argv[i]);
+	  }
+
+	  // custom sift parameter
+	  float dog_threshold = 0.02 / sift._dog_level_num; // default gpu sift get too few features
+	  dog_threshold /= 1.5f;	// to get more features
+
+	  switch (options_.feature_density)
+	  {
+	  case FeatureDensity::SPARSE:
+		  dog_threshold *= 1.5f;
+		  break;
+
+	  case FeatureDensity::DENSE:
+		  dog_threshold /= 1.5f;
+		  break;
+
+	  default:
+		  break;
+	  }
+
+	  sprintf(ppChar[5], "%f", dog_threshold); 
+	  sift.ParseParam(argc, ppChar);
 
 	  if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED ||
 		  false == sift.RunSIFT(TEST_IMAGE) ||
@@ -171,26 +197,6 @@ FeatureExtractorAndMatcher::FeatureExtractorAndMatcher(
   }
   else
 	  LOG(INFO) << "采用CPU运行SIFT...";
-
-  // custom sift parameter
-  float dog_threshold = 0.02 / sift._dog_level_num; // default gpu sift get too few features
-  dog_threshold /= 1.5f;	// to get more features
-
-  switch (options_.feature_density)
-  {
-  case FeatureDensity::SPARSE:
-	  dog_threshold *= 1.5f;
-	  break;
-
-  case FeatureDensity::DENSE:
-	  dog_threshold /= 1.5f;
-	  break;
-
-  default:
-	  break;
-  }
-
-  sift._dog_threshold = dog_threshold;
 
 }
 
