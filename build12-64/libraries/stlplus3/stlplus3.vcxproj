@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{7AC874CA-14E1-373C-B1F2-F85A830AF073}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>stlplus3</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\file\code\git\3d\TheiaSfM\build12-64\lib\Debug\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stlplus3.dir\Debug\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stlplus3-debug</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\file\code\git\3d\TheiaSfM\build12-64\lib\Release\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stlplus3.dir\Release\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stlplus3</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\file\code\git\3d\TheiaSfM\build12-64\lib\MinSizeRel\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">stlplus3.dir\MinSizeRel\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">stlplus3</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\file\code\git\3d\TheiaSfM\build12-64\lib\RelWithDebInfo\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">stlplus3.dir\RelWithDebInfo\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">stlplus3</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;GTEST_TESTING_OUTPUT_DIRECTORY="D:/file/code/git/3d/TheiaSfM/build12-64/testing_output";THEIA_DATA_DIR="D:/file/code/git/3d/TheiaSfM/data";THEIA_SUITESPARSE_VERSION="4.5.0";CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;GTEST_TESTING_OUTPUT_DIRECTORY=\"D:/file/code/git/3d/TheiaSfM/build12-64/testing_output\";THEIA_DATA_DIR=\"D:/file/code/git/3d/TheiaSfM/data\";THEIA_SUITESPARSE_VERSION=\"4.5.0\";CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY="D:/file/code/git/3d/TheiaSfM/build12-64/testing_output";THEIA_DATA_DIR="D:/file/code/git/3d/TheiaSfM/data";THEIA_SUITESPARSE_VERSION="4.5.0";CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat></DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY=\"D:/file/code/git/3d/TheiaSfM/build12-64/testing_output\";THEIA_DATA_DIR=\"D:/file/code/git/3d/TheiaSfM/data\";THEIA_SUITESPARSE_VERSION=\"4.5.0\";CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY="D:/file/code/git/3d/TheiaSfM/build12-64/testing_output";THEIA_DATA_DIR="D:/file/code/git/3d/TheiaSfM/data";THEIA_SUITESPARSE_VERSION="4.5.0";CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat></DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY=\"D:/file/code/git/3d/TheiaSfM/build12-64/testing_output\";THEIA_DATA_DIR=\"D:/file/code/git/3d/TheiaSfM/data\";THEIA_SUITESPARSE_VERSION=\"4.5.0\";CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY="D:/file/code/git/3d/TheiaSfM/build12-64/testing_output";THEIA_DATA_DIR="D:/file/code/git/3d/TheiaSfM/data";THEIA_SUITESPARSE_VERSION="4.5.0";CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GTEST_TESTING_OUTPUT_DIRECTORY=\"D:/file/code/git/3d/TheiaSfM/build12-64/testing_output\";THEIA_DATA_DIR=\"D:/file/code/git/3d/TheiaSfM/data\";THEIA_SUITESPARSE_VERSION=\"4.5.0\";CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\file\code\git\3d\TheiaSfM;D:\file\code\git\3d\TheiaSfM\include;D:\file\code\git\3d\TheiaSfM\src;D:\file\code\theia-3rd\ceres-solver-1.12.0\include;D:\file\code\theia-3rd\glog-0.3.3\include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;D:\file\code\theia-3rd\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;D:\file\code\theia-3rd\oiio-1.5.24\include;D:\file\code\theia-3rd\eigen-3.3.3;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/libraries/stlplus3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build12-64 --check-stamp-file D:\file\code\git\3d\TheiaSfM\build12-64\libraries\stlplus3\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/file/code/git/3d/TheiaSfM/libraries/stlplus3/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\file\code\git\3d\TheiaSfM\build12-64\libraries\stlplus3\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/libraries/stlplus3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build12-64 --check-stamp-file D:\file\code\git\3d\TheiaSfM\build12-64\libraries\stlplus3\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/file/code/git/3d/TheiaSfM/libraries/stlplus3/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\file\code\git\3d\TheiaSfM\build12-64\libraries\stlplus3\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/libraries/stlplus3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build12-64 --check-stamp-file D:\file\code\git\3d\TheiaSfM\build12-64\libraries\stlplus3\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:/file/code/git/3d/TheiaSfM/libraries/stlplus3/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\file\code\git\3d\TheiaSfM\build12-64\libraries\stlplus3\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/file/code/git/3d/TheiaSfM/libraries/stlplus3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/file/code/git/3d/TheiaSfM -BD:/file/code/git/3d/TheiaSfM/build12-64 --check-stamp-file D:\file\code\git\3d\TheiaSfM\build12-64\libraries\stlplus3\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:/file/code/git/3d/TheiaSfM/libraries/stlplus3/CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\CMakeLists.txt;D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\file\code\git\3d\TheiaSfM\build12-64\libraries\stlplus3\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\file_system.cpp"  />
+    <ClCompile Include="D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\portability_fixes.cpp"  />
+    <ClCompile Include="D:\file\code\git\3d\TheiaSfM\libraries\stlplus3\wildcard.cpp"  />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:/file/code/git/3d/TheiaSfM/build12-64/ZERO_CHECK.vcxproj">
+      <Project>26B45875-916B-363E-87D8-FAA06AAC93A5</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

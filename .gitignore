@@ -265,3 +265,9 @@
 /build12/dll_reconstruction/Debug
 /build12/dll_view3d/Debug
 /build12/client_csharp/*.suo
+/build12-64/CMakeFiles
+/build12-64/cmake
+/build12-64/*.cmake
+/build12-64/applications/CMakeFiles
+/build12-64/libraries/CMakeFiles
+/build12-64/src/theia/CMakeFiles
