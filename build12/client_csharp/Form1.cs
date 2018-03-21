@@ -66,8 +66,8 @@ namespace client_csharp
             bool bUseGPU = checkBox1.Checked;
             int nThreads;
             int.TryParse(textBox6.Text, out nThreads);
-            if (nThreads > 2)
-                nThreads = 2;// 线程数>=3，内存接近1g，有时程序会崩溃
+            //if (nThreads > 2)
+            //    nThreads = 2;// 线程数>=3，内存接近1g，有时程序会崩溃
             int nFeatureDensity = comboBox5.SelectedIndex;
             bool bMatchOutOfCore = checkBox2.Checked;
             DateTime dt = DateTime.Now;

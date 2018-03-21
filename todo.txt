@@ -1,5 +1,6 @@
 2018-3-16 09:51:50
 每完成一次重建，最好关了重新打开，否则上次重建可能会影响这次；
+reconstruction_writer.cc:56] Could not open the file: E:\3d\0508dalian\E:\3d\2017_03-5\result for writing.
 
 2018-3-15 15:42:37
 中文路径稀疏崩溃；
