@@ -37,7 +37,7 @@
 #include <ceres/rotation.h>
 #include <Eigen/Core>
 #include <glog/logging.h>
-#include <gflags/gflags.h>
+//#include <gflags/gflags.h>
 
 #include <algorithm>
 #include <fstream>  // NOLINT

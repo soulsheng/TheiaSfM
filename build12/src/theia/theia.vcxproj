@@ -5,6 +5,14 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -13,9 +21,17 @@
       <Configuration>MinSizeRel</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="RelWithDebInfo|Win32">
       <Configuration>RelWithDebInfo</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -49,6 +65,20 @@
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v120</PlatformToolset>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v120</PlatformToolset>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -75,10 +105,17 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">theia</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\..\..\build12\lib64\$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)-debug</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\..\..\build12\lib64\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>..\..\..;..\..\..\include;..\..\..\src;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\COLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;..\..\..\libraries;..\..\..\libraries\spectra;..\..\..\libraries\akaze;..\..\..\libraries\cereal;..\..\..\libraries\cereal\include;..\..\..\libraries\flann;..\..\..\libraries\flann\src\cpp;\include;..\..\..\libraries\optimo;..\..\..\libraries\statx;..\..\..\libraries\stlplus3;..\..\..\libraries\vlfeat;..\..\..\libraries\visual_sfm;$(THEIA_3RD)\IlmBase-2.2.0\include;$(THEIA_3RD)\eigen-3.3.3;$(THEIA_3RD)\ceres-solver-1.12.0\include;$(THEIA_3RD)\glog-0.3.3\include;$(THEIA_3RD)\boost_1_60_0-vc12;$(THEIA_3RD)\gflags-2.2.0\include;$(THEIA_3RD)\oiio-1.5.24\include;$(THEIA_3RD)\siftgpu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..;..\..\..\include;..\..\..\src;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\COLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;..\..\..\libraries;..\..\..\libraries\spectra;..\..\..\libraries\akaze;..\..\..\libraries\cereal;..\..\..\libraries\cereal\include;..\..\..\libraries\flann;..\..\..\libraries\flann\src\cpp;\include;..\..\..\libraries\optimo;..\..\..\libraries\statx;..\..\..\libraries\stlplus3;..\..\..\libraries\vlfeat;..\..\..\libraries\visual_sfm;$(THEIA_3RD)\IlmBase-2.2.0\include;$(THEIA_3RD)\eigen-3.3.3;$(THEIA_3RD)\ceres-solver-1.12.0\include;$(THEIA_3RD)\glog-0.3.3\include;D:\file\code\sdk\boost;$(THEIA_3RD)\gflags-2.2.0\include;$(THEIA_3RD)\oiio-1.5.24\include;$(THEIA_3RD)\siftgpu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -201,6 +238,18 @@
       <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..;..\..\..\include;..\..\..\src;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\COLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;..\..\..\libraries;..\..\..\libraries\spectra;..\..\..\libraries\akaze;..\..\..\libraries\cereal;..\..\..\libraries\cereal\include;..\..\..\libraries\flann;..\..\..\libraries\flann\src\cpp;\include;..\..\..\libraries\optimo;..\..\..\libraries\statx;..\..\..\libraries\stlplus3;..\..\..\libraries\vlfeat;..\..\..\libraries\visual_sfm;$(THEIA_3RD)\IlmBase-2.2.0\include;$(THEIA_3RD)\eigen-3.3.3;$(THEIA_3RD)\ceres-solver-1.12.0\include;$(THEIA_3RD)\glog-0.3.3\include;D:\file\code\sdk\boost;$(THEIA_3RD)\gflags-2.2.0\include;$(THEIA_3RD)\oiio-1.5.24\include;$(THEIA_3RD)\siftgpu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLOG_NO_ABBREVIATED_SEVERITIES</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..;..\..\..\include;..\..\..\src;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\AMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\COLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CCOLAMD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\CHOLMOD\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SPQR\Include;$(THEIA_3RD)\suitesparse-metis-for-windows-1.3.1\SuiteSparse\SuiteSparse_config;..\..\..\libraries;..\..\..\libraries\spectra;..\..\..\libraries\akaze;..\..\..\libraries\cereal;..\..\..\libraries\cereal\include;..\..\..\libraries\flann;..\..\..\libraries\flann\src\cpp;\include;..\..\..\libraries\optimo;..\..\..\libraries\statx;..\..\..\libraries\stlplus3;..\..\..\libraries\vlfeat;..\..\..\libraries\visual_sfm;$(THEIA_3RD)\IlmBase-2.2.0\include;$(THEIA_3RD)\eigen-3.3.3;$(THEIA_3RD)\ceres-solver-1.12.0\include;$(THEIA_3RD)\glog-0.3.3\include;D:\file\code\sdk\boost;$(THEIA_3RD)\oiio-1.5.24\include;$(THEIA_3RD)\siftgpu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLOG_NO_ABBREVIATED_SEVERITIES;USE_LOG_INFO=1;</PreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\theia\alignment\alignment.h" />
