@@ -303,6 +303,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\..;..\..\..\include;..\..\..\src;..\..\..\libraries\vlfeat\.\vl;$(THEIA_3RD)\eigen-3.3.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>VL_BUILD_DLL;VL_DISABLE_SSE2;vlfeat_EXPORTS</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <ImportLibrary>..\..\lib64/Debug/vlfeat-debug.lib</ImportLibrary>
