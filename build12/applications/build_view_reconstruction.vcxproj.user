@@ -13,7 +13,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>E:\3d\2017_03-5\ E:\\3d\output\</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>E:\3d\2017_03-5-副本\ E:\\3d\output\</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
